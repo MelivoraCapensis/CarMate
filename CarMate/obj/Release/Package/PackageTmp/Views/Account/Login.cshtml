@@ -1,0 +1,80 @@
+﻿@model CarMate.Models.LoginModel
+
+<meta name="viewport" content="width=device-width" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="~/Content/stylish-portfolio.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!-- Custom Fonts -->
+<link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="btclose" class="close" data-dismiss="modal" aria-hidden="true">
+                    @Html.ActionLink("x", "Index", "Home")
+                </button>
+                <h1 class="text-center">Login</h1>
+            </div>
+            <div class="modal-body">
+              
+                <h2>Use a local account to log in.</h2>
+                @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl, @class = "form col-md-12 center-block" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    
+                    <div class="form-group">
+                    
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-lg", @placeholder = "Userame" })
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                    <div class="form-group">
+                     
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div class="form-group">
+              
+                        <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block" />
+                        <span class="pull-right">@Html.ActionLink("Register", "Register")</span>
+                        <span>
+                            @*<a href="#">Need help?</a>*@
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                        </span>
+                    </div>
+
+                }
+
+                <h2>Use another service to log in.</h2>
+                @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

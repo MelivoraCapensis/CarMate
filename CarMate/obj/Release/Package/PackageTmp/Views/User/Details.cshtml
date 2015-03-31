@@ -1,0 +1,272 @@
+﻿@using System.Web.UI.WebControls
+@model CarMate.Users
+
+@{
+    ViewBag.Title = "Гараж пользовалетя " + Model.Nickname;
+}
+@*<meta name="viewport" content="width=device-width" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="~/Content/stylish-portfolio.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!-- Custom Fonts -->
+<link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">*@
+
+<div class="container">
+
+        <h2>Гараж пользовалетя @Model.Nickname</h2>
+
+    <div class="row"> <!-- users wrapper row -->
+        <div class="col-lg-12"> <!-- users wrapper col -->
+            <div class="row"><!-- wrapper row -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-4 media-left media-middle">
+                            <img alt="Avatar" src="@Model.ImgPath"/>
+                            @if (ViewBag.IsOwner != null && ViewBag.IsOwner == false)
+                            {
+                                @Html.ActionLink("Отправить сообщение", "SendMessage", "User", new {id = @Model.Id}, new {@class = "btn btn-info"})
+                            }
+                        </div>
+                        <div class="col-xs-8">
+                            @*<p>Страна: @Model.country, Область: , Город: @Model.city</p>*@
+                            <p>Дата регистрации: @Model.DateRegister.ToString("dd.MM.yyyy")</p>
+                            @{
+                                int day = (DateTime.Now - @Model.DateRegister.AddDays(-1)).Days;
+                            }
+                            <p>Дней с сайтом: @day</p>
+                        </div><!-- End col -->
+                    </div><!-- End row -->
+                </div> <!-- End Container-fluid -->
+            </div><!-- End wrapper row -->
+        </div><!-- End col -->
+    </div> <!-- End users row -->
+
+    <div class="row">
+        <div class=" col-lg-offset-3 col-lg-6 text-center">
+            @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+            {
+                @Html.ActionLink("Добавить транспортное средство", "Create", "Car", new { userId = @Model.Id }, new { @class = "btn btn-primary btn-lg btn-block" })
+            }
+        </div>
+    </div>
+
+     <div class="row"> <!-- cars wrapper row -->
+                @if (@Model.Cars.Any())
+                {
+                    foreach (var car in @Model.Cars)
+                    {
+                        <div class="col-xs-4">
+                            <div class="container-fluid highlight">
+
+                                <div class="row">
+                                    @*<div class="col-xs-12 ">*@
+                                    <div class="col-lg-3 col-md-3 thumbnail">
+                                        @Html.ActionLink(" ", "Details", "Car", new { id = car.Id })
+                                        <img src="@car.ImgPath" />
+                                    </div><!-- End col-->
+                                </div><!-- End row-->
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        @if (@car.ModificationId != null)
+                                        {
+                                            <h3>@car.CarModels.CarBrands.brand @(" - ") @car.CarModels.model @(" - ") @car.CarModifications.modification</h3>
+                                        }
+                                        else
+                                        {
+                                            <h3>@car.CarModels.CarBrands.brand @(" - ") @car.CarModels.model</h3>
+                                        }
+
+                                        <p>Марка: @car.CarModels.CarBrands.brand</p>
+                                        <p>Модель: @car.CarModels.model</p>
+
+                                        <p>
+                                            Модификация:
+                                            @if (@car.ModificationId != null)
+                                            {
+                                                @car.CarModifications.modification
+                                            }
+                                        </p>
+
+                                        <p>Количество просмотров: @*@car.viewCount*@</p>
+                                        @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+                                        {
+                                            <p>
+                                                @Html.ActionLink("Удалить", "Delete", "Car", new {id = car.Id}, new {@class = "btn btn-primary"})
+                                                @Html.ActionLink("Редактировать", "Edit", "Car", new {id = car.Id}, new {@class = "btn btn-primary"})
+                                            </p>
+                                        }
+                                        @Html.ActionLink("Подробнее", "Details", "Car", new {id = car.Id}, new {@class = "btn btn-success"})
+                                    </div><!-- End col 12-->
+                                </div><!-- End row-->
+                            </div> <!-- End container-fluid -->
+                        </div>
+                        <!-- End col xs-4-->
+                    }
+                }
+                else
+                {
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger">
+                            У пользователя в гараже нет транспортных средств.
+                        </div>
+                    </div>
+                }
+    </div><!-- End cars row -->
+
+</div> <!-- End General Container -->
+
+
+
+
+@*    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="~/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="~/bower_components/raphael/raphael-min.js"></script>
+    <script src="~/bower_components/morrisjs/morris.min.js"></script>
+    <script src="~/js/morris-data.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/dist/js/sb-admin-2.js"></script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*<h2>Details</h2>
+
+        <fieldset>
+            <legend>Users</legend>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.firstName)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.firstName)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.lastName)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.lastName)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.userEmail)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.userEmail)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.userPassword)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.userPassword)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.nickname)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.nickname)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.country)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.country)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.city)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.city)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.imgPath)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.imgPath)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.dateCreate)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.dateCreate)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.state)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.state)
+            </div>
+
+            <div class="display-label">
+                 @Html.DisplayNameFor(model => model.dateRegister)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.dateRegister)
+            </div>
+        </fieldset>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@

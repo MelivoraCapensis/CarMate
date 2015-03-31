@@ -1,0 +1,7 @@
+﻿@model CarMate.CarModels
+
+@Html.Label("modelId", "Модель", htmlAttributes: new { @class = "control-label col-md-2" })
+<div class="col-md-3">
+    @Html.DropDownList("modelId", null, htmlAttributes: new { @class = "form-control", onchange = "GetModifications(this)" }, optionLabel: "-выберите модель-")
+    @Html.ValidationMessage("modelId", "", new { @class = "text-danger" })
+</div>

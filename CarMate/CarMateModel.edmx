@@ -1,0 +1,1724 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="gb_carmateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aliases">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarBrands">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="carTypeId" Type="int" Nullable="false" />
+          <Property Name="brand" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarId" Type="int" Nullable="false" />
+          <Property Name="CarNodeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarEvents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarId" Type="int" Nullable="false" />
+          <Property Name="EventTypeId" Type="int" Nullable="false" />
+          <Property Name="FuelCategoryId" Type="int" />
+          <Property Name="Odometer" Type="int" Nullable="false" />
+          <Property Name="CostTotal" Type="float" Nullable="false" />
+          <Property Name="DateEvent" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="4000" />
+          <Property Name="FuelCount" Type="float" />
+          <Property Name="PricePerLitr" Type="float" />
+          <Property Name="Latitute" Type="float" />
+          <Property Name="Longitute" Type="float" />
+          <Property Name="IsFullTank" Type="bit" Nullable="false" />
+          <Property Name="IsMissedFilling" Type="bit" Nullable="false" />
+          <Property Name="NameEvent" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreate" Type="datetime" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarModels">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brandId" Type="int" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarModifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="modelId" Type="int" Nullable="false" />
+          <Property Name="modification" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="horsePower" Type="nvarchar" MaxLength="30" />
+          <Property Name="yearBegin" Type="nvarchar" MaxLength="30" />
+          <Property Name="yearEnd" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="CarNode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ModelId" Type="int" Nullable="false" />
+          <Property Name="ModificationId" Type="int" />
+          <Property Name="Odometer" Type="int" />
+          <Property Name="Tank" Type="int" />
+          <Property Name="Consumption" Type="float" />
+          <Property Name="ImgPath" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateBuy" Type="datetime" />
+          <Property Name="DateCreate" Type="datetime" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="carType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="dateCreate" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoryLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="country" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="dateCreate" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FuelCategories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="countryId" Type="int" Nullable="false" />
+          <Property Name="category" Type="nvarchar" MaxLength="20" />
+          <Property Name="dateCreate" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogBook">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoryid" Type="int" Nullable="false" />
+          <Property Name="chargingid" Type="int" Nullable="false" />
+          <Property Name="carId" Type="int" Nullable="false" />
+          <Property Name="total_cost" Type="real" />
+          <Property Name="dateCharging" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Placemarks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="countryId" Type="int" Nullable="false" />
+          <Property Name="regionId" Type="int" />
+          <Property Name="categoryId" Type="int" Nullable="false" />
+          <Property Name="vendorId" Type="int" />
+          <Property Name="latitude" Type="float" Nullable="false" />
+          <Property Name="longitude" Type="float" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="100" />
+          <Property Name="dateCreate" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="placemarkid" Type="int" Nullable="false" />
+          <Property Name="vendorId" Type="int" Nullable="false" />
+          <Property Name="regionId" Type="int" Nullable="false" />
+          <Property Name="fuelId" Type="int" Nullable="false" />
+          <Property Name="price" Type="float" />
+          <Property Name="userPrice" Type="float" />
+          <Property Name="dateCreate" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Regions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="countryId" Type="int" Nullable="false" />
+          <Property Name="region" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="dateCreate" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionId" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Nickname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ImgPath" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateRegister" Type="datetime" Nullable="false" />
+          <Property Name="DateCreate" Type="datetime" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VendorAliases">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorId" Type="int" Nullable="false" />
+          <Property Name="AliasId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="countryId" Type="int" Nullable="false" />
+          <Property Name="vendor" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="icon" Type="varbinary(max)" />
+          <Property Name="dateCreate" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="CarDetails_fk_Car">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="CarDetails" Type="Self.CarDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDetails">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarDetails_fk_CarNode">
+          <End Role="CarNode" Type="Self.CarNode" Multiplicity="1" />
+          <End Role="CarDetails" Type="Self.CarDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarNode">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDetails">
+              <PropertyRef Name="CarNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Events_fk_EventType">
+          <End Role="EventTypes" Type="Self.EventTypes" Multiplicity="1" />
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarEvents">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Events_fk_FuelCategory">
+          <End Role="FuelCategories" Type="Self.FuelCategories" Multiplicity="0..1" />
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarEvents">
+              <PropertyRef Name="FuelCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CarBrands_carTypeId">
+          <End Role="CarTypes" Type="Self.CarTypes" Multiplicity="1" />
+          <End Role="CarBrands" Type="Self.CarBrands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarBrands">
+              <PropertyRef Name="carTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CarModels_brandId">
+          <End Role="CarBrands" Type="Self.CarBrands" Multiplicity="1" />
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarBrands">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarModels">
+              <PropertyRef Name="brandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cars_modelId">
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cars_modificationId">
+          <End Role="CarModifications" Type="Self.CarModifications" Multiplicity="0..1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModifications">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="ModificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cars_userId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CategoryLog_categoryid">
+          <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="1" />
+          <End Role="LogBook" Type="Self.LogBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryLog">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LogBook">
+              <PropertyRef Name="categoryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Charging_carId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarEvents">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Charging_chargingid">
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="1" />
+          <End Role="LogBook" Type="Self.LogBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarEvents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogBook">
+              <PropertyRef Name="chargingid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_FuelCategories_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="FuelCategories" Type="Self.FuelCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FuelCategories">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LogBook_carId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="LogBook" Type="Self.LogBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogBook">
+              <PropertyRef Name="carId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Modifications_modelId">
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="1" />
+          <End Role="CarModifications" Type="Self.CarModifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarModifications">
+              <PropertyRef Name="modelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_categoryId">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_placemarkid">
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Placemarks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="placemarkid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_regionId">
+          <End Role="Regions" Type="Self.Regions" Multiplicity="0..1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="regionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_vendorId">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="vendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Prices_fuelId">
+          <End Role="FuelCategories" Type="Self.FuelCategories" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="fuelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Prices_vendorId">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="vendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Regions_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Regions" Type="Self.Regions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Regions">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Regions_regionId">
+          <End Role="Regions" Type="Self.Regions" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="regionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Vendors_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vendors">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Users_fk_Region">
+          <End Role="Regions" Type="Self.Regions" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VendorAliases_fk_Alias">
+          <End Role="Aliases" Type="Self.Aliases" Multiplicity="1" />
+          <End Role="VendorAliases" Type="Self.VendorAliases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aliases">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VendorAliases">
+              <PropertyRef Name="AliasId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VendorAliases_fk_Vendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="1" />
+          <End Role="VendorAliases" Type="Self.VendorAliases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VendorAliases">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gb_carmateModelStoreContainer">
+          <EntitySet Name="Aliases" EntityType="Self.Aliases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarBrands" EntityType="Self.CarBrands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarDetails" EntityType="Self.CarDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarEvents" EntityType="Self.CarEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarModifications" EntityType="Self.CarModifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarNode" EntityType="Self.CarNode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarTypes" EntityType="Self.CarTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventTypes" EntityType="Self.EventTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FuelCategories" EntityType="Self.FuelCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogBook" EntityType="Self.LogBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Placemarks" EntityType="Self.Placemarks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prices" EntityType="Self.Prices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Regions" EntityType="Self.Regions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VendorAliases" EntityType="Self.VendorAliases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="CarDetails_fk_Car" Association="Self.CarDetails_fk_Car">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="CarDetails" EntitySet="CarDetails" />
+          </AssociationSet>
+          <AssociationSet Name="CarDetails_fk_CarNode" Association="Self.CarDetails_fk_CarNode">
+            <End Role="CarNode" EntitySet="CarNode" />
+            <End Role="CarDetails" EntitySet="CarDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Events_fk_EventType" Association="Self.Events_fk_EventType">
+            <End Role="EventTypes" EntitySet="EventTypes" />
+            <End Role="CarEvents" EntitySet="CarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="Events_fk_FuelCategory" Association="Self.Events_fk_FuelCategory">
+            <End Role="FuelCategories" EntitySet="FuelCategories" />
+            <End Role="CarEvents" EntitySet="CarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CarBrands_carTypeId" Association="Self.fk_CarBrands_carTypeId">
+            <End Role="CarTypes" EntitySet="CarTypes" />
+            <End Role="CarBrands" EntitySet="CarBrands" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CarModels_brandId" Association="Self.fk_CarModels_brandId">
+            <End Role="CarBrands" EntitySet="CarBrands" />
+            <End Role="CarModels" EntitySet="CarModels" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cars_modelId" Association="Self.fk_Cars_modelId">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cars_modificationId" Association="Self.fk_Cars_modificationId">
+            <End Role="CarModifications" EntitySet="CarModifications" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cars_userId" Association="Self.fk_Cars_userId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CategoryLog_categoryid" Association="Self.fk_CategoryLog_categoryid">
+            <End Role="CategoryLog" EntitySet="CategoryLog" />
+            <End Role="LogBook" EntitySet="LogBook" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Charging_carId" Association="Self.fk_Charging_carId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="CarEvents" EntitySet="CarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Charging_chargingid" Association="Self.fk_Charging_chargingid">
+            <End Role="CarEvents" EntitySet="CarEvents" />
+            <End Role="LogBook" EntitySet="LogBook" />
+          </AssociationSet>
+          <AssociationSet Name="fk_FuelCategories_countryId" Association="Self.fk_FuelCategories_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="FuelCategories" EntitySet="FuelCategories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LogBook_carId" Association="Self.fk_LogBook_carId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="LogBook" EntitySet="LogBook" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Modifications_modelId" Association="Self.fk_Modifications_modelId">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="CarModifications" EntitySet="CarModifications" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_categoryId" Association="Self.fk_Placemarks_categoryId">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_countryId" Association="Self.fk_Placemarks_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_placemarkid" Association="Self.fk_Placemarks_placemarkid">
+            <End Role="Placemarks" EntitySet="Placemarks" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_regionId" Association="Self.fk_Placemarks_regionId">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_vendorId" Association="Self.fk_Placemarks_vendorId">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Prices_fuelId" Association="Self.fk_Prices_fuelId">
+            <End Role="FuelCategories" EntitySet="FuelCategories" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Prices_vendorId" Association="Self.fk_Prices_vendorId">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Regions_countryId" Association="Self.fk_Regions_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Regions" EntitySet="Regions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Regions_regionId" Association="Self.fk_Regions_regionId">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Vendors_countryId" Association="Self.fk_Vendors_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Vendors" EntitySet="Vendors" />
+          </AssociationSet>
+          <AssociationSet Name="Users_fk_Region" Association="Self.Users_fk_Region">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="VendorAliases_fk_Alias" Association="Self.VendorAliases_fk_Alias">
+            <End Role="Aliases" EntitySet="Aliases" />
+            <End Role="VendorAliases" EntitySet="VendorAliases" />
+          </AssociationSet>
+          <AssociationSet Name="VendorAliases_fk_Vendors" Association="Self.VendorAliases_fk_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="VendorAliases" EntitySet="VendorAliases" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="gb_carmateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aliases">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alias" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="VendorAliases" Relationship="Self.VendorAliases_fk_Alias" FromRole="Aliases" ToRole="VendorAliases" />
+        </EntityType>
+        <EntityType Name="CarBrands">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="carTypeId" Type="Int32" Nullable="false" />
+          <Property Name="brand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarTypes" Relationship="Self.fk_CarBrands_carTypeId" FromRole="CarBrands" ToRole="CarTypes" />
+          <NavigationProperty Name="CarModels" Relationship="Self.fk_CarModels_brandId" FromRole="CarBrands" ToRole="CarModels" />
+        </EntityType>
+        <EntityType Name="CarDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="CarNodeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.CarDetails_fk_Car" FromRole="CarDetails" ToRole="Cars" />
+          <NavigationProperty Name="CarNode" Relationship="Self.CarDetails_fk_CarNode" FromRole="CarDetails" ToRole="CarNode" />
+        </EntityType>
+        <EntityType Name="CarEvents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" />
+          <Property Name="FuelCategoryId" Type="Int32" />
+          <Property Name="Odometer" Type="Int32" Nullable="false" />
+          <Property Name="CostTotal" Type="Double" Nullable="false" />
+          <Property Name="DateEvent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="FuelCount" Type="Double" />
+          <Property Name="PricePerLitr" Type="Double" />
+          <Property Name="Latitute" Type="Double" />
+          <Property Name="Longitute" Type="Double" />
+          <Property Name="IsFullTank" Type="Boolean" Nullable="false" />
+          <Property Name="IsMissedFilling" Type="Boolean" Nullable="false" />
+          <Property Name="NameEvent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EventTypes" Relationship="Self.Events_fk_EventType" FromRole="CarEvents" ToRole="EventTypes" />
+          <NavigationProperty Name="FuelCategories" Relationship="Self.Events_fk_FuelCategory" FromRole="CarEvents" ToRole="FuelCategories" />
+          <NavigationProperty Name="Cars" Relationship="Self.fk_Charging_carId" FromRole="CarEvents" ToRole="Cars" />
+          <NavigationProperty Name="LogBook" Relationship="Self.fk_Charging_chargingid" FromRole="CarEvents" ToRole="LogBook" />
+        </EntityType>
+        <EntityType Name="CarModels">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="brandId" Type="Int32" Nullable="false" />
+          <Property Name="model" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarBrands" Relationship="Self.fk_CarModels_brandId" FromRole="CarModels" ToRole="CarBrands" />
+          <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_modelId" FromRole="CarModels" ToRole="Cars" />
+          <NavigationProperty Name="CarModifications" Relationship="Self.fk_Modifications_modelId" FromRole="CarModels" ToRole="CarModifications" />
+        </EntityType>
+        <EntityType Name="CarModifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="modelId" Type="Int32" Nullable="false" />
+          <Property Name="modification" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="horsePower" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="yearBegin" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="yearEnd" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CarModels" Relationship="Self.fk_Modifications_modelId" FromRole="CarModifications" ToRole="CarModels" />
+          <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_modificationId" FromRole="CarModifications" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="CarNode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarDetails" Relationship="Self.CarDetails_fk_CarNode" FromRole="CarNode" ToRole="CarDetails" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ModelId" Type="Int32" Nullable="false" />
+          <Property Name="ModificationId" Type="Int32" />
+          <Property Name="Odometer" Type="Int32" />
+          <Property Name="Tank" Type="Int32" />
+          <Property Name="Consumption" Type="Double" />
+          <Property Name="ImgPath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateBuy" Type="DateTime" Precision="3" />
+          <Property Name="DateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarDetails" Relationship="Self.CarDetails_fk_Car" FromRole="Cars" ToRole="CarDetails" />
+          <NavigationProperty Name="CarEvents" Relationship="Self.fk_Charging_carId" FromRole="Cars" ToRole="CarEvents" />
+          <NavigationProperty Name="CarModels" Relationship="Self.fk_Cars_modelId" FromRole="Cars" ToRole="CarModels" />
+          <NavigationProperty Name="CarModifications" Relationship="Self.fk_Cars_modificationId" FromRole="Cars" ToRole="CarModifications" />
+          <NavigationProperty Name="Users" Relationship="Self.fk_Cars_userId" FromRole="Cars" ToRole="Users" />
+          <NavigationProperty Name="LogBook" Relationship="Self.fk_LogBook_carId" FromRole="Cars" ToRole="LogBook" />
+        </EntityType>
+        <EntityType Name="CarTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="carType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarBrands" Relationship="Self.fk_CarBrands_carTypeId" FromRole="CarTypes" ToRole="CarBrands" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Placemarks" Relationship="Self.fk_Placemarks_categoryId" FromRole="Categories" ToRole="Placemarks" />
+        </EntityType>
+        <EntityType Name="CategoryLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LogBook" Relationship="Self.fk_CategoryLog_categoryid" FromRole="CategoryLog" ToRole="LogBook" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FuelCategories" Relationship="Self.fk_FuelCategories_countryId" FromRole="Countries" ToRole="FuelCategories" />
+          <NavigationProperty Name="Placemarks" Relationship="Self.fk_Placemarks_countryId" FromRole="Countries" ToRole="Placemarks" />
+          <NavigationProperty Name="Regions" Relationship="Self.fk_Regions_countryId" FromRole="Countries" ToRole="Regions" />
+          <NavigationProperty Name="Vendors" Relationship="Self.fk_Vendors_countryId" FromRole="Countries" ToRole="Vendors" />
+        </EntityType>
+        <EntityType Name="EventTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarEvents" Relationship="Self.Events_fk_EventType" FromRole="EventTypes" ToRole="CarEvents" />
+        </EntityType>
+        <EntityType Name="FuelCategories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryId" Type="Int32" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarEvents" Relationship="Self.Events_fk_FuelCategory" FromRole="FuelCategories" ToRole="CarEvents" />
+          <NavigationProperty Name="Countries" Relationship="Self.fk_FuelCategories_countryId" FromRole="FuelCategories" ToRole="Countries" />
+          <NavigationProperty Name="Prices" Relationship="Self.fk_Prices_fuelId" FromRole="FuelCategories" ToRole="Prices" />
+        </EntityType>
+        <EntityType Name="LogBook">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryid" Type="Int32" Nullable="false" />
+          <Property Name="chargingid" Type="Int32" Nullable="false" />
+          <Property Name="carId" Type="Int32" Nullable="false" />
+          <Property Name="total_cost" Type="Single" />
+          <Property Name="dateCharging" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CarEvents" Relationship="Self.fk_Charging_chargingid" FromRole="LogBook" ToRole="CarEvents" />
+          <NavigationProperty Name="Cars" Relationship="Self.fk_LogBook_carId" FromRole="LogBook" ToRole="Cars" />
+          <NavigationProperty Name="CategoryLog" Relationship="Self.fk_CategoryLog_categoryid" FromRole="LogBook" ToRole="CategoryLog" />
+        </EntityType>
+        <EntityType Name="Placemarks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryId" Type="Int32" Nullable="false" />
+          <Property Name="regionId" Type="Int32" />
+          <Property Name="categoryId" Type="Int32" Nullable="false" />
+          <Property Name="vendorId" Type="Int32" />
+          <Property Name="latitude" Type="Double" Nullable="false" />
+          <Property Name="longitude" Type="Double" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.fk_Placemarks_categoryId" FromRole="Placemarks" ToRole="Categories" />
+          <NavigationProperty Name="Countries" Relationship="Self.fk_Placemarks_countryId" FromRole="Placemarks" ToRole="Countries" />
+          <NavigationProperty Name="Prices" Relationship="Self.fk_Placemarks_placemarkid" FromRole="Placemarks" ToRole="Prices" />
+          <NavigationProperty Name="Regions" Relationship="Self.fk_Placemarks_regionId" FromRole="Placemarks" ToRole="Regions" />
+          <NavigationProperty Name="Vendors" Relationship="Self.fk_Placemarks_vendorId" FromRole="Placemarks" ToRole="Vendors" />
+        </EntityType>
+        <EntityType Name="Prices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="placemarkid" Type="Int32" Nullable="false" />
+          <Property Name="vendorId" Type="Int32" Nullable="false" />
+          <Property Name="regionId" Type="Int32" Nullable="false" />
+          <Property Name="fuelId" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Double" />
+          <Property Name="userPrice" Type="Double" />
+          <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FuelCategories" Relationship="Self.fk_Prices_fuelId" FromRole="Prices" ToRole="FuelCategories" />
+          <NavigationProperty Name="Placemarks" Relationship="Self.fk_Placemarks_placemarkid" FromRole="Prices" ToRole="Placemarks" />
+          <NavigationProperty Name="Vendors" Relationship="Self.fk_Prices_vendorId" FromRole="Prices" ToRole="Vendors" />
+          <NavigationProperty Name="Regions" Relationship="Self.fk_Regions_regionId" FromRole="Prices" ToRole="Regions" />
+        </EntityType>
+        <EntityType Name="Regions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryId" Type="Int32" Nullable="false" />
+          <Property Name="region" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Countries" Relationship="Self.fk_Regions_countryId" FromRole="Regions" ToRole="Countries" />
+          <NavigationProperty Name="Placemarks" Relationship="Self.fk_Placemarks_regionId" FromRole="Regions" ToRole="Placemarks" />
+          <NavigationProperty Name="Prices" Relationship="Self.fk_Regions_regionId" FromRole="Regions" ToRole="Prices" />
+          <NavigationProperty Name="Users" Relationship="Self.Users_fk_Region" FromRole="Regions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Nickname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImgPath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateRegister" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_userId" FromRole="Users" ToRole="Cars" />
+          <NavigationProperty Name="Regions" Relationship="Self.Users_fk_Region" FromRole="Users" ToRole="Regions" />
+        </EntityType>
+        <EntityType Name="VendorAliases">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <Property Name="AliasId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aliases" Relationship="Self.VendorAliases_fk_Alias" FromRole="VendorAliases" ToRole="Aliases" />
+          <NavigationProperty Name="Vendors" Relationship="Self.VendorAliases_fk_Vendors" FromRole="VendorAliases" ToRole="Vendors" />
+        </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryId" Type="Int32" Nullable="false" />
+          <Property Name="vendor" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="icon" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Countries" Relationship="Self.fk_Vendors_countryId" FromRole="Vendors" ToRole="Countries" />
+          <NavigationProperty Name="Placemarks" Relationship="Self.fk_Placemarks_vendorId" FromRole="Vendors" ToRole="Placemarks" />
+          <NavigationProperty Name="Prices" Relationship="Self.fk_Prices_vendorId" FromRole="Vendors" ToRole="Prices" />
+          <NavigationProperty Name="VendorAliases" Relationship="Self.VendorAliases_fk_Vendors" FromRole="Vendors" ToRole="VendorAliases" />
+        </EntityType>
+        <Association Name="VendorAliases_fk_Alias">
+          <End Role="Aliases" Type="Self.Aliases" Multiplicity="1" />
+          <End Role="VendorAliases" Type="Self.VendorAliases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aliases">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VendorAliases">
+              <PropertyRef Name="AliasId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CarBrands_carTypeId">
+          <End Role="CarTypes" Type="Self.CarTypes" Multiplicity="1" />
+          <End Role="CarBrands" Type="Self.CarBrands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarBrands">
+              <PropertyRef Name="carTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CarModels_brandId">
+          <End Role="CarBrands" Type="Self.CarBrands" Multiplicity="1" />
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarBrands">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarModels">
+              <PropertyRef Name="brandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarDetails_fk_Car">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="CarDetails" Type="Self.CarDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDetails">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarDetails_fk_CarNode">
+          <End Role="CarNode" Type="Self.CarNode" Multiplicity="1" />
+          <End Role="CarDetails" Type="Self.CarDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarNode">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDetails">
+              <PropertyRef Name="CarNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Events_fk_EventType">
+          <End Role="EventTypes" Type="Self.EventTypes" Multiplicity="1" />
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarEvents">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Events_fk_FuelCategory">
+          <End Role="FuelCategories" Type="Self.FuelCategories" Multiplicity="0..1" />
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarEvents">
+              <PropertyRef Name="FuelCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Charging_carId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarEvents">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Charging_chargingid">
+          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="1" />
+          <End Role="LogBook" Type="Self.LogBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarEvents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogBook">
+              <PropertyRef Name="chargingid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cars_modelId">
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Modifications_modelId">
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="1" />
+          <End Role="CarModifications" Type="Self.CarModifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CarModifications">
+              <PropertyRef Name="modelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cars_modificationId">
+          <End Role="CarModifications" Type="Self.CarModifications" Multiplicity="0..1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModifications">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="ModificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cars_userId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LogBook_carId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="LogBook" Type="Self.LogBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogBook">
+              <PropertyRef Name="carId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_categoryId">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CategoryLog_categoryid">
+          <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="1" />
+          <End Role="LogBook" Type="Self.LogBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryLog">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LogBook">
+              <PropertyRef Name="categoryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_FuelCategories_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="FuelCategories" Type="Self.FuelCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FuelCategories">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Regions_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Regions" Type="Self.Regions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Regions">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Vendors_countryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vendors">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Prices_fuelId">
+          <End Role="FuelCategories" Type="Self.FuelCategories" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="fuelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_placemarkid">
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Placemarks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="placemarkid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_regionId">
+          <End Role="Regions" Type="Self.Regions" Multiplicity="0..1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="regionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Placemarks_vendorId">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="Placemarks" Type="Self.Placemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Placemarks">
+              <PropertyRef Name="vendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Prices_vendorId">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="vendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Regions_regionId">
+          <End Role="Regions" Type="Self.Regions" Multiplicity="1" />
+          <End Role="Prices" Type="Self.Prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prices">
+              <PropertyRef Name="regionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Users_fk_Region">
+          <End Role="Regions" Type="Self.Regions" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VendorAliases_fk_Vendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="1" />
+          <End Role="VendorAliases" Type="Self.VendorAliases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VendorAliases">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarMateEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aliases" EntityType="Self.Aliases" />
+          <EntitySet Name="CarBrands" EntityType="Self.CarBrands" />
+          <EntitySet Name="CarDetails" EntityType="Self.CarDetails" />
+          <EntitySet Name="CarEvents" EntityType="Self.CarEvents" />
+          <EntitySet Name="CarModels" EntityType="Self.CarModels" />
+          <EntitySet Name="CarModifications" EntityType="Self.CarModifications" />
+          <EntitySet Name="CarNode" EntityType="Self.CarNode" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" />
+          <EntitySet Name="CarTypes" EntityType="Self.CarTypes" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" />
+          <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" />
+          <EntitySet Name="EventTypes" EntityType="Self.EventTypes" />
+          <EntitySet Name="FuelCategories" EntityType="Self.FuelCategories" />
+          <EntitySet Name="LogBook" EntityType="Self.LogBook" />
+          <EntitySet Name="Placemarks" EntityType="Self.Placemarks" />
+          <EntitySet Name="Prices" EntityType="Self.Prices" />
+          <EntitySet Name="Regions" EntityType="Self.Regions" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="VendorAliases" EntityType="Self.VendorAliases" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" />
+          <AssociationSet Name="VendorAliases_fk_Alias" Association="Self.VendorAliases_fk_Alias">
+            <End Role="Aliases" EntitySet="Aliases" />
+            <End Role="VendorAliases" EntitySet="VendorAliases" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CarBrands_carTypeId" Association="Self.fk_CarBrands_carTypeId">
+            <End Role="CarTypes" EntitySet="CarTypes" />
+            <End Role="CarBrands" EntitySet="CarBrands" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CarModels_brandId" Association="Self.fk_CarModels_brandId">
+            <End Role="CarBrands" EntitySet="CarBrands" />
+            <End Role="CarModels" EntitySet="CarModels" />
+          </AssociationSet>
+          <AssociationSet Name="CarDetails_fk_Car" Association="Self.CarDetails_fk_Car">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="CarDetails" EntitySet="CarDetails" />
+          </AssociationSet>
+          <AssociationSet Name="CarDetails_fk_CarNode" Association="Self.CarDetails_fk_CarNode">
+            <End Role="CarNode" EntitySet="CarNode" />
+            <End Role="CarDetails" EntitySet="CarDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Events_fk_EventType" Association="Self.Events_fk_EventType">
+            <End Role="EventTypes" EntitySet="EventTypes" />
+            <End Role="CarEvents" EntitySet="CarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="Events_fk_FuelCategory" Association="Self.Events_fk_FuelCategory">
+            <End Role="FuelCategories" EntitySet="FuelCategories" />
+            <End Role="CarEvents" EntitySet="CarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Charging_carId" Association="Self.fk_Charging_carId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="CarEvents" EntitySet="CarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Charging_chargingid" Association="Self.fk_Charging_chargingid">
+            <End Role="CarEvents" EntitySet="CarEvents" />
+            <End Role="LogBook" EntitySet="LogBook" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cars_modelId" Association="Self.fk_Cars_modelId">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Modifications_modelId" Association="Self.fk_Modifications_modelId">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="CarModifications" EntitySet="CarModifications" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cars_modificationId" Association="Self.fk_Cars_modificationId">
+            <End Role="CarModifications" EntitySet="CarModifications" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cars_userId" Association="Self.fk_Cars_userId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LogBook_carId" Association="Self.fk_LogBook_carId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="LogBook" EntitySet="LogBook" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_categoryId" Association="Self.fk_Placemarks_categoryId">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CategoryLog_categoryid" Association="Self.fk_CategoryLog_categoryid">
+            <End Role="CategoryLog" EntitySet="CategoryLog" />
+            <End Role="LogBook" EntitySet="LogBook" />
+          </AssociationSet>
+          <AssociationSet Name="fk_FuelCategories_countryId" Association="Self.fk_FuelCategories_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="FuelCategories" EntitySet="FuelCategories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_countryId" Association="Self.fk_Placemarks_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Regions_countryId" Association="Self.fk_Regions_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Regions" EntitySet="Regions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Vendors_countryId" Association="Self.fk_Vendors_countryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Vendors" EntitySet="Vendors" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Prices_fuelId" Association="Self.fk_Prices_fuelId">
+            <End Role="FuelCategories" EntitySet="FuelCategories" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_placemarkid" Association="Self.fk_Placemarks_placemarkid">
+            <End Role="Placemarks" EntitySet="Placemarks" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_regionId" Association="Self.fk_Placemarks_regionId">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Placemarks_vendorId" Association="Self.fk_Placemarks_vendorId">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Placemarks" EntitySet="Placemarks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Prices_vendorId" Association="Self.fk_Prices_vendorId">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Regions_regionId" Association="Self.fk_Regions_regionId">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="Users_fk_Region" Association="Self.Users_fk_Region">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="VendorAliases_fk_Vendors" Association="Self.VendorAliases_fk_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="VendorAliases" EntitySet="VendorAliases" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="gb_carmateModelStoreContainer" CdmEntityContainer="CarMateEntities">
+          <EntitySetMapping Name="Aliases">
+            <EntityTypeMapping TypeName="gb_carmateModel.Aliases">
+              <MappingFragment StoreEntitySet="Aliases">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarBrands">
+            <EntityTypeMapping TypeName="gb_carmateModel.CarBrands">
+              <MappingFragment StoreEntitySet="CarBrands">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="carTypeId" ColumnName="carTypeId" />
+                <ScalarProperty Name="brand" ColumnName="brand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarDetails">
+            <EntityTypeMapping TypeName="gb_carmateModel.CarDetails">
+              <MappingFragment StoreEntitySet="CarDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="CarNodeId" ColumnName="CarNodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarEvents">
+            <EntityTypeMapping TypeName="gb_carmateModel.CarEvents">
+              <MappingFragment StoreEntitySet="CarEvents">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+                <ScalarProperty Name="FuelCategoryId" ColumnName="FuelCategoryId" />
+                <ScalarProperty Name="Odometer" ColumnName="Odometer" />
+                <ScalarProperty Name="CostTotal" ColumnName="CostTotal" />
+                <ScalarProperty Name="DateEvent" ColumnName="DateEvent" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FuelCount" ColumnName="FuelCount" />
+                <ScalarProperty Name="PricePerLitr" ColumnName="PricePerLitr" />
+                <ScalarProperty Name="Latitute" ColumnName="Latitute" />
+                <ScalarProperty Name="Longitute" ColumnName="Longitute" />
+                <ScalarProperty Name="IsFullTank" ColumnName="IsFullTank" />
+                <ScalarProperty Name="IsMissedFilling" ColumnName="IsMissedFilling" />
+                <ScalarProperty Name="NameEvent" ColumnName="NameEvent" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarModels">
+            <EntityTypeMapping TypeName="gb_carmateModel.CarModels">
+              <MappingFragment StoreEntitySet="CarModels">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="brandId" ColumnName="brandId" />
+                <ScalarProperty Name="model" ColumnName="model" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarModifications">
+            <EntityTypeMapping TypeName="gb_carmateModel.CarModifications">
+              <MappingFragment StoreEntitySet="CarModifications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="modelId" ColumnName="modelId" />
+                <ScalarProperty Name="modification" ColumnName="modification" />
+                <ScalarProperty Name="horsePower" ColumnName="horsePower" />
+                <ScalarProperty Name="yearBegin" ColumnName="yearBegin" />
+                <ScalarProperty Name="yearEnd" ColumnName="yearEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarNode">
+            <EntityTypeMapping TypeName="gb_carmateModel.CarNode">
+              <MappingFragment StoreEntitySet="CarNode">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="gb_carmateModel.Cars">
+              <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="ModificationId" ColumnName="ModificationId" />
+                <ScalarProperty Name="Odometer" ColumnName="Odometer" />
+                <ScalarProperty Name="Tank" ColumnName="Tank" />
+                <ScalarProperty Name="Consumption" ColumnName="Consumption" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+                <ScalarProperty Name="DateBuy" ColumnName="DateBuy" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarTypes">
+            <EntityTypeMapping TypeName="gb_carmateModel.CarTypes">
+              <MappingFragment StoreEntitySet="CarTypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="carType" ColumnName="carType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="gb_carmateModel.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryLog">
+            <EntityTypeMapping TypeName="gb_carmateModel.CategoryLog">
+              <MappingFragment StoreEntitySet="CategoryLog">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="category" ColumnName="category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="gb_carmateModel.Countries">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="gb_carmateModel.EventTypes">
+              <MappingFragment StoreEntitySet="EventTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FuelCategories">
+            <EntityTypeMapping TypeName="gb_carmateModel.FuelCategories">
+              <MappingFragment StoreEntitySet="FuelCategories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="countryId" ColumnName="countryId" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogBook">
+            <EntityTypeMapping TypeName="gb_carmateModel.LogBook">
+              <MappingFragment StoreEntitySet="LogBook">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+                <ScalarProperty Name="chargingid" ColumnName="chargingid" />
+                <ScalarProperty Name="carId" ColumnName="carId" />
+                <ScalarProperty Name="total_cost" ColumnName="total_cost" />
+                <ScalarProperty Name="dateCharging" ColumnName="dateCharging" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Placemarks">
+            <EntityTypeMapping TypeName="gb_carmateModel.Placemarks">
+              <MappingFragment StoreEntitySet="Placemarks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="countryId" ColumnName="countryId" />
+                <ScalarProperty Name="regionId" ColumnName="regionId" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="vendorId" ColumnName="vendorId" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prices">
+            <EntityTypeMapping TypeName="gb_carmateModel.Prices">
+              <MappingFragment StoreEntitySet="Prices">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="placemarkid" ColumnName="placemarkid" />
+                <ScalarProperty Name="vendorId" ColumnName="vendorId" />
+                <ScalarProperty Name="regionId" ColumnName="regionId" />
+                <ScalarProperty Name="fuelId" ColumnName="fuelId" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="userPrice" ColumnName="userPrice" />
+                <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="gb_carmateModel.Regions">
+              <MappingFragment StoreEntitySet="Regions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="countryId" ColumnName="countryId" />
+                <ScalarProperty Name="region" ColumnName="region" />
+                <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="gb_carmateModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+                <ScalarProperty Name="DateRegister" ColumnName="DateRegister" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorAliases">
+            <EntityTypeMapping TypeName="gb_carmateModel.VendorAliases">
+              <MappingFragment StoreEntitySet="VendorAliases">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="AliasId" ColumnName="AliasId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="gb_carmateModel.Vendors">
+              <MappingFragment StoreEntitySet="Vendors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="countryId" ColumnName="countryId" />
+                <ScalarProperty Name="vendor" ColumnName="vendor" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

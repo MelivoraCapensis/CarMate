@@ -1,0 +1,45 @@
+﻿@helper CurrentItem(string controller, string action)
+{
+    if (controller != ViewContext.RouteData.Values["controller"].ToString() || action != ViewContext.RouteData.Values["action"].ToString())
+    {
+        return;
+    }
+    @:class="active"
+}
+
+@if (Request.IsAuthenticated){
+    <text>
+        @*Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!*@
+        <li>
+            Hello, @User.Identity.Name
+        </li>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
+            {
+                @Html.AntiForgeryToken()
+                @*<a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>*@
+                @*@Html.ActionLink("Dashboard", "Dashboard", "Map")*@
+                <li>
+                    @Html.ActionLink("Мой гараж", "Garage", "User", routeValues: null, htmlAttributes: new {@class = "btn btn-light"})
+                </li>
+                <li>
+                    @Html.ActionLink("Настройки", "Manage", "Account", routeValues: null, htmlAttributes: new {@class = "btn btn-light"})
+                </li>
+                <li>
+                    @Html.ActionLink("Карта", "GetMap", "Map", htmlAttributes: new { @class = "btn btn-light" })
+                </li>
+                <li>
+                    <input type="submit" value="Выйти" class="btn" />
+                </li>
+            }
+    </text>
+     //@Html.Partial("_DashboardPartial")
+}
+else
+{
+    <ul>
+        @*<li> @Html.ActionLink("Dashboard", "Dashboard","Map")</li>*@
+        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-light" })</li>
+        <li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-light" })</li>
+        
+    </ul>
+}

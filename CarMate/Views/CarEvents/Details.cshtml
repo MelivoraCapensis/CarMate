@@ -1,0 +1,122 @@
+﻿@model CarMate.CarEvents
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<div class="container">
+<fieldset>
+    <legend>CarEvents</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Cars.ImgPath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Cars.ImgPath)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EventTypes.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EventTypes.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FuelCategories.category)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FuelCategories.category)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Odometer)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Odometer)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CostTotal)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CostTotal)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateEvent)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateEvent)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FuelCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FuelCount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PricePerLitr)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PricePerLitr)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Latitute)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Latitute)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Longitute)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Longitute)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsFullTank)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsFullTank)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsMissedFilling)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsMissedFilling)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Comment)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Comment)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateCreate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateCreate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.State)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.State)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+</div>
+<!-- /class container -->

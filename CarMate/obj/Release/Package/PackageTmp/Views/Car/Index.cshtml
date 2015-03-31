@@ -1,0 +1,145 @@
+﻿@model IEnumerable<CarMate.Cars>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<div class="container">
+  
+        <h2>Транспортные средства:</h2>
+
+        @foreach (var car in @Model)
+        {
+            var border = "thumbnail";
+            if (ViewBag.Owner != null && ViewBag.Owner == @car.UserId)
+            {
+                border = "thumbnail alert alert-success";
+            }
+
+            <div class="row">
+                <ul class="media-list col-lg-6 col-md-6">
+                    <li class="media">
+                        <div class="@border">
+                            <div class="@border media-left media-middle">
+                                <img alt="Avatar" src="@car.ImgPath" style="width: 150px; height: 150px" />
+                            </div>
+                            @*</div>*@
+                            <div class="media-body">
+                                <h5 class="media-heading">Владелец: @Html.ActionLink(@car.Users.Nickname, "Details", "User", new { id = car.UserId }, null)</h5>
+                                <p>Марка: @car.CarModels.CarBrands.brand</p>
+                                <p>Модель: @car.CarModels.model</p>
+                                <p>
+                                    Модификация:
+                                    @if (@car.ModificationId != null)
+                                    {
+                                        @car.CarModifications.modification
+                                    }
+                                </p>
+                                @Html.ActionLink("Подробно", "Details", "Car", new { id = car.Id }, null)
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        }
+
+
+</div>
+<!-- /class container -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users.firstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarModels.model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarModifications.modification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.odometer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tank)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.consumption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.state)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.firstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarModels.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarModifications.modification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.odometer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tank)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.consumption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

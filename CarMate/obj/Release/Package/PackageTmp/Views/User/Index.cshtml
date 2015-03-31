@@ -1,0 +1,113 @@
+﻿@model IEnumerable<CarMate.Users>
+
+@{
+    ViewBag.Title = "Пользователи";
+    }
+@*<meta name="viewport" content="width=device-width" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="~/Content/stylish-portfolio.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!-- Custom Fonts -->
+<link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">*@
+
+<div class="container">
+
+        <h2>Пользователи</h2>
+
+        <div class="row"> <!-- users wrapper row -->
+            <div class="col-lg-12"> <!-- users wrapper col -->
+                <div class="row"><!-- ul wrapper row -->
+                    <ul class="media-list col-lg-6 col-md-6">
+                    @foreach (var user in @Model)
+                    {
+                        var border = "thumbnail";
+                        if (ViewBag.Owner != null && ViewBag.Owner == @user.Id)
+                        {
+                            border = "thumbnail alert alert-success";
+                        }
+                        
+                        <li class="media">
+                           @* <div class="row"> <!-- li inner row -->
+                                <div class="col-lg-6"> <!-- li inner col -->*@
+                            <div class="container-fluid">
+                            <div class="row @border">
+                                <div class="col-xs-4 media-left media-middle">
+                                    <img alt="Avatar" src="@user.ImgPath" class="img-thumbnail"/>
+                                </div>
+                                @*</div>*@
+                                <div class="col-xs-8">
+                                    <h4 class="media-heading">@Html.ActionLink(@user.Nickname, "Details", new { id = user.Id })</h4>
+
+                                    @*<p>Страна: @user.ccountry, Область: , Город: @user.city</p>*@
+                                    <p>Дата регистрации: @user.DateRegister.ToString("dd.MM.yyyy")</p>
+                                    @{
+                                        int day = (DateTime.Now - @user.DateRegister.AddDays(-1)).Days;
+                                    }
+                                    <p>Дней с сайтом: @day</p>
+                                    <div>
+                                        Гараж:
+                                        @if (user.Cars.Any())
+                                        {
+                                            var cars = user.Cars.ToList();
+                                            for (int i = 0; i < cars.Count; i++)
+                                            {
+                                                var car = cars[i];
+                                                @Html.ActionLink(car.CarModels.CarBrands.brand + " - " + car.CarModels.model, "Details", "Car", new { id = car.Id }, null)
+                                                @*@car.Charging.Count*@
+                                                if (i < cars.Count - 1)
+                                                {
+                                                    @:,
+                                            }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @: Пусто
+                                    }
+                                    </div>
+
+
+                                    @if (ViewBag.Owner != null && ViewBag.Owner != @user.Id)
+                                    {
+                                        @Html.ActionLink("Отправить сообщение", "SendMessage", "User", new { id = @user.Id }, new { @class = "btn btn-info" })
+                                    }
+                                     </div>
+                                </div> <!-- End li row-->
+                            </div> <!-- End li container-->
+                            @*     </div> <!--End li inner col -->
+                            </div> <!--End li inner row -->*@
+                        </li>
+                     
+                    }
+            </ul>
+         </div><!-- ul wrapper row -->
+       </div> <!--End users wrapper col -->
+     </div> <!--End users wrapper row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+@*<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="~/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="~/bower_components/raphael/raphael-min.js"></script>
+<script src="~/bower_components/morrisjs/morris.min.js"></script>
+<script src="~/js/morris-data.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="~/dist/js/sb-admin-2.js"></script>*@

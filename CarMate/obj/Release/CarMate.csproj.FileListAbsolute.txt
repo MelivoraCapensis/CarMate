@@ -1,0 +1,504 @@
+C:\Users\L K\Desktop\CarMate\CarMate\bin\CarMate.dll.config
+C:\Users\L K\Desktop\CarMate\CarMate\bin\CarMate.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\L K\Desktop\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Http.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Http.WebHost.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Net.Http.Formatting.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Http.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Http.WebHost.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.Http.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\L K\Desktop\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Desktop\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\CarMate.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\Алёна\Desktop\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\Алёна\Desktop\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\CarMate.dll.config
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\CarMate.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Http.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Http.WebHost.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Net.Http.Formatting.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Http.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Http.WebHost.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.Http.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\L K\Downloads\CarMate(1)\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\CarMate.dll.config
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\CarMate.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Http.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Http.WebHost.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Net.Http.Formatting.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Http.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Http.WebHost.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.Http.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\L K\Desktop\Новая папка\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\CarMate.dll.config
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\CarMate.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Http.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Http.WebHost.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Net.Http.Formatting.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Http.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Http.WebHost.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.Http.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\L K\Desktop\Новая папка (4)\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\CarMate.dll.config
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\CarMate.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Http.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Http.WebHost.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Net.Http.Formatting.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Http.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Http.WebHost.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.Http.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\L K\Desktop\CarMate Золотой байт\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\CarMate.dll.config
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\CarMate.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Http.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Http.WebHost.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Net.Http.Formatting.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Http.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Http.WebHost.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.Http.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\L K\Downloads\CarMate\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\CarMate.dll.config
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\CarMate.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\CarMate.pdb
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Antlr3.Runtime.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.Core.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\EntityFramework.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Newtonsoft.Json.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Helpers.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Http.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Http.WebHost.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Mvc.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Optimization.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Razor.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Deployment.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.WebPages.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Razor.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\WebGrease.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\WebMatrix.Data.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\WebMatrix.WebData.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\EntityFramework.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Newtonsoft.Json.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Net.Http.Formatting.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Helpers.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Http.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Http.WebHost.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Mvc.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Razor.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.WebPages.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Deployment.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\System.Web.WebPages.Razor.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\WebMatrix.Data.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\WebMatrix.WebData.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.Core.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\EntityFramework.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.Helpers.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.Http.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.Mvc.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.Optimization.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.Razor.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.WebPages.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.WebPages.Deployment.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\System.Web.WebPages.Razor.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\Microsoft.Web.WebPages.OAuth.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\obj\Release\CarMate.csprojResolveAssemblyReference.cache
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\obj\Release\CarMate.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\obj\Release\CarMate.pdb
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Facebook.dll
+C:\Users\L K\Desktop\CarMate\CarMate\CarMate\bin\Facebook.xml

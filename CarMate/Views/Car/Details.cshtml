@@ -1,0 +1,290 @@
+﻿@using CarMate
+@model CarMate.Cars
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+
+        <h2>Владелец: "@Model.Users.Nickname"</h2>
+
+        <p>
+
+            @*@Html.ActionLink("Back to List", "Index")*@
+
+            @*@{
+                    var r1 = new List<double> {130.3, 25, 150, 150, 150, 85, 0, 123.3, 91.2, 83.5, 106.6, 92.3};
+                    var r2 = new List<double> {48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2};
+                    var r3 = new List<double> {42.4, 33.2, 34.5, 39.7, 0, 0, 0, 60.4, 47.6, 0, 46.8, 0};
+                    var r4 = new List<double>();
+                    double summ = 0;
+                    double summR1 = 0;
+                    double summR2 = 0;
+                    double summR3 = 0;
+                    for (int i = 0; i < r1.Count; i++)
+                    {
+                        r4.Add(r1[i] + r2[i] + r3[i]);
+                        summ += r1[i] + r2[i] + r3[i];
+                        summR1 += r1[i];
+                        summR2 += r2[i];
+                        summR3 += r3[i];
+                    }
+                    int d = 231;
+                }*@
+        </p>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-3 thumbnail">
+                <div class="text-center">
+                    <img src="@Model.ImgPath" class="col-lg-12" />
+                    @*<img src="" class="col-lg-12" />*@
+                    @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+                    {
+                        @Html.ActionLink("Редактировать автомобиль", "Edit", "Car", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                    }
+                    @Html.ActionLink("Посмотреть все фото", "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                </div>
+                <hr />
+                <p>Марка: @Model.CarModels.CarBrands.brand</p>
+                <p>Модель: @Model.CarModels.model</p>
+                <p>Модификация: @Model.CarModifications.modification</p>
+                <p>Год выпуска: @*@Model.dateBuy</p>*@
+                <p>Расход бензина: @Model.Consumption л/100км</p>
+                <p>Одометр (пробег): @Model.Odometer км</p>
+                <p>Объем бака: @Model.Tank л</p>
+                <p>Топливо: @*@Model.dateBuy</p>*@
+                <p>Цвет: @*@Model.dateBuy</p>*@
+                <p>Дата покупки: @*@Model.dateBuy</p>*@
+                <p>Коробка: @*@Model.dateBuy</p>*@
+                <p>Комментарий/отзыв: @*@Model.dateBuy</p>*@
+                <p>Оценка пользователя: @*@Model.dateBuy</p>*@
+            </div>
+            <div class="col-lg-9 col-md-9">
+                <ul class="nav nav-pills">
+                    <li class="active">@Html.ActionLink("Все", "Test", "Test")</li>
+                    <li>@Html.ActionLink("События", "Index", "CarEvents", new {carId = Model.Id}, null)</li>
+                    <li>@Html.ActionLink("Расход топлива", "Test", "Test")</li>
+                    <li>@Html.ActionLink("Статистика затрат", "Test", "Test")</li>
+                    <li>@Html.ActionLink("Статистика персональная", "Test", "Test")</li>
+                    <li>@Html.ActionLink("Планы", "Test", "Test")</li>
+                </ul>
+            </div>
+            <div class="col-lg-9 col-md-9">
+                <div id="chart_price">
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-9 col-md-9">
+                <div id="chart_distance">
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-9 col-md-9" style="float: right;">
+                <div id="chart_test">
+                    <script>
+                        $('text:contains("Highcharts.com")').fadeOut(11);
+                    </script>
+                </div>
+            </div>
+
+        </div>
+
+
+</div> <!-- End General Container -->
+
+
+<!-- jQuery -->
+<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="~/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="~/bower_components/raphael/raphael-min.js"></script>
+<script src="~/bower_components/morrisjs/morris.min.js"></script>
+<script src="~/js/morris-data.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="~/dist/js/sb-admin-2.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#chart_price').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 1, //null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Расходы на машину за 2014 год'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    type: 'pie',
+                    name: 'Доля расходов',
+                    data: [
+                        ['Бензин', 56.47],
+                        ['Стоянки', 29.03],
+                        ['Мойка', 14.50]
+                    ]
+                }
+            ]
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#chart_distance').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Затраты за  2014 год'
+            },
+            xAxis: {
+                categories: [
+                    'Январь',
+                    'Февраль',
+                    'Март',
+                    'Апрель',
+                    'Май',
+                    'Июнь',
+                    'Июль',
+                    'Август',
+                    'Сентябрь',
+                    'Октябрь',
+                    'Ноябрь',
+                    'Декабрь'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Деньги (грн)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} грн</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {
+                    name: 'Всего',
+                    data: [
+                        221.6, 97.0, 223.8, 231.1, 197.0, 133.3, 59.0, 243.3, 191.2, 148.7, 212.7, 143.5
+                    ]
+
+                }, {
+                    name: 'Заправка',
+                    data: [
+                        130.3, 25.0, 150.0, 150.0, 150.0, 85.0, 0.0, 123.3, 91.2, 83.5, 106.6, 92.3
+                    ]
+
+                }, {
+                    name: 'Стоянка',
+                    data: [
+                        48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2
+                    ]
+
+                }, {
+                    name: 'Мойка',
+                    data: [
+                        42.4, 33.2, 34.5, 39.7, 0, 0, 0, 60.4, 47.6, 0, 46.8, 0
+                    ]
+
+                }
+            ]
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#chart_test').highcharts({
+            title: {
+                text: 'Пробез за месяц',
+                x: -20 //center
+            },
+            //subtitle: {
+            //    text: 'Source: WorldClimate.com',
+            //    x: -20
+            //},
+            xAxis: {
+                categories: [
+                    'Янв',
+                    'Фев',
+                    'Мар',
+                    'Апр',
+                    'Май',
+                    'Июн',
+                    'Июл',
+                    'Авг',
+                    'Сен',
+                    'Окт',
+                    'Ноя',
+                    'Дек'
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: 'Расстояние (км)'
+                },
+                plotLines: [
+                    {
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }
+                ]
+            },
+            tooltip: {
+                valueSuffix: 'км'
+            },
+            //legend: {
+            //    layout: 'vertical',
+            //    align: 'right',
+            //    verticalAlign: 'middle',
+            //    borderWidth: 0
+            //},
+            series: [
+                {
+                    name: '@Model.CarModels.model',
+                    data: [34.0, 16.9, 19.5, 28.5, 18.2, 21.5, 0.0, 26.5, 23.3, 18.3, 13.9, 9.6]
+                }
+            ]
+        });
+    });
+
+
+</script>
