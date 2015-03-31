@@ -90,13 +90,13 @@
                                             data_toggle="modal",
                                             data_target="#SendMessage"
                                         })*@
-                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#SendMessage">
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="SendMessage_@user.Nickname">
                                                 Отправить сообщение
                                             </button>
 
                                             <div>
                                                 <!-- Модальное окно -->
-                                                <div class="modal fade" id="SendMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="SendMessage_@user.Nickname" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
