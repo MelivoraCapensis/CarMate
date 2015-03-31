@@ -83,100 +83,11 @@
 
                                         @if (ViewBag.Owner != null && ViewBag.Owner != @user.Id)
                                         {
-                                        @*@Html.ActionLink("Отправить сообщение", "SendMessage", "User", new { id = @user.Id }, new
-                                        {
-                                            @class = "btn btn-info",
-                                            type="button",
-                                            data_toggle="modal",
-                                            data_target="#SendMessage"
-                                        })*@
-                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="SendMessage_@user.Nickname">
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#SendMessage_@user.Nickname">
                                                 Отправить сообщение
                                             </button>
 
-                                            <div>
-                                                <!-- Модальное окно -->
-                                                <div class="modal fade" id="SendMessage_@user.Nickname" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                <h4 class="modal-title" id="myModalLabel">Отправить сообщение "@user.Nickname"</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                @using (Html.BeginForm("SendMessage", "User", FormMethod.Post, new {@class = "form-horizontal"}))
-                                                                {
-                                                                    @Html.Hidden("HotelId", @user.Id)
-
-                                                                    <div class="form-group">
-                                                                        <label class="control-label col-md-3" for="Тема сообщения">Тема</label>
-                                                                        <div class="col-sm-9">
-                                                                            @Html.Editor("Тема сообщения", new {htmlAttributes = new {@class = "form-control"}})
-                                                                            @Html.ValidationMessage("ClientName", "", new {@class = "text-danger"})
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group">
-                                                                        <label class="control-label col-md-3" for="Сообщение">Сообщение</label>
-                                                                        <div class="col-sm-9">
-                                                                            @Html.TextArea("Емейл", htmlAttributes: new {@class = "form-control"})
-                                                                            @Html.ValidationMessage("ClientEmail", "", new {@class = "text-danger"})
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-
-                                                                        <input style="float: right;" type="submit" value="Отправить сообщение" class="btn btn-success"/>
-                                                                    </div>
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                            @Html.Partial("_PartSendMessage", user)
                                         }
                                     </div>
                                 </div> <!-- End li row-->
@@ -192,15 +103,3 @@
     </div> <!--End users wrapper row -->
 </div>
     <!-- /#page-wrapper -->
-
-@*<script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Metis Menu Plugin JavaScript -->
-<script src="~/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-<!-- Morris Charts JavaScript -->
-<script src="~/bower_components/raphael/raphael-min.js"></script>
-<script src="~/bower_components/morrisjs/morris.min.js"></script>
-<script src="~/js/morris-data.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="~/dist/js/sb-admin-2.js"></script>*@

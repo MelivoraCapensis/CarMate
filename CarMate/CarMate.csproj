@@ -1165,6 +1165,8 @@
     </Content>
     <None Include="Properties\PublishProfiles\AJleksei.pubxml" />
     <None Include="Properties\PublishProfiles\AlSh.pubxml" />
+    <None Include="Properties\PublishProfiles\Car-Mate - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\Car-Mate - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\dgfdg.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="img\bg.jpg" />
@@ -1407,6 +1409,9 @@
     <Content Include="Views\Shared\_CountriesPartial.cshtml" />
     <Content Include="Views\Car\_PartCarModel.cshtml" />
     <Content Include="Views\Car\_PartCarModification.cshtml" />
+    <Content Include="Views\Shared\_PartSendMessage.cshtml" />
+    <Content Include="Views\Shared\_PartLogin.cshtml" />
+    <Content Include="Views\Shared\_PartRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

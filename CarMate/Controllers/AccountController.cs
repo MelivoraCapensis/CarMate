@@ -34,11 +34,22 @@ namespace CarMate.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                //return RedirectToLocal(returnUrl);
+                //return View(model);
+                using (CarMateEntities db = new CarMateEntities())
+                {
+                    var userId = db.Users
+                    .Where(x => x.Nickname.Equals(model.UserName))
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+
+                    return RedirectToAction("Details", "User", new { id = userId });
+                }
+                
             }
 
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
@@ -405,6 +416,18 @@ namespace CarMate.Controllers
             }
             else
             {
+                if (HttpContext.User.Identity.IsAuthenticated)
+                {
+                    using (CarMateEntities db = new CarMateEntities())
+                    {
+                        var userId = db.Users
+                        .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+                        .Select(x => x.Id)
+                        .FirstOrDefault();
+
+                        return RedirectToAction("Details", "User", new { id = userId });
+                    }
+                }
                 return RedirectToAction("Index", "Home");
             }
         }
