@@ -1,10 +1,10 @@
 ﻿@model CarMate.CarEvents
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создание события";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 <div class="container">
 @using (Html.BeginForm())
 {
@@ -17,7 +17,12 @@
         <div class="form-group col-md-12">
             @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-2">
-                @Html.TextBoxFor(events => events.DateEvent, htmlAttributes: new { @class = "form-control", @Value = Model.DateEvent.ToString("dd.MM.yyyy"), data_provide = "datepicker"})
+                 @Html.TextBoxFor(model => model.DateEvent, htmlAttributes: new
+                    {
+                        @class = "form-control",
+                        data_provide = "datepicker",
+                        @Value = Model.DateEvent.ToString("d")
+                    })
                 @Html.ValidationMessageFor(model => model.DateEvent, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -46,24 +51,23 @@
             </div>
         </div>
 
-        @using (Ajax.BeginForm("TypeSearch", new AjaxOptions { UpdateTargetId = "results" }))
-        {
-            <div class="form-group">
-                @Html.LabelFor(events => events.EventTypeId, "Событие", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-2">
-                    @Html.DropDownList("EventTypeId", null, htmlAttributes: new { @class = "form-control", onchange = "AdditionalsChanged(this)" })
-                    @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(events => events.EventTypeId, "Событие", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DropDownList("EventTypeId", null, htmlAttributes: new { @class = "form-control", onchange = "CarEventsChanged(this)" })
+                @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
             </div>
-        }
+        </div>
 
-
+        <div class="form-group col-md-12" id="car_event">
+            @Html.Action("GetEvent")
+        </div>
         
 
 
 
-        @Html.Partial("_PartEventFilling")
-        @Html.Partial("_PartEventOther")
+@*        @Html.Partial("_PartEventFilling")
+        @Html.Partial("_PartEventOther")*@
 
 
 
@@ -89,3 +93,17 @@
 
 </div>
 <!-- /class container -->
+
+<script type="text/javascript">
+    @* При изенении марки автомобиля подружаем модели *@
+    function CarEventsChanged(id) {
+        var name = id.text;
+        $("#car_event").load('@(Url.Action("GetEvent","CarEvents"))', { "name": "Заправка" });
+    }
+</script>
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Script/bootstrap-datepicker")
+}

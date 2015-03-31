@@ -162,16 +162,28 @@ namespace CarMate.Controllers
             ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
         }
 
-        public ActionResult TypeSearch(int id)
+        public PartialViewResult GetEvent(string name = "")
         {
             //List<Book> books = db.Books.Where(a => a.Author.Contains(name)).ToList<Book>();
             //if (type.Equals("Заправка"))
-            InitViewBag(new CarEvents());
-            if(id == 2)
+            if(name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
                 return PartialView("_PartEventFilling");
-            else
+
                 return PartialView("_PartEventOther");
-            
         }
+
+        //public PartialViewResult GetModifications(int modelId = 0)
+        //{
+        //    ViewBag.ModificationId = new SelectList(
+        //        db.CarModifications.Where(x => x.modelId == modelId)
+        //            .Select(x => new { modificationId = x.id, x.modification })
+        //            .OrderBy(x => x.modification)
+        //            .ToList(),
+        //        "ModificationId",
+        //        "Modification"
+        //        );
+
+        //    return PartialView("_PartCarModification");
+        //}
     }
 }

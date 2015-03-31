@@ -42,17 +42,19 @@ else
         @*<li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-light" })</li>*@
 
         <li>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Register">
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Register">
                 Регистрация
             </button>
         </li>
-        @*@Html.Partial("_PartRegister")*@
+        
 
         <li>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Login">
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Login">
                 Войти
             </button>
         </li>
-        @*@Html.Partial("_PartLogin")*@
+
+        @Html.Partial("_PartRegister", new CarMate.Models.RegisterModel())
+        @Html.Partial("_PartLogin", new CarMate.Models.LoginModel())
     </ul>
 }

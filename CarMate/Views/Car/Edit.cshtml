@@ -28,7 +28,7 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.CarModels.brandId, "Марка", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-3">
-                    @Html.DropDownList("brandId", null, htmlAttributes: new {@class = "form-control", onchange = "GetModels(this)"}, optionLabel: "-выберите марку-")
+                    @Html.DropDownList("brandId", null, htmlAttributes: new {@class = "form-control", onchange = "GetModels(this)", onload = "GetModels(this)"}, optionLabel: "-выберите марку-")
                     @Html.ValidationMessageFor(model => model.CarModels.brandId, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -37,26 +37,9 @@
                 @Html.Action("GetModels")
             </div>
 
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.ModelId, "Модель", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.DropDownList("modelId", null, htmlAttributes: new {@class = "form-control"}, optionLabel: String.Empty)
-                    @Html.ValidationMessageFor(model => model.ModelId, "", new {@class = "text-danger"})
-                </div>
-            </div>*@
-
-
             <div class="form-group col-md-12" id="car_modification">
                 @Html.Action("GetModifications")
             </div>
-
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.ModificationId, "Модификация", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.DropDownList("modificationId", null, htmlAttributes: new {@class = "form-control"}, optionLabel: String.Empty)
-                    @Html.ValidationMessageFor(model => model.ModificationId, "", new {@class = "text-danger"})
-                </div>
-            </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Consumption, "Расход топлива", htmlAttributes: new {@class = "control-label col-md-2"})
