@@ -233,6 +233,7 @@
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Countries.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
@@ -261,6 +262,7 @@
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\RegionModel.cs" />
     <Compile Include="Models\Squirrel.cs" />
+    <Compile Include="Models\VendorModel.cs" />
     <Compile Include="Placemarks.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>

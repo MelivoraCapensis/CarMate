@@ -43,9 +43,9 @@ namespace CarMate.Controllers
             return (angle * RADIO) * 0.62137;//distance in miles
         }
         //запрос к API геокодирования 
-        public string GetforrmatedAdress(double lat,double lng)
+        public string GetforrmatedAdress(double lat, double lng)
         {
-            
+
             string url = string.Format(
                 "http://maps.googleapis.com/maps/api/geocode/xml?latlng={0},{1}&sensor=true_or_false&language=ru",
                 lat.ToString().Replace(",", "."), lng.ToString().Replace(",", "."));
@@ -76,7 +76,7 @@ namespace CarMate.Controllers
                 region = xmldoc.GetElementsByTagName("short_name")[2].ChildNodes[0].InnerText;
 
             }
-            return formatted_address;             
+            return formatted_address;
         }
 
         private IPlacemarksRepository placemarksRepository;
@@ -105,7 +105,7 @@ namespace CarMate.Controllers
         //
         // GET: /Map/Details/5
 
-       
+
         public ActionResult GetMap()
         {
             List<SelectListItem> ddlcat = new List<SelectListItem>();
@@ -118,16 +118,16 @@ namespace CarMate.Controllers
                 });
             }
             List<SelectListItem> ddlrad = new List<SelectListItem>();
+            ddlrad.Add(new SelectListItem() { Text = "1.0км", Value = "1,0" });
             ddlrad.Add(new SelectListItem() { Text = "10км", Value = "10" });
             ddlrad.Add(new SelectListItem() { Text = "2км", Value = "2" });
             ddlrad.Add(new SelectListItem() { Text = "1.5км", Value = "1,5" });
-            ddlrad.Add(new SelectListItem() { Text = "1.0км", Value = "1,0" });          
             ddlrad.Add(new SelectListItem() { Text = "0.8км", Value = "0,8" });
             ddlrad.Add(new SelectListItem() { Text = "0.5км", Value = "0,5" });
             ddlrad.Add(new SelectListItem() { Text = "0.4км", Value = "0,4" });
             ddlrad.Add(new SelectListItem() { Text = "0.2км", Value = "0,2" });
-          
-           
+
+
             CountryModel model = new CountryModel();
             using (CarMateEntities context = new CarMateEntities())
             {
@@ -137,11 +137,11 @@ namespace CarMate.Controllers
                     {
                         Text = x.country,
                         Value = x.id.ToString(),
-                        Selected=true
+                        Selected = true
                     });
             }
 
-          
+
             Squirrel s = new Squirrel();
             s.PoinCat = ddlcat;
             s.SeelctedCat = 1;
@@ -150,11 +150,11 @@ namespace CarMate.Controllers
             s.CountriesModel = model;
             return View(s);
         }
-        
+
         [HttpPost]
         public JsonResult PostSquirrel(Squirrel poi)
         {
-            List<Squirrel> markers = new List<Squirrel>();          
+            List<Squirrel> markers = new List<Squirrel>();
             int categoryId;
             Int32.TryParse(poi.Category, out categoryId);
             double radius;
@@ -162,38 +162,37 @@ namespace CarMate.Controllers
             var placemarks = from p in placemarksRepository.GetPlacemarks()
                              select p;
             placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
-            if (poi.Lat != null && poi.Long!=null)
+            if (poi.Lat != null && poi.Long != null)
             {
                 double latitude;
                 Double.TryParse(poi.Lat.Replace(".", ","), out latitude);
                 double longitude;
                 Double.TryParse(poi.Long.Replace(".", ","), out longitude);
-                foreach(var p in placemarks)
+                foreach (var p in placemarks)
                 {
                     if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
                     {
-                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
+                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
                         List<string> pricesSquirrel = new List<string>();
-                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
+                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
                         foreach (var v in prices)
                         {
                             pricesSquirrel.Add(v.ToString());
-                        }                     
+                        }
                         formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
                         markers.Add(new Squirrel()
                         {
                             Lat = p.latitude.ToString(),
                             Long = p.longitude.ToString(),
                             Vendore = p.description,
-                            Adress=formatted_address,
-                            Prices = pricesSquirrel.ToArray(),
-                            FuelCategories = fuelcatsSquirrel.ToArray()
+                            Adress = formatted_address,
+                            Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
+                            FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям 
                         });
                     }
-
-                }   
+                }
             }
-            else 
+            else
             {
                 int countryId;
                 Int32.TryParse(poi.Country, out countryId);
@@ -233,7 +232,7 @@ namespace CarMate.Controllers
                         List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
                         List<string> pricesSquirrel = new List<string>();
                         List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
-                        foreach(var v in prices)
+                        foreach (var v in prices)
                         {
                             pricesSquirrel.Add(v.ToString());
                         }
@@ -245,24 +244,25 @@ namespace CarMate.Controllers
                             Vendore = p.description,
                             Adress = formatted_address,
                             Prices = pricesSquirrel.ToArray(),
-                            FuelCategories=fuelcatsSquirrel.ToArray()
+                            FuelCategories = fuelcatsSquirrel.ToArray()
                         });
                     }
-                }            
-            }            
+                }
+            }
             return Json(markers, JsonRequestBehavior.AllowGet);
         }
-       //выбор точек по маршруту
+        //выбор точек по маршруту
         [HttpPost]
         public JsonResult PostlstSquirrel(List<Squirrel> incominglstSquirrel)
         {
+
             #region получаем категорию и радиус
             Squirrel item = incominglstSquirrel[0];
             int categoryId;
             Int32.TryParse(item.Category, out categoryId);
             double radius;
             Double.TryParse(item.Radius, out radius);
-            #endregion 
+            #endregion
 
             // выбор из базы данных пои точек по категории и отбор по радиусу
 
@@ -270,8 +270,8 @@ namespace CarMate.Controllers
                              select p;
             placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
             List<Squirrel> markers = new List<Squirrel>();//список маркеров по путевым точкам
-           
-            foreach (var poisqurrel in incominglstSquirrel) 
+
+            foreach (var poisqurrel in incominglstSquirrel)
             {
                 double latitude;
                 Double.TryParse(poisqurrel.Lat.Replace(".", ","), out latitude);
@@ -279,10 +279,10 @@ namespace CarMate.Controllers
                 Double.TryParse(poisqurrel.Long.Replace(".", ","), out longitude);
                 foreach (var p in placemarks)
                 {
-                   
+
                     if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
                     {
-                       
+
                         List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
                         List<string> pricesSquirrel = new List<string>();
                         List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
@@ -300,7 +300,7 @@ namespace CarMate.Controllers
                             Prices = pricesSquirrel.ToArray(),
                             FuelCategories = fuelcatsSquirrel.ToArray()
                         };
-                        if(!markers.Contains(temp))                        
+                        if (!markers.Contains(temp))
                             markers.Add(temp);
                     }
 
