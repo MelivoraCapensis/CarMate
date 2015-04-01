@@ -51,8 +51,8 @@ namespace CarMate.Controllers
                 CarId = carId,
                 DateEvent = DateTime.Today
             };
-            InitViewBag(carEvents);
-
+            //InitViewBag(carEvents);
+            ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", 1);
             return View(carEvents);
         }
 
@@ -159,17 +159,24 @@ namespace CarMate.Controllers
         private void InitViewBag(CarEvents carEvents)
         {
             ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
-            ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
+            //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
         }
 
         public PartialViewResult GetEvent(string name = "")
         {
-            //List<Book> books = db.Books.Where(a => a.Author.Contains(name)).ToList<Book>();
-            //if (type.Equals("Заправка"))
-            if(name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
+            if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
+            {
+                ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 return PartialView("_PartEventFilling");
+            }
+            if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
+            {
+                //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+                return PartialView("_PartEventRepair");
+            }
 
-                return PartialView("_PartEventOther");
+            
+            return PartialView("_PartEventOther");
         }
 
         //public PartialViewResult GetModifications(int modelId = 0)

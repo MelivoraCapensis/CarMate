@@ -6,14 +6,14 @@
 
 <div class="container">
 
-    <h2>
+    <h4>
         Редактирование транспортного средства "@Model.CarModels.CarBrands.brand - @Model.CarModels.model -
         @if (@Model.ModificationId != null)
         {
             @: @Model.CarModifications.modification
         }
         "
-    </h2>
+    </h4>
 
 
     @using (Html.BeginForm())
@@ -25,7 +25,7 @@
         @Html.HiddenFor(model => model.UserId)
 
         <div class="form-horizontal">
-            <div class="form-group col-md-12">
+            <div class="form-group">
                 @Html.LabelFor(model => model.CarModels.brandId, "Марка", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-3">
                     @Html.DropDownList("brandId", null, htmlAttributes: new {@class = "form-control", onchange = "GetModels(this)"}, optionLabel: "-выберите марку-")
@@ -33,30 +33,13 @@
                 </div>
             </div>
 
-            <div class="form-group col-md-12" id="car_model">
+            <div class="form-group" id="car_model">
                 @Html.Action("GetModels")
             </div>
 
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.ModelId, "Модель", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.DropDownList("modelId", null, htmlAttributes: new {@class = "form-control"}, optionLabel: String.Empty)
-                    @Html.ValidationMessageFor(model => model.ModelId, "", new {@class = "text-danger"})
-                </div>
-            </div>*@
-
-
-            <div class="form-group col-md-12" id="car_modification">
+            <div class="form-group" id="car_modification">
                 @Html.Action("GetModifications")
             </div>
-
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.ModificationId, "Модификация", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.DropDownList("modificationId", null, htmlAttributes: new {@class = "form-control"}, optionLabel: String.Empty)
-                    @Html.ValidationMessageFor(model => model.ModificationId, "", new {@class = "text-danger"})
-                </div>
-            </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Consumption, "Расход топлива", htmlAttributes: new {@class = "control-label col-md-2"})
@@ -118,10 +101,44 @@
     }
 
 
-    @*$(document).ready(function() {
+     @*$(document).ready(function () {
+
         var brandId = getElementById("brandId").value;
-        $('#car_model').load('@(Url.Action("GetModels","Car"))', { "brandId": brandId });
+        $('#brandId').change('@(Url.Action("GetModels","Car"))', { "brandId": brandId });
     });*@
+
+    $(document).ready(function () {
+        var carBrandId = '@(Model.CarModels.CarBrands.id)';
+        var carModelId = '@(Model.CarModels.id)';
+        var carModificationId = '@(Model.CarModifications.id)';
+
+        
+        
+        //alert("carBrandId = " + carBrandId);
+        $('#brandId').trigger('change');    // Генерируем событие onchange для выпадающего списка с брендами автомобилей
+        
+        // Функция отрабатывает, через секунду
+        setTimeout(function () {
+            
+            $("#modelId option[value='" + carModelId + "']").attr("selected", "selected");  // Выбираем марку автомобиля с определенным Id
+            $('#modelId').trigger('change');    // Генерируем событие onchange для выпадающего списка с марками автомобилей 
+
+            // Функция отрабатывает, через секунду
+            setTimeout(function () {
+                $("#modificationId option[value='" + carModificationId + "']").attr("selected", "selected");    // Выбираем модификацию автомобиля с определенным Id
+            }, 1000);
+        }, 1000);
+        
+        
+        
+        
+        
+        
+
+        //$("#modelId option[value='" + title + "']").attr("selected", "selected");
+        //alert(title);
+
+    });
 </script>
 
 @section scripts {

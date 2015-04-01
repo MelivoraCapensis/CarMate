@@ -42,14 +42,14 @@ else
         @*<li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-light" })</li>*@
 
         <li>
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Register">
+            <button id="registerButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#register">
                 Регистрация
             </button>
         </li>
         
 
         <li>
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Login">
+            <button id="loginButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login">
                 Войти
             </button>
         </li>

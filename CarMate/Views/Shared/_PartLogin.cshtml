@@ -4,11 +4,11 @@
 
 <div>
     <!-- Модальное окно -->
-    <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button id="loginCloseButton" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title text-center" id="myModalLabel">Вход</h4>
                 </div>
                 <div class="modal-body">
@@ -19,32 +19,36 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
 
-                    
+
                         <div class="form-group">
-                    
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-lg", @placeholder = "Userame" })
+
+                            @Html.TextBoxFor(m => m.UserName, new {@class = "form-control input-lg", @placeholder = "Userame"})
                             @Html.ValidationMessageFor(m => m.UserName)
                         </div>
                         <div class="form-group">
-                     
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", @placeholder = "Password" })
+
+                            @Html.PasswordFor(m => m.Password, new {@class = "form-control input-lg", @placeholder = "Password"})
                             @Html.ValidationMessageFor(m => m.Password)
                         </div>
                         <div class="form-group">
-              
-                            <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block" />
-                            
+
+                            <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block"/>
+
                             <span>
                                 @*<a href="#">Need help?</a>*@
                                 @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                                @Html.LabelFor(m => m.RememberMe, new {@class = "checkbox"})
                             </span>
+                            
+                            <button id="registerInLogin" type="button" class="btn btn-info btn-lg">
+                                Регистрация
+                            </button>
                         </div>
 
                     }
 
                     <h2>Use another service to log in.</h2>
-                    @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
+                    @Html.Action("ExternalLoginsList", "Account", new {ReturnUrl = ViewBag.ReturnUrl})
 
                 </div>
             </div>
@@ -52,8 +56,11 @@
     </div>
 </div>
 
-
-
-
-
-
+<script>
+    $(document).ready(function () {
+        $('#registerInLogin').click(function() {    // При нажатии на кнопку регистрации в окне входа
+            $('#loginCloseButton').trigger('click');    // Закрываем окно входа
+            $('#registerButton').trigger('click');    // Открываем окно регистрации
+        });
+    });    
+</script>
