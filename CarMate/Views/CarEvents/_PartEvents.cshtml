@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CarMate.CarEvents>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>События </h2>
+
+<div class="container">
+<p>
+    @Html.ActionLink("Добавить событие", "Create", "CarEvents", new { carId = ViewBag.CarId }, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Событие
+        </th>
+
+        <th>
+            Пробег
+        </th>
+
+        <th>
+            Дата
+        </th>
+
+        <th>
+            Стоимость
+        </th>
+
+        <th>
+            Комментарий
+        </th>
+
+        <th>
+            Показать на карте
+        </th>
+    </tr>
+
+    @foreach (var carEvent in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(x => carEvent.EventTypes.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(x => carEvent.Odometer)
+            </td>
+
+            <td>
+                @Html.DisplayFor(x => carEvent.DateEvent)
+            </td>
+
+            <td>
+                @Html.DisplayFor(x => carEvent.CostTotal)
+            </td>
+
+            <td>
+                @Html.DisplayFor(x => carEvent.Comment)
+            </td>
+
+            <td>
+                @if (carEvent.Latitute != null && carEvent.Longitute != null)
+                {
+                    @*@Html.ActionLink("Показать на карте", "", "", null, null)*@
+                    @:Показать на карте
+                }
+            </td>
+          
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new {id = carEvent.Id}) |
+                @Html.ActionLink("Удалить", "Delete", new {id = carEvent.Id})
+            </td>
+        </tr>
+    }
+
+</table>
+
+</div>
+<!-- /class container -->

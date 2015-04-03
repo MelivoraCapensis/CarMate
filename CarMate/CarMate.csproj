@@ -1217,8 +1217,11 @@
     <Content Include="PlaceMarkers\Locwebapi.png" />
     <Content Include="PlaceMarkers\Locwebapi2.png" />
     <Content Include="PlaceMarkers\Media-Player-VLC.png" />
+    <Content Include="PlaceMarkers\media.png" />
     <Content Include="PlaceMarkers\Nav.png" />
+    <Content Include="PlaceMarkers\route.png" />
     <Content Include="PlaceMarkers\waypoint.png" />
+    <Content Include="PlaceMarkers\waypoint2.png" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.ru.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1417,6 +1420,7 @@
     <Content Include="Views\Shared\_PartLogin.cshtml" />
     <Content Include="Views\Shared\_PartRegister.cshtml" />
     <Content Include="Views\CarEvents\_PartEventRepair.cshtml" />
+    <Content Include="Views\CarEvents\_PartEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
