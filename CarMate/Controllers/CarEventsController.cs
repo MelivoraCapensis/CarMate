@@ -21,7 +21,8 @@ namespace CarMate.Controllers
             //var carevents = db.CarEvents.Include(c => c.EventTypes).Include(c => c.FuelCategories).Include(c => c.Cars);
             var carevents = db.CarEvents.Where(x => x.CarId == carId).ToList();
             ViewBag.CarId = carId;
-            return View(carevents.ToList());
+            return PartialView("_PartEvents", carevents);
+            //return View(carevents.ToList());
         }
 
         //
