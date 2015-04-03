@@ -5,9 +5,15 @@
 }
 
 @*@*<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">*@
+    <meta name="description" content="">
+    <meta name="author" content="">*@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <!-- Bootstrap Core CSS -->
 <link href="~/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- MetisMenu CSS -->
@@ -16,9 +22,12 @@
 <link href="~/dist/css/timeline.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="~/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="~/Content/customStyles.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
 <link href="~/bower_components/morrisjs/morris.css" rel="stylesheet">
 <!-- Custom Fonts -->
+<link href="~/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 <link href="~/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="~/Content/examples.css" rel="stylesheet" type="text/css">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -26,8 +35,26 @@
 <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
 <![endif]-->
+<script src="~/Scripts/bootstrap.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/examples.css" />
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>*@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+@*<script src="https://code.jquery.com/jquery-1.10.2.js"></script>*@
 <style>
+    label {
+        color: white;
+    }
+
     .controls {
         margin-top: 16px;
         border: 1px solid transparent;
@@ -42,7 +69,7 @@
     #pac-input {
         background-color: #fff;
         padding: 0 11px 0 13px;
-        width: 500px;
+        width: 100%;
         font-family: Roboto;
         font-size: 15px;
         font-weight: 300;
@@ -53,7 +80,7 @@
             border-color: #4d90fe;
             margin-left: -1px;
             padding-left: 14px; /* Regular padding-left + 1. */
-            width: 401px;
+            width: 100%;
         }
 
     .pac-container {
@@ -72,236 +99,45 @@
             font-weight: 100;
         }
 
-    /*input, textarea {
-        width: 50px;
-    }*/
-    #locationField, #controls {
-        position: relative;
-        width: 480px;
-      }
-      #autocomplete {
+
+    #autocomplete {
         position: absolute;
         top: 0px;
         left: 0px;
         width: 99%;
-      }
-      .label {
-        text-align: right;
-        font-weight: bold;
-        width: 100px;
-        color: #303030;
-      }
-      #address {
-        border: 1px solid #000090;
-        background-color: #46b8da;
-        width: 480px;
-        padding-right: 2px;
-      }
-      #address td {
-        font-size: 10pt;
-      }
-      .field {
-        width: 99%;
-      }
-      .slimField {
-        width: 80px;
-      }
-      .wideField {
-        width: 200px;
-      }
-      #locationField {
-        height: 20px;
-        margin-bottom: 2px;
-      }
-
+    }
 </style>
+<script type="text/javascript">
+    $("#menu_map").append('<label>Показать сервисы: </label>' +
+                       '<label class="checkbox">' +
+                       '<input type="checkbox" id="gas_markers" value="1" checked >АЗС</label>' +
+                       '<label class="checkbox">' +
+                       '<input type="checkbox" id="parking_markers" disabled>Парковки</label>' +
+                       '<label class="checkbox">' +
+                       '<input type="checkbox" id="avtorepair_markers" disabled >Cто</label>' +
+                       '<label class="checkbox">' +
+                       '<input type="checkbox" id="foursquare_markers" checked>Кафе</label>' +
+                       '<label>Поиск места на карте:</label>' +
+                       '<input type="text" placeholder="введите адресс" id="pac-input">' +
+                       '<label>Радиус</label>' +
+                       '<select class="form-control" id="radius">' +
+                       '<option selected  value = "1,0" >1.0км</option>' +
+                       '<option value = "10" >10км</option>' +
+                       '<option value = "2" >2км</option>' +
+                       '<option value = "1,5" >1.5км</option>' +
+                       '<option value = "0,8" >0.8км</option>' +
+                       '<option value = "0,5" >0.5км</option>' +
+                       '<option value = "0,4" >0.4км</option>' +
+                       '<option value = "0,2" >0.2км</option>' +
+                       '</select>' +
+                      '<label for="directionsPanel" id="labelroute" >Маршрут детали:</label>' +
+                      ' <div id="directionsPanel" style="overflow:auto;width:100%;height:300px;"></div>' +
+                       '<input type="text" id="latitude" disabled="true" style="display:none;" />' +
+                       '<input type="text" id="longitude" disabled="true" style="display:none;" />');
+
+</script>
 <div class="container-fluid">
-    <div class="row">
-        <div class="panel panel-primary">        
-            <div class="panel-heading">
-                <h3 class="panel-title">Выбор путевых точек по местоположению</h3>       
-             </div>        
-            <div class="panel-body">
-                <div id="poiForm">
-                   
-                    <table>
-                        <tr>
-                            <td>
-                                @Html.TextBoxFor(c => c.Country, new { @class = "controls", @placeholder = "Введите местоположение", @id = "pac-input" })
-                            </td>
-                            <td>&nbsp;&nbsp;&nbsp;Или укажите точку на карте вызвав контекстное меню</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.Label("Выберите категорию: ")</td>
-                            <td>&nbsp;&nbsp;&nbsp;@Html.DropDownListFor(c => c.Category, new SelectList(Model.PoinCat, "Value", "Text", Model.SeelctedCat), new { @id = "category" })</td>
-                        </tr>
-                        <tr>
-                            <td>@Html.Label("Укажите радиус: ")</td>
-                            <td>&nbsp;&nbsp;&nbsp;@Html.DropDownListFor(c => c.Category, new SelectList(Model.RadiusCat, "Value", "Text", Model.SeelctedRad), new { @id = "radius" })</td>
-                        </tr>
-                    </table>
 
-                    <input type="text" id="latitude" disabled="true" style="display:none;" />
-                    <input type="text" id="longitude" disabled="true" style="display:none;" />
-                    <table id="address" style="display:none;">
-                        <tr>
-                            <td class=" label">
-                                Адрес
-                            </td>
-                            <td class="slimField">
-
-                                <input class="field" id="street_number"
-                                       disabled="true"></input>
-                            </td>
-                            <td class="wideField" colspan="2">
-
-                                <input class="field" id="route"
-                                       disabled="true"></input>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label">Город</td>
-                            <td class="wideField" colspan="3">
-
-                                <input class="field" id="locality"
-                                       disabled="true"></input>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label">Регион</td>
-                            <td class="slimField">
-
-                                <input class="field"
-                                       id="administrative_area_level_1" disabled="true"></input>
-                            </td>
-                            <td class="label">Код</td>
-                            <td class="wideField">
-                                <input class="field" id="postal_code"
-                                       disabled="true"></input>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td class="label">Страна</td>
-                            <td class="wideField" colspan="3">
-
-                                <input class="field"
-                                       id="country" disabled="true"></input>
-                            </td>
-                        </tr>
-                    </table>
-                    <input id="poi" type="button" value="Загрузить" class="btn btn-primary" />
-                </div>
-            </div>
-        </div>
-                            
-    </div>
-    <div class="row" >            
-        <div class="col-md-8">    
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Выбор путевых точек по региону</h3>
-                </div>
-                <div class="panel-body">
-                    <div id="regionFrom" class="form-group">
-                        <table>
-                            <tr>
-                                <td>@Html.Partial("_CountriesPartial", Model.CountriesModel)</td>
-                            </tr>
-                            <tr>
-                                <td><div id="regionsDiv"></div></td>
-                            </tr>
-                            <tr>
-
-                                <td><input id="region" type="button" value="Загрузить" class="btn btn-info" /></td>
-                            </tr>                           
-                        </table>
-                    </div> 
-                </div>
-            </div>                
-        </div>            
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-heading">
-                        Установите маркер и загрузите кафе
-                    </h3>
-                </div>
-                <div class="panel-body feed">
-                    <section class="feed-item">
-                        <div class="feed-item-body">
-                            <input id="fcafe" type="button" value="Foursquare Кафе" class="btn btn-info" />
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </div>        
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Проложить маршрут и отобразить путевые точки по маршруту
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div id="routeForm">
-                        <table id="control">
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td>Откуда:</td>
-                                            <td>
-                                                <input id="startvalue" type="text" style="width: 500px" class="controls"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Куда:</td>
-                                            <td><input id="endvalue" type="text" style="width: 500px" class="controls" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left">
-                                                <input id="direct" type="button" value="Проложить маршрут" class="btn btn-info" onclick="return Button1_onclick()" />
-
-                                            </td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td valign="top">
-                                    <div id="directionpanel" style="height: 200px;width:100%; overflow: auto"></div>
-                                </td>
-                            </tr>
-                        </table>
-                        <ul id="instructions" style="height: 100px;width:100%; overflow: auto;display:none;"></ul>
-                    </div>
-                    <div id="routeMarker">
-                        <table>
-                            <tr>
-                                <td>
-                                    <input id="gaspoi" type="button" value="Показать маркеры" class="btn btn-info" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.DropDownListFor(c => c.Category, new SelectList(Model.PoinCat, "Value", "Text", Model.SeelctedCat), new { @id = "category_route" })
-                                    @Html.DropDownListFor(c => c.Category, new SelectList(Model.RadiusCat, "Value", "Text", Model.SeelctedRad), new { @id = "radius_route" })
-                                </td>
-
-                            </tr>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-
-           
-        </div>   
-    </div>
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-8">
             <div id="map" style="width:100%; height:800px;"></div>
@@ -314,38 +150,39 @@
                 <div class="panel-body">
                     <ul id="results" style="overflow:scroll; display:block;height:800px" class="list-group"></ul>
                 </div>
-            </div>         
+            </div>
         </div>
-    </div>    
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-md-4">
+
+            <div id="directionsPanel" style="overflow:auto;width:100%;height:300px;"></div>
+        </div>
+
+    </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-<script src="../gmaps.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css" />
-<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
-<link rel="stylesheet" type="text/css" href="~/Content/examples.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+
 <script type="text/javascript">
-    var map;
-    var items, markers_data = [], markers_chois = [];
-    var service, gasInfWin;
-    var locpos;
-    var image;
-    var squirrel;
-    var squirrel_data = [];
-    var place;
-    var placeSearch, autocomplete, autocomplete1,autocomplete2;
+    var map;//карта
+    var markers = [];//массив маркеров
+    var image;//маркер картинка
+    var squirrel;//объект json
+    var squirrel_data = [];//массив объектов json
+    var cafe_marker = [];//массив данных от Foursquare
+    var gas_markers = [];//массив данных от БД азс
+    var route_markers = [];//массив для начальной и конечной точки маршрута
+    var waipoint_markers = [];//массив путевых точек маршрута
+    var routepath = [];//массив для временного хранения путевых точек
+    var waigas_markers = [];//массив заправок по маршруту
+    var infowindow_arr = [];//масив инфоокон
+    var place;//autocomplete.getPlace()
+    var placeSearch, autocomplete, autocomplete1, autocomplete2; //google.maps.places.Autocomplete(input);
     var geocoder = new google.maps.Geocoder();
-    var directionsDisplay;
+    var directionsDisplay;//setDirections(response);
     var directionsService = new google.maps.DirectionsService();
-    var aclocation = [], aclocation2 = [], routepath = [];
+    var aclocation = [], aclocation2 = [];
     var componentForm = {
         street_number: 'short_name',
         route: 'long_name',
@@ -354,391 +191,141 @@
         country: 'long_name',
         postal_code: 'short_name'
     };
-    var input1,input2
-    //Map
-    var countriesDiv = $("#countriesDiv");
-    $(document).ready(function () {
-        $("#Id").change(function () {
-            var id = $("#Id").val();
-            var regionsDiv = $("#regionsDiv");
-            $.ajax({
-                cache: false,
-                type: "GET",
-                url: "@(Url.RouteUrl("RegionByCountry"))",
-                data: { "id": id },
-                success: function (data)
-                {
-                    regionsDiv.html('');
-                    regionsDiv.html(data);
+    var input, input1, input2;//lat long
 
-                },
-                error: function (xhr, ajaxOptions, thrownError)
-                {
-                    alert('Failed to retrive region');
-                }
-            });
+    var Pix = 3.141592653589793;
+    var RADIO = 6378.16;
+
+
+    //Google maps API инициализация
+    function initialize() {
+
+        var element = document.getElementById("map");
+        var rendererOptions = {
+            draggable: true
+        };
+        directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+
+        //directionsDisplay.setPanel(document.getElementById('directionpanel'));
+        map = new google.maps.Map(element, {
+            center: new google.maps.LatLng(50.450100, 30.523989),
+            zoom: 10,
+            mapTypeId: "OSM",
+            mapTypeControl: false,
+            streetViewControl: false
         });
 
-        map = new GMaps({
-            el: '#map',
-            lat: 50.450100,
-            lng: 30.523989,
-            mapTypeControlOptions: {
-                mapTypeIds: ["hybrid", "roadmap", "satellite", "terrain", "osm", "cloudmade"]
-            }
-
-        });
-        //Map Type
-        map.addMapType("osm", {
+        //получение OpenStreetMap tile server
+        map.mapTypes.set("OSM", new google.maps.ImageMapType({
             getTileUrl: function (coord, zoom) {
                 return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
             },
             tileSize: new google.maps.Size(256, 256),
             name: "OpenStreetMap",
             maxZoom: 18
-        });
-        map.setMapTypeId("osm");
-        map.on('marker_added', function (marker) {
-            var index = map.markers.indexOf(marker);            
-            $('#results').append('<li class="list-group-item"><a href="#" class="list-group-item pan-to-marker" data-marker-index="' + index + '">' + marker.infoWindow.content + '</a></li>');
-            if (index == map.markers.length - 1) {
-                map.fitZoom();
-            }
-        });
-        map.setContextMenu({
-            control: 'map',
-            options: [{
-                title: 'Установить маркер',
-                name: 'add_marker',
-                action: function (e) {
-                    image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
-                    
-                    map.addMarker({
-                        lat: e.latLng.lat(),
-                        lng: e.latLng.lng(),
-                        icon: image,
-                        infoWindow: {
-                            content: '<p id="lat">' + e.latLng.lat() + '</p><p id="lng">' + e.latLng.lng() + '</p>'
-
-                        }
-                    });                 
-                    document.getElementById('latitude').value = e.latLng.lat();
-                    document.getElementById('longitude').value = e.latLng.lng();
+        }));
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+        //google.maps.event.addListener(directionsDisplay, 'directions_changed', function () {
+        //    computeTotalDistance(directionsDisplay.getDirections());
+        //});
+        //геолокация
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = new google.maps.LatLng(position.coords.latitude,
+                                                    position.coords.longitude);
+                image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    icon: image
+                });
+                addMarker(marker, markers);
+                var infowindow = new google.maps.InfoWindow({
+                    map: map,
+                    position: pos,
+                    content: 'Ваше местоположение'
+                });
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.open(map, marker);
+                });
+                map.setCenter(pos);
+                map.setZoom(12);
+                //запоминаем текущие координаты местоположения
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                if ($("#foursquare_markers")[0].checked == true) {
+                    getFoursquare();
                 }
-            }
-            ]//end map option
-        });//end context menu
-
-
-        directionsDisplay = new google.maps.DirectionsRenderer();
-        directionsDisplay.setPanel(document.getElementById('directionpanel'));
-
-        //блок маршрутов
-
-        //autocomplete Google
-        input1 = (document.getElementById('startvalue'));
-        input2 = (document.getElementById('endvalue'));
-        autocomplete1 = new google.maps.places.Autocomplete(input1);
-        autocomplete2 = new google.maps.places.Autocomplete(input2);
-        autocomplete1.setTypes(['geocode']);
-        autocomplete2.setTypes(['geocode']);
-        google.maps.event.addListener(autocomplete1, 'place_changed', function () {
-            var string = $('#instructions').html();
-            string = $('#instructions').html('');
-            var place = autocomplete1.getPlace();
-            if (!place.geometry) {
-                return;
-            }
-            if (place.geometry.viewport) {
-            } else {
-                var lat = place.geometry.location.lat();
-                var lng = place.geometry.location.lng();
-                aclocation = [];
-                aclocation.push(lat);
-                aclocation.push(lng);
-                address = document.getElementById('startvalue').value;
-                map.setCenter(place.geometry.location.lat(), place.geometry.location.lng());
-                map.addMarker({
-                    lat: place.geometry.location.lat(),
-                    lng: place.geometry.location.lng(),
-                    infoWindow: {
-                        content: '<p >' + address + '</p>'
-
-                    }
-
-                });
-            }
-            var address = '';
-            if (place.address_components) {
-                address = [
-                  (place.address_components[0] && place.address_components[0].short_name || ''),
-                  (place.address_components[1] && place.address_components[1].short_name || ''),
-                  (place.address_components[2] && place.address_components[2].short_name || '')
-                ].join(' ');
-
-            }
-
-
-        });
-        google.maps.event.addListener(autocomplete2, 'place_changed', function () {
-            var place = autocomplete2.getPlace();
-            if (!place.geometry) {
-                return;
-            }
-            if (place.geometry.viewport) {              
-
-            } else {
-                var lat = place.geometry.location.lat();
-                var lng = place.geometry.location.lng();
-                aclocation2 = [];
-                aclocation2.push(lat);
-                aclocation2.push(lng);
-                address = document.getElementById('endvalue').value;
-                map.setCenter(place.geometry.location.lat(), place.geometry.location.lng());
-                map.addMarker({
-                    lat: place.geometry.location.lat(),
-                    lng: place.geometry.location.lng(),
-                    infoWindow:{
-                    content: '<p >' + address + '</p>'
-
-                    }
-                });
-
-            }
-            var address = '';
-            if (place.address_components) {
-                address = [
-                  (place.address_components[0] && place.address_components[0].short_name || ''),
-                  (place.address_components[1] && place.address_components[1].short_name || ''),
-                  (place.address_components[2] && place.address_components[2].short_name || '')
-                ].join(' ');
-
-            }
-        });
-        $("#fcafe").bind("click", function () {
-           var lat= document.getElementById('latitude').value;
-           var lng = document.getElementById('longitude').value;
-           var image = new google.maps.MarkerImage("../PlaceMarkers/Coffee.png");
-           $.getJSON('https://api.foursquare.com/v2/venues/search?client_id=4G0ZYJBKXRKRJ5VGLULFCGQPRNJADTJZIHQPE5NRT33WKVMV&client_secret=VU4NZM13SM3AFZ30NDA2U4B1ZYOLKZ5JNQJQKW2RYZXSFKZL&v=20130815&ll=' + lat + ',' + lng + '&query=cafe',
-                            function (data) {
-                                $.each(data.response.venues, function (i, venues) {
-                                    content = '<p>Name: ' + venues.name +
-                                        ' Address: ' + venues.location.address +
-                                        ' Lat/long: ' + venues.location.lat + ', ' + venues.location.lng + '</p>';
-                                 
-                                    map.addMarker({
-                                        lat: venues.location.lat,
-                                        lng: venues.location.lng,
-                                        title: venues.name,
-                                        icon: image,
-                                        infoWindow: {
-                                            content: '<p>' + content + '</p>'
-                                        }
-                                    });
-                                });                             
-                                map.setCenter(lat, lng);
-                                //map.setZoom(15);
-                            });
-        });
-        $("#region").bind("click", function () {
-            document.getElementById('latitude').value = '';
-            document.getElementById('longitude').value = '';
-            var country = $('#Id').val();
-            var category = $('#category').val();
-            var streetroute = $('#route').val();
-            var streetNumber = $('#street_number').val();
-            var city = $('#locality').val();
-            var region = $('#Idregion').val();
-            var latitude = $('#latitude').val();
-            var longitude = $('#longitude').val();
-            var radius = $('#radius').val();
-            squirrel = {
-                Lat: latitude,
-                Long: longitude,
-                Vendore: "",
-                ImagePath: 'F',
-                Country: country,
-                Category: category,
-                StreetRoute: streetroute,
-                StreetNumber: streetNumber,
-                City: city,
-                Region: region,
-                Radius: radius
-            };
-            var onEventLaunchSquirrel = new postSquirrel(squirrel);
-            onEventLaunchSquirrel.launchSquirrel();
-
-        });
-        $("#poi").bind("click", function () {
-            var country = $('#countrydb').val();
-            var category = $('#category').val();
-            var streetroute = $('#route').val();
-            var streetNumber = $('#street_number').val();
-            var city = $('#locality').val();
-            var region = $('#region').val();
-            var latitude = $('#latitude').val();
-            var longitude = $('#longitude').val();
-            var radius = $('#radius').val();
-            squirrel = {
-                Lat: latitude,
-                Long: longitude,
-                Vendore: "",
-                ImagePath: 'F',
-                Country: country,
-                Category: category,
-                StreetRoute: streetroute,
-                StreetNumber: streetNumber,
-                City: city,
-                Region: region,
-                Radius: radius
-
-            };
-            var onEventLaunchSquirrel = new postSquirrel(squirrel);
-            onEventLaunchSquirrel.launchSquirrel();
-        });
-
-        function postSquirrel(squirrel) {
-        this.launchSquirrel = function () {
-            // build json object
-            $.ajax({
-                type: "POST",
-                url: "/map/PostSquirrel",
-                traditional: true,
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(squirrel),
-                success: function (data) {
-                    $.each(data, function (i, item) {
-                        var lat = item.Lat.replace(",", ".");
-                        var lng = item.Long.replace(",", ".");
-                        var price = item.Prices;
-                        var fuelcategory=item.FuelCategories;
-                        var pricecontent = "";
-                        var fuelcatcontent = "";
-                        $.each(fuelcategory, function (index, value) { fuelcatcontent += "<th>" + value + "</th>"; })
-                        $.each(price, function (index, value) { pricecontent += "<td>" + value + "</td>"; })
-                        content = '<p>' + item.Vendore +
-                                           ' Lat/long: ' + item.Lat + ', ' + item.Long + " " + "<br/>" +
-                                           "<p>" + item.Adress + "</p>" +
-                                           "<table class='table table-hover'><thead><tr>"
-                                           + fuelcatcontent
-                                           + "</tr></thead>" +
-                                           "<tbody><tr>"
-                                           + pricecontent
-                                           + "</tr></tbody></table>";
-
-                        var image = new google.maps.MarkerImage("../PlaceMarkers/Fuel.png");
-                        markers_data.push({
-                            lat: lat,
-                            lng: lng,
-                            title: item.Vendore,
-                            icon: image,
-                            infoWindow: {
-                                content: '<p>' + content + '</p>'
-                            }
-                        });
-                        map.addMarker({
-                            lat: lat,
-                            lng: lng,
-                            title: item.Vendore,
-                            icon: image,
-                            infoWindow: {
-                                content: '<p>' + content + '</p>'
-                            }
-                        });
-
-                    });              
-                    map.setCenter(markers_data[0].lat, markers_data[0].lng);
-                    //map.setZoom(15);
-                    console.log(data)
-                },
-                error: function (data) { console.log(data) }
-            });}
-        }
-        $("#gaspoi").bind("click", function () {           
-            var category_route = $('#category_route').val();
-            var radius_route = $('#radius_route').val();
-            squirrel_data[0].Radius = radius_route;
-            squirrel_data[0].Category = category_route;
-            var onEventLaunchlstSquirrel = new postlstSquirrel(squirrel_data);
-            onEventLaunchlstSquirrel.launchlstSquirrel();
-
-        });
-        function postlstSquirrel(squirrel_data) {   
-            this.launchlstSquirrel = function () {
-                //build json object
-                $.ajax({
-                    type: "POST",
-                    url: "@(Url.RouteUrl("PostlstSquirrel"))",
-                    traditional: true,
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify(squirrel_data),
-                    success: function (data) {
-                        $.each(data, function (i, item) {
-                            var lat = item.Lat.replace(",", ".");
-                            var lng = item.Long.replace(",", ".");
-                            var price = item.Prices;
-                            var fuelcategory = item.FuelCategories;
-                            var pricecontent = "";
-                            var fuelcatcontent = "";
-                            $.each(fuelcategory, function (index, value) { fuelcatcontent += "<th>" + value + "</th>"; })
-                            $.each(price, function (index, value) { pricecontent += "<td>" + value + "</td>"; })
-                            content = '<p>' + item.Vendore +
-                                               ' Lat/long: ' + item.Lat + ', ' + item.Long + " " + "<br/>" +
-                                               "<p>" + item.Adress + "</p>" +
-                                               "<table class='table table-hover'><thead><tr>"
-                                               + fuelcatcontent
-                                               + "</tr></thead>" +
-                                               "<tbody><tr>"
-                                               + pricecontent
-                                               + "</tr></tbody></table>";
-
-                            var image = new google.maps.MarkerImage("../PlaceMarkers/Fuel.png");
-                            markers_data.push({
-                                lat: lat,
-                                lng: lng,
-                                title: item.Vendore,
-                                icon: image,
-                                infoWindow: {
-                                    content: '<p>' + content + '</p>'
-                                }
-                            });
-                            map.addMarker({
-                                lat: lat,
-                                lng: lng,
-                                title: item.Vendore,
-                                icon: image,
-                                infoWindow: {
-                                    content: '<p>' + content + '</p>'
-                                }
-                            });
-
-                        });
-                        map.setCenter(markers_data[0].lat, markers_data[0].lng);
-                       // map.setZoom(15);
-                        console.log(data)
-                    },
-                    error: function (data) { console.log(data) }
-
-                });
-            }
+                if ($("#gas_markers")[0].checked == true) {
+                    getDbMarkersGas();
+                }
+            }, function () {
+                handleNoGeolocation(true);
+            });
+        } else {
+            handleNoGeolocation(false);
         }
 
+        //добавляет маркеры формирует маршрут
+        google.maps.event.addListener(map, 'click', function (event) {
+            if (route_markers.length == 2) {
 
+                deleteMarkers(route_markers);
+                deleteMarkers(waipoint_markers);
 
-        $(document).on('click', '.pan-to-marker', function (e) {
-            e.preventDefault();
+                route_markers = [];
 
-            var position, lat, lng, $index,marker;
+            }
+            image = new google.maps.MarkerImage("../PlaceMarkers/route.png");
+            var marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map,
+                icon: image
+            });
+            addMarker(marker, route_markers);
+            if (route_markers.length > 1) {
 
-            $index = $(this).data('marker-index');
-            position = map.markers[$index].getPosition();
+                calcRoute(route_markers);
+            }
 
-            lat = position.lat();
-            lng = position.lng();
-            map.markers[$index].infoWindow.setPosition(new google.maps.LatLng(lat+0.001, lng));
-            map.markers[$index].infoWindow.open(map.map);
-            map.setCenter(lat, lng);
         });
+
+        // выставляется маркеров места интереса на карте
+        google.maps.event.addListener(map, 'rightclick', function (event) {
+            image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
+            var marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map,
+                icon: image
+            });
+            var infowindow = new google.maps.InfoWindow({
+                map: map,
+                position: event.latLng,
+                content: 'Ваше местоположение'
+            });
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+
+            document.getElementById('latitude').value = event.latLng.lat();
+            document.getElementById('longitude').value = event.latLng.lng();
+            deleteMarkers(markers);
+            deleteMarkers(gas_markers);
+            deleteMarkers(cafe_marker);
+            $('#results').append("");
+            if ($("#gas_markers")[0].checked == true) {
+                getDbMarkersGas();
+            }
+            if ($("#foursquare_markers")[0].checked == true) {
+
+                getFoursquare();
+            }
+
+            addMarker(marker, markers);
+        });
+
+        //google автозаполнение
         input = (document.getElementById('pac-input'));
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.setTypes(['geocode']);
@@ -755,21 +342,39 @@
 
             } else {
 
-                map.setCenter(place.geometry.location.lat(), place.geometry.location.lng());
                 document.getElementById('latitude').value = place.geometry.location.lat();
                 document.getElementById('longitude').value = place.geometry.location.lng();
-              //  map.setZoom(17);
-                fillInAddress();
-            }        
-            // image = new google.maps.MarkerImage(place.icon);
+            }
+
+            deleteMarkers(markers);
+            deleteMarkers(gas_markers);
+            deleteMarkers(cafe_marker);
+            $('#results').append("");
+            if ($("#gas_markers")[0].checked == true) {
+                getDbMarkersGas();
+            }
+            if ($("#foursquare_markers")[0].checked == true) {
+
+                getFoursquare();
+            }
             image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
-            map.addMarker({
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng(),
+            marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
                 icon: image
+            });
+            var infowindow = new google.maps.InfoWindow({
+                map: map,
+                position: place.geometry.location,
+                content: place.formatted_address
 
-            });       
+            });
 
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+
+            addMarker(marker, markers);
             var address = '';
             if (place.address_components) {
                 address = [
@@ -780,106 +385,407 @@
 
             }
         });
-        //setupClickListener('changetype-geocode', ['geocode']);
-        // [START region_fillform]
-        function fillInAddress() {
 
+    }
+    function handleNoGeolocation(errorFlag) {
+        if (errorFlag) {
+            var content = 'Error: The Geolocation service failed';
+        } else {
+            var content = 'Error: Your browser doesn\'t support geolocation';
+        }
+    }
+    //функции для расчета расстояния между точками на карте
+    function Radians(x) {
+        return x * Pix / 180;
+    }
+    function DistanceBetweenPlaces(lon1, lat1, lon2, lat2) {
 
-            for (var component in componentForm) {
-                document.getElementById(component).value = '';
-                document.getElementById(component).disabled = false;
-            }
+        var dlon = Radians(lon1 - lon2);
+        var dlat = Radians(lat1 - lat2);
+        var a = (Math.sin(dlat / 2) * Math.sin(dlat / 2)) +
+            Math.cos(Radians(lat1)) * Math.cos(Radians(lat2)) * (Math.sin(dlon / 2) * Math.sin(dlon / 2));
+        var angel = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var r = (angel * RADIO) * 0.62137;
 
-            // Get each component of the address from the place details
-            // and fill the corresponding field on the form.
-            for (var i = 0; i < place.address_components.length; i++) {
-                var addressType = place.address_components[i].types[0];
+        return (angel * RADIO) * 0.62137;//distance in miles
 
-                if (componentForm[addressType]) {
-                    var val = place.address_components[i][componentForm[addressType]];
-                    document.getElementById(addressType).value = val;
-                }
-            }
+    }
+    //
+    //добавление маркера на карту
+    function addMarker(marker, array_markers) {
+        array_markers.push(marker);
+    }
+    // установка  маркеров из массива на карту
+    function setAllMap(markers, map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
+    //удаление маркеров с карты сохраняя при этом в массиве
+    function clearMarkers(markers) {
+        setAllMap(markers, null);
+    }
+    //показать все маркеры из массива
+    function showMarkers() {
+        setAllMap(map);
+    }
+    //удалить все маркеры из массива
+    function deleteMarkers(markers) {
+        clearMarkers(markers);
+        markers = [];
+
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    $(function () {
+        $('#collapseFour').collapse({
+            toggle: false
+        })
+    });
+    $(function () { $('#collapseOne').collapse('hide') });
+    $('#gas_markers').on("click", function () {
+        if ($('#gas_markers:checked').val() !== undefined) {
+            //Checked
+
+            getDbMarkersGas();
+        }
+        else {
+            //Not checked
+
+            clearMarkers(gas_markers);
         }
     });
+    $('#parking_markers').on("click", function () {
+        if ($('#parking_markers:checked').val() !== undefined) {
+            //Checked
 
-    // [END region_fillform]
-    function calcRoute() {
-        var start = document.getElementById('startvalue').value;
-        var end = document.getElementById('endvalue').value;
-        var category_route = $('#category_route').val();
-        var radius_route = $('#radius_route').val();        
+        }
+        else {
+            //Not checked
+
+
+        }
+    });
+    $('#avtorepair_markers').on("click", function () {
+        if ($('#avtorepair_markers:checked').val() !== undefined) {
+            //Checked
+
+        }
+        else {
+            //Not checked
+
+        }
+
+    });
+    //укправление маркерами Foursquare
+    $('#foursquare_markers').on("click", function () {
+        if ($('#foursquare_markers:checked').val() !== undefined) {
+            //Checked
+
+            getFoursquare();
+        }
+        else {
+            //Not checked
+
+
+            clearMarkers(cafe_marker);
+        }
+
+    });
+
+    //if ($("#gas_markers").attr("checked")) { alert('Отмечен');}
+    //загрузка  от api forsquare маркеров с учетом местоположения
+    function getFoursquare() {
+
+        var lat = document.getElementById('latitude').value;
+        var lng = document.getElementById('longitude').value;
+        var image = new google.maps.MarkerImage("../PlaceMarkers/Coffee.png");
+        $.getJSON('https://api.foursquare.com/v2/venues/search?client_id=4G0ZYJBKXRKRJ5VGLULFCGQPRNJADTJZIHQPE5NRT33WKVMV&client_secret=VU4NZM13SM3AFZ30NDA2U4B1ZYOLKZ5JNQJQKW2RYZXSFKZL&v=20130815&ll=' + lat + ',' + lng + '&query=cafe',
+                         function (data) {
+                             $.each(data.response.venues, function (i, venues) {
+                                 content = '<p>Name: ' + venues.name +
+                                     ' Address: ' + venues.location.address +
+                                     ' Lat/long: ' + venues.location.lat + ', ' + venues.location.lng + '</p>';
+                                 var pos = new google.maps.LatLng(venues.location.lat,
+                                                    venues.location.lng);
+                                 var infowindow = new google.maps.InfoWindow({
+                                     content: '<p>' + content + '</p>'
+                                 });
+                                 $('#results').append('<li class="list-group-item">' + infowindow.content + '</a></li>');
+
+                                 var marker = new google.maps.Marker({
+                                     Position: pos,
+                                     map: map,
+                                     icon: image
+                                 });
+                                 google.maps.event.addListener(marker, 'click', function () {
+                                     infowindow.open(map, marker);
+                                 });
+                                 addMarker(marker, cafe_marker);
+                             });
+                             //map.setZoom(15);
+                         });
+    }
+    function getDbMarkersGas() {
+        var lat = document.getElementById('latitude').value;
+        var lng = document.getElementById('longitude').value;
+        var radius = $('#radius').val();
+        var category = $('#gas_markers').val();
+        squirrel = {
+            Lat: lat,
+            Long: lng,
+            Vendore: "",
+            ImagePath: "",
+            Country: "",
+            Category: category,
+            StreetRoute: "",
+            StreetNumber: "",
+            City: "",
+            Region: "",
+            Radius: radius
+        };
+        var onEventLaunchSquirrel = new postSquirrel(squirrel);
+        onEventLaunchSquirrel.launchSquirrel();
+    }
+    //передача json объекта и загрузка данных из контролера
+    //от точки местоположения в радиусе выбираются маркеры из бд
+    function postSquirrel(squirrel) {
+        this.launchSquirrel = function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/map/PostSquirrel",
+                traditional: true,
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(squirrel),
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        var lat = item.Lat.replace(",", ".");
+                        var lng = item.Long.replace(",", ".");
+                        var price = item.Prices;
+                        var fuelcategory = item.FuelCategories;
+                        var pricecontent = "";
+                        var fuelcatcontent = "";
+                        $.each(fuelcategory, function (index, value) { fuelcatcontent += "<th>" + value + "</th>"; })
+                        $.each(price, function (index, value) { pricecontent += "<td>" + value + "</td>"; })
+                        content = '<p>' + item.Vendore +
+                                           ' Lat/long: ' + item.Lat + ', ' + item.Long + " " + "<br/>" +
+                                           "<p>" + item.Adress + "</p>" +
+                                           "<table class='table table-hover'><thead><tr>"
+                                           + fuelcatcontent
+                                           + "</tr></thead>" +
+                                           "<tbody><tr>"
+                                           + pricecontent
+                                           + "</tr></tbody></table>";
+
+                        var image = new google.maps.MarkerImage("../PlaceMarkers/Fuel.png");
+                        var infowindow = new google.maps.InfoWindow({
+                            content: '<p>' + content + '</p>'
+                        });
+
+                        var pos = new google.maps.LatLng(lat, lng);
+                        var marker = new google.maps.Marker({
+                            Position: pos,
+                            title: item.Vendore,
+                            map: map,
+                            icon: image
+                        });
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+                        addMarker(marker, gas_markers);
+                    });
+                    // alert("Загружено!!!");
+                    console.log(data)
+                },
+                error: function (data) { console.log(data) }
+            });
+        }
+    }
+    //получение от google api путевых точек по маршруту
+    function calcRoute(route_markers) {
+        var radius = $('#radius').val();
+        var rf = parseFloat(radius);
+        var start = route_markers[0].position;
+        var end = route_markers[route_markers.length - 1].position;
         var request = {
             origin: start,
             destination: end,
             travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
         squirrel_data = [];
-        map.travelRoute({
-            origin: aclocation,
-            destination: aclocation2,
-            travelMode: 'driving',
-            step: function (e) {
-                $('#instructions').append('<li>' + e.instructions + '</li>');
-                $('#instructions li:eq(' + e.step_number + ')').delay(450 * e.step_number).fadeIn(200, function () {
-                    map.drawPolyline({
-                        path: e.path,
-                        strokeColor: '#131540',
-                        strokeOpacity: 0.6,
-                        strokeWeight: 6
-                    });
-                });
-            }
-        });
         directionsService.route(request, function (response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 var path;
-                image = new google.maps.MarkerImage("../PlaceMarkers/waypoint.png");
-                var route = response.routes[0];// содержит массив объектов DirectionsRoute(1 маршрут  для заданных исходной точки и пункта назначения)           
+                //image = new google.maps.MarkerImage("../PlaceMarkers/waypoint.png");
+                var route = response.routes[0];// содержит массив объектов DirectionsRoute(1 маршрут  для заданных исходной точки и пункта назначения)
+
                 for (var i = 0; i < route.legs.length; i++) {
-                   var leg = route.legs[i];//legs[] содержит массив объектов DirectionsLeg каждый из которых содержит информацию об отрезке маршрута между двумя точками на заданном маршруте                 
+                    var leg = route.legs[i];//legs[] содержит массив объектов DirectionsLeg каждый из которых содержит информацию об отрезке маршрута между двумя точками на заданном маршруте
+
                     for (var j = 0; j < leg.steps.length; j++) {
                         var step = leg.steps[j];//DirectionsLeg определяет отдельный отрезок пути от исходной точки до пункта назначения в вычисленном маршруте.
-                        //steps[] содержит массив объектов DirectionsStep с информацией о каждом шаге на отрезке путешествия.               
+                        //steps[] содержит массив объектов DirectionsStep с информацией о каждом шаге на отрезке путешествия.
                         for (var k = 0; k < step.path.length; k++) {
                             path = step.path[k];//path содержит массив элементов LatLngs, описывающий траекторию шага.
-                            routepath.push(path);
-                            squirrel = {
-                                Lat: path.lat(),
-                                Long: path.lng(),
-                                Vendore: "",
-                                ImagePath: '',
-                                Country: '',
-                                Category: '',
-                                StreetRoute: '',
-                                StreetNumber: '',
-                                City: '',
-                                Region: '',
-                                Radius: ''
-                            };
 
+                            if (routepath.length == 0) {
+                                routepath.push(path);
+                                squirrel = {
+                                    Lat: path.lat(),
+                                    Long: path.lng(),
+                                    Vendore: "",
+                                    ImagePath: '',
+                                    Country: '',
+                                    Category: '',
+                                    StreetRoute: '',
+                                    StreetNumber: '',
+                                    City: '',
+                                    Region: '',
+                                    Radius: ''
+                                };
+                                squirrel_data.push(squirrel);
+                                image = new google.maps.MarkerImage("../PlaceMarkers/media.png");
+                                var marker = new google.maps.Marker({
+                                    position: path,
+                                    map: map,
+                                    icon: image
+                                });
+                                addMarker(marker, waipoint_markers);
+                            }
+                            var s = routepath.length;
 
-                            squirrel_data.push(squirrel);
-                            map.addMarker({
-                                lat: path.lat(),
-                                lng: path.lng(),
-                                icon:image,
-                                infoWindow: {
-                                    content: '<p >' + path.lat() + ' ' + path.lng() + '</p>'
-
-                                }
-                            });
+                            if (routepath.length > 0 && DistanceBetweenPlaces(routepath[s - 1].lat(), routepath[s - 1].lng(), path.lat(), path.lng()) > rf) {
+                                routepath.push(path);
+                                squirrel = {
+                                    Lat: path.lat(),
+                                    Long: path.lng(),
+                                    Vendore: "",
+                                    ImagePath: '',
+                                    Country: '',
+                                    Category: '',
+                                    StreetRoute: '',
+                                    StreetNumber: '',
+                                    City: '',
+                                    Region: '',
+                                    Radius: ''
+                                };
+                                squirrel_data.push(squirrel);
+                                image = new google.maps.MarkerImage("../PlaceMarkers/media.png");
+                                var marker = new google.maps.Marker({
+                                    position: path,
+                                    map: map,
+                                    icon: image
+                                });
+                                addMarker(marker, waipoint_markers);
+                            }
                         }
                     }
                 }
-                directionsDisplay.setDirections(response);               
+                $('#directionsPanel').css("background", "white");
+                $('#labelroute').css("color", "white");
+                directionsDisplay.setDirections(response);
+
+            }//end responce
+            if ($('#gas_markers:checked').val() !== undefined) {
+                getDbMarkerRoute();
             }
         });
     }
-    function Button1_onclick() {
-        calcRoute();
+    function getDbMarkerRoute() {
+        var radius = $('#radius').val();
+        var category = $('#gas_markers').val();
+        squirrel_data[0].Radius = radius;
+        squirrel_data[0].Category = category;
+        var onEventLaunchlstSquirrel = new postlstSquirrel(squirrel_data);
+        onEventLaunchlstSquirrel.launchlstSquirrel();
+
     }
-    //конец блока маршрутов
+    //загружаются маркеры азс изи бд по маршруту
+    function postlstSquirrel(squirrel_data) {
+        this.launchlstSquirrel = function () {
+            //build json object
+            $.ajax({
+                type: "POST",
+                url: "@(Url.RouteUrl("PostlstSquirrel"))",
+                traditional: true,
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(squirrel_data),
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        var lat = item.Lat.replace(",", ".");
+                        var lng = item.Long.replace(",", ".");
+                        var price = item.Prices;
+                        var fuelcategory = item.FuelCategories;
+                        var pricecontent = "";
+                        var fuelcatcontent = "";
+                        $.each(fuelcategory, function (index, value) { fuelcatcontent += "<th>" + value + "</th>"; })
+                        $.each(price, function (index, value) { pricecontent += "<td>" + value + "</td>"; })
+                        content = '<p>' + item.Vendore +
+                                           ' Lat/long: ' + item.Lat + ', ' + item.Long + " " + "<br/>" +
+                                           "<p>" + item.Adress + "</p>" +
+                                           "<table class='table table-hover'><thead><tr>"
+                                           + fuelcatcontent
+                                           + "</tr></thead>" +
+                                           "<tbody><tr>"
+                                           + pricecontent
+                                           + "</tr></tbody></table>";
+
+                        var image = new google.maps.MarkerImage("../PlaceMarkers/Fuel.png");
+                        var pos = new google.maps.LatLng(lat, lng);
+                        var marker = new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            icon: image
+                        });
+                        var infowindow = new google.maps.InfoWindow({
+                            map: map,
+                            position: pos,
+                            content: content
+                        });
+
+
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+                        infowindow.close();
+                        addMarker(marker, waigas_markers);
+
+
+                    });
+                    //map.setCenter(markers_data[0].lat, markers_data[0].lng);
+                    // map.setZoom(15);
+
+
+                    //  alert("Загружено!!!");
+                    console.log(data)
+
+                },
+                error: function (data) { console.log(data) }
+
+            });
+        }
+    }
+
+    //function computeTotalDistance(result) {
+    //    var total = 0;
+    //    var myroute = result.routes[0];
+    //    for (var i = 0; i < myroute.legs.length; i++) {
+    //        total += myroute.legs[i].distance.value;
+    //    }
+    //    total = total / 1000.0;
+    //    document.getElementById('labelroute').innerHTML = 'Маршрут детали: '+total + ' km';
+    //}
+    $('#radius').bind("change", function () {
+
+        deleteMarkers(gas_markers);
+        if ($("#gas_markers").attr("checked")) {
+            getDbMarkersGas();
+        }
+    });
+
+
+
 </script>
 <!-- /#wrapper -->
 <!-- jQuery -->
@@ -894,3 +800,4 @@
 <script src="~/js/morris-data.js"></script>
 <!-- Custom Theme JavaScript -->
 <script src="~/dist/js/sb-admin-2.js"></script>
+
