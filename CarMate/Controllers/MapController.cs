@@ -118,10 +118,10 @@ namespace CarMate.Controllers
                 });
             }
             List<SelectListItem> ddlrad = new List<SelectListItem>();
-            ddlrad.Add(new SelectListItem() { Text = "1.0км", Value = "1,0" });
             ddlrad.Add(new SelectListItem() { Text = "10км", Value = "10" });
             ddlrad.Add(new SelectListItem() { Text = "2км", Value = "2" });
             ddlrad.Add(new SelectListItem() { Text = "1.5км", Value = "1,5" });
+            ddlrad.Add(new SelectListItem() { Text = "1.0км", Value = "1,0" });
             ddlrad.Add(new SelectListItem() { Text = "0.8км", Value = "0,8" });
             ddlrad.Add(new SelectListItem() { Text = "0.5км", Value = "0,5" });
             ddlrad.Add(new SelectListItem() { Text = "0.4км", Value = "0,4" });
@@ -172,9 +172,9 @@ namespace CarMate.Controllers
                 {
                     if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
                     {
-                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
                         List<string> pricesSquirrel = new List<string>();
-                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
                         foreach (var v in prices)
                         {
                             pricesSquirrel.Add(v.ToString());
@@ -186,10 +186,11 @@ namespace CarMate.Controllers
                             Long = p.longitude.ToString(),
                             Vendore = p.description,
                             Adress = formatted_address,
-                            Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
-                            FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям 
+                            Prices = pricesSquirrel.ToArray(),
+                            FuelCategories = fuelcatsSquirrel.ToArray()
                         });
                     }
+
                 }
             }
             else
@@ -255,7 +256,6 @@ namespace CarMate.Controllers
         [HttpPost]
         public JsonResult PostlstSquirrel(List<Squirrel> incominglstSquirrel)
         {
-
             #region получаем категорию и радиус
             Squirrel item = incominglstSquirrel[0];
             int categoryId;
