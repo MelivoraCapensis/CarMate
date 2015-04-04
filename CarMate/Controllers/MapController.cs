@@ -165,9 +165,9 @@ namespace CarMate.Controllers
             if (poi.Lat != null && poi.Long != null)
             {
                 double latitude;
-                Double.TryParse(poi.Lat.Replace(".", ","), out latitude);
+                Double.TryParse(poi.Lat.Replace(",", "."), out latitude);
                 double longitude;
-                Double.TryParse(poi.Long.Replace(".", ","), out longitude);
+                Double.TryParse(poi.Long.Replace(",", "."), out longitude);
                 foreach (var p in placemarks)
                 {
                     if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
@@ -190,7 +190,6 @@ namespace CarMate.Controllers
                             FuelCategories = fuelcatsSquirrel.ToArray()
                         });
                     }
-
                 }
             }
             else
@@ -201,7 +200,6 @@ namespace CarMate.Controllers
                 Int32.TryParse(poi.Region, out regionId);
                 if (regionId == 1)
                 {
-
                     placemarks = placemarks.Where(x => x.countryId == countryId).ToList();
                     foreach (var p in placemarks)
                     {
@@ -226,7 +224,6 @@ namespace CarMate.Controllers
                 }
                 else
                 {
-
                     placemarks = placemarks.Where(x => x.regionId == regionId && x.categoryId == countryId).ToList();
                     foreach (var p in placemarks)
                     {
@@ -252,6 +249,7 @@ namespace CarMate.Controllers
             }
             return Json(markers, JsonRequestBehavior.AllowGet);
         }
+
         //выбор точек по маршруту
         [HttpPost]
         public JsonResult PostlstSquirrel(List<Squirrel> incominglstSquirrel)
@@ -306,6 +304,7 @@ namespace CarMate.Controllers
 
                 }
             }
+
             return Json(markers, JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)
