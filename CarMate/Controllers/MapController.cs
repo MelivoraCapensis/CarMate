@@ -158,7 +158,7 @@ namespace CarMate.Controllers
             int categoryId;
             Int32.TryParse(poi.Category, out categoryId);
             double radius;
-            Double.TryParse(poi.Radius, out radius);
+            Double.TryParse(poi.Radius.Replace(",", "."), out radius);
             var placemarks = from p in placemarksRepository.GetPlacemarks()
                              select p;
             placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
@@ -272,9 +272,9 @@ namespace CarMate.Controllers
             foreach (var poisqurrel in incominglstSquirrel)
             {
                 double latitude;
-                Double.TryParse(poisqurrel.Lat.Replace(".", ","), out latitude);
+                Double.TryParse(poisqurrel.Lat.Replace(",", "."), out latitude);
                 double longitude;
-                Double.TryParse(poisqurrel.Long.Replace(".", ","), out longitude);
+                Double.TryParse(poisqurrel.Long.Replace(",", "."), out longitude);
                 foreach (var p in placemarks)
                 {
 
