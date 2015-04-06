@@ -1170,8 +1170,8 @@
     <None Include="Properties\PublishProfiles\Car-Mate - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\Car-Mate - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\dgfdg.pubxml" />
-    <None Include="Properties\PublishProfiles\nlkasdjf - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\nlkasdjf - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Tdgdfg - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\Tdgdfg - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\TestCarMate - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\TestCarMate - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />

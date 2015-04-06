@@ -26,11 +26,12 @@ namespace CarMate.Controllers
         {
             //ViewBag.ReturnUrl = returnUrl;
             return View();
+            //return PartialView("_PartLogin");
         }
+
 
         //
         // POST: /Account/Login
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

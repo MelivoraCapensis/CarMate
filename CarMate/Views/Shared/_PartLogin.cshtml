@@ -19,8 +19,7 @@
                 <div class="modal-body">
                     <h2>Use a local account to log in.</h2>
                     @*@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl, @class = "form col-md-12 center-block" }))*@
-                    @*@using (Html.BeginForm("Login", "Account", FormMethod.Post))*@
-                    @using (Ajax.BeginForm("Login", "Account", FormMethod.Get, new AjaxOptions { UpdateTargetId = "login" }))
+                    @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
