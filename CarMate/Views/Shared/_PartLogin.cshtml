@@ -4,6 +4,11 @@
 
 <div>
     <!-- Модальное окно -->
+    @*@using (Ajax.BeginForm("BookSearch", new AjaxOptions { UpdateTargetId = "searchresults" }))
+    {
+        <input type="text" name="name" />
+        <input type="submit" value="Поиск" />
+    }*@
     <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -14,7 +19,8 @@
                 <div class="modal-body">
                     <h2>Use a local account to log in.</h2>
                     @*@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl, @class = "form col-md-12 center-block" }))*@
-                    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                    @*@using (Html.BeginForm("Login", "Account", FormMethod.Post))*@
+                    @using (Ajax.BeginForm("Login", "Account", FormMethod.Get, new AjaxOptions { UpdateTargetId = "login" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
@@ -35,7 +41,6 @@
                             <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block"/>
 
                             <span>
-                                @*<a href="#">Need help?</a>*@
                                 @Html.CheckBoxFor(m => m.RememberMe)
                                 @Html.LabelFor(m => m.RememberMe, new {@class = "checkbox"})
                             </span>
@@ -62,5 +67,5 @@
             $('#loginCloseButton').trigger('click');    // Закрываем окно входа
             $('#registerButton').trigger('click');    // Открываем окно регистрации
         });
-    });    
+    });
 </script>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -24,10 +25,12 @@ namespace CarMate.Controllers
         const double RADIO = 6378.16;
         /// Convert degrees to Radians    
         ///  
+        /// 
         public static double Radians(double x)
         {
             return x * PIx / 180;
         }
+
         /// Calculate the distance between two places.
         public static double DistanceBetweenPlaces(
            double lon1,
@@ -42,6 +45,7 @@ namespace CarMate.Controllers
             double angle = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             return (angle * RADIO) * 0.62137;//distance in miles
         }
+
         //запрос к API геокодирования 
         public string GetforrmatedAdress(double lat, double lng)
         {
@@ -117,16 +121,7 @@ namespace CarMate.Controllers
                     Value = c.id.ToString()
                 });
             }
-            List<SelectListItem> ddlrad = new List<SelectListItem>();
-            ddlrad.Add(new SelectListItem() { Text = "10км", Value = "10" });
-            ddlrad.Add(new SelectListItem() { Text = "2км", Value = "2" });
-            ddlrad.Add(new SelectListItem() { Text = "1.5км", Value = "1,5" });
-            ddlrad.Add(new SelectListItem() { Text = "1.0км", Value = "1,0" });
-            ddlrad.Add(new SelectListItem() { Text = "0.8км", Value = "0,8" });
-            ddlrad.Add(new SelectListItem() { Text = "0.5км", Value = "0,5" });
-            ddlrad.Add(new SelectListItem() { Text = "0.4км", Value = "0,4" });
-            ddlrad.Add(new SelectListItem() { Text = "0.2км", Value = "0,2" });
-
+            
 
             CountryModel model = new CountryModel();
             using (CarMateEntities context = new CarMateEntities())
@@ -145,7 +140,6 @@ namespace CarMate.Controllers
             Squirrel s = new Squirrel();
             s.PoinCat = ddlcat;
             s.SeelctedCat = 1;
-            s.RadiusCat = ddlrad;
             s.SeelctedRad = 1;
             s.CountriesModel = model;
             return View(s);
@@ -158,16 +152,44 @@ namespace CarMate.Controllers
             int categoryId;
             Int32.TryParse(poi.Category, out categoryId);
             double radius;
-            Double.TryParse(poi.Radius.Replace(",", "."), out radius);
+            Double.TryParse(poi.Radius.Replace(".", ","), out radius);
+            //markers.Add(new Squirrel()
+            //{
+            //    Lat = radius.ToString(CultureInfo.CurrentCulture),
+            //    Long = poi.Radius.ToString(CultureInfo.CurrentCulture),
+            //    Vendore = "TEST",
+            //    Adress = "TEST",
+            //    Prices = new List<string>().ToArray(),
+            //    FuelCategories = new List<string>().ToArray()
+            //});
+
             var placemarks = from p in placemarksRepository.GetPlacemarks()
                              select p;
             placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
             if (poi.Lat != null && poi.Long != null)
             {
+                //markers.Add(new Squirrel()
+                //{
+                //    Lat = poi.Lat,
+                //    Long = poi.Long,
+                //    Vendore = "TEST",
+                //    Adress = "TEST",
+                //    Prices = new List<string>().ToArray(),
+                //    FuelCategories = new List<string>().ToArray()
+                //});
                 double latitude;
-                Double.TryParse(poi.Lat.Replace(",", "."), out latitude);
+                Double.TryParse(poi.Lat.Replace(".", ","), out latitude);
                 double longitude;
-                Double.TryParse(poi.Long.Replace(",", "."), out longitude);
+                Double.TryParse(poi.Long.Replace(".", ","), out longitude);
+                //markers.Add(new Squirrel()
+                //{
+                //    Lat = latitude.ToString(CultureInfo.CurrentCulture),
+                //    Long = longitude.ToString(CultureInfo.CurrentCulture),
+                //    Vendore = "TEST",
+                //    Adress = "TEST",
+                //    Prices = new List<string>().ToArray(),
+                //    FuelCategories = new List<string>().ToArray()
+                //});
                 foreach (var p in placemarks)
                 {
                     if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
@@ -197,7 +219,7 @@ namespace CarMate.Controllers
                 int countryId;
                 Int32.TryParse(poi.Country, out countryId);
                 int regionId;
-                Int32.TryParse(poi.Region, out regionId);
+                Int32.TryParse(poi.Region.Replace(".", ","), out regionId);
                 if (regionId == 1)
                 {
                     placemarks = placemarks.Where(x => x.countryId == countryId).ToList();
@@ -259,7 +281,7 @@ namespace CarMate.Controllers
             int categoryId;
             Int32.TryParse(item.Category, out categoryId);
             double radius;
-            Double.TryParse(item.Radius, out radius);
+            Double.TryParse(item.Radius.Replace(".", ","), out radius);
             #endregion
 
             // выбор из базы данных пои точек по категории и отбор по радиусу
@@ -272,9 +294,9 @@ namespace CarMate.Controllers
             foreach (var poisqurrel in incominglstSquirrel)
             {
                 double latitude;
-                Double.TryParse(poisqurrel.Lat.Replace(",", "."), out latitude);
+                Double.TryParse(poisqurrel.Lat.Replace(".", ","), out latitude);
                 double longitude;
-                Double.TryParse(poisqurrel.Long.Replace(",", "."), out longitude);
+                Double.TryParse(poisqurrel.Long.Replace(".", ","), out longitude);
                 foreach (var p in placemarks)
                 {
 

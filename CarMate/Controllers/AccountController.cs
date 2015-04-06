@@ -24,7 +24,7 @@ namespace CarMate.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            //ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -54,7 +54,8 @@ namespace CarMate.Controllers
 
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");
-            return View(model);
+            //return View(model);
+            return PartialView("_PartLogin", model);
         }
 
         //
