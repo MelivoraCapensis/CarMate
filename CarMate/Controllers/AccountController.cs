@@ -114,14 +114,14 @@ namespace CarMate.Controllers
                         {
                             Nickname = model.UserName,
                             UserEmail = model.Email,
-                            FirstName = model.FirstName,
-                            LastName = model.LastName,
+                            //FirstName = model.FirstName,
+                            //LastName = model.LastName,
                             //dateBirth = model.Year,
                             //country = model.Country,
                             //region = model.Region,
                             //city = model.City,
                             DateRegister = date,
-                            UserPassword = model.Password,
+                            //UserPassword = model.Password,
 
                             DateCreate = date,
                             State = 0

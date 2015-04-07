@@ -1,122 +1,64 @@
 ﻿@model CarMate.CarEvents
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Подробно";
 }
 
-<h2>Details</h2>
 <div class="container">
-<fieldset>
-    <legend>CarEvents</legend>
+    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <div class="row">
+        @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
+        <div class="col-lg-9 col-md-9">
+            @Html.Partial("_PartCarMenu")
+            <hr />
+            <div id="carContainer">
+                <h2>@ViewBag.Title</h2>
+                                
+                <div class="form-horizontal">
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(events => events.EventTypes.Name, "Событие", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-2">
+                            @Html.DisplayFor(model => model.EventTypes.Name)
+                        </div>
+                    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Cars.ImgPath)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Cars.ImgPath)
-    </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-2">
+                            @Html.DisplayFor(model => model.Odometer)
+                        </div>
+                    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EventTypes.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EventTypes.Name)
-    </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-2">
+                            @Html.DisplayFor(model => model.DateEvent)
+                        </div>
+                    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.FuelCategories.category)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.FuelCategories.category)
-    </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-2">
+                            @Html.DisplayFor(model => model.CostTotal)
+                        </div>
+                    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Odometer)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Odometer)
-    </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-2">
+                            @Html.DisplayFor(model => model.Comment)
+                        </div>
+                    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CostTotal)
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("Изменить", "Edit", new { id = Model.Id })
+                            @Html.ActionLink("Удалить", "Delete", new { id = Model.Id })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CostTotal)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateEvent)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateEvent)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.FuelCount)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.FuelCount)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.PricePerLitr)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.PricePerLitr)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Latitute)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Latitute)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Longitute)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Longitute)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.IsFullTank)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IsFullTank)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.IsMissedFilling)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IsMissedFilling)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Comment)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Comment)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateCreate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateCreate)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.State)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.State)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 </div>
-<!-- /class container -->
