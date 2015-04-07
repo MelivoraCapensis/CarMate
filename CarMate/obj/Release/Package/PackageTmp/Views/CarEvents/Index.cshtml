@@ -4,78 +4,142 @@
     ViewBag.Title = "Index";
 }
 
-<h2>События </h2>
+@*<h2>События </h2>*@
 
 <div class="container">
-<p>
-    @Html.ActionLink("Добавить событие", "Create", "CarEvents", new { carId = ViewBag.CarId }, null)
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Событие
-        </th>
 
-        <th>
-            Пробег
-        </th>
+    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
 
-        <th>
-            Дата
-        </th>
-
-        <th>
-            Стоимость
-        </th>
-
-        <th>
-            Комментарий
-        </th>
-
-        <th>
-            Показать на карте
-        </th>
-    </tr>
-
-    @foreach (var carEvent in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(x => carEvent.EventTypes.Name)
-            </td>
-
-            <td>
-                @Html.DisplayFor(x => carEvent.Odometer)
-            </td>
-
-            <td>
-                @Html.DisplayFor(x => carEvent.DateEvent)
-            </td>
-
-            <td>
-                @Html.DisplayFor(x => carEvent.CostTotal)
-            </td>
-
-            <td>
-                @Html.DisplayFor(x => carEvent.Comment)
-            </td>
-
-            <td>
-                @if (carEvent.Latitute != null && carEvent.Longitute != null)
+    <div class="row">
+        <div class="col-lg-3 col-md-3 thumbnail">
+            <div class="text-center">
+                <img src="@ViewBag.Car.ImgPath" class="col-lg-12" />
+                @*<img src="" class="col-lg-12" />*@
+                @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                 {
-                    @*@Html.ActionLink("Показать на карте", "", "", null, null)*@
-                    @:Показать на карте
+                    @Html.ActionLink("Редактировать автомобиль", "Edit", "Car", new { id = ViewBag.Car.Id }, new { @class = "btn btn-primary" })
                 }
-            </td>
-          
-            <td>
-                @Html.ActionLink("Изменить", "Edit", new {id = carEvent.Id}) |
-                @Html.ActionLink("Удалить", "Delete", new {id = carEvent.Id})
-            </td>
-        </tr>
-    }
+                @Html.ActionLink("Посмотреть все фото", "Photo", "Car", new { id = ViewBag.Car.Id }, new { @class = "btn btn-primary" })
+            </div>
+            <hr />
+            <p>Марка: @ViewBag.Car.CarModels.CarBrands.brand</p>
+            <p>Модель: @ViewBag.Car.CarModels.model</p>
+            <p>Модификация: @ViewBag.Car.CarModifications.modification</p>
+            <p>Год выпуска: @*@ViewBag.Car.dateBuy</p>*@
+            <p>Расход бензина: @ViewBag.Car.Consumption л/100км</p>
+            <p>Одометр (пробег): @ViewBag.Car.Odometer км</p>
+            <p>Объем бака: @ViewBag.Car.Tank л</p>
+            <p>Топливо: @*@ViewBag.Car.dateBuy</p>*@
+            <p>Цвет: @*@ViewBag.Car.dateBuy</p>*@
+            <p>Дата покупки: @*@ViewBag.Car.dateBuy</p>*@
+            <p>Коробка: @*@ViewBag.Car.dateBuy</p>*@
+            <p>Комментарий/отзыв: @*@ViewBag.Car.dateBuy</p>*@
+            <p>Оценка пользователя: @*@ViewBag.Car.dateBuy</p>*@
+        </div>
+        <div class="col-lg-9 col-md-9">
+            <ul class="nav nav-pills">
+                <li class="active">@Html.ActionLink("Все", "Test", "Test")</li>
+                <li>
+                    @Html.ActionLink("События", "Index", "CarEvents", new { carId = ViewBag.Car.Id }, null)
+                </li>
+                <li>@Html.ActionLink("Расход топлива", "Test", "Test")</li>
+                <li>@Html.ActionLink("Статистика затрат", "Test", "Test")</li>
+                <li>@Html.ActionLink("Статистика персональная", "Test", "Test")</li>
+                <li>@Html.ActionLink("Планы", "Test", "Test")</li>
+            </ul>
 
-</table>
+            <hr/>
+            <div id="carContainer">
+                <p>
+                    @Html.ActionLink("Добавить событие", "Create", "CarEvents", new { carId = ViewBag.Car.Id }, null)
+                </p>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Событие
+                        </th>
 
-</div>
-<!-- /class container -->
+                        <th>
+                            Пробег
+                        </th>
+
+                        <th>
+                            Дата
+                        </th>
+
+                        <th>
+                            Стоимость
+                        </th>
+
+                        <th>
+                            Комментарий
+                        </th>
+
+                        <th>
+                            Показать на карте
+                        </th>
+                    </tr>
+
+                    @foreach (var carEvent in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => carEvent.EventTypes.Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Odometer)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.DateEvent)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.CostTotal)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Comment)
+                            </td>
+
+                            <td>
+                                @if (carEvent.Latitute != null && carEvent.Longitute != null)
+                                {
+                                    @*@Html.ActionLink("Показать на карте", "", "", null, null)*@
+                                    @:Показать на карте
+                            }
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Изменить", "Edit", new { id = carEvent.Id }) |
+                                @Html.ActionLink("Удалить", "Delete", new { id = carEvent.Id })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+        @*<div class="col-lg-9 col-md-9">
+                <div id="chart_price">
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-9 col-md-9">
+                <div id="chart_distance">
+
+                </div>
+            </div>*@
+
+
+
+    </div>
+
+
+</div> <!-- End General Container -->
+
+
+

@@ -1,5 +1,4 @@
-﻿@using CarMate
-@model CarMate.Cars
+﻿@model CarMate.Cars
 
 @{
     ViewBag.Title = "Details";
@@ -39,8 +38,7 @@
                 <ul class="nav nav-pills">
                     <li class="active">@Html.ActionLink("Все", "Test", "Test")</li>
                     <li>
-                        @*@Html.ActionLink("События", "Index", "CarEvents", new {carId = Model.Id}, null)*@
-                        @Ajax.ActionLink("События", "Index", "CarEvents", new {id = Model.Id}, new AjaxOptions(UpdateTargetId = "carContainer"))
+                        @Html.ActionLink("События", "Index", "CarEvents", new {carId = Model.Id}, null)
                     </li>
                     <li>@Html.ActionLink("Расход топлива", "Test", "Test")</li>
                     <li>@Html.ActionLink("Статистика затрат", "Test", "Test")</li>
@@ -49,11 +47,11 @@
                 </ul>
             </div>
 
-            <div id="carContainer">
+            @*<div id="carContainer">
                 
-            </div>
+            </div>*@
 
-            <div class="col-lg-9 col-md-9">
+            @*<div class="col-lg-9 col-md-9">
                 <div id="chart_price">
 
                 </div>
@@ -64,17 +62,10 @@
                 <div id="chart_distance">
 
                 </div>
-            </div>
+            </div>*@
 
 
-            <div class="col-lg-9 col-md-9" style="float: right;">
-                <div id="chart_test">
-                    <script type="text/javascript">
-                        $('text:contains("Highcharts.com")').fadeOut(11);
-                    </script>
-                </div>
-            </div>
-
+            
         </div>
 
 
@@ -274,6 +265,5 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquery")
 }
