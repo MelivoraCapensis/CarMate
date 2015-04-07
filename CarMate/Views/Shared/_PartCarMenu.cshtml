@@ -1,0 +1,18 @@
+﻿<ul class="nav nav-pills">
+    <li class="active">
+        @Html.ActionLink("Все", "Test", "Test")
+    </li>
+
+    <li>
+        @Html.ActionLink("События", "Index", "CarEvents", new { carId = ViewBag.Car.Id }, null)
+    </li>
+
+    <li>@Html.ActionLink("Расход топлива", "Test", "Test")</li>
+
+    <li>@Html.ActionLink("Статистика затрат", "Test", "Test")</li>
+
+    <li>@Html.ActionLink("Статистика персональная", "Test", "Test")</li>
+
+    <li>
+        @Html.ActionLink("Планы", "Test", "Test")</li>
+</ul>

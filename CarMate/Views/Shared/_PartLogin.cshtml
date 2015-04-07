@@ -3,12 +3,6 @@
 
 
 <div>
-    <!-- Модальное окно -->
-    @*@using (Ajax.BeginForm("BookSearch", new AjaxOptions { UpdateTargetId = "searchresults" }))
-    {
-        <input type="text" name="name" />
-        <input type="submit" value="Поиск" />
-    }*@
     <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -18,12 +12,10 @@
                 </div>
                 <div class="modal-body">
                     <h2>Use a local account to log in.</h2>
-                    @*@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl, @class = "form col-md-12 center-block" }))*@
-                    @using (Html.BeginForm())
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
-
 
                         <div class="form-group">
 
