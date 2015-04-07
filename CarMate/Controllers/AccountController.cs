@@ -29,7 +29,6 @@ namespace CarMate.Controllers
             //return PartialView("_PartLogin");
         }
 
-
         //
         // POST: /Account/Login
         [HttpPost]

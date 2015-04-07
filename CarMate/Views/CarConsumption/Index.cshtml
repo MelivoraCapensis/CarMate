@@ -1,29 +1,19 @@
 ﻿@model IEnumerable<CarMate.CarEvents>
 
 @{
-    ViewBag.Title = "Все события";
+    ViewBag.Title = "Index";
 }
-
 <div class="container">
-
     <h2>Владелец: "@ViewBag.User.Nickname"</h2>
-
     <div class="row">
         @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
             @Html.Partial("_PartCarMenu")
-            <hr/>
+            <hr />
             <div id="carContainer">
-                <h2>@ViewBag.Title</h2>
-                <p>
-                    @Html.ActionLink("Добавить событие", "Create", "CarEvents", new { carId = ViewBag.Car.Id }, null)
-                </p>
+                <h2>Index</h2>
                 <table class="table">
                     <tr>
-                        <th>
-                            Событие
-                        </th>
-
                         <th>
                             Пробег
                         </th>
@@ -33,25 +23,19 @@
                         </th>
 
                         <th>
-                            Стоимость
+                            Название
                         </th>
 
                         <th>
-                            Комментарий
+                            Расход
                         </th>
 
-                        <th>
-                            Показать на карте
-                        </th>
                     </tr>
 
+                    @int odometr = 0;
                     @foreach (var carEvent in Model)
                     {
                         <tr>
-                            <td>
-                                @Html.DisplayFor(x => carEvent.EventTypes.Name)
-                            </td>
-
                             <td>
                                 @Html.DisplayFor(x => carEvent.Odometer)
                             </td>
@@ -61,19 +45,15 @@
                             </td>
 
                             <td>
-                                @Html.DisplayFor(x => carEvent.CostTotal)
+                                @Html.DisplayFor(x => carEvent.NameEvent)
                             </td>
 
                             <td>
-                                @Html.DisplayFor(x => carEvent.Comment)
+                                @Html.DisplayFor(x => carEvent.NameEvent)
                             </td>
 
                             <td>
-                                @if (carEvent.Latitute != null && carEvent.Longitute != null)
-                                {
-                                    @*@Html.ActionLink("Показать на карте", "", "", null, null)*@
-                                    @:Показать на карте
-                            }
+                                @carEvent.Odometer - odometr;
                             </td>
 
                             <td>
@@ -85,7 +65,11 @@
                     }
 
                 </table>
+
+
             </div>
         </div>
     </div>
-</div> <!-- End General Container -->
+</div>
+
+                

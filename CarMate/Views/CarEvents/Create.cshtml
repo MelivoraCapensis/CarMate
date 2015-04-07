@@ -4,80 +4,87 @@
     ViewBag.Title = "Создание события";
 }
 
-<h2>@ViewBag.Title</h2>
+@*<h2>@ViewBag.Title</h2>*@
+
 <div class="container">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(x => x.CarId)
+    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <div class="row">
+        @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
+        <div class="col-lg-9 col-md-9">
+            @Html.Partial("_PartCarMenu")
+            <hr />
+            <div id="carContainer">
+                <h2>@ViewBag.Title</h2>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.CarId)
 
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(model => model.DateEvent, htmlAttributes: new
+                                {
+                                    @class = "form-control",
+                                    data_provide = "datepicker",
+                                    @Value = Model.DateEvent.ToString("d")
+                                })
+                                @Html.ValidationMessageFor(model => model.DateEvent, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-horizontal">
-            <div class="form-group">
-                @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.DateEvent, htmlAttributes: new
-                    {
-                        @class = "form-control",
-                        data_provide = "datepicker",
-                        @Value = Model.DateEvent.ToString("d")
-                    })
-                    @Html.ValidationMessageFor(model => model.DateEvent, "", new {@class = "text-danger"})
-                </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(events => events.Odometer, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Odometer, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-3">
-                    @Html.TextBoxFor(events => events.Odometer, htmlAttributes: new {@class = "form-control"})
-                    @Html.ValidationMessageFor(model => model.Odometer, "", new {@class = "text-danger"})
-                </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.EventTypeId, "Событие", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.DropDownList("EventTypeId", null, htmlAttributes: new { @class = "form-control", onchange = "GetEvent(this)" })
+                                @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-            
+                        <div class="form-group" id="car_event">
+                            @Html.Action("GetEvent")
+                        </div>
 
-            
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(events => events.CostTotal, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CostTotal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(events => events.EventTypeId, "Событие", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-3">
-                    @Html.DropDownList("EventTypeId", null, htmlAttributes: new {@class = "form-control", onchange = "GetEvent(this)"})
-                    @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
-                </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextAreaFor(model => model.Comment, 10, 30, htmlAttributes: new { @class = "form-control", @style = "-moz-resize:none;-ms-resize:none;-o-resize:none;resize:none;" })
+                                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-            <div class="form-group" id="car_event">
-                @Html.Action("GetEvent")
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-3">
-                    @Html.TextBoxFor(events => events.CostTotal, htmlAttributes: new {@class = "form-control"})
-                    @Html.ValidationMessageFor(model => model.CostTotal, "", new {@class = "text-danger"})
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.TextAreaFor(model => model.Comment, 10, 30, htmlAttributes: new { @class = "form-control", @style = "-moz-resize:none;-ms-resize:none;-o-resize:none;resize:none;" })
-                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Сохранить" class="btn btn-default"/>
-                    @Html.ActionLink("Назад", "Index", "CarEvents", new {carId = Model.CarId}, new {@class = "btn btn-default"})
-                </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Сохранить" class="btn btn-default" />
+                                @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, new { @class = "btn btn-default" })
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-    }
+    </div>
+</div> <!-- End General Container -->
 
-</div>
-<!-- /class container -->
+
 
 <script type="text/javascript">
     @* При изменении события автомобиля подружаем разные поля *@

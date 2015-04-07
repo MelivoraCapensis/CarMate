@@ -19,26 +19,32 @@ namespace CarMate.Controllers
         public ActionResult Index(int carId)
         {
             //var carevents = db.CarEvents.Include(c => c.EventTypes).Include(c => c.FuelCategories).Include(c => c.Cars);
-            var carevents = db.CarEvents.Where(x => x.CarId == carId).ToList();
-            var car = db.Cars.Find(carId);
-            ViewBag.Car = car;
-            ViewBag.User = db.Users.Find(car.UserId);
-            return View(carevents);
+            var carEvents = db.CarEvents.Where(x => x.CarId == carId).OrderByDescending(x=>x.DateCreate).ToList();
+            CarAndUserInit(carId);
+            return View(carEvents);
             //return View(carevents.ToList());
         }
 
         //
         // GET: /CarEvents/Details/5
 
+        public void CarAndUserInit(int carId)
+        {
+            var car = db.Cars.Find(carId);
+            ViewBag.Car = car;
+            ViewBag.User = db.Users.Find(car.UserId);
+        }
+
         public ActionResult Details(int id)
         {
-            CarEvents carevents = db.CarEvents.Find(id);
-            if (carevents == null)
+            CarEvents carEvents = db.CarEvents.Find(id);
+            if (carEvents == null)
             {
                 return HttpNotFound();
             }
+            CarAndUserInit(carEvents.CarId);
 
-            return View(carevents);
+            return View(carEvents);
         }
 
         //
@@ -56,6 +62,7 @@ namespace CarMate.Controllers
             };
             //InitViewBag(carEvents);
             ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", 1);
+            CarAndUserInit(carId);
             return View(carEvents);
         }
 
@@ -77,6 +84,7 @@ namespace CarMate.Controllers
             }
 
             InitViewBag(carEvents);
+            CarAndUserInit(carEvents.CarId);
             //ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carevents.CarId);
@@ -90,19 +98,20 @@ namespace CarMate.Controllers
 
         public ActionResult Edit(int id)
         {
-            CarEvents carevents = db.CarEvents.Find(id);
-            if (carevents == null)
+            CarEvents carEvents = db.CarEvents.Find(id);
+            if (carEvents == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.EventType = carevents.EventTypes.Name;
+            ViewBag.EventType = carEvents.EventTypes.Name;
 
-            InitViewBag(carevents);
+            InitViewBag(carEvents);
+            CarAndUserInit(carEvents.CarId);
             //ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carevents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carevents.CarId);
-            return View(carevents);
+            return View(carEvents);
         }
 
         //
@@ -124,6 +133,7 @@ namespace CarMate.Controllers
             //ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carEvents.CarId);
+            CarAndUserInit(carEvents.CarId);
             return View(carEvents);
         }
 
@@ -132,12 +142,13 @@ namespace CarMate.Controllers
 
         public ActionResult Delete(int id)
         {
-            CarEvents carevents = db.CarEvents.Find(id);
-            if (carevents == null)
+            CarEvents carEvents = db.CarEvents.Find(id);
+            if (carEvents == null)
             {
                 return HttpNotFound();
             }
-            return View(carevents);
+            CarAndUserInit(carEvents.CarId);
+            return View(carEvents);
         }
 
         //
@@ -167,6 +178,7 @@ namespace CarMate.Controllers
 
         public PartialViewResult GetEvent(string name = "")
         {
+
             if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
             {
                 ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
@@ -178,22 +190,7 @@ namespace CarMate.Controllers
                 return PartialView("_PartEventRepair");
             }
 
-            
             return PartialView("_PartEventOther");
         }
-
-        //public PartialViewResult GetModifications(int modelId = 0)
-        //{
-        //    ViewBag.ModificationId = new SelectList(
-        //        db.CarModifications.Where(x => x.modelId == modelId)
-        //            .Select(x => new { modificationId = x.id, x.modification })
-        //            .OrderBy(x => x.modification)
-        //            .ToList(),
-        //        "ModificationId",
-        //        "Modification"
-        //        );
-
-        //    return PartialView("_PartCarModification");
-        //}
     }
 }
