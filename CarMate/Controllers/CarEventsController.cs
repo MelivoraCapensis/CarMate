@@ -8,7 +8,9 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using CarMate.Classes;
+using Newtonsoft.Json;
 
 namespace CarMate.Controllers
 {
@@ -263,7 +265,7 @@ namespace CarMate.Controllers
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
         }
 
-        public PartialViewResult GetEvent(string name = "")
+        public PartialViewResult GetEvent(string carEventJson, string name = "")
         {
             //CarEvents carEvent = null;
             //if (carEventModel != null)
@@ -274,19 +276,23 @@ namespace CarMate.Controllers
             //        carEvent = (CarEvents) js.ReadObject(ms);
             //    }
             //}
+            CarEvents carEventsModel = null;
+            if(carEventJson != null)
+                carEventsModel = JsonConvert.DeserializeObject<CarEvents>(carEventJson);
+            
 
             if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
             {
                 ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
-                return PartialView("_PartEventFilling");
+                return PartialView("_PartEventFilling", carEventsModel);
             }
             if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
             {
                 //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
-                return PartialView("_PartEventRepair");
+                return PartialView("_PartEventRepair", carEventsModel);
             }
 
-            return PartialView("_PartEventOther");
+            return PartialView("_PartEventOther", carEventsModel);
         }
     }
 }
