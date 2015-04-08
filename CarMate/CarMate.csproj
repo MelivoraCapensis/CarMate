@@ -283,7 +283,7 @@
     <Compile Include="Vendors.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CarModelViewModel.cs" />
+    <Compile Include="ViewModel\CarConsumptionViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\PoiViewModel.cs" />
   </ItemGroup>

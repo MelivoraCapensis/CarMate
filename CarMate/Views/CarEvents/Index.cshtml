@@ -15,9 +15,12 @@
             <hr/>
             <div id="carContainer">
                 <h2>@ViewBag.Title</h2>
-                <p>
-                    @Html.ActionLink("Добавить событие", "Create", "CarEvents", new { carId = ViewBag.Car.Id }, null)
-                </p>
+                @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+                {
+                    <p>
+                        @Html.ActionLink("Добавить событие", "Create", "CarEvents", new {carId = ViewBag.Car.Id}, null)
+                    </p>
+                }
                 <table class="table">
                     <tr>
                         <th>
@@ -77,9 +80,12 @@
                             </td>
 
                             <td>
-                                @Html.ActionLink("Детали", "Details", new { id = carEvent.Id }) |
-                                @Html.ActionLink("Изменить", "Edit", new { id = carEvent.Id }) |
-                                @Html.ActionLink("Удалить", "Delete", new { id = carEvent.Id })
+                                @Html.ActionLink("Детали", "Details", new { id = carEvent.Id })
+                                @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+                                {
+                                    @Html.ActionLink("Изменить", "Edit", new {id = carEvent.Id})
+                                    @Html.ActionLink("Удалить", "Delete", new {id = carEvent.Id})
+                                }
                             </td>
                         </tr>
                     }

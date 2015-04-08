@@ -53,8 +53,11 @@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, new { @class = "btn btn-default" })
-                            @Html.ActionLink("Изменить", "Edit", new { id = Model.Id })
-                            @Html.ActionLink("Удалить", "Delete", new { id = Model.Id })
+                            @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+                            {
+                                @Html.ActionLink("Изменить", "Edit", new {id = Model.Id})
+                                @Html.ActionLink("Удалить", "Delete", new {id = Model.Id})
+                            }
                         </div>
                     </div>
                 </div>

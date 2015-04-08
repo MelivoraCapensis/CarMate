@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CarMate.CarEvents>
+﻿@model IEnumerable<CarMate.ViewModel.CarConsumptionViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -15,10 +15,6 @@
                 <table class="table">
                     <tr>
                         <th>
-                            Пробег
-                        </th>
-
-                        <th>
                             Дата
                         </th>
 
@@ -27,43 +23,58 @@
                         </th>
 
                         <th>
-                            Расход
+                            Пробег
                         </th>
 
+                        <th>
+                            Расход
+                        </th>
                     </tr>
 
-                    @int odometr = 0;
                     @foreach (var carEvent in Model)
                     {
+                        <tr style="background: cornflowerblue">
+                            <td></td>
+
+                            <td></td>
+
+                            <td></td>
+
+                            <td></td>
+                        </tr>
+
                         <tr>
                             <td>
-                                @Html.DisplayFor(x => carEvent.Odometer)
+                                @Html.DisplayFor(x => carEvent.NewCarEvent.DateEvent)
                             </td>
 
                             <td>
-                                @Html.DisplayFor(x => carEvent.DateEvent)
+                                @Html.DisplayFor(x => carEvent.NewCarEvent.NameEvent)
                             </td>
 
                             <td>
-                                @Html.DisplayFor(x => carEvent.NameEvent)
+                                @Html.DisplayFor(x => carEvent.Mileage)
                             </td>
 
                             <td>
-                                @Html.DisplayFor(x => carEvent.NameEvent)
-                            </td>
-
-                            <td>
-                                @carEvent.Odometer - odometr;
-                            </td>
-
-                            <td>
-                                @Html.ActionLink("Детали", "Details", new { id = carEvent.Id }) |
-                                @Html.ActionLink("Изменить", "Edit", new { id = carEvent.Id }) |
-                                @Html.ActionLink("Удалить", "Delete", new { id = carEvent.Id })
+                                @Html.DisplayFor(x => carEvent.Consumption)
                             </td>
                         </tr>
-                    }
 
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => carEvent.OldCarEvent.DateEvent)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.OldCarEvent.NameEvent)
+                            </td>
+
+                            <td></td>
+
+                            <td></td>
+                        </tr>
+                    }
                 </table>
 
 
