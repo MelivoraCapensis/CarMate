@@ -56,10 +56,19 @@ namespace CarMate.Controllers
             // Если пользователь авторизирован, ищем его Id в БД
             Owner(HttpContext);
 
+            CarAndUserInit(id);
+
             // Этот пользователь владелец?
             ViewBag.IsOwner = this.UserId == cars.UserId;
 
             return View(cars);
+        }
+
+        public void CarAndUserInit(int carId)
+        {
+            var car = db.Cars.Find(carId);
+            ViewBag.Car = car;
+            ViewBag.User = db.Users.Find(car.UserId);
         }
 
         //

@@ -1,18 +1,34 @@
-﻿<ul class="nav nav-pills">
-    <li class="active">
-        @Html.ActionLink("Все", "Test", "Test")
+﻿@helper CurrentItem(string controller)
+{
+    if (controller != ViewContext.RouteData.Values["controller"].ToString())
+    {
+        return;
+    }
+    @:class="active"
+}
+
+<ul class="nav nav-pills">
+    <li @CurrentItem("Car")>
+        @Html.ActionLink("Все", "Details", "Car", new { id = ViewBag.Car.Id }, null)
     </li>
 
-    <li>
+    <li @CurrentItem("CarEvents")>
         @Html.ActionLink("События", "Index", "CarEvents", new { carId = ViewBag.Car.Id }, null)
     </li>
 
-    <li>@Html.ActionLink("Расход топлива", "Test", "Test")</li>
-
-    <li>@Html.ActionLink("Статистика затрат", "Test", "Test")</li>
-
-    <li>@Html.ActionLink("Статистика персональная", "Test", "Test")</li>
+    <li @CurrentItem("CarConsumption")>
+        @Html.ActionLink("Расход топлива", "Index", "CarConsumption", new { carId = ViewBag.Car.Id }, null)
+    </li>
 
     <li>
-        @Html.ActionLink("Планы", "Test", "Test")</li>
+        @Html.ActionLink("Статистика затрат", "Test", "Test")
+    </li>
+
+    <li>
+        @Html.ActionLink("Статистика персональная", "Test", "Test")
+    </li>
+
+    <li>
+        @Html.ActionLink("Планы", "Test", "Test")
+    </li>
 </ul>

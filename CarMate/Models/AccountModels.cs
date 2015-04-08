@@ -62,11 +62,11 @@ namespace CarMate.Models
 
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Логин - обязательное поле")]
         [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Пароль - обязательное поле")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
@@ -77,7 +77,7 @@ namespace CarMate.Models
 
     public class RegisterModel
     {
-        [Required(ErrorMessage = "Имя пользователя - обязательное поле")]
+        [Required(ErrorMessage = "Логин - обязательное поле")]
         [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 

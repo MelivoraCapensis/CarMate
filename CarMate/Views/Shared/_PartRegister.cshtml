@@ -10,7 +10,7 @@
                     <h4 class="modal-title text-center" id="myModalLabel">Регистрация</h4>
                 </div>
                 <div class="modal-body">
-                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
 

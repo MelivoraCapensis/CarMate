@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using CarMate.Classes;
@@ -19,10 +22,20 @@ namespace CarMate.Controllers
         public ActionResult Index(int carId)
         {
             //var carevents = db.CarEvents.Include(c => c.EventTypes).Include(c => c.FuelCategories).Include(c => c.Cars);
-            var carEvents = db.CarEvents.Where(x => x.CarId == carId).OrderByDescending(x=>x.DateCreate).ToList();
+            var carEvents = db.CarEvents
+                .Where(x => x.CarId == carId)
+                .OrderByDescending(x=>x.DateCreate).ToList();
+
             CarAndUserInit(carId);
+
+            Owner(HttpContext);
+            var car = db.Cars.Find(carId);
+            ViewBag.IsOwner = this.UserId == car.UserId;
+
+
             return View(carEvents);
             //return View(carevents.ToList());
+
         }
 
         //
@@ -44,6 +57,9 @@ namespace CarMate.Controllers
             }
             CarAndUserInit(carEvents.CarId);
 
+            Owner(HttpContext);
+            ViewBag.IsOwner = this.UserId == carEvents.Cars.UserId;
+
             return View(carEvents);
         }
 
@@ -52,9 +68,6 @@ namespace CarMate.Controllers
 
         public ActionResult Create(int carId)
         {
-            //ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name");
-            //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category");
-            //ViewBag.CarId = carId;
             var carEvents = new CarEvents
             {
                 CarId = carId,
@@ -63,6 +76,13 @@ namespace CarMate.Controllers
             //InitViewBag(carEvents);
             ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", 1);
             CarAndUserInit(carId);
+            Owner(HttpContext);
+            var car = db.Cars.Find(carId);
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
+
             return View(carEvents);
         }
 
@@ -85,6 +105,12 @@ namespace CarMate.Controllers
 
             InitViewBag(carEvents);
             CarAndUserInit(carEvents.CarId);
+            Owner(HttpContext);
+            var car = db.Cars.Find(carEvents.CarId);
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
             //ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carevents.CarId);
@@ -108,6 +134,12 @@ namespace CarMate.Controllers
 
             InitViewBag(carEvents);
             CarAndUserInit(carEvents.CarId);
+            Owner(HttpContext);
+            var car = db.Cars.Find(carEvents.CarId);
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
             //ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carevents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carevents.CarId);
@@ -121,9 +153,33 @@ namespace CarMate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CarEvents carEvents)
         {
+            Owner(HttpContext);
+            var car = db.Cars.Find(carEvents.CarId);
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                db.Entry(carEvents).State = EntityState.Modified;
+                CarEvents carEventsFromDb = db.CarEvents.Find(carEvents.Id);
+                carEventsFromDb.Comment = carEvents.Comment;
+                carEventsFromDb.CostTotal = carEvents.CostTotal;
+                carEventsFromDb.DateEvent = carEvents.DateEvent;
+                carEventsFromDb.EventTypeId = carEvents.EventTypeId;
+                carEventsFromDb.FuelCategoryId = carEvents.FuelCategoryId;
+                carEventsFromDb.FuelCount = carEvents.FuelCount;
+                carEventsFromDb.IsFullTank = carEvents.IsFullTank;
+                carEventsFromDb.IsMissedFilling = carEvents.IsMissedFilling;
+                carEventsFromDb.Latitute = carEvents.Latitute;
+                carEventsFromDb.Longitute = carEvents.Longitute;
+                carEventsFromDb.NameEvent = carEvents.NameEvent;
+                carEventsFromDb.Odometer = carEvents.Odometer;
+                carEventsFromDb.PricePerLitr = carEvents.PricePerLitr;
+
+                carEventsFromDb.DateCreate = DateTime.Now;
+                carEventsFromDb.State = Consts.StateUpdate;
+
                 db.SaveChanges();
                 return RedirectToAction("Index", new { carId = carEvents.CarId });
             }
@@ -142,11 +198,19 @@ namespace CarMate.Controllers
 
         public ActionResult Delete(int id)
         {
+            Owner(HttpContext);
             CarEvents carEvents = db.CarEvents.Find(id);
             if (carEvents == null)
             {
                 return HttpNotFound();
             }
+
+            var car = db.Cars.Find(carEvents.CarId);
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
+
             CarAndUserInit(carEvents.CarId);
             return View(carEvents);
         }
@@ -158,7 +222,16 @@ namespace CarMate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Owner(HttpContext);
+
             CarEvents carEvents = db.CarEvents.Find(id);
+
+            var car = db.Cars.Find(carEvents.CarId);
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
+
             db.CarEvents.Remove(carEvents);
             db.SaveChanges();
             return RedirectToAction("Index", new { carId = carEvents.CarId });
@@ -170,6 +243,20 @@ namespace CarMate.Controllers
             base.Dispose(disposing);
         }
 
+        public void Owner(HttpContextBase httpContext)
+        {
+            // Если пользователь авторизован
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                this.UserId = db.Users
+                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+
+                ViewBag.Owner = this.UserId;
+            }
+        }
+
         private void InitViewBag(CarEvents carEvents)
         {
             ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
@@ -178,6 +265,15 @@ namespace CarMate.Controllers
 
         public PartialViewResult GetEvent(string name = "")
         {
+            //CarEvents carEvent = null;
+            //if (carEventModel != null)
+            //{
+            //    DataContractJsonSerializer js = new DataContractJsonSerializer(typeof (CarEvents));
+            //    using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(carEventModel)))
+            //    {
+            //        carEvent = (CarEvents) js.ReadObject(ms);
+            //    }
+            //}
 
             if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
             {
