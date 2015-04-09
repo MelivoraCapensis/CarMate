@@ -121,14 +121,14 @@
                        '<input type="text" placeholder="введите адресс" id="pac-input">' +
                        '<label>Радиус</label>' +
                        '<select class="form-control" id="radius">' +
-                       '<option selected  value = "1,0" >1.0км</option>' +
-                       '<option value = "10" >10км</option>' +
-                       '<option value = "2" >2км</option>' +
-                       '<option value = "1,5" >1.5км</option>' +
-                       '<option value = "0,8" >0.8км</option>' +
-                       '<option value = "0,5" >0.5км</option>' +
-                       '<option value = "0,4" >0.4км</option>' +
-                       '<option value = "0,2" >0.2км</option>' +
+                       '<option selected  value = "1.0" >1.0км</option>' +
+                       '<option value = "10.0" >10км</option>' +
+                       '<option value = "2.0" >2км</option>' +
+                       '<option value = "1.5" >1.5км</option>' +
+                       '<option value = "0.8" >0.8км</option>' +
+                       '<option value = "0.5" >0.5км</option>' +
+                       '<option value = "0.4" >0.4км</option>' +
+                       '<option value = "0.2" >0.2км</option>' +
                        '</select>' +
                       '<label for="directionsPanel" id="labelroute" >Маршрут детали:</label>' +
                       ' <div id="directionsPanel" style="overflow:auto;width:100%;height:300px;"></div>' +
@@ -254,6 +254,7 @@
                 //запоминаем текущие координаты местоположения
                 document.getElementById('latitude').value = position.coords.latitude;
                 document.getElementById('longitude').value = position.coords.longitude;
+
                 if ($("#foursquare_markers")[0].checked == true) {
                     getFoursquare();
                 }
@@ -437,12 +438,8 @@
 
     }
     google.maps.event.addDomListener(window, 'load', initialize);
-    $(function () {
-        $('#collapseFour').collapse({
-            toggle: false
-        })
-    });
-    $(function () { $('#collapseOne').collapse('hide') });
+
+
     $('#gas_markers').on("click", function () {
         if ($('#gas_markers:checked').val() !== undefined) {
             //Checked
@@ -537,13 +534,11 @@
             Vendore: "",
             ImagePath: "",
             Country: "",
+            Adress: "",
             Category: category,
-            StreetRoute: "",
-            StreetNumber: "",
-            City: "",
-            Region: "",
             Radius: radius
         };
+        //alert("Lat: " + squirrel.Lat + "Lng: " + squirrel.Long + " Cat: " + squirrel.Category + "Радиус: " + squirrel.Radius)
         var onEventLaunchSquirrel = new postSquirrel(squirrel);
         onEventLaunchSquirrel.launchSquirrel();
     }
@@ -605,6 +600,7 @@
     //получение от google api путевых точек по маршруту
     function calcRoute(route_markers) {
         var radius = $('#radius').val();
+        var category = $('#gas_markers').val();
         var rf = parseFloat(radius);
         var start = route_markers[0].position;
         var end = route_markers[route_markers.length - 1].position;
@@ -635,15 +631,13 @@
                                     Lat: path.lat(),
                                     Long: path.lng(),
                                     Vendore: "",
-                                    ImagePath: '',
-                                    Country: '',
-                                    Category: '',
-                                    StreetRoute: '',
-                                    StreetNumber: '',
-                                    City: '',
-                                    Region: '',
-                                    Radius: ''
+                                    ImagePath: "",
+                                    Country: "",
+                                    Adress: "",
+                                    Category: category,
+                                    Radius: radius
                                 };
+                                //alert("Lat: " + squirrel.Lat + "Lng: " + squirrel.Long + " Cat: " + squirrel.Category + "Радиус: " + squirrel.Radius)
                                 squirrel_data.push(squirrel);
                                 image = new google.maps.MarkerImage("../PlaceMarkers/media.png");
                                 var marker = new google.maps.Marker({
@@ -663,13 +657,10 @@
                                     Vendore: "",
                                     ImagePath: '',
                                     Country: '',
-                                    Category: '',
-                                    StreetRoute: '',
-                                    StreetNumber: '',
-                                    City: '',
-                                    Region: '',
-                                    Radius: ''
+                                    Category: category,
+                                    Radius: radius
                                 };
+                                //alert("Lat: "+squirrel.Lat+"Lng: "+squirrel.Long+" Cat: "+squirrel.Category+"Радиус: "+squirrel.Radius)
                                 squirrel_data.push(squirrel);
                                 image = new google.maps.MarkerImage("../PlaceMarkers/media.png");
                                 var marker = new google.maps.Marker({

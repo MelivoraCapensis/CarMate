@@ -1,5 +1,4 @@
-﻿@using CarMate
-@model CarMate.Cars
+﻿@model CarMate.Cars
 
 @{
     ViewBag.Title = "Details";
@@ -10,50 +9,16 @@
         <h2>Владелец: "@Model.Users.Nickname"</h2>
 
         <div class="row">
-            <div class="col-lg-3 col-md-3 thumbnail">
-                <div class="text-center">
-                    <img src="@Model.ImgPath" class="col-lg-12" />
-                    @*<img src="" class="col-lg-12" />*@
-                    @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
-                    {
-                        @Html.ActionLink("Редактировать автомобиль", "Edit", "Car", new { id = Model.Id }, new { @class = "btn btn-primary" })
-                    }
-                    @Html.ActionLink("Посмотреть все фото", "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-primary" })
-                </div>
-                <hr />
-                <p>Марка: @Model.CarModels.CarBrands.brand</p>
-                <p>Модель: @Model.CarModels.model</p>
-                <p>Модификация: @Model.CarModifications.modification</p>
-                <p>Год выпуска: @*@Model.dateBuy</p>*@
-                <p>Расход бензина: @Model.Consumption л/100км</p>
-                <p>Одометр (пробег): @Model.Odometer км</p>
-                <p>Объем бака: @Model.Tank л</p>
-                <p>Топливо: @*@Model.dateBuy</p>*@
-                <p>Цвет: @*@Model.dateBuy</p>*@
-                <p>Дата покупки: @*@Model.dateBuy</p>*@
-                <p>Коробка: @*@Model.dateBuy</p>*@
-                <p>Комментарий/отзыв: @*@Model.dateBuy</p>*@
-                <p>Оценка пользователя: @*@Model.dateBuy</p>*@
-            </div>
+            @Html.Partial("_PartCarInfo")
             <div class="col-lg-9 col-md-9">
-                <ul class="nav nav-pills">
-                    <li class="active">@Html.ActionLink("Все", "Test", "Test")</li>
-                    <li>
-                        @*@Html.ActionLink("События", "Index", "CarEvents", new {carId = Model.Id}, null)*@
-                        @Ajax.ActionLink("События", "Index", "CarEvents", new {id = Model.Id}, new AjaxOptions(UpdateTargetId = "carContainer"))
-                    </li>
-                    <li>@Html.ActionLink("Расход топлива", "Test", "Test")</li>
-                    <li>@Html.ActionLink("Статистика затрат", "Test", "Test")</li>
-                    <li>@Html.ActionLink("Статистика персональная", "Test", "Test")</li>
-                    <li>@Html.ActionLink("Планы", "Test", "Test")</li>
-                </ul>
+                @Html.Partial("_PartCarMenu")
             </div>
 
-            <div id="carContainer">
+            @*<div id="carContainer">
                 
-            </div>
+            </div>*@
 
-            <div class="col-lg-9 col-md-9">
+            @*<div class="col-lg-9 col-md-9">
                 <div id="chart_price">
 
                 </div>
@@ -64,24 +29,17 @@
                 <div id="chart_distance">
 
                 </div>
-            </div>
+            </div>*@
 
 
-            <div class="col-lg-9 col-md-9" style="float: right;">
-                <div id="chart_test">
-                    <script>
-                        $('text:contains("Highcharts.com")').fadeOut(11);
-                    </script>
-                </div>
-            </div>
-
+            
         </div>
 
 
 </div> <!-- End General Container -->
 
 
-<!-- jQuery -->
+@*<!-- jQuery -->
 <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -92,9 +50,9 @@
 <script src="~/bower_components/morrisjs/morris.min.js"></script>
 <script src="~/js/morris-data.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="~/dist/js/sb-admin-2.js"></script>
+<script src="~/dist/js/sb-admin-2.js"></script>*@
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(function () {
         $('#chart_price').highcharts({
             chart: {
@@ -270,10 +228,9 @@
     });
 
 
-</script>
+</script>*@
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquery")
 }

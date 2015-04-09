@@ -24,13 +24,13 @@ namespace CarMate.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            //ViewBag.ReturnUrl = returnUrl;
+            return View(new LoginModel());
+            //return PartialView("_PartLogin");
         }
 
         //
         // POST: /Account/Login
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -55,6 +55,7 @@ namespace CarMate.Controllers
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");
             return View(model);
+            //return PartialView("_PartLogin", model);
         }
 
         //
@@ -113,14 +114,14 @@ namespace CarMate.Controllers
                         {
                             Nickname = model.UserName,
                             UserEmail = model.Email,
-                            FirstName = model.FirstName,
-                            LastName = model.LastName,
+                            //FirstName = model.FirstName,
+                            //LastName = model.LastName,
                             //dateBirth = model.Year,
                             //country = model.Country,
                             //region = model.Region,
                             //city = model.City,
                             DateRegister = date,
-                            UserPassword = model.Password,
+                            //UserPassword = model.Password,
 
                             DateCreate = date,
                             State = 0

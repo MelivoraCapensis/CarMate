@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Antlr.Runtime;
@@ -17,11 +18,19 @@ namespace CarMate.Controllers
 
         //
         // GET: /Car/
-
         public ActionResult Index()
         {
             var cars = db.Cars.Include(c => c.CarModels).Include(c => c.CarModifications).Include(c => c.Users);
+            Owner(HttpContext);
 
+            return View(cars.ToList());
+        }
+
+        // Назвать метод по другому
+        // Получает Id авторизованного юзера
+        public void Owner(HttpContextBase httpContext)
+        {
+            // Если пользователь авторизован
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 this.UserId = db.Users
@@ -31,14 +40,6 @@ namespace CarMate.Controllers
 
                 ViewBag.Owner = this.UserId;
             }
-            else
-            {
-                this.UserId = 0;
-            }
-
-
-
-            return View(cars.ToList());
         }
 
         //
@@ -53,17 +54,9 @@ namespace CarMate.Controllers
             }
             
             // Если пользователь авторизирован, ищем его Id в БД
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                this.UserId = db.Users
-                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
-            }
-            else
-            {
-                this.UserId = 0;
-            }
+            Owner(HttpContext);
+
+            CarAndUserInit(id);
 
             // Этот пользователь владелец?
             ViewBag.IsOwner = this.UserId == cars.UserId;
@@ -71,40 +64,31 @@ namespace CarMate.Controllers
             return View(cars);
         }
 
+        public void CarAndUserInit(int carId)
+        {
+            var car = db.Cars.Find(carId);
+            ViewBag.Car = car;
+            ViewBag.User = db.Users.Find(car.UserId);
+        }
+
         //
         // GET: /Car/Create
-        //[ChildActionOnly]
+        [Authorize]
         public ActionResult Create(int userId = 0)
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                this.UserId = db.Users
-                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
-
-                ViewBag.Owner = this.UserId;
-            }
-            else
-            {
-                // Если пользователь не авторизирован, у него нет доступа к этому методу
-                return HttpNotFound();
-            }
-
+            Owner(HttpContext);
             if (this.UserId != userId)
             {
+                //return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
                 return HttpNotFound();
             }
+
             Cars car = new Cars
             {
                 UserId = this.UserId,
                 DateBuy = DateTime.Today
             };
-
-            //ViewBag.User = db.Users.Find(this.UserId);
-            //ViewBag.modelId = new SelectList(db.CarModels, "id", "model");
-            //ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification");
-            //ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand");
+            
             InitViewBag(car);
             return View(car);
             
@@ -114,9 +98,17 @@ namespace CarMate.Controllers
         // POST: /Car/Create
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cars cars)
+        public ActionResult Create(Cars car)
         {
+            Owner(HttpContext);
+            if (this.UserId != car.UserId)
+            {
+                //return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return HttpNotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -125,7 +117,7 @@ namespace CarMate.Controllers
                     string imgPath = "";
                     if (pf != null && pf.ContentLength != 0)
                     {
-                        string fileName = cars.UserId + cars.Odometer + Path.GetExtension(pf.FileName);
+                        string fileName = car.UserId + car.Odometer + Path.GetExtension(pf.FileName);
                         imgPath = "/Content/Images/" + fileName;
                         pf.SaveAs(Server.MapPath(imgPath));
                     }
@@ -133,14 +125,14 @@ namespace CarMate.Controllers
                         imgPath = "/Content/Images/auto.jpg";
                     if (!String.IsNullOrEmpty(imgPath))
                     {
-                        cars.ImgPath = imgPath;
+                        car.ImgPath = imgPath;
                     }
 
-                    cars.DateCreate = DateTime.Now;
-                    cars.State = 0;
-                    db.Cars.Add(cars);
+                    car.DateCreate = DateTime.Now;
+                    car.State = 0;
+                    db.Cars.Add(car);
                     db.SaveChanges();
-                    return RedirectToAction("Details", "Car", new { id = cars.Id });
+                    return RedirectToAction("Details", "Car", new { id = car.Id });
                 }
                 catch (Exception exc)
                 {
@@ -148,33 +140,17 @@ namespace CarMate.Controllers
                 }
             }
 
-            //ViewBag.User = db.Users.Find(this.UserId);
-            //ViewBag.modelId = new SelectList(db.CarModels, "id", "model");
-            //ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification");
-            //ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand");
-            InitViewBag(cars);
-            return View(cars);
+            InitViewBag(car);
+            return View(car);
         }
 
         //
         // GET: /Car/Edit/5
         //[ChildActionOnly]
+        [Authorize]
         public ActionResult Edit(int id = 0)
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                this.UserId = db.Users
-                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
-
-                //ViewBag.Owner = this.UserId;
-            }
-            else
-            {
-                // Если пользователь не авторизирован, у него нет доступа к этому методу
-                return HttpNotFound();
-            }
+            Owner(HttpContext);
 
             Cars car = db.Cars.Find(id);
             if (car == null)
@@ -187,15 +163,6 @@ namespace CarMate.Controllers
                 return HttpNotFound();
             }
 
-            
-
-            // Если пользователь, который хочет редактировать этот автомобиль, не является его владельцем
-            //if (this.UserId != cars.UserId)
-            //{
-            //    return HttpNotFound();
-            //}
-
-
             ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand", car.CarModels.CarBrands.id);
             ViewBag.modelId = new SelectList(db.CarModels, "id", "model", car.ModelId);
             ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification", car.ModificationId);
@@ -207,10 +174,16 @@ namespace CarMate.Controllers
         // POST: /Car/Edit/5
 
         [HttpPost]
-        //[ChildActionOnly]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Cars car)
         {
+            Owner(HttpContext);
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 Cars carFromDb = db.Cars.Find(car.Id);
@@ -232,48 +205,42 @@ namespace CarMate.Controllers
 
         //
         // GET: /Car/Delete/5
-        //[ChildActionOnly]
+        [Authorize]
         public ActionResult Delete(int id = 0)
         {
-            //if (HttpContext.User.Identity.IsAuthenticated)
-            //{
-            //    this.UserId = db.Users
-            //        .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-            //        .Select(x => x.Id)
-            //        .FirstOrDefault();
+            Owner(HttpContext);
 
-            //    //ViewBag.Owner = this.UserId;
-            //}
-            //else
-            //{
-            //    // Если пользователь не авторизирован, у него нет доступа к этому методу
-            //    return HttpNotFound();
-            //}
-
-            Cars cars = db.Cars.Find(id);
-            if (cars == null)
+            Cars car = db.Cars.Find(id);
+            if (car == null)
             {
                 return HttpNotFound();
             }
 
-            //if (UserId != cars.UserId)
-            //{
-            //    return HttpNotFound();
-            //}
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
 
-            //InitViewBag(cars);
-            return View(cars);
+            return View(car);
         }
 
         //
         // POST: /Car/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        //[ChildActionOnly]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Owner(HttpContext);
+
             Cars car = db.Cars.Find(id);
+
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
+
             db.Cars.Remove(car);
             db.SaveChanges();
             return RedirectToAction("Details", "User", new {id = car.UserId});
@@ -288,8 +255,6 @@ namespace CarMate.Controllers
         public void InitViewBag(Cars car)
         {
             ViewBag.User = db.Users.Find(this.UserId);
-            //ViewBag.modelId = new SelectList(db.CarModels, "id", "model", car.ModelId);
-            //ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification", car.ModificationId);
             ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand");
         }
 

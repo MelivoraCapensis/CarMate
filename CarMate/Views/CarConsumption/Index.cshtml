@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CarMate.ViewModel.CarConsumptionViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <div class="row">
+        @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
+        <div class="col-lg-9 col-md-9">
+            @Html.Partial("_PartCarMenu")
+            <hr />
+            <div id="carContainer">
+                <h2>Index</h2>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Дата
+                        </th>
+
+                        <th>
+                            Название
+                        </th>
+
+                        <th>
+                            Пробег
+                        </th>
+
+                        <th>
+                            Расход
+                        </th>
+                    </tr>
+
+                    @foreach (var carEvent in Model)
+                    {
+                        <tr style="background: cornflowerblue">
+                            <td></td>
+
+                            <td></td>
+
+                            <td></td>
+
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => carEvent.NewCarEvent.DateEvent)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.NewCarEvent.NameEvent)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Mileage)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Consumption)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => carEvent.OldCarEvent.DateEvent)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.OldCarEvent.NameEvent)
+                            </td>
+
+                            <td></td>
+
+                            <td></td>
+                        </tr>
+                    }
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                

@@ -50,6 +50,10 @@
       <HintPath>..\packages\Facebook.6.8.0\lib\net45\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,9 +80,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
@@ -226,6 +227,7 @@
     <Compile Include="Code\VKontakteAuthenticationClient.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CarConsumptionController.cs" />
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\CarEventsController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
@@ -282,7 +284,7 @@
     <Compile Include="Vendors.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CarModelViewModel.cs" />
+    <Compile Include="ViewModel\CarConsumptionViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\PoiViewModel.cs" />
   </ItemGroup>
@@ -1166,7 +1168,6 @@
       <LastGenOutput>CarMateModel.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\AJleksei.pubxml" />
-    <None Include="Properties\PublishProfiles\AlSh.pubxml" />
     <None Include="Properties\PublishProfiles\Car-Mate - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\Car-Mate - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\dgfdg.pubxml" />
@@ -1419,6 +1420,9 @@
     <Content Include="Views\Shared\_PartRegister.cshtml" />
     <Content Include="Views\CarEvents\_PartEventRepair.cshtml" />
     <Content Include="Views\CarEvents\_PartEvents.cshtml" />
+    <Content Include="Views\Shared\_PartCarInfo.cshtml" />
+    <Content Include="Views\Shared\_PartCarMenu.cshtml" />
+    <Content Include="Views\CarConsumption\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

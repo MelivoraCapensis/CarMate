@@ -1,5 +1,4 @@
-﻿@using CarMate
-@model CarMate.Cars
+﻿@model CarMate.Cars
 
 @{
     ViewBag.Title = "Details";
@@ -8,31 +7,6 @@
 <div class="container">
 
         <h2>Владелец: "@Model.Users.Nickname"</h2>
-
-        <p>
-
-            @*@Html.ActionLink("Back to List", "Index")*@
-
-            @*@{
-                    var r1 = new List<double> {130.3, 25, 150, 150, 150, 85, 0, 123.3, 91.2, 83.5, 106.6, 92.3};
-                    var r2 = new List<double> {48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2};
-                    var r3 = new List<double> {42.4, 33.2, 34.5, 39.7, 0, 0, 0, 60.4, 47.6, 0, 46.8, 0};
-                    var r4 = new List<double>();
-                    double summ = 0;
-                    double summR1 = 0;
-                    double summR2 = 0;
-                    double summR3 = 0;
-                    for (int i = 0; i < r1.Count; i++)
-                    {
-                        r4.Add(r1[i] + r2[i] + r3[i]);
-                        summ += r1[i] + r2[i] + r3[i];
-                        summR1 += r1[i];
-                        summR2 += r2[i];
-                        summR3 += r3[i];
-                    }
-                    int d = 231;
-                }*@
-        </p>
 
         <div class="row">
             <div class="col-lg-3 col-md-3 thumbnail">
@@ -63,14 +37,21 @@
             <div class="col-lg-9 col-md-9">
                 <ul class="nav nav-pills">
                     <li class="active">@Html.ActionLink("Все", "Test", "Test")</li>
-                    <li>@Html.ActionLink("События", "Index", "CarEvents", new {carId = Model.Id}, null)</li>
+                    <li>
+                        @Html.ActionLink("События", "Index", "CarEvents", new {carId = Model.Id}, null)
+                    </li>
                     <li>@Html.ActionLink("Расход топлива", "Test", "Test")</li>
                     <li>@Html.ActionLink("Статистика затрат", "Test", "Test")</li>
                     <li>@Html.ActionLink("Статистика персональная", "Test", "Test")</li>
                     <li>@Html.ActionLink("Планы", "Test", "Test")</li>
                 </ul>
             </div>
-            <div class="col-lg-9 col-md-9">
+
+            @*<div id="carContainer">
+                
+            </div>*@
+
+            @*<div class="col-lg-9 col-md-9">
                 <div id="chart_price">
 
                 </div>
@@ -81,24 +62,17 @@
                 <div id="chart_distance">
 
                 </div>
-            </div>
+            </div>*@
 
 
-            <div class="col-lg-9 col-md-9" style="float: right;">
-                <div id="chart_test">
-                    <script>
-                        $('text:contains("Highcharts.com")').fadeOut(11);
-                    </script>
-                </div>
-            </div>
-
+            
         </div>
 
 
 </div> <!-- End General Container -->
 
 
-<!-- jQuery -->
+@*<!-- jQuery -->
 <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -109,7 +83,7 @@
 <script src="~/bower_components/morrisjs/morris.min.js"></script>
 <script src="~/js/morris-data.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="~/dist/js/sb-admin-2.js"></script>
+<script src="~/dist/js/sb-admin-2.js"></script>*@
 
 <script type="text/javascript">
     $(function () {
@@ -230,7 +204,7 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $('#chart_test').highcharts({
             title: {
                 text: 'Пробез за месяц',
@@ -288,3 +262,8 @@
 
 
 </script>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+}

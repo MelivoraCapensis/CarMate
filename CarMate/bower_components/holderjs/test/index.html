@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
 <title>Holder Testing</title>
@@ -73,7 +73,7 @@
 	</div>
 </div>
 <div class="thumb">
-	<script>
+	<script type="text/javascript">
 	var r = Math.random();
 	if(r > 0.5){
 	document.write('<img data-src="holder.js/200x150" src="missing.jpg" style="width:200px;height:150px;outline:solid 3px red">');
@@ -196,7 +196,7 @@
 <!--
 <script src="require.js" data-main="test.js"></script>
 -->
-<script>
+<script type="text/javascript">
 Holder.add_image("holder.js/300x200/sky", "#thumb1").run();
 Holder.add_theme("custom", {foreground: "#fff", background: "#000", size: 15}).run({
 	domain: "custom.holder",

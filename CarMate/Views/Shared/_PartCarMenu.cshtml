@@ -1,0 +1,34 @@
+﻿@helper CurrentItem(string controller)
+{
+    if (controller != ViewContext.RouteData.Values["controller"].ToString())
+    {
+        return;
+    }
+    @:class="active"
+}
+
+<ul class="nav nav-pills">
+    <li @CurrentItem("Car")>
+        @Html.ActionLink("Все", "Details", "Car", new { id = ViewBag.Car.Id }, null)
+    </li>
+
+    <li @CurrentItem("CarEvents")>
+        @Html.ActionLink("События", "Index", "CarEvents", new { carId = ViewBag.Car.Id }, null)
+    </li>
+
+    <li @CurrentItem("CarConsumption")>
+        @Html.ActionLink("Расход топлива", "Index", "CarConsumption", new { carId = ViewBag.Car.Id }, null)
+    </li>
+
+    <li>
+        @Html.ActionLink("Статистика затрат", "Test", "Test")
+    </li>
+
+    <li>
+        @Html.ActionLink("Статистика персональная", "Test", "Test")
+    </li>
+
+    <li>
+        @Html.ActionLink("Планы", "Test", "Test")
+    </li>
+</ul>

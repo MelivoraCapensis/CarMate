@@ -3,7 +3,6 @@
 
 
 <div>
-    <!-- Модальное окно -->
     <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -12,13 +11,11 @@
                     <h4 class="modal-title text-center" id="myModalLabel">Вход</h4>
                 </div>
                 <div class="modal-body">
-                    <h2>Use a local account to log in.</h2>
-                    @*@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl, @class = "form col-md-12 center-block" }))*@
+                    <h2>Вход</h2>
                     @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true)
-
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
                         <div class="form-group">
 
@@ -30,16 +27,12 @@
                             @Html.PasswordFor(m => m.Password, new {@class = "form-control input-lg", @placeholder = "Password"})
                             @Html.ValidationMessageFor(m => m.Password)
                         </div>
+                        
+                        <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block"/>
+
                         <div class="form-group">
-
-                            <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block"/>
-
-                            <span>
-                                @*<a href="#">Need help?</a>*@
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe, new {@class = "checkbox"})
-                            </span>
-                            
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
                             <button id="registerInLogin" type="button" class="btn btn-info btn-lg">
                                 Регистрация
                             </button>
@@ -56,11 +49,11 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         $('#registerInLogin').click(function() {    // При нажатии на кнопку регистрации в окне входа
             $('#loginCloseButton').trigger('click');    // Закрываем окно входа
             $('#registerButton').trigger('click');    // Открываем окно регистрации
         });
-    });    
+    });
 </script>
