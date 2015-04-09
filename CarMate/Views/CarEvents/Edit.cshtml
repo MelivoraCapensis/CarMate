@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "Редактирование события";
     CarEvents carEvent = new CarEvents();
+    carEvent.Comment = "sdsdsfdsfsdffsd";
     string str = JsonConvert.SerializeObject(carEvent, Formatting.Indented);
 }
 

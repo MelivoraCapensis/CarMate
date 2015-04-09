@@ -823,7 +823,6 @@ C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\EntityFramework.dll
 C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\Facebook.dll
 C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\Microsoft.Web.WebPages.OAuth.dll
-C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\Newtonsoft.Json.dll
 C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\System.Net.Http.Formatting.dll
 C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Helpers.dll
 C:\Users\06503\Desktop\CarMate\CarMate\CarMate\bin\System.Web.Http.dll
