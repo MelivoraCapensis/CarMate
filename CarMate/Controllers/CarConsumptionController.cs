@@ -12,13 +12,22 @@ namespace CarMate.Controllers
     {
         public ActionResult Index(int carId)
         {
-            var fullTankCharging = SelectFullTankCharging(carId);
+            double minConsumption, avgConsumption, maxConsumption;
+            var fullTankCharging = SelectFullTankCharging(carId, out minConsumption, out avgConsumption, out maxConsumption);
             CarAndUserInit(carId);
+            ViewBag.MinConsumption = minConsumption;
+            ViewBag.AvgConsumption = avgConsumption;
+            ViewBag.MaxConsumption = maxConsumption;
+
             return View(fullTankCharging);
         }
 
-        public List<CarConsumptionViewModel> SelectFullTankCharging(int carId)
+        public List<CarConsumptionViewModel> SelectFullTankCharging(int carId, out double minConsumption, out double avgConsumption, out double maxConsumption)
         {
+            minConsumption = 0;
+            avgConsumption = 0;
+            maxConsumption = 0;
+
             // Получаем все события заправок из базы
             var carEvents = db.CarEvents
                 .Where(
@@ -36,7 +45,7 @@ namespace CarMate.Controllers
             // - если 3 заправки подряд с полным баком, то 2 пары
             List<CarConsumptionViewModel> fullTankCharging = new List<CarConsumptionViewModel>();
 
-
+            double summConsumption = 0;
             foreach (var carEvent in carEvents)
             {
                 // Если у текущей заправки заправили полный бак
@@ -52,7 +61,21 @@ namespace CarMate.Controllers
                     // Это НЕ первая заправка полынм баком
                     else
                     {
-                        fullTankCharging.Add(new CarConsumptionViewModel(tmpCarEvent, carEvent));
+                        double consumption = 0;
+                        int mileage = carEvent.Odometer - tmpCarEvent.Odometer;
+                        if (carEvent.FuelCount != null)
+                        {
+                            consumption = Math.Round(((double)carEvent.FuelCount * 100 / mileage), 2);
+                            if (Math.Abs(minConsumption) <= 0|| minConsumption > consumption)
+                                minConsumption = consumption;
+
+                            if (Math.Abs(maxConsumption) <= 0 || maxConsumption < consumption)
+                                maxConsumption = consumption;
+
+                            summConsumption += consumption;
+                        }
+
+                        fullTankCharging.Add(new CarConsumptionViewModel(tmpCarEvent, carEvent, consumption, mileage));
                         tmpCarEvent = carEvent;
                     }
                 }
@@ -63,7 +86,9 @@ namespace CarMate.Controllers
                     //isPreviousChargingFullTank = false;
                 }
             }
+            avgConsumption = Math.Round(summConsumption/carEvents.Count);
 
+            
             return fullTankCharging;
         }
 

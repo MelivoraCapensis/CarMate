@@ -13,13 +13,13 @@
             <hr />
             <div id="carContainer">
                 <h2>@ViewBag.Title</h2>
-                <h3>Вы точно хотите удалить событи?</h3>
+                <h3>Вы точно хотите удалить событие "@Model.EventTypes.Name"?</h3>
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
                     <p>
-                        <input type="submit" value="Удалить" />
-                        @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, null)
+                        <input class="btn btn-default" type="submit" value="Удалить" />
+                        @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, htmlAttributes: new {@class = "btn btn-default"})
                     </p>
                 }
             </div>

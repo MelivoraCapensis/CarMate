@@ -31,9 +31,9 @@ namespace CarMate
                 "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js",
                 "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.ru.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
-                "~/Scripts/highcharts/js/highcharts.js",
-                "~/Scripts/highcharts/js/modules/exporting.js"
+            bundles.Add(new ScriptBundle("~/Script/highcharts").Include(
+                "~/Scripts/highcharts/js/highcharts.js"//,
+                //"~/Scripts/highcharts/js/modules/exporting.js"
                 ));
 
 
