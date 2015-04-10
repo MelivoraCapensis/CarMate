@@ -1425,6 +1425,9 @@
     <Content Include="Views\Shared\_PartCarInfo.cshtml" />
     <Content Include="Views\Shared\_PartCarMenu.cshtml" />
     <Content Include="Views\CarConsumption\Index.cshtml" />
+    <Content Include="Views\CarEvents\_PartEventFillingDetails.cshtml" />
+    <Content Include="Views\CarEvents\_PartEventOtherDetails.cshtml" />
+    <Content Include="Views\CarEvents\_PartEventRepairDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

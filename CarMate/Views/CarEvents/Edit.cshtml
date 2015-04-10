@@ -1,18 +1,28 @@
 ﻿@using CarMate
 @using Newtonsoft.Json
-@model CarMate.CarEvents
+@model CarEvents
 
 @{
     ViewBag.Title = "Редактирование события";
-    CarEvents carEvent = new CarEvents();
-    carEvent.Comment = "sdsdsfdsfsdffsd";
-    string str = JsonConvert.SerializeObject(carEvent, Formatting.Indented);
+    
+    // ВНИМАНИЕ КОСТЫЛЬ!
+    // Создаю новый объект на подобии модели, чтобы конвертировать его в JSON и передать в контроллер
+    // Для заполнения PartialView данными (тоесть PartialView будет прилетать с заполнеными данными)
+    CarEvents carEvent = new CarEvents()
+    {
+        FuelCategoryId = Model.FuelCategoryId,
+        FuelCount = Model.FuelCount,
+        IsFullTank = Model.IsFullTank,
+        IsMissedFilling = Model.IsMissedFilling,
+        PricePerLitr = Model.PricePerLitr
+    };
+    string str = JsonConvert.SerializeObject(carEvent);
 }
 
 <div class="container">
     <h2>Владелец: "@ViewBag.User.Nickname"</h2>
     <div class="row">
-        @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
+        @Html.Partial("_PartCarInfo", (Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
             @Html.Partial("_PartCarMenu")
             <hr />
@@ -26,22 +36,22 @@
                     @Html.HiddenFor(x => x.EventTypes.Name)
 
                     <div class="form-horizontal">
-                        <div class="form-group col-md-12">
+                        <div class="form-group">
                             @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 @Html.TextBoxFor(model => model.DateEvent, htmlAttributes: new
                                 {
                                     @class = "form-control",
                                     data_provide = "datepicker",
-                                    @Value = Model.DateEvent.ToString("d")
+                                    @Value = Model.DateEvent.ToString("d"),
                                 })
                                 @Html.ValidationMessageFor(model => model.DateEvent, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group col-md-12">
+                        <div class="form-group">
                             @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 @Html.TextBoxFor(events => events.Odometer, htmlAttributes: new {@class = "form-control"})
                                 @Html.ValidationMessageFor(model => model.Odometer, "", new {@class = "text-danger"})
                             </div>
@@ -59,18 +69,18 @@
                             @Html.Action("GetEvent")
                         </div>
 
-                        <div class="form-group col-md-12">
+                        <div class="form-group">
                             @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 @Html.TextBoxFor(events => events.CostTotal, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.CostTotal, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group col-md-12">
+                        <div class="form-group">
                             @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-2">
-                                @Html.TextAreaFor(model => model.Comment, htmlAttributes: new { @class = "form-control" })
+                            <div class="col-md-3">
+                                @Html.TextAreaFor(model => model.Comment, 10, 30, htmlAttributes: new { @class = "form-control", @style = "-moz-resize:none;-ms-resize:none;-o-resize:none;resize:none;" })
                                 @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -93,8 +103,11 @@
     function GetEvent(selectElement) {
         var name = selectElement.options[selectElement.selectedIndex].text;
         var carEventModel = '@(str)';
-        var carEventModelJson = JSON.stringify(carEventModel, ["FuelCategoryId", "FuelCount", "IsFullTank", "IsMissedFilling", "PricePerLitr"]);
-        $("#carEventEdit").load('@(Url.Action("GetEvent","CarEvents"))', { "carEventJson": carEventModelJson, "name": name });
+        //alert(carEventModel);
+        //var carEventModelJson = JSON.stringify(carEventModel, ["FuelCategoryId", "FuelCount", "IsFullTank", "IsMissedFilling", "PricePerLitr"]);
+        //alert(carEventModelJson);
+        // Подружаю PartialView и передаю в нее модель
+        $("#carEventEdit").load('@(Url.Action("GetEvent","CarEvents"))', { "carEventJson": carEventModel, "name": name });
     }
 
     $(document).ready(function () {

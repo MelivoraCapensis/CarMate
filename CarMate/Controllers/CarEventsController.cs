@@ -26,7 +26,7 @@ namespace CarMate.Controllers
             //var carevents = db.CarEvents.Include(c => c.EventTypes).Include(c => c.FuelCategories).Include(c => c.Cars);
             var carEvents = db.CarEvents
                 .Where(x => x.CarId == carId)
-                .OrderByDescending(x=>x.DateCreate).ToList();
+                .OrderByDescending(x=>x.DateEvent).ToList();
 
             CarAndUserInit(carId);
 
@@ -62,6 +62,9 @@ namespace CarMate.Controllers
             Owner(HttpContext);
             ViewBag.IsOwner = this.UserId == carEvents.Cars.UserId;
 
+            ViewBag.EventType = carEvents.EventTypes.Name;
+            InitViewBag(carEvents);
+
             return View(carEvents);
         }
 
@@ -73,7 +76,7 @@ namespace CarMate.Controllers
             var carEvents = new CarEvents
             {
                 CarId = carId,
-                DateEvent = DateTime.Today
+                DateEvent = DateTime.Now
             };
             //InitViewBag(carEvents);
             ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", 1);
@@ -165,24 +168,32 @@ namespace CarMate.Controllers
             if (ModelState.IsValid)
             {
                 CarEvents carEventsFromDb = db.CarEvents.Find(carEvents.Id);
+                // При любом событии
                 carEventsFromDb.Comment = carEvents.Comment;
                 carEventsFromDb.CostTotal = carEvents.CostTotal;
                 carEventsFromDb.DateEvent = carEvents.DateEvent;
                 carEventsFromDb.EventTypeId = carEvents.EventTypeId;
+                carEventsFromDb.Latitute = carEvents.Latitute;
+                carEventsFromDb.Longitute = carEvents.Longitute;
+                carEventsFromDb.Odometer = carEvents.Odometer;
+                // Если название события пустое, то в название события записываем его тип
+                //carEventsFromDb.NameEvent = String.IsNullOrEmpty(carEvents.NameEvent) ? carEvents.EventTypes.Name : carEvents.NameEvent;
+
+                // Нет в списке
+                carEventsFromDb.NameEvent = carEvents.NameEvent;
+                // Заправка
                 carEventsFromDb.FuelCategoryId = carEvents.FuelCategoryId;
                 carEventsFromDb.FuelCount = carEvents.FuelCount;
                 carEventsFromDb.IsFullTank = carEvents.IsFullTank;
                 carEventsFromDb.IsMissedFilling = carEvents.IsMissedFilling;
-                carEventsFromDb.Latitute = carEvents.Latitute;
-                carEventsFromDb.Longitute = carEvents.Longitute;
-                carEventsFromDb.NameEvent = carEvents.NameEvent;
-                carEventsFromDb.Odometer = carEvents.Odometer;
                 carEventsFromDb.PricePerLitr = carEvents.PricePerLitr;
 
+                // Системное
                 carEventsFromDb.DateCreate = DateTime.Now;
                 carEventsFromDb.State = Consts.StateUpdate;
 
                 db.SaveChanges();
+
                 return RedirectToAction("Index", new { carId = carEvents.CarId });
             }
 
@@ -267,19 +278,13 @@ namespace CarMate.Controllers
 
         public PartialViewResult GetEvent(string carEventJson, string name = "")
         {
-            //CarEvents carEvent = null;
-            //if (carEventModel != null)
-            //{
-            //    DataContractJsonSerializer js = new DataContractJsonSerializer(typeof (CarEvents));
-            //    using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(carEventModel)))
-            //    {
-            //        carEvent = (CarEvents) js.ReadObject(ms);
-            //    }
-            //}
             CarEvents carEventsModel = null;
-            if(carEventJson != null)
+            if (carEventJson != null)
+            {
+                carEventJson = carEventJson.Replace("&quot;", "\"");
                 carEventsModel = JsonConvert.DeserializeObject<CarEvents>(carEventJson);
-            
+            }
+
 
             if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
             {
@@ -294,5 +299,30 @@ namespace CarMate.Controllers
 
             return PartialView("_PartEventOther", carEventsModel);
         }
+
+        public PartialViewResult GetEventDetails(string carEventJson, string name = "")
+        {
+            CarEvents carEventsModel = null;
+            if (carEventJson != null)
+            {
+                carEventJson = carEventJson.Replace("&quot;", "\"");
+                carEventsModel = JsonConvert.DeserializeObject<CarEvents>(carEventJson);
+            }
+
+            if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
+            {
+                ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+                return PartialView("_PartEventFillingDetails", carEventsModel);
+            }
+            if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
+            {
+                //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+                return PartialView("_PartEventRepairDetails", carEventsModel);
+            }
+
+            return PartialView("_PartEventOtherDetails", carEventsModel);
+        }
+
+        
     }
 }

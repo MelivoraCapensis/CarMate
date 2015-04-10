@@ -1,0 +1,49 @@
+﻿@model CarMate.CarEvents
+
+@*<h2>Заправка</h2>*@
+
+<div class="form-group">
+    @Html.LabelFor(events => events.FuelCategoryId, "Тип топлива", htmlAttributes: new { @class = "text-right col-md-2" })
+    <div class="col-md-5">
+        @*@Html.DropDownList("FuelCategoryId", null, htmlAttributes: new { @class = "form-control" })*@
+        @Html.DisplayFor(model => model.FuelCategoryId)
+        @*@Html.ValidationMessageFor(model => model.FuelCategoryId, "", new { @class = "text-danger" })*@
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(events => events.FuelCount, "Залито бензина", htmlAttributes: new { @class = "text-right col-md-2" })
+    <div class="col-md-5">
+        @*@Html.TextBoxFor(model => model.FuelCount, htmlAttributes: new {@class = "form-control"})
+        @Html.ValidationMessageFor(model => model.FuelCount, "", new {@class = "text-danger"})*@
+        @Html.DisplayFor(model => model.FuelCount)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(events => events.PricePerLitr, "Цена за литр", htmlAttributes: new { @class = "text-right col-md-2" })
+    <div class="col-md-5">
+        @*@Html.TextBoxFor(model => model.PricePerLitr, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.PricePerLitr, "", new { @class = "text-danger" })*@
+        @Html.DisplayFor(model => model.PricePerLitr)
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(events => events.IsFullTank, "Полный бак", htmlAttributes: new { @class = "text-right col-md-2" })
+    <div class="col-md-5">
+        @*@Html.CheckBoxFor(model => model.IsFullTank, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IsFullTank, "", new { @class = "text-danger" })*@
+        @Html.DisplayFor(model => model.IsFullTank)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(events => events.IsMissedFilling, "Пропустил заправку", htmlAttributes: new { @class = "text-right col-md-2" })
+    <div class="col-md-5">
+        @*@Html.CheckBoxFor(model => model.IsMissedFilling, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IsMissedFilling, "", new { @class = "text-danger" })*@
+        @Html.DisplayFor(model => model.IsMissedFilling)
+    </div>
+</div>

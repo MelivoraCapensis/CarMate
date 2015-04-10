@@ -15,18 +15,18 @@ namespace CarMate.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Страница описания приложения.";
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Страница описания приложения.";
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Страница контактов.";
+        //public ActionResult Contact()
+        //{
+        //    ViewBag.Message = "Страница контактов.";
 
-            return View();
-        }
+        //    return View();
+        //}
     }
 }

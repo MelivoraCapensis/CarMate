@@ -36,6 +36,7 @@ namespace CarMate.Controllers
             // - если 3 заправки подряд с полным баком, то 2 пары
             List<CarConsumptionViewModel> fullTankCharging = new List<CarConsumptionViewModel>();
 
+
             foreach (var carEvent in carEvents)
             {
                 // Если у текущей заправки заправили полный бак

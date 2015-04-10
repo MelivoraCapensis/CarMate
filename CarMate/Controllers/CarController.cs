@@ -86,7 +86,7 @@ namespace CarMate.Controllers
             Cars car = new Cars
             {
                 UserId = this.UserId,
-                DateBuy = DateTime.Today
+                DateBuy = DateTime.Now
             };
             
             InitViewBag(car);

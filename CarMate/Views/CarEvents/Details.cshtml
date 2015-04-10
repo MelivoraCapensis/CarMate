@@ -1,51 +1,68 @@
-﻿@model CarMate.CarEvents
+﻿@using CarMate
+@using Newtonsoft.Json
+@model CarEvents
 
 @{
     ViewBag.Title = "Подробно";
+
+    CarEvents carEvent = new CarEvents()
+    {
+        FuelCategoryId = Model.FuelCategoryId,
+        FuelCount = Model.FuelCount,
+        IsFullTank = Model.IsFullTank,
+        IsMissedFilling = Model.IsMissedFilling,
+        PricePerLitr = Model.PricePerLitr
+    };
+    string str = JsonConvert.SerializeObject(carEvent);
 }
 
 <div class="container">
     <h2>Владелец: "@ViewBag.User.Nickname"</h2>
     <div class="row">
-        @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
+        @Html.Partial("_PartCarInfo", (Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
             @Html.Partial("_PartCarMenu")
             <hr />
             <div id="carContainer">
                 <h2>@ViewBag.Title</h2>
-                                
+
                 <div class="form-horizontal">
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(events => events.EventTypes.Name, "Событие", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
-                            @Html.DisplayFor(model => model.EventTypes.Name)
+                    <div class="form-group">
+                        @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new { @class = "text-right col-md-2" })
+                        <div class="col-md-5">
+                            @*@Html.DisplayFor(model => model.DateEvent)*@
+                            @Model.DateEvent.ToString("dd/MM/yyyy HH:mm")
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
+                    <div class="form-group">
+                        @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new { @class = "text-right col-md-2" })
+                        <div class="col-md-5">
                             @Html.DisplayFor(model => model.Odometer)
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
-                            @Html.DisplayFor(model => model.DateEvent)
+                    <div class="form-group">
+                        @Html.LabelFor(events => events.EventTypes.Name, "Событие", htmlAttributes: new { @class = "text-right col-md-2" })
+                        <div class="col-md-5">
+                            @Html.DisplayFor(model => model.EventTypes.Name)
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
+                    <div id="carEventDetails">
+                        @Html.Action("GetEventDetails")
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new { @class = "text-right col-md-2" })
+                        <div class="col-md-5">
                             @Html.DisplayFor(model => model.CostTotal)
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
+                    <div class="form-group">
+                        @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "text-right col-md-2" })
+                        <div class="col-md-5">
                             @Html.DisplayFor(model => model.Comment)
                         </div>
                     </div>
@@ -55,8 +72,8 @@
                             @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, new { @class = "btn btn-default" })
                             @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                             {
-                                @Html.ActionLink("Изменить", "Edit", new {id = Model.Id})
-                                @Html.ActionLink("Удалить", "Delete", new {id = Model.Id})
+                                @Html.ActionLink("Изменить", "Edit", new {id = Model.Id}, htmlAttributes: new {@class = "btn btn-default"})
+                                @Html.ActionLink("Удалить", "Delete", new {id = Model.Id}, htmlAttributes: new {@class = "btn btn-default"})
                             }
                         </div>
                     </div>
@@ -65,3 +82,19 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    @* При изменении события автомобиля подружаем разные поля *@
+    @*function GetEventDetails(selectElement) {
+        var name = selectElement.options[selectElement.selectedIndex].text;
+        $("#car_event").load('@(Url.Action("GetEvent","CarEvents"))', { "name": name });
+    }*@
+
+
+    $(document).ready(function () {
+        var name = '@(Model.EventTypes.Name)';
+        var carEventModel = '@(str)';
+
+        $('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
+    });
+</script>
