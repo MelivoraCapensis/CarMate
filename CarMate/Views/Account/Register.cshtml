@@ -27,6 +27,8 @@
     <div class="row">
         <div class="col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6">
             <h2>Регистрация</h2>
+            @Html.Partial("_PartRegister")
+            @*
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
@@ -67,54 +69,6 @@
                         </div>
                     </div>
 
-                    @*<hr/>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.FirstName, "Имя", htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-lg-3 col-md-3">
-                                @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new {@class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.FirstName, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LastName, "Фамилия", htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-lg-3 col-md-3">
-                                @Html.TextBoxFor(model => model.LastName, htmlAttributes: new {@class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.LastName, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Country, "Страна", htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-lg-3 col-md-3">
-                                @Html.TextBoxFor(model => model.Country, htmlAttributes: new {@class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.Country, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Region, "Область", htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-lg-3 col-md-3">
-                                @Html.TextBoxFor(model => model.Region, htmlAttributes: new {@class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.Region, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.City, "Город", htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-lg-3 col-md-3">
-                                @Html.TextBoxFor(model => model.City, htmlAttributes: new {@class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.City, "", new {@class = "text-danger"})
-                            </div>
-                        </div>*@
-
-                    @*<div class="form-group">
-                        <label class="control-label col-md-2" for="file">Выберите аватар</label>
-                        <div class="col-md-10">
-                            <input type="file" name="file" value="Выбрать картинку" />
-                        </div>
-                    </div>*@
 
                     <div class="form-group">
                         <div class="col-md-offset-8 col-md-10">
@@ -122,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-            }
+            }*@
         </div>
     </div>
 </div>

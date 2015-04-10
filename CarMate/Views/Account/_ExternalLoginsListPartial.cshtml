@@ -12,14 +12,36 @@ else
     using (Html.BeginForm("ExternalLogin", "Account", new {ReturnUrl = ViewBag.ReturnUrl}))
     {
         @Html.AntiForgeryToken()
-        <fieldset id="socialLoginList">
-            <legend>Вход через другую службу</legend>
-            <p>
-                @foreach (AuthenticationClientData p in Model)
-                {
-                    <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Войдите, используя свою учетную запись @p.DisplayName">@p.DisplayName</button>
-                }
-            </p>
-        </fieldset>
+        <h4>Вход через другую службу</h4>
+        <div class="btn-group text-center" role="group">
+            @foreach (AuthenticationClientData p in Model)
+            {
+                <button class="btn btn-default" type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Войдите, используя свою учетную запись @p.DisplayName">@p.DisplayName</button>
+            }
+        </div>
     }
 }
+
+
+@*    <div class="container">
+        <div class="row">
+            @using (Html.BeginForm("ExternalLogin", "Account", new {ReturnUrl = ViewBag.ReturnUrl}))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <h5>Вход через другую службу</h5>
+                        <div class="col-lg-8 col-md-8">
+                            <div class="btn-group text-center" role="group">
+                                @foreach (AuthenticationClientData p in Model)
+                                {
+                                    <button class="btn btn-default" type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Войдите, используя свою учетную запись @p.DisplayName">@p.DisplayName</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>*@

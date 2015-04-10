@@ -100,19 +100,10 @@
         $("#car_modification").load('@(Url.Action("GetModifications","Car"))', { "modelId": modelId });
     }
 
-
-     @*$(document).ready(function () {
-
-        var brandId = getElementById("brandId").value;
-        $('#brandId').change('@(Url.Action("GetModels","Car"))', { "brandId": brandId });
-    });*@
-
     $(document).ready(function () {
         var carBrandId = '@(Model.CarModels.CarBrands.id)';
         var carModelId = '@(Model.CarModels.id)';
         var carModificationId = '@(Model.CarModifications.id)';
-
-        
         
         //alert("carBrandId = " + carBrandId);
         $('#brandId').trigger('change');    // Генерируем событие onchange для выпадающего списка с брендами автомобилей
@@ -128,16 +119,6 @@
                 $("#modificationId option[value='" + carModificationId + "']").attr("selected", "selected");    // Выбираем модификацию автомобиля с определенным Id
             }, 1000);
         }, 1000);
-        
-        
-        
-        
-        
-        
-
-        //$("#modelId option[value='" + title + "']").attr("selected", "selected");
-        //alert(title);
-
     });
 </script>
 

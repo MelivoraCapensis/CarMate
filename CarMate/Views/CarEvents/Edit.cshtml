@@ -1,7 +1,12 @@
-﻿@model CarMate.CarEvents
+﻿@using CarMate
+@using Newtonsoft.Json
+@model CarMate.CarEvents
 
 @{
     ViewBag.Title = "Редактирование события";
+    CarEvents carEvent = new CarEvents();
+    carEvent.Comment = "sdsdsfdsfsdffsd";
+    string str = JsonConvert.SerializeObject(carEvent, Formatting.Indented);
 }
 
 <div class="container">
@@ -87,9 +92,9 @@
 <script type="text/javascript">
     function GetEvent(selectElement) {
         var name = selectElement.options[selectElement.selectedIndex].text;
-        @*var carEventModel = '@(Model)';
-        var carEventModelJson = JSON.stringify(carEventModel);*@
-        $("#carEventEdit").load('@(Url.Action("GetEvent","CarEvents"))', { "name": name });
+        var carEventModel = '@(str)';
+        var carEventModelJson = JSON.stringify(carEventModel, ["FuelCategoryId", "FuelCount", "IsFullTank", "IsMissedFilling", "PricePerLitr"]);
+        $("#carEventEdit").load('@(Url.Action("GetEvent","CarEvents"))', { "carEventJson": carEventModelJson, "name": name });
     }
 
     $(document).ready(function () {

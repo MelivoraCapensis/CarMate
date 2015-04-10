@@ -1,5 +1,10 @@
 ﻿@model CarMate.Models.LoginModel
 
+@{
+    ViewBag.Title = "Вход";
+}
+
+
 @*<meta name="viewport" content="width=device-width" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,7 +83,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6">
-            <h2>Вход</h2>
+            @*<h2>Вход</h2>
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
@@ -105,7 +110,9 @@
             }
 
             <h2>Войти с помощью:</h2>
-            @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
+            @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })*@
+            <h4 class="text-center">Вход</h4>
+            @Html.Partial("_PartLogin")
         </div>
     </div>
 </div>
