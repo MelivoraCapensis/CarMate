@@ -4,6 +4,7 @@
     ViewBag.Title = "Расход топлива";
 
     var coms = Model.Select(x => x.Consumption).ToArray();
+    var coms1 = Model.Select(x => x.Consumption).ToList();
 }
 
 <div class="container">
@@ -16,106 +17,115 @@
             <div id="carContainer">
                 <h2>@ViewBag.Title</h2>
 
-                
+                @if (Model.Any())
+                {
 
-                <table class="table">
-                    <tr>
-                        <th>
-                            Дата
-                        </th>
-
-                        <th>
-                            Название
-                        </th>
-
-                        <th>
-                            Пробег
-                        </th>
-
-                        <th>
-                            Расход
-                        </th>
-
-                        <th>
-                            
-                        </th>
-                    </tr>
-
-                    @foreach (var carEvent in Model)
-                    {
-                        //if (minConsumption == 0)
-                        //{
-                        //    minConsumption = carEvent.Consumption;
-                        //}
-                        //if (maxConsumption < carEvent.Consumption)
-                        //{
-                        //    maxConsumption = carEvent.Consumption;
-                        //}
-                        
-                        
-                        <tr style="background: cornflowerblue">
-                            <td></td>
-
-                            <td></td>
-
-                            <td></td>
-
-                            <td></td>
-
-                            <td></td>
-                        </tr>
-
+                    <table class="table">
                         <tr>
-                            <td>
-                                @*@Html.DisplayFor(x => carEvent.NewCarEvent.DateEvent)*@
-                                @carEvent.NewCarEvent.DateEvent.ToString("dd/MM/yyyy HH:mm")
-                            </td>
+                            <th>
+                                Дата
+                            </th>
 
-                            <td>
-                                @*@carEvent.NewCarEvent.FuelCategories.category*@
-                                @*Название заправки, тип топлива, перейти к событию, место где произошло событие*@
-                            </td>
+                            <th>
+                                Название
+                            </th>
 
-                            <td>
-                                @Html.DisplayFor(x => carEvent.Mileage)
-                            </td>
+                            <th>
+                                Пробег
+                            </th>
 
-                            <td>
-                                @Html.DisplayFor(x => carEvent.Consumption)
-                            </td>
+                            <th>
+                                Расход
+                            </th>
 
-                            <td>
-                                @Html.ActionLink("К событию", "Details", "CarEvents", new { id = carEvent.NewCarEvent.Id }, new { @class = "btn btn-default" })
-                            </td>
+                            <th>
+
+                            </th>
                         </tr>
 
-                        <tr>
-                            <td>
-                                @*@Html.DisplayFor(x => carEvent.OldCarEvent.DateEvent)*@
-                                @carEvent.OldCarEvent.DateEvent.ToString("dd/MM/yyyy HH:mm")
-                            </td>
+                        @foreach (var carEvent in Model)
+                        {
+                            //if (minConsumption == 0)
+                            //{
+                            //    minConsumption = carEvent.Consumption;
+                            //}
+                            //if (maxConsumption < carEvent.Consumption)
+                            //{
+                            //    maxConsumption = carEvent.Consumption;
+                            //}
 
-                            <td>
-                                @*Название заправки, тип топлива, перейти к событию, место где произошло событие*@
-                            </td>
 
-                            <td></td>
+                            <tr style="background: cornflowerblue">
+                                <td></td>
 
-                            <td></td>
+                                <td></td>
 
-                            <td>
-                                @Html.ActionLink("К событию", "Details", "CarEvents", new {id = carEvent.OldCarEvent.Id}, new {@class = "btn btn-default"})
-                            </td>
-                        </tr>
-                    }
-                </table>
+                                <td></td>
 
-                Минимальный: @ViewBag.MinConsumption;
-                Средний: @ViewBag.AvgConsumption;
-                Максимальный: @ViewBag.MaxConsumption;
+                                <td></td>
 
-                <div id="fuelConsamptionHighcharts" class="col-lg-12 col-md-12"></div>
+                                <td></td>
+                            </tr>
 
+                            <tr>
+                                <td>
+                                    @*@Html.DisplayFor(x => carEvent.NewCarEvent.DateEvent)*@
+                                    @carEvent.NewCarEvent.DateEvent.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+                                <td>
+                                    @*@carEvent.NewCarEvent.FuelCategories.category*@
+                                    @*Название заправки, тип топлива, перейти к событию, место где произошло событие*@
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(x => carEvent.Mileage)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(x => carEvent.Consumption)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("К событию", "Details", "CarEvents", new {id = carEvent.NewCarEvent.Id}, new {@class = "btn btn-default"})
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    @*@Html.DisplayFor(x => carEvent.OldCarEvent.DateEvent)*@
+                                    @carEvent.OldCarEvent.DateEvent.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+                                <td>
+                                    @*Название заправки, тип топлива, перейти к событию, место где произошло событие*@
+                                </td>
+
+                                <td></td>
+
+                                <td></td>
+
+                                <td>
+                                    @Html.ActionLink("К событию", "Details", "CarEvents", new {id = carEvent.OldCarEvent.Id}, new {@class = "btn btn-default"})
+                                </td>
+                            </tr>
+                        }
+                    </table>
+
+                    @:Минимальный: @ViewBag.MinConsumption;
+                    @:Средний: @ViewBag.AvgConsumption;
+                    @:Максимальный: @ViewBag.MaxConsumption;
+
+                    <div id="fuelConsamptionHighcharts" class="col-lg-12 col-md-12"></div>
+                }
+                else
+                {
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger">
+                            Пользоавать еще не запправлял полный бак 2 раза подряд.
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -124,12 +134,17 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var fuelConsumption = '@(coms)';
-        //alert(fuelConsumption[0]);
-        for (var i = 0; i < fuelConsumption.length; i++) {
-            alert(fuelConsumption[i]);
+        //int carId, DateTime beginDate, DateTime endDate
+        var carId = '@(ViewBag.Car.Id)';
+        var jsontext = ('@(Url.Action("GetConsumptionFromPeriod", "CarConsumption"))', { "carId": carId, "beginDate": Date(), "endDate": Date() });
+        var dataConsumption = JSON.parse(jsontext);
+        alert(dataConsumption);
+        var str = "";
+        for (var i = 0; i < dataConsumption.length; i++) {
+            str += dataConsumption[i];
         }
-        var arr = new Array(fuelConsumption.length);
+        alert(str);
+        var arr = new Array(dataConsumption.length);
 
         $('#fuelConsamptionHighcharts').highcharts({
             chart: {
@@ -159,8 +174,8 @@
             },
             series: [
                 {
-                     name: 'London',    
-                     data: fuelConsumption
+                     name: 'London',
+                     data: dataConsumption
                 }
                 //, {
                 //    name: 'London',

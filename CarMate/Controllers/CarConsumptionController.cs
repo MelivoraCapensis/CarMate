@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CarMate.Classes;
 using CarMate.ViewModel;
+using Newtonsoft.Json;
 
 namespace CarMate.Controllers
 {
@@ -92,11 +93,80 @@ namespace CarMate.Controllers
             return fullTankCharging;
         }
 
+        public List<double> SelectFullTankCharging(int carId, DateTime beginDate, DateTime endDate)
+        {
+            // Получаем все события заправок из базы
+            var carEvents = db.CarEvents
+                .Where(
+                    x =>
+                        x.CarId == carId &&
+                        x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
+                        x.DateEvent >= beginDate &&
+                        x.DateEvent <= endDate)
+                .OrderBy(x => x.DateCreate)
+                .ToList();
+
+            // Ссылка на пердыдущее событие заправки
+            CarEvents tmpCarEvent = null;
+            // Список событий заправок 
+            // (идут парами: 
+            // - если 2 заправки подряд с полный бак, то 1 пара
+            // - если 3 заправки подряд с полным баком, то 2 пары
+            List<double> fullTankCharging = new List<double>();
+
+            foreach (var carEvent in carEvents)
+            {
+                // Если у текущей заправки заправили полный бак
+                if (carEvent.IsFullTank)
+                {
+                    // Это первая заправка полынм баком
+                    // - пропустил предыдущую заправку
+                    // - до этого заправился не поным баком
+                    if (tmpCarEvent == null || carEvent.IsMissedFilling)
+                    {
+                        tmpCarEvent = carEvent;
+                    }
+                    // Это НЕ первая заправка полынм баком
+                    else
+                    {
+                        double consumption = 0;
+                        int mileage = carEvent.Odometer - tmpCarEvent.Odometer;
+                        if (carEvent.FuelCount != null)
+                        {
+                            consumption = Math.Round(((double)carEvent.FuelCount * 100 / mileage), 2);
+                        }
+
+                        fullTankCharging.Add(consumption);
+                        tmpCarEvent = carEvent;
+                    }
+                }
+                // Заправка не с полным баком
+                else
+                {
+                    tmpCarEvent = null;
+                }
+            }
+            return fullTankCharging;
+        }
+
         public void CarAndUserInit(int carId)
         {
             var car = db.Cars.Find(carId);
             ViewBag.Car = car;
             ViewBag.User = db.Users.Find(car.UserId);
+        }
+
+        public string GetConsumptionFromPeriod(int carId, DateTime beginDate, DateTime endDate)
+        {
+            if (beginDate == DateTime.MinValue)
+                beginDate = DateTime.Now.AddMonths(-2);
+            if (endDate == DateTime.MinValue)
+                endDate = DateTime.Now.AddMonths(2);
+
+            List<double> fullTankChargigng = SelectFullTankCharging(carId, beginDate, endDate);
+            string json = JsonConvert.SerializeObject(fullTankChargigng.ToArray());
+
+            return json;
         }
     }
 
