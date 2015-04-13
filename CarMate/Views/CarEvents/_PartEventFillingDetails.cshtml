@@ -3,10 +3,10 @@
 @*<h2>Заправка</h2>*@
 
 <div class="form-group">
-    @Html.LabelFor(events => events.FuelCategoryId, "Тип топлива", htmlAttributes: new { @class = "text-right col-md-2" })
+    @Html.LabelFor(events => events.FuelCategories.category, "Тип топлива", htmlAttributes: new { @class = "text-right col-md-2" })
     <div class="col-md-5">
         @*@Html.DropDownList("FuelCategoryId", null, htmlAttributes: new { @class = "form-control" })*@
-        @Html.DisplayFor(model => model.FuelCategoryId)
+        @Html.DisplayFor(model => model.FuelCategories.category)
         @*@Html.ValidationMessageFor(model => model.FuelCategoryId, "", new { @class = "text-danger" })*@
     </div>
 </div>

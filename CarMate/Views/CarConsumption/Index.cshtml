@@ -1,10 +1,12 @@
-﻿@model IEnumerable<CarMate.ViewModel.CarConsumptionViewModel>
+﻿@using System.Globalization
+@using Newtonsoft.Json
+@model IEnumerable<CarMate.ViewModel.CarConsumptionViewModel>
 
 @{
     ViewBag.Title = "Расход топлива";
 
-    var coms = Model.Select(x => x.Consumption).ToArray();
-    var coms1 = Model.Select(x => x.Consumption).ToList();
+    var comsumption = Model.OrderBy(x=>x.NewCarEvent.DateEvent).Select(x => x.Consumption).ToArray();
+    string comsumptionJson = JsonConvert.SerializeObject(comsumption);
 }
 
 <div class="container">
@@ -134,17 +136,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //int carId, DateTime beginDate, DateTime endDate
-        var carId = '@(ViewBag.Car.Id)';
-        var jsontext = ('@(Url.Action("GetConsumptionFromPeriod", "CarConsumption"))', { "carId": carId, "beginDate": Date(), "endDate": Date() });
-        var dataConsumption = JSON.parse(jsontext);
-        alert(dataConsumption);
-        var str = "";
-        for (var i = 0; i < dataConsumption.length; i++) {
-            str += dataConsumption[i];
-        }
-        alert(str);
+        var json = '@(comsumptionJson)';
+        var dataConsumption = JSON.parse(json);
+
         var arr = new Array(dataConsumption.length);
+        for (var j = 0; j < arr.length; j++) {
+            arr[j] = '';
+        }
 
         $('#fuelConsamptionHighcharts').highcharts({
             chart: {
@@ -161,7 +159,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Temperature (°C)'
+                    text: 'Бензин/Газ (л./100км.)'
                 }
             },
             plotOptions: {
@@ -174,7 +172,7 @@
             },
             series: [
                 {
-                     name: 'London',
+                     name: 'Тип топлива',
                      data: dataConsumption
                 }
                 //, {

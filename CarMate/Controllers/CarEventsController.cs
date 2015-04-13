@@ -307,11 +307,13 @@ namespace CarMate.Controllers
             {
                 carEventJson = carEventJson.Replace("&quot;", "\"");
                 carEventsModel = JsonConvert.DeserializeObject<CarEvents>(carEventJson);
+                carEventsModel.FuelCategories = db.FuelCategories.Find(carEventsModel.FuelCategoryId);
             }
 
             if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
             {
-                ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+                
+                //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 return PartialView("_PartEventFillingDetails", carEventsModel);
             }
             if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
@@ -323,6 +325,23 @@ namespace CarMate.Controllers
             return PartialView("_PartEventOtherDetails", carEventsModel);
         }
 
-        
+        //public PartialViewResult GetEventDetails(int carEventId = 0, string name = "")
+        //{
+        //    CarEvents carEventsModel = db.CarEvents.Find(carEventId);
+
+        //    if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+        //        return PartialView("_PartEventFillingDetails", carEventsModel);
+        //    }
+        //    if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+        //        return PartialView("_PartEventRepairDetails", carEventsModel);
+        //    }
+
+        //    return PartialView("_PartEventOtherDetails", carEventsModel);
+        //}
+
     }
 }

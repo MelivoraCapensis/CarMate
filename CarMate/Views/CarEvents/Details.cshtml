@@ -94,7 +94,9 @@
     $(document).ready(function () {
         var name = '@(Model.EventTypes.Name)';
         var carEventModel = '@(str)';
+        //var carEventId = '@(Model.CarId)';
 
         $('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
+        @*$('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventId": carEventId, "name": name });*@
     });
 </script>

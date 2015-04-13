@@ -1,0 +1,107 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<CarMate.CarEvents>
+
+@{
+    ViewBag.Title = "Статистика затрат";
+    Dictionary<string, double> allCostStatistics = new Dictionary<string, double>();
+    foreach (var eventType in ViewBag.EventTypes)
+    {
+        allCostStatistics.Add(eventType, 0);
+    }
+    
+    foreach (var carEvent in Model)
+    {
+        allCostStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
+    }
+    string allCostStatisticsJson = JsonConvert.SerializeObject(allCostStatistics);
+}
+
+@*<h2>Index</h2>*@
+<div class="container">
+    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <div class="row">
+        @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
+        <div class="col-lg-9 col-md-9">
+            @Html.Partial("_PartCarMenu")
+            <hr />
+            <div id="carContainer">
+                <h2>@ViewBag.Title</h2>
+
+                <div id="allCostStatistics" class="col-lg-12 col-md-12"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var json = '@(allCostStatisticsJson)';
+        alert(json);
+        var data = JSON.parse(json);
+        alert(data);
+        var
+            //brands = {},
+            brandsData = [],
+            //versions = {},
+            drilldownSeries = [];
+
+
+        for (var i = 0; i < data.length; i++) {
+            alert(data[0][0]);
+        }
+
+        $('#allCostStatistics').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Статистика расходов'
+            },
+            subtitle: {
+                text: 'Click the columns to view versions. Source: netmarketshare.com.'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Total percent market share'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.1f}%'
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br />'
+            },
+
+            series: [
+                {
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: brandsData
+                }
+            ],
+            drilldown: {
+                series: drilldownSeries
+            }
+        });
+    });
+</script>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Script/highcharts")
+}

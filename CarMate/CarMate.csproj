@@ -229,6 +229,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CarConsumptionController.cs" />
     <Compile Include="Controllers\CarController.cs" />
+    <Compile Include="Controllers\CarCostStatisticsController.cs" />
     <Compile Include="Controllers\CarEventsController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1428,6 +1429,7 @@
     <Content Include="Views\CarEvents\_PartEventFillingDetails.cshtml" />
     <Content Include="Views\CarEvents\_PartEventOtherDetails.cshtml" />
     <Content Include="Views\CarEvents\_PartEventRepairDetails.cshtml" />
+    <Content Include="Views\CarCostStatistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
