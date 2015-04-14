@@ -20,12 +20,12 @@
         @Html.ActionLink("Расход топлива", "Index", "CarConsumption", new { carId = ViewBag.Car.Id }, null)
     </li>
 
-    <li>
+    <li @CurrentItem("CarCostStatistics")>
         @Html.ActionLink("Статистика затрат", "Index", "CarCostStatistics", new { carId = ViewBag.Car.Id }, null)
     </li>
 
-    <li>
-        @Html.ActionLink("Статистика персональная", "Test", "Test")
+    <li @CurrentItem("CarPersonalStatistics")>
+        @Html.ActionLink("Статистика персональная", "Index", "CarPersonalStatistics", new { carId = ViewBag.Car.Id }, null)
     </li>
 
     <li>

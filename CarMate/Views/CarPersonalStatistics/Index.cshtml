@@ -1,0 +1,117 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<CarMate.CarEvents>
+
+@{
+    ViewBag.Title = "Персональная статистика";
+
+
+    // Проехано, за определенный период
+    Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
+    int allDistance = 0;
+    var carEvents = Model.ToList();
+    int tmpOdometr = 0;
+    for (int i = 0; i < carEvents.Count(); i++)
+    {
+        if (i == 0)
+        {
+            var begin = carEvents[i].Odometer;
+            var end = carEvents[carEvents.Count - 1].Odometer;
+            allDistance = end - begin;
+            //break;
+        }
+        //if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs))
+        //{
+        var result = distance.FirstOrDefault(x => x.Key.Year == carEvents[i].DateEvent.Year && x.Key.Month == carEvents[i].DateEvent.Month);
+        if (result.Key != DateTime.MinValue)
+        {
+            distance[result.Key] += carEvents[i].Odometer - tmpOdometr;
+        }
+        else
+        {
+            distance.Add(new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1), carEvents[i].Odometer - tmpOdometr);
+        }
+        tmpOdometr = carEvents[i].Odometer;
+        //}
+    }
+
+    List<double> tmpDistance = new List<double>();
+    tmpDistance.AddRange(distance.Values);
+    string tmpDistanceJson = JsonConvert.SerializeObject(tmpDistance.ToArray());
+    
+    
+}
+
+<div class="container">
+    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <div class="row">
+        @Html.Partial("_PartCarInfo", (CarMate.Cars) ViewBag.Car)
+        <div class="col-lg-9 col-md-9">
+            @Html.Partial("_PartCarMenu")
+            <hr/>
+            <div id="carContainer">
+                <h2>@ViewBag.Title</h2>
+                <p>
+                    Проехано, за выбранный период: @allDistance км.
+                </p>
+
+                <div id="distanceStatistics" class="col-lg-12 col-md-12"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var tmpDistanceJson = '@(tmpDistanceJson)';
+        alert(tmpDistanceJson);
+        var tmpDistance = JSON.parse(tmpDistanceJson);
+        alert(tmpDistance);
+
+        var arr = new Array(tmpDistance.length);
+        for (var j = 0; j < arr.length; j++) {
+            arr[j] = '';
+        }
+
+        $('#distanceStatistics').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Проехано'
+            },
+            subtitle: {
+                text: 'За период: '
+            },
+            xAxis: {
+                categories: arr
+            },
+            yAxis: {
+                title: {
+                    text: 'Расстояние (км)'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [
+                {
+                    name: 'Проехано',
+                    data: tmpDistance
+                }
+                //, {
+                //    name: 'London',
+                //    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                //}
+            ]
+        });
+    });
+</script>
+
+    @section scripts {
+    @Scripts.Render("~/Script/highcharts")
+}

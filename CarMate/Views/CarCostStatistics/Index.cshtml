@@ -1,19 +1,74 @@
-﻿@using Newtonsoft.Json
+﻿@using CarMate.Classes
+@using Newtonsoft.Json
 @model IEnumerable<CarMate.CarEvents>
 
 @{
     ViewBag.Title = "Статистика затрат";
+    // Всего потрачено денег на группы событий (Заправка, ремонт), за определенный период
     Dictionary<string, double> allCostStatistics = new Dictionary<string, double>();
+    // Всего потрачено денег, за определеный период
+    double allCosts = 0;
+    // Потрачено денег на бензин, за определенный период
+    Dictionary<DateTime, double> fuelCosts = new Dictionary<DateTime, double>();
+    // Потрачено денег на группы событий по месяцам, за определенный период
+    Dictionary<string, double> otherCostStatistics = new Dictionary<string, double>();
+    // Мойка, нет в списке, ремонт, стоянка, страховка, техосмотр, штраф, эвакуатор
+    
+    // Получаем названия событий
     foreach (var eventType in ViewBag.EventTypes)
     {
         allCostStatistics.Add(eventType, 0);
+        if (!eventType.Equals(Consts.EventTypeNameAzs))
+        {
+            otherCostStatistics.Add(eventType, 0);
+        }
     }
-    
+
     foreach (var carEvent in Model)
     {
         allCostStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
+        if (otherCostStatistics.ContainsKey(carEvent.EventTypes.Name))
+        {
+            otherCostStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
+        }
+        allCosts += carEvent.CostTotal;
+        if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs))
+        {
+            var result = fuelCosts.FirstOrDefault(x => x.Key.Year == carEvent.DateEvent.Year && x.Key.Month == carEvent.DateEvent.Month);
+            if (result.Key != DateTime.MinValue)
+            {
+                fuelCosts[result.Key] += carEvent.CostTotal;
+            }
+            else
+            {
+                fuelCosts.Add(new DateTime(carEvent.DateEvent.Year, carEvent.DateEvent.Month, 1), carEvent.CostTotal);
+            }
+        }
     }
-    string allCostStatisticsJson = JsonConvert.SerializeObject(allCostStatistics);
+    var dataKey = allCostStatistics.Keys.ToArray();
+    var dataValue = allCostStatistics.Values.ToArray();
+
+    //string allCostStatisticsJson = JsonConvert.SerializeObject(allCostStatistics);
+
+    string dataKeyJson = JsonConvert.SerializeObject(dataKey);
+    string dataValueJson = JsonConvert.SerializeObject(dataValue);
+
+    List<double> tmpFuelCosts = new List<double>();
+    tmpFuelCosts.AddRange(fuelCosts.Values);
+    string tmpFuelCostsJson = JsonConvert.SerializeObject(tmpFuelCosts.ToArray());
+
+    //List<double> tmpСarwash = new List<double>();
+    //foreach (var item in otherCostStatistics)
+    //{
+    //    if (item.Key.Equals(Consts.EventTypeNameСarwash))
+    //    {
+    //        tmpСarwash.Add(item.Value);
+    //    }
+    //}
+    
+    //string tmpFuelCostsJson = JsonConvert.SerializeObject();
+    
+    
 }
 
 @*<h2>Index</h2>*@
@@ -26,8 +81,57 @@
             <hr />
             <div id="carContainer">
                 <h2>@ViewBag.Title</h2>
+                <p>
+                    Всего денег потрачено: @allCosts грн.
+                </p>
+
 
                 <div id="allCostStatistics" class="col-lg-12 col-md-12"></div>
+                <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
+                <div id="otherCostStatistics" class="col-lg-12 col-md-12"></div>
+
+
+                <pre id="tsv" style="display:none">Browser Version	Total Market Share
+Ремонт 8.0	260.61%
+Ремонт 9.0	760.96%
+Техосмотр 18.0	48.01%
+Страховка 19.0	777.73%
+Стоянка 12	26.72%
+Ремонт 6.0	6.40%
+Стоянка 11	24.72%
+Ремонт 7.0	3.55%
+Штраф 5.1	73.53%
+Стоянка 13	22.16%
+Стоянка 3.6	12.87%
+Мойка 11.x	49.30%
+Техосмотр 17.0	41.13%
+Стоянка 10	20.90%
+Штраф 5.0	200.85%
+Стоянка 9.0	20.65%
+Стоянка 8.0	20.55%
+Стоянка 4.0	20.50%
+Техосмотр 16.0	40.45%
+Стоянка 3.0	20.36%
+Стоянка 3.5	20.36%
+Стоянка 6.0	20.32%
+Стоянка 5.0	20.31%
+Стоянка 7.0	20.29%
+Другое 7.0	50.29%
+Техосмотр 18.0 - Maxthon Edition	40.26%
+Техосмотр 14.0	40.25%
+Техосмотр 20.0	40.24%
+Техосмотр 15.0	40.18%
+Техосмотр 12.0	40.16%
+Мойка 12.x	30.15%
+Штраф 4.0	100.14%
+Техосмотр 13.0	0.13%
+Штраф 4.1	100.12%
+Техосмотр 11.0	0.10%
+Стоянка 14	20.10%
+Стоянка 2.0	20.09%
+Техосмотр 10.0	40.09%
+Мойка 10.x	25.09%
+Ремонт 8.0 - Tencent Traveler Edition	0.09%</pre>
             </div>
         </div>
     </div>
@@ -35,68 +139,251 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        var json = '@(allCostStatisticsJson)';
-        alert(json);
-        var data = JSON.parse(json);
-        alert(data);
-        var
-            //brands = {},
-            brandsData = [],
-            //versions = {},
-            drilldownSeries = [];
+    $(document).ready(function() {
+        var dataKeyJson = '@(dataKeyJson)';
+        // Меняем все символы "&quot;" на кавычку
+        dataKeyJson = dataKeyJson.replace(new RegExp('&quot;', 'g'), '\"');
+        var dataKey = JSON.parse(dataKeyJson);
+
+        var dataValueJson = '@(dataValueJson)';
+        var dataValue = JSON.parse(dataValueJson);
+
+        //var arr = new Array();
+        //for (var i = 0; i < dataKey.length; i++) {
+        //    arr[dataKey[i]] = dataValue[i];
+        //    alert(arr[dataKey[i]]);
+        //}
+        //alert(arr["Заправка"]);
+
+        $(function() {
+            $('#allCostStatistics').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Статистика расходов'
+                },
+                subtitle: {
+                    text: 'Период: '
+                },
+                //tooltip: {
+                //    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                //},
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [
+                    {
+                        type: 'pie',
+                        name: 'Денег потрачено',
+                        data: [
+                            [dataKey[0], dataValue[0]],
+                            [dataKey[1], dataValue[1]],
+                            [dataKey[2], dataValue[2]],
+                            [dataKey[3], dataValue[3]],
+                            [dataKey[4], dataValue[4]],
+                            [dataKey[5], dataValue[5]],
+                            [dataKey[6], dataValue[6]],
+                            [dataKey[7], dataValue[7]],
+                            [dataKey[8], dataValue[8]]
+                            //['IE', 26.8],
+                            //{
+                            //    name: 'Техосмотр',
+                            //    y: 12.8,
+                            //    sliced: true,
+                            //    selected: true
+                            //},
+                            //['Штраф', 8.5],
+                            //['Мойка', 6.2],
+                            //['Others', 0.7]
+                        ]
+                    }
+                ]
+            });
+        });
 
 
-        for (var i = 0; i < data.length; i++) {
-            alert(data[0][0]);
+        var tmpFuelCostsJson = '@(tmpFuelCostsJson)';
+        var tmpFuelCosts = JSON.parse(tmpFuelCostsJson);
+
+        var arr = new Array(tmpFuelCosts.length);
+        for (var j = 0; j < arr.length; j++) {
+            arr[j] = '';
         }
 
-        $('#allCostStatistics').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Статистика расходов'
-            },
-            subtitle: {
-                text: 'Click the columns to view versions. Source: netmarketshare.com.'
-            },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: {
+        // Затраты на бензин за определенный период
+        $(function() {
+            $('#fuelCostStatistics').highcharts({
+                chart: {
+                    type: 'line'
+                },
                 title: {
-                    text: 'Total percent market share'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.y:.1f}%'
+                    text: 'Затраты на топливо'
+                },
+                subtitle: {
+                    text: 'За период'
+                },
+                xAxis: {
+                    //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    categories: arr
+                },
+                yAxis: {
+                    title: {
+                        text: 'Денег потрачено'
                     }
-                }
-            },
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [
+                    {
+                        name: 'Топливо',
+                        data: tmpFuelCosts
+                    }
+                    //, {
+                    //    name: 'London',
+                    //    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                    //}
+                ]
+            });
+        });
 
-            tooltip: {
-                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br />'
-            },
 
-            series: [
-                {
-                    name: 'Brands',
-                    colorByPoint: true,
-                    data: brandsData
+        $(function() {
+            Highcharts.data({
+                csv: document.getElementById('tsv').innerHTML,
+                itemDelimiter: '\t',
+                parsed: function(columns) {
+
+                    var brands = {},
+                        brandsData = [],
+                        versions = {},
+                        drilldownSeries = [];
+
+                    // Parse percentage strings
+                    columns[1] = $.map(columns[1], function(value) {
+                        if (value.indexOf('%') === value.length - 1) {
+                            value = parseFloat(value);
+                        }
+                        return value;
+                    });
+
+                    $.each(columns[0], function(i, name) {
+                        var brand,
+                            version;
+
+                        if (i > 0) {
+
+                            // Remove special edition notes
+                            name = name.split(' -')[0];
+
+                            // Split into brand and version
+                            version = name.match(/([0-9]+[\.0-9x]*)/);
+                            if (version) {
+                                version = version[0];
+                            }
+                            brand = name.replace(version, '');
+
+                            // Create the main data
+                            if (!brands[brand]) {
+                                brands[brand] = columns[1][i];
+                            } else {
+                                brands[brand] += columns[1][i];
+                            }
+
+                            // Create the version data
+                            if (version !== null) {
+                                if (!versions[brand]) {
+                                    versions[brand] = [];
+                                }
+                                versions[brand].push([' ', columns[1][i]]);
+                            }
+                        }
+
+                    });
+
+                    $.each(brands, function(name, y) {
+                        brandsData.push({
+                            name: name,
+                            y: y,
+                            drilldown: versions[name] ? name : null
+                        });
+                    });
+                    $.each(versions, function(key, value) {
+                        drilldownSeries.push({
+                            name: key,
+                            id: key,
+                            data: value
+                        });
+                    });
+
+                    // Create the chart
+                    $('#otherCostStatistics').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Другие события'
+                        },
+                        subtitle: {
+                            text: 'Нажмите на колонку, для более подробной статистики'
+                        },
+                        xAxis: {
+                            type: 'category'
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Сумма за выбранный период'
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            series: {
+                                borderWidth: 0,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.y:.2f}'
+                                }
+                            }
+                        },
+
+                        tooltip: {
+                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b>грн<br/>'
+                        },
+
+                        series: [
+                            {
+                                name: 'Событие',
+                                colorByPoint: true,
+                                data: brandsData
+                            }
+                        ],
+                        drilldown: {
+                            series: drilldownSeries
+                        }
+                    });
                 }
-            ],
-            drilldown: {
-                series: drilldownSeries
-            }
+            });
         });
     });
 </script>
@@ -104,4 +391,6 @@
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/highcharts")
+@*<script src="http://code.highcharts.com/modules/data.js"></script>
+<script src="http://code.highcharts.com/modules/drilldown.js"></script>*@
 }

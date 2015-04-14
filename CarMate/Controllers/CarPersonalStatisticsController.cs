@@ -6,16 +6,16 @@ using System.Web.Mvc;
 
 namespace CarMate.Controllers
 {
-    public class CarCostStatisticsController : BaseController
+    public class CarPersonalStatisticsController : BaseController
     {
         //
-        // GET: /CarCostStatistics/
+        // GET: /CarPersonalStatistics/
 
         public ActionResult Index(int carId)
         {
             CarAndUserInit(carId);
-            ViewBag.EventTypes = db.EventTypes.OrderBy(x => x.Name).Select(x => x.Name).ToList();
             var carEevEvents = db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+
             return View(carEevEvents);
         }
 
