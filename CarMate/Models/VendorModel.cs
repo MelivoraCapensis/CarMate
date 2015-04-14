@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CarMate.Models
 {
-    public class VendorItem : IEquatable<VendorItem>
+    public class VendorItem:IEquatable<VendorItem>
     {
         public string Name { set; get; }
         public string[] Categories { set; get; }
@@ -16,14 +16,14 @@ namespace CarMate.Models
             {
                 return true;
             }
-            else
+            else 
             {
                 return false;
             }
 
         }
     }
-    public class CheaperFuelItem : IEquatable<CheaperFuelItem>, IComparable
+    public class CheaperFuelItem : IEquatable<CheaperFuelItem>,IComparable
     {
         public string Name { set; get; }
         public double Price { set; get; }

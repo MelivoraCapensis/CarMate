@@ -17,11 +17,11 @@ namespace CarMate.Controllers
     public class MapController : Controller
     {
         private CarMateEntities db = new CarMateEntities();
-
+       
         string formatted_address = "";
         //
         // GET: /Map/
-        static double PIx = 3.141592;
+        static double  PIx = 3.141592;
         static double RADIO = 6378.16;
         /// Convert degrees to Radians    
         ///  
@@ -30,7 +30,7 @@ namespace CarMate.Controllers
             return x * PIx / 180;
         }
         /// Calculate the distance between two places.
-        public static double DistanceBetweenPlaces(
+        public  static double DistanceBetweenPlaces(
            double lon1,
            double lat1,
            double lon2,
@@ -41,12 +41,12 @@ namespace CarMate.Controllers
 
             double a = (Math.Sin(dlat / 2) * Math.Sin(dlat / 2)) + Math.Cos(Radians(lat1)) * Math.Cos(Radians(lat2)) * (Math.Sin(dlon / 2) * Math.Sin(dlon / 2));
             double angle = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            return (angle * RADIO);//distance in miles
+            return (angle * RADIO) ;//distance in miles
         }
         //запрос к API геокодирования 
-        public string GetforrmatedAdress(double lat, double lng)
+        public string GetforrmatedAdress(double lat,double lng)
         {
-
+            
             string url = string.Format(
                 "http://maps.googleapis.com/maps/api/geocode/xml?latlng={0},{1}&sensor=true_or_false&language=ru",
                 lat.ToString().Replace(",", "."), lng.ToString().Replace(",", "."));
@@ -77,7 +77,7 @@ namespace CarMate.Controllers
                 region = xmldoc.GetElementsByTagName("short_name")[2].ChildNodes[0].InnerText;
 
             }
-            return formatted_address;
+            return formatted_address;             
         }
 
         private IPlacemarksRepository placemarksRepository;
@@ -106,38 +106,38 @@ namespace CarMate.Controllers
         //
         // GET: /Map/Details/5
 
-
+       
         public ActionResult GetMap()
         {
             Squirrel s = new Squirrel();
             return View(s);
         }
-
+        
         [HttpPost]
         public JsonResult PostSquirrel(Squirrel poi)
         {
-            List<Squirrel> markers = new List<Squirrel>();
+            List<Squirrel> markers = new List<Squirrel>();          
             int categoryId;
             Int32.TryParse(poi.Category, out categoryId);
             double radius;
             string r, l1, l2;
-            List<int> fuelcategoryid = new List<int>();
+            List<int> fuelcategoryid=new List<int>();
             //r = poi.Radius.Replace('.', ',');
             //l1 = poi.Lat.Replace('.', ',');
             //l2 = poi.Long.Replace('.', ',');
             r = poi.Radius;
             l1 = poi.Lat;
-            l2 = poi.Long;
+            l2 = poi.Long;   
             Double.TryParse(r, out radius);
             double latitude;
             Double.TryParse(l1, out latitude);
             double longitude;
             Double.TryParse(l2, out longitude);
             if (poi.FuelCategories == null)
-            {
+            {            
                 var placemarks = from p in placemarksRepository.GetPlacemarks()
-                                 select p;
-                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                             select p;            
+                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();                  
                 foreach (var p in placemarks)
                 {
                     if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
@@ -161,9 +161,9 @@ namespace CarMate.Controllers
                         });
                     }
                 }
-
+                
             }
-            else if (poi.FuelCategories != null && poi.Gascheaper == null)
+            else if (poi.FuelCategories != null && poi.Gascheaper==null)
             {
                 if (poi.FuelCategories.Length > 0)
                 {
@@ -182,37 +182,37 @@ namespace CarMate.Controllers
                 {
                     if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
                     {
-
-                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
-                        if (prices.Count == 0)
-                            continue;
-                        for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
-                        {
-                            int tempId = fuelcategoryid[i];
-                            if (prices[tempId - 1] != 0)
-                            {
-                                List<double?> pricesSquirrel = new List<double?>();
-                                List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
-                                foreach (var v in prices)
+                        
+                            List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                            if (prices.Count == 0)
+                                continue;
+                            for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
+                            { 
+                                int tempId=fuelcategoryid[i];
+                                if (prices[tempId-1] != 0)
                                 {
-                                    pricesSquirrel.Add(v);
+                                    List<double?> pricesSquirrel = new List<double?>();
+                                    List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                                    foreach (var v in prices)
+                                    {
+                                        pricesSquirrel.Add(v);
+                                    }
+                                    formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                    Squirrel temp = new Squirrel()
+                                    {
+                                        Lat = p.latitude.ToString(),
+                                        Long = p.longitude.ToString(),
+                                        Vendore = p.description,
+                                        Adress = formatted_address,
+                                        Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
+                                        FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям
+                                    };
+                                    if (!markers.Contains(temp))
+                                        markers.Add(temp);//проверяем чтобы точки заправок по разным категориям не дублировались
                                 }
-                                formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
-                                Squirrel temp = new Squirrel()
-                                {
-                                    Lat = p.latitude.ToString(),
-                                    Long = p.longitude.ToString(),
-                                    Vendore = p.description,
-                                    Adress = formatted_address,
-                                    Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
-                                    FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям
-                                };
-                                if (!markers.Contains(temp))
-                                    markers.Add(temp);//проверяем чтобы точки заправок по разным категориям не дублировались
-                            }
-                        }
+                            }                 
                     }
-                }
+                }           
             }
             else if (poi.FuelCategories != null && poi.Gascheaper != null)
             {
@@ -280,7 +280,7 @@ namespace CarMate.Controllers
                 }
                 List<CheaperFuelItem> cheaperfuels = new List<CheaperFuelItem>();
                 List<Squirrel> tempmarkers = new List<Squirrel>();
-                List<Squirrel> tempmarkers2 = new List<Squirrel>();
+                List<Squirrel> tempmarkers2 = new List<Squirrel>();  
                 for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
                 {
                     foreach (var v in vendors)
@@ -294,15 +294,15 @@ namespace CarMate.Controllers
                         cheaperfuels.Add(fuelitem);
                     }
                     cheaperfuels.Sort();
-                    tempmarkers = markers.Where(x => x.Vendore == cheaperfuels[0].Name).Select(x => x).ToList();
+                    tempmarkers=markers.Where(x => x.Vendore == cheaperfuels[0].Name).Select(x => x).ToList();
                     tempmarkers2.AddRange(tempmarkers);
                 }
                 markers = tempmarkers2;
             }
             return Json(markers, JsonRequestBehavior.AllowGet);
         }
-
-        //выбор точек по маршруту
+       
+       //выбор точек по маршруту
         [HttpPost]
         public JsonResult PostlstSquirrel(List<Squirrel> incominglstSquirrel)
         {
@@ -316,7 +316,7 @@ namespace CarMate.Controllers
             //r = item.Radius.Replace('.', ',');
             r = item.Radius;
             Double.TryParse(r, out radius);
-            #endregion
+            #endregion 
             List<Squirrel> markers = new List<Squirrel>();//список маркеров по путевым точкам
             List<int> fuelcategoryid = new List<int>();
             if (item.FuelCategories == null)
@@ -369,7 +369,7 @@ namespace CarMate.Controllers
                     }
                 }
             }
-            else if (item.FuelCategories != null && item.Gascheaper == null)
+            else if (item.FuelCategories != null && item.Gascheaper==null)
             {
 
                 if (item.FuelCategories.Length > 0)
@@ -436,7 +436,7 @@ namespace CarMate.Controllers
                         }
                     }
                 }
-
+            
             }
             else if (item.FuelCategories != null && item.Gascheaper != null)
             {
@@ -546,15 +546,14 @@ namespace CarMate.Controllers
         public JsonResult PostlstSVendor(List<Squirrel> incominglstSquirrel)
         {
             List<VendorItem> vendors = new List<VendorItem>();
-            foreach (var v in incominglstSquirrel)
+            foreach (var v in incominglstSquirrel) 
             {
-                VendorItem vtemp = new VendorItem()
-                {
-                    Name = v.Vendore,
-                    Categories = v.FuelCategories,
-                    Prices = v.Prices
+                VendorItem vtemp=new VendorItem(){
+                    Name=v.Vendore,
+                    Categories=v.FuelCategories,
+                    Prices=v.Prices
                 };
-                if (!vendors.Contains(vtemp) & vtemp.Prices != null)
+                if (!vendors.Contains(vtemp) & vtemp.Prices!=null)
                 {
                     vendors.Add(vtemp);
                 }
@@ -562,11 +561,10 @@ namespace CarMate.Controllers
             List<Squirrel> outlstSquirrel = new List<Squirrel>();
             foreach (var v in vendors)
             {
-                Squirrel temp = new Squirrel()
-                {
+                Squirrel temp = new Squirrel() {
                     Vendore = v.Name,
-                    FuelCategories = v.Categories,
-                    Prices = v.Prices
+                    FuelCategories=v.Categories,
+                    Prices=v.Prices
                 };
                 outlstSquirrel.Add(temp);
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarMate.Models
 {
-    public class Squirrel : IEquatable<Squirrel>
+    public  class Squirrel:IEquatable<Squirrel>
     {
         public string Lat { set; get; }
         public string Long { set; get; }
@@ -19,7 +19,7 @@ namespace CarMate.Models
         public double?[] Prices { set; get; }
         public string[] FuelCategories { set; get; }
         public string Gascheaper { set; get; }
-        public string[] ChekedFuelCategories { set; get; }
+        public string[] ChekedFuelCategories { set; get; }      
         public bool Equals(Squirrel other)
         {
             if (this.Lat == other.Lat & this.Long == other.Long)

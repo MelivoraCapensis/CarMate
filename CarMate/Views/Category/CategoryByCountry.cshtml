@@ -1,0 +1,37 @@
+﻿@model CarMate.Models.CategoryModel
+<form class="bs-example bs-example-form" role="form">
+    <div class="row">
+        @foreach (var category in Model.CategoryList)
+        {
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <span>
+                        <input id="category@(category.id)"
+                               type="checkbox"
+                               name="SelectedCategoryIDs"
+                               value="@category.id"
+                               @(Model.SelectedCategoryIDs.Contains(category.id) ? "checked" : "") />
+                        <label for="category@(category.id)">@category.category</label>
+                    </span>
+                    <div id="categoryDetails"></div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <label>Радиус</label>
+            <select class="form-control" id="radius">
+                <option selected value="1.0">1.0км</option>
+                <option value="10.0">10км</option>
+                <option value="2.0">2км</option>
+                <option value="1.5">1.5км</option>
+                <option value="0.8">0.8км</option>
+                <option value="0.5">0.5км</option>
+                <option value="0.4">0.4км</option>
+                <option value="0.2">0.2км</option>
+            </select>
+        </div>
+    </div>
+
+</form>

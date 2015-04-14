@@ -232,7 +232,9 @@
     <Compile Include="Controllers\CarCostStatisticsController.cs" />
     <Compile Include="Controllers\CarEventsController.cs" />
     <Compile Include="Controllers\CarPersonalStatisticsController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\FuelCategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
@@ -1175,6 +1177,8 @@
     <None Include="Properties\PublishProfiles\CarMateStep - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\CarMateStep - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\dgfdg.pubxml" />
+    <None Include="Properties\PublishProfiles\jhklgfdgdf - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\jhklgfdgdf - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="img\bg.jpg" />
     <Content Include="img\callout.jpg" />
@@ -1212,6 +1216,8 @@
     <Content Include="lib\gmaps.streetview.js" />
     <Content Include="lib\gmaps.styles.js" />
     <Content Include="lib\gmaps.utils.js" />
+    <Content Include="nprogress.css" />
+    <Content Include="nprogress.js" />
     <Content Include="PlaceMarkers\Bar.png" />
     <Content Include="PlaceMarkers\car_repair.png" />
     <Content Include="PlaceMarkers\Coffee.png" />
@@ -1436,6 +1442,8 @@
     <Content Include="Views\CarEvents\_PartEventRepairDetails.cshtml" />
     <Content Include="Views\CarCostStatistics\Index.cshtml" />
     <Content Include="Views\CarPersonalStatistics\Index.cshtml" />
+    <Content Include="Views\FuelCategory\CheckFuelCategory.cshtml" />
+    <Content Include="Views\Category\CategoryByCountry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -30,6 +30,18 @@ namespace CarMate
                 "map/postlstSquirrel",
                 new { controller = "Map", action = "PostlstSquirrel" },
                 new[] { "CarMate.Controllers" });
+            routes.MapRoute("CategoryByCategory",
+               "category/categorybycountry",
+               new { controller = "Category", action = "CategoryByCountry" },
+               new[] { "MvcJsonPartialForm.Controllers" });
+            routes.MapRoute("CheckFuelCategory",
+               "fuelcategory/checkfuelcategory",
+               new { controller = "FuelCategory", action = "CheckFuelCategory" },
+               new[] { "MvcJsonPartialForm.Controllers" });
+            routes.MapRoute("PostlstSVendor",
+               "map/postlstsvendor",
+               new { controller = "Map", action = "PostlstSVendor" },
+               new[] { "MvcJsonPartialForm.Controllers" });
 
         }
     }

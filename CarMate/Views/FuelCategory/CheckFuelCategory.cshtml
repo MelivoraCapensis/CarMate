@@ -1,0 +1,30 @@
+﻿@model CarMate.Models.FuelCategoryModel
+<form class="bs-example bs-example-form" role="form">
+    <div class="row">
+        @foreach (var fuelcategory in Model.FuelCategoryList)
+        {
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span>
+                        <input id="fuelcategory"
+                               type="checkbox"
+                               name="SelectedFuelCategoryIDs"
+                               value="@fuelcategory.id"
+                               @(Model.SelectedFuelCategoryIDs.Contains(fuelcategory.id) ? "checked" : "") />
+                        <label for="fuelcategory@(fuelcategory.id)">@fuelcategory.category</label>
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <span>
+                    <input type="checkbox" id="gas_cheaper" disabled value="1">
+                    <label for="checkbox">где дешевле</label>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
