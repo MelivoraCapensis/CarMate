@@ -17,6 +17,7 @@ namespace CarMate.Controllers
     public class MapController : Controller
     {
         private CarMateEntities db = new CarMateEntities();
+
         string formatted_address = "";
         //
         // GET: /Map/
@@ -119,96 +120,457 @@ namespace CarMate.Controllers
             int categoryId;
             Int32.TryParse(poi.Category, out categoryId);
             double radius;
-            Double.TryParse(poi.Radius, out radius);
-            var placemarks = from p in placemarksRepository.GetPlacemarks()
-                             select p;
-            placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+            string r, l1, l2;
+            List<int> fuelcategoryid = new List<int>();
+            //r = poi.Radius.Replace('.', ',');
+            //l1 = poi.Lat.Replace('.', ',');
+            //l2 = poi.Long.Replace('.', ',');
+            r = poi.Radius;
+            l1 = poi.Lat;
+            l2 = poi.Long;
+            Double.TryParse(r, out radius);
             double latitude;
-            Double.TryParse(poi.Lat, out latitude);
+            Double.TryParse(l1, out latitude);
             double longitude;
-            Double.TryParse(poi.Long, out longitude);
-            foreach (var p in placemarks)
+            Double.TryParse(l2, out longitude);
+            if (poi.FuelCategories == null)
             {
-                if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                var placemarks = from p in placemarksRepository.GetPlacemarks()
+                                 select p;
+                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                foreach (var p in placemarks)
                 {
-                    List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
-                    List<string> pricesSquirrel = new List<string>();
-                    List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
-                    foreach (var v in prices)
+                    if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
                     {
-                        pricesSquirrel.Add(v.ToString());
+                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                        List<double?> pricesSquirrel = new List<double?>();
+                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                        foreach (var v in prices)
+                        {
+                            pricesSquirrel.Add(v);
+                        }
+                        formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                        markers.Add(new Squirrel()
+                        {
+                            Lat = p.latitude.ToString(),
+                            Long = p.longitude.ToString(),
+                            Vendore = p.description,
+                            Adress = formatted_address,
+                            Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
+                            FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям 
+                        });
                     }
-                    formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
-                    markers.Add(new Squirrel()
+                }
+
+            }
+            else if (poi.FuelCategories != null && poi.Gascheaper == null)
+            {
+                if (poi.FuelCategories.Length > 0)
+                {
+                    for (int i = 0; i < poi.FuelCategories.Length; i++)
                     {
-                        Lat = p.latitude.ToString(),
-                        Long = p.longitude.ToString(),
-                        Vendore = p.description,
-                        Adress = formatted_address,
-                        Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
-                        FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям 
-                    });
+                        int fcid;
+                        Int32.TryParse(poi.FuelCategories[i], out fcid);
+                        fuelcategoryid.Add(fcid);
+                    }
+
+                }
+                var placemarks = from p in placemarksRepository.GetPlacemarks()
+                                 select p;
+                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                foreach (var p in placemarks)
+                {
+                    if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                    {
+
+                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                        if (prices.Count == 0)
+                            continue;
+                        for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
+                        {
+                            int tempId = fuelcategoryid[i];
+                            if (prices[tempId - 1] != 0)
+                            {
+                                List<double?> pricesSquirrel = new List<double?>();
+                                List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                                foreach (var v in prices)
+                                {
+                                    pricesSquirrel.Add(v);
+                                }
+                                formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                Squirrel temp = new Squirrel()
+                                {
+                                    Lat = p.latitude.ToString(),
+                                    Long = p.longitude.ToString(),
+                                    Vendore = p.description,
+                                    Adress = formatted_address,
+                                    Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
+                                    FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям
+                                };
+                                if (!markers.Contains(temp))
+                                    markers.Add(temp);//проверяем чтобы точки заправок по разным категориям не дублировались
+                            }
+                        }
+                    }
                 }
             }
+            else if (poi.FuelCategories != null && poi.Gascheaper != null)
+            {
+                if (poi.FuelCategories.Length > 0)
+                {
+                    for (int i = 0; i < poi.FuelCategories.Length; i++)
+                    {
+                        int fcid;
+                        Int32.TryParse(poi.FuelCategories[i], out fcid);
+                        fuelcategoryid.Add(fcid);
+                    }
 
+                }
+                var placemarks = from p in placemarksRepository.GetPlacemarks()
+                                 select p;
+                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                foreach (var p in placemarks)
+                {
+                    if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                    {
+
+                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                        if (prices.Count == 0)
+                            continue;
+                        for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
+                        {
+                            int tempId = fuelcategoryid[i];
+                            if (prices[tempId - 1] != 0)
+                            {
+                                List<double?> pricesSquirrel = new List<double?>();
+                                List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                                foreach (var v in prices)
+                                {
+                                    pricesSquirrel.Add(v);
+                                }
+                                formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                Squirrel temp = new Squirrel()
+                                {
+                                    Lat = p.latitude.ToString(),
+                                    Long = p.longitude.ToString(),
+                                    Vendore = p.description,
+                                    Adress = formatted_address,
+                                    Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
+                                    FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям
+                                };
+                                if (!markers.Contains(temp))
+                                    markers.Add(temp);//проверяем чтобы точки заправок по разным категориям не дублировались
+                            }
+                        }
+                    }
+                }
+                List<VendorItem> vendors = new List<VendorItem>();
+                foreach (var m in markers)
+                {
+                    VendorItem vtemp = new VendorItem()
+                    {
+                        Name = m.Vendore,
+                        Categories = m.FuelCategories,
+                        Prices = m.Prices
+                    };
+                    if (!vendors.Contains(vtemp) & vtemp.Prices != null)
+                    {
+                        vendors.Add(vtemp);
+                    }
+                }
+                List<CheaperFuelItem> cheaperfuels = new List<CheaperFuelItem>();
+                List<Squirrel> tempmarkers = new List<Squirrel>();
+                List<Squirrel> tempmarkers2 = new List<Squirrel>();
+                for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
+                {
+                    foreach (var v in vendors)
+                    {
+                        int tempId = fuelcategoryid[i];//выбраная категория топлива
+                        CheaperFuelItem fuelitem = new CheaperFuelItem()
+                        {
+                            Name = v.Name,
+                            Price = Convert.ToDouble(v.Prices[tempId])
+                        };
+                        cheaperfuels.Add(fuelitem);
+                    }
+                    cheaperfuels.Sort();
+                    tempmarkers = markers.Where(x => x.Vendore == cheaperfuels[0].Name).Select(x => x).ToList();
+                    tempmarkers2.AddRange(tempmarkers);
+                }
+                markers = tempmarkers2;
+            }
             return Json(markers, JsonRequestBehavior.AllowGet);
         }
+
         //выбор точек по маршруту
         [HttpPost]
         public JsonResult PostlstSquirrel(List<Squirrel> incominglstSquirrel)
         {
 
             #region получаем категорию и радиус
+            string r, l1, l2;
             Squirrel item = incominglstSquirrel[0];
             int categoryId;
             Int32.TryParse(item.Category, out categoryId);
             double radius;
-            Double.TryParse(item.Radius, out radius);
+            //r = item.Radius.Replace('.', ',');
+            r = item.Radius;
+            Double.TryParse(r, out radius);
             #endregion
-
-            // выбор из базы данных пои точек по категории и отбор по радиусу
-
-            var placemarks = from p in placemarksRepository.GetPlacemarks()
-                             select p;
-            placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
             List<Squirrel> markers = new List<Squirrel>();//список маркеров по путевым точкам
-
-            foreach (var poisqurrel in incominglstSquirrel)
+            List<int> fuelcategoryid = new List<int>();
+            if (item.FuelCategories == null)
             {
-                double latitude;
-                Double.TryParse(poisqurrel.Lat, out latitude);
-                double longitude;
-                Double.TryParse(poisqurrel.Long, out longitude);
-                foreach (var p in placemarks)
-                {
 
-                    if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                // выбор из базы данных пои точек по категории и отбор по радиусу
+
+                var placemarks = from p in placemarksRepository.GetPlacemarks()
+                                 select p;
+                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+
+
+                foreach (var poisqurrel in incominglstSquirrel)
+                {
+                    double latitude;
+                    //l1 = poisqurrel.Lat.Replace('.', ',');
+                    //l2 = poisqurrel.Long.Replace('.', ',');
+                    l1 = poisqurrel.Lat;
+                    l2 = poisqurrel.Long;
+                    Double.TryParse(l1, out latitude);
+                    double longitude;
+                    Double.TryParse(l2, out longitude);
+                    foreach (var p in placemarks)
                     {
 
-                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
-                        List<string> pricesSquirrel = new List<string>();
-                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
-                        foreach (var v in prices)
+                        if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
                         {
-                            pricesSquirrel.Add(v.ToString());
-                        }
-                        formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
-                        Squirrel temp = new Squirrel()
-                        {
-                            Lat = p.latitude.ToString(),
-                            Long = p.longitude.ToString(),
-                            Vendore = p.description,
-                            Adress = formatted_address,
-                            Prices = pricesSquirrel.ToArray(),
-                            FuelCategories = fuelcatsSquirrel.ToArray()
-                        };
-                        if (!markers.Contains(temp))
-                            markers.Add(temp);
-                    }
 
+                            List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
+                            List<double?> pricesSquirrel = new List<double?>();
+                            List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
+                            foreach (var v in prices)
+                            {
+                                pricesSquirrel.Add(v);
+                            }
+                            formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                            Squirrel temp = new Squirrel()
+                            {
+                                Lat = p.latitude.ToString(),
+                                Long = p.longitude.ToString(),
+                                Vendore = p.description,
+                                Adress = formatted_address,
+                                Prices = pricesSquirrel.ToArray(),
+                                FuelCategories = fuelcatsSquirrel.ToArray()
+                            };
+                            if (!markers.Contains(temp))
+                                markers.Add(temp);
+                        }
+
+                    }
                 }
             }
+            else if (item.FuelCategories != null && item.Gascheaper == null)
+            {
+
+                if (item.FuelCategories.Length > 0)
+                {
+                    for (int i = 0; i < item.FuelCategories.Length; i++)
+                    {
+                        int fcid;
+                        Int32.TryParse(item.FuelCategories[i], out fcid);
+                        fuelcategoryid.Add(fcid);
+                    }
+                    // выбор из базы данных пои точек по категории и отбор по радиусу
+
+                    var placemarks = from p in placemarksRepository.GetPlacemarks()
+                                     select p;
+                    placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+
+
+                    foreach (var poisqurrel in incominglstSquirrel)
+                    {
+                        double latitude;
+                        //l1 = poisqurrel.Lat.Replace('.', ',');
+                        //l2 = poisqurrel.Long.Replace('.', ',');
+                        l1 = poisqurrel.Lat;
+                        l2 = poisqurrel.Long;
+                        Double.TryParse(l1, out latitude);
+                        double longitude;
+                        Double.TryParse(l2, out longitude);
+                        foreach (var p in placemarks)
+                        {
+
+                            if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                            {
+
+                                List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
+                                if (prices.Count == 0)
+                                    continue;
+
+                                for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
+                                {
+                                    int tempId = fuelcategoryid[i];
+                                    if (prices[tempId - 1] != 0)
+                                    {
+                                        List<double?> pricesSquirrel = new List<double?>();
+                                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
+                                        foreach (var v in prices)
+                                        {
+                                            pricesSquirrel.Add(v);
+                                        }
+                                        formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                        Squirrel temp = new Squirrel()
+                                        {
+                                            Lat = p.latitude.ToString(),
+                                            Long = p.longitude.ToString(),
+                                            Vendore = p.description,
+                                            Adress = formatted_address,
+                                            Prices = pricesSquirrel.ToArray(),
+                                            FuelCategories = fuelcatsSquirrel.ToArray()
+                                        };
+                                        if (!markers.Contains(temp))
+                                            markers.Add(temp);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            else if (item.FuelCategories != null && item.Gascheaper != null)
+            {
+                if (item.FuelCategories.Length > 0)
+                {
+                    for (int i = 0; i < item.FuelCategories.Length; i++)
+                    {
+                        int fcid;
+                        Int32.TryParse(item.FuelCategories[i], out fcid);
+                        fuelcategoryid.Add(fcid);
+                    }
+                    // выбор из базы данных пои точек по категории и отбор по радиусу
+
+                    var placemarks = from p in placemarksRepository.GetPlacemarks()
+                                     select p;
+                    placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+
+
+                    foreach (var poisqurrel in incominglstSquirrel)
+                    {
+                        double latitude;
+                        //l1 = poisqurrel.Lat.Replace('.', ',');
+                        //l2 = poisqurrel.Long.Replace('.', ',');
+                        l1 = poisqurrel.Lat;
+                        l2 = poisqurrel.Long;
+                        Double.TryParse(l1, out latitude);
+                        double longitude;
+                        Double.TryParse(l2, out longitude);
+                        foreach (var p in placemarks)
+                        {
+
+                            if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                            {
+
+                                List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
+                                if (prices.Count == 0)
+                                    continue;
+
+                                for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
+                                {
+                                    int tempId = fuelcategoryid[i];
+                                    if (prices[tempId - 1] != 0)
+                                    {
+                                        List<double?> pricesSquirrel = new List<double?>();
+                                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
+                                        foreach (var v in prices)
+                                        {
+                                            pricesSquirrel.Add(v);
+                                        }
+                                        formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                        Squirrel temp = new Squirrel()
+                                        {
+                                            Lat = p.latitude.ToString(),
+                                            Long = p.longitude.ToString(),
+                                            Vendore = p.description,
+                                            Adress = formatted_address,
+                                            Prices = pricesSquirrel.ToArray(),
+                                            FuelCategories = fuelcatsSquirrel.ToArray()
+                                        };
+                                        if (!markers.Contains(temp))
+                                            markers.Add(temp);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                List<VendorItem> vendors = new List<VendorItem>();
+                foreach (var m in markers)
+                {
+                    VendorItem vtemp = new VendorItem()
+                    {
+                        Name = m.Vendore,
+                        Categories = m.FuelCategories,
+                        Prices = m.Prices
+                    };
+                    if (!vendors.Contains(vtemp) & vtemp.Prices != null)
+                    {
+                        vendors.Add(vtemp);
+                    }
+                }
+                List<CheaperFuelItem> cheaperfuels = new List<CheaperFuelItem>();
+                List<Squirrel> tempmarkers = new List<Squirrel>();
+                List<Squirrel> tempmarkers2 = new List<Squirrel>();
+                for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
+                {
+                    foreach (var v in vendors)
+                    {
+                        int tempId = fuelcategoryid[i];//выбраная категория топлива
+                        CheaperFuelItem fuelitem = new CheaperFuelItem()
+                        {
+                            Name = v.Name,
+                            Price = Convert.ToDouble(v.Prices[tempId])
+                        };
+                        cheaperfuels.Add(fuelitem);
+                    }
+                    cheaperfuels.Sort();
+                    tempmarkers = markers.Where(x => x.Vendore == cheaperfuels[0].Name).Select(x => x).ToList();
+                    tempmarkers2.AddRange(tempmarkers);
+                }
+                markers = tempmarkers2;
+            }
             return Json(markers, JsonRequestBehavior.AllowGet);
+        }
+        //vendors пои на карте
+        [HttpPost]
+        public JsonResult PostlstSVendor(List<Squirrel> incominglstSquirrel)
+        {
+            List<VendorItem> vendors = new List<VendorItem>();
+            foreach (var v in incominglstSquirrel)
+            {
+                VendorItem vtemp = new VendorItem()
+                {
+                    Name = v.Vendore,
+                    Categories = v.FuelCategories,
+                    Prices = v.Prices
+                };
+                if (!vendors.Contains(vtemp) & vtemp.Prices != null)
+                {
+                    vendors.Add(vtemp);
+                }
+            }
+            List<Squirrel> outlstSquirrel = new List<Squirrel>();
+            foreach (var v in vendors)
+            {
+                Squirrel temp = new Squirrel()
+                {
+                    Vendore = v.Name,
+                    FuelCategories = v.Categories,
+                    Prices = v.Prices
+                };
+                outlstSquirrel.Add(temp);
+            }
+            return Json(outlstSquirrel, JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)
         {
