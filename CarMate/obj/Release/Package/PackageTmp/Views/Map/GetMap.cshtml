@@ -46,9 +46,9 @@
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-<link href='../nprogress.css' rel='stylesheet' />
+@*<link href='../nprogress.css' rel='stylesheet' />*@
 <script src='../vendor/jquery-2.0.js'></script>
-<script src='../nprogress.js'></script>
+@*<script src='../nprogress.js'></script>*@
 <script>if (location.hostname.match(/ricostacruz\.com$/)) { var _gaq = _gaq || []; _gaq.push(["_setAccount", "UA-20473929-1"]), _gaq.push(["_trackPageview"]), function () { var a = document.createElement("script"); a.type = "text/javascript", a.async = !0, a.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js"; var b = document.getElementsByTagName("script")[0]; b.parentNode.insertBefore(a, b) }() }</script>
 
 <style>
@@ -109,8 +109,8 @@
 </style>
 <script type="text/javascript"> 
     $('body').show();
-    NProgress.start();
-    NProgress.set(0.5);
+    //NProgress.start();
+    //NProgress.set(0.5);
     $("#menu_map").append('<div id="categoryDiv"></div>'+
        '<div class="row">'+
        '<div class="col-lg-10">'+
@@ -350,7 +350,7 @@
             navigator.geolocation.getCurrentPosition(function (position) {
                 var pos = new google.maps.LatLng(position.coords.latitude,
                                                     position.coords.longitude);
-                NProgress.set(0.8);
+                //NProgress.set(0.8);
                 image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
                 var marker = new google.maps.Marker({
                     position: pos,
@@ -368,7 +368,7 @@
                 });
                 map.setCenter(pos);
                 map.setZoom(12);
-                NProgress.done();
+                //NProgress.done();
                 //запоминаем текущие координаты местоположения
                 document.getElementById('latitude').value = position.coords.latitude;
                 document.getElementById('longitude').value = position.coords.longitude;
@@ -790,7 +790,7 @@
     function postSquirrel(squirrel) {
         this.launchSquirrel = function () {
             $('body').show();
-            NProgress.start();
+            //NProgress.start();
             $.ajax({
                 type: "POST",
                 url: "/map/PostSquirrel",
@@ -798,7 +798,7 @@
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(squirrel),
                 success: function (data) {
-                    NProgress.set(0.4);
+                    //NProgress.set(0.4);
                     $.each(data, function (i, item) {
                         var lat = item.Lat.replace(",", ".");
                         var lng = item.Long.replace(",", ".");
@@ -835,11 +835,11 @@
                         });
                         addMarker(marker, gas_markers);
                     });
-                    NProgress.set(0.8);
+                    //NProgress.set(0.8);
                    // alert("Загружено!!!");
-                    console.log(data)
+                    console.log(data);
                     vendorDetails(data);
-                    NProgress.done();
+                    //NProgress.done();
                 },
                 error: function (data) { console.log(data) }
             });
@@ -862,9 +862,9 @@
                     var fuelcategory = item.FuelCategories;
                     var pricecontent = "";
                     var fuelcatcontent = "";
-                    $.each(fuelcategory, function (index, value) {
-                        fuelcatcontent += "<th>" + value + "</th>";                        
-                    })
+                    $.each(fuelcategory, function(index, value) {
+                        fuelcatcontent += "<th>" + value + "</th>";
+                    });
                     
                     $.each(price, function (index, value) { pricecontent += "<td>" + value + "</td>"; })
                    
@@ -878,7 +878,7 @@
                    
                     $('#results').append('<li class="list-group-item">' + content + '</a></li>');
                 });
-                console.log(data)
+                console.log(data);
             },
             error: function (data) { console.log(data) }
         });
@@ -999,7 +999,7 @@
     function postlstSquirrel(squirrel_data) {   
         this.launchlstSquirrel = function () {
             $('body').show();
-            NProgress.start();
+            //NProgress.start();
             //build json object
             $.ajax({
                 type: "POST",
@@ -1008,7 +1008,7 @@
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(squirrel_data),
             success: function (data) {
-                NProgress.set(0.4);
+                //NProgress.set(0.4);
                 $.each(data, function (i, item) {
                     var lat = item.Lat.replace(",", ".");
                     var lng = item.Long.replace(",", ".");
@@ -1055,9 +1055,9 @@
               
                
               //  alert("Загружено!!!");
-                console.log(data)
+                console.log(data);
                 vendorDetails(data);//получить инфу о азс на карте
-                NProgress.done();
+                //NProgress.done();
             },
             error: function (data) { console.log(data) }
 

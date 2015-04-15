@@ -141,6 +141,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var dataKeyJson = '@(dataKeyJson)';
+        
         // Меняем все символы "&quot;" на кавычку
         dataKeyJson = dataKeyJson.replace(new RegExp('&quot;', 'g'), '\"');
         var dataKey = JSON.parse(dataKeyJson);

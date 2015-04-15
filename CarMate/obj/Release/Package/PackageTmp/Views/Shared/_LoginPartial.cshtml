@@ -93,3 +93,21 @@ else
         </div>
     </div>
 }
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#registerInLogin').click(function() { // При нажатии на кнопку регистрации в окне входа
+            $('#loginCloseButton').trigger('click'); // Закрываем окно входа
+            $('#registerButton').trigger('click'); // Открываем окно регистрации
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#loginInRegister').click(function () {    // При нажатии на кнопку входа в окне регистрации
+            $('#registerCloseButton').trigger('click');    // Закрываем окно регистрации
+            $('#loginButton').trigger('click');    // Открываем окно входа
+        });
+    });
+</script>

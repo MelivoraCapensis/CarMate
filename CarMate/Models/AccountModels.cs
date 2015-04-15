@@ -100,7 +100,8 @@ namespace CarMate.Models
 
         [Required(ErrorMessage = "Адрес электронной почты - обязательное поле")]
         [Display(Name = "Адрес электронной почты")]
-        [DataType(DataType.EmailAddress)]
+        //[DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Некорректный Адрес электронной почты ")]
         public string Email { get; set; }
 
         [Display(Name = "Имя")]

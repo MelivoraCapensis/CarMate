@@ -35,7 +35,7 @@ namespace CarMate.Controllers
                     x =>
                         x.CarId == carId &&
                         x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
-                .OrderBy(x => x.DateCreate)
+                .OrderBy(x => x.DateEvent)
                 .ToList();
 
             // Ссылка на пердыдущее событие заправки
@@ -90,7 +90,7 @@ namespace CarMate.Controllers
             avgConsumption = Math.Round(summConsumption/carEvents.Count);
 
             
-            return fullTankCharging;
+            return fullTankCharging.OrderByDescending(x=>x.NewCarEvent.DateEvent).ToList();
         }
 
         public List<double> SelectFullTankCharging(int carId, DateTime beginDate, DateTime endDate)
