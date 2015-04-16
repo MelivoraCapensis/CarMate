@@ -22,8 +22,8 @@ namespace CarMate
 
             //https://developers.facebook.com/
             OAuthWebSecurity.RegisterFacebookClient(
-                appId: "938726452834876",
-                appSecret: "7119d14460f2ee79ee75e1e49a142574");
+                appId: "814701851943328",
+                appSecret: "36bba673fcaea0f6e30a51152dc20353");
 
             /*
              * Login: CarMate@ukr.net
@@ -43,8 +43,8 @@ namespace CarMate
             //https://vk.com/apps
             OAuthWebSecurity.RegisterClient(
                 client: new VKontakteAuthenticationClient(
-                    "4727896",
-                    "1lF4CnL7GX6hRCE71lRU"),
+                    "4880283",
+                    "3uPXyI93563gZ8e51ojA"),
                     displayName: "ВКонтакте",
                     extraData: null
                 );
