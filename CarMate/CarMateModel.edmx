@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="gb_carmateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Aliases">
           <Key>
             <PropertyRef Name="Id" />
@@ -562,7 +562,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="gb_carmateModelStoreContainer">
+        <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Aliases" EntityType="Self.Aliases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarBrands" EntityType="Self.CarBrands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarDetails" EntityType="Self.CarDetails" Schema="dbo" store:Type="Tables" />
@@ -697,10 +697,11 @@
             <End Role="VendorAliases" EntitySet="VendorAliases" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="gb_carmateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Aliases">
           <Key>
             <PropertyRef Name="Id" />
@@ -1454,9 +1455,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="gb_carmateModelStoreContainer" CdmEntityContainer="CarMateEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="CarMateEntities">
           <EntitySetMapping Name="Aliases">
-            <EntityTypeMapping TypeName="gb_carmateModel.Aliases">
+            <EntityTypeMapping TypeName="Model.Aliases">
               <MappingFragment StoreEntitySet="Aliases">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Alias" ColumnName="Alias" />
@@ -1464,7 +1465,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CarBrands">
-            <EntityTypeMapping TypeName="gb_carmateModel.CarBrands">
+            <EntityTypeMapping TypeName="Model.CarBrands">
               <MappingFragment StoreEntitySet="CarBrands">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="carTypeId" ColumnName="carTypeId" />
@@ -1473,7 +1474,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CarDetails">
-            <EntityTypeMapping TypeName="gb_carmateModel.CarDetails">
+            <EntityTypeMapping TypeName="Model.CarDetails">
               <MappingFragment StoreEntitySet="CarDetails">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CarId" ColumnName="CarId" />
@@ -1482,7 +1483,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CarEvents">
-            <EntityTypeMapping TypeName="gb_carmateModel.CarEvents">
+            <EntityTypeMapping TypeName="Model.CarEvents">
               <MappingFragment StoreEntitySet="CarEvents">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CarId" ColumnName="CarId" />
@@ -1505,7 +1506,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CarModels">
-            <EntityTypeMapping TypeName="gb_carmateModel.CarModels">
+            <EntityTypeMapping TypeName="Model.CarModels">
               <MappingFragment StoreEntitySet="CarModels">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="brandId" ColumnName="brandId" />
@@ -1514,7 +1515,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CarModifications">
-            <EntityTypeMapping TypeName="gb_carmateModel.CarModifications">
+            <EntityTypeMapping TypeName="Model.CarModifications">
               <MappingFragment StoreEntitySet="CarModifications">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="modelId" ColumnName="modelId" />
@@ -1526,7 +1527,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CarNode">
-            <EntityTypeMapping TypeName="gb_carmateModel.CarNode">
+            <EntityTypeMapping TypeName="Model.CarNode">
               <MappingFragment StoreEntitySet="CarNode">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1534,7 +1535,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cars">
-            <EntityTypeMapping TypeName="gb_carmateModel.Cars">
+            <EntityTypeMapping TypeName="Model.Cars">
               <MappingFragment StoreEntitySet="Cars">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1551,7 +1552,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CarTypes">
-            <EntityTypeMapping TypeName="gb_carmateModel.CarTypes">
+            <EntityTypeMapping TypeName="Model.CarTypes">
               <MappingFragment StoreEntitySet="CarTypes">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="carType" ColumnName="carType" />
@@ -1559,7 +1560,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="gb_carmateModel.Categories">
+            <EntityTypeMapping TypeName="Model.Categories">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="category" ColumnName="category" />
@@ -1569,7 +1570,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CategoryLog">
-            <EntityTypeMapping TypeName="gb_carmateModel.CategoryLog">
+            <EntityTypeMapping TypeName="Model.CategoryLog">
               <MappingFragment StoreEntitySet="CategoryLog">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="category" ColumnName="category" />
@@ -1577,7 +1578,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="gb_carmateModel.Countries">
+            <EntityTypeMapping TypeName="Model.Countries">
               <MappingFragment StoreEntitySet="Countries">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="country" ColumnName="country" />
@@ -1587,7 +1588,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EventTypes">
-            <EntityTypeMapping TypeName="gb_carmateModel.EventTypes">
+            <EntityTypeMapping TypeName="Model.EventTypes">
               <MappingFragment StoreEntitySet="EventTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1595,7 +1596,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FuelCategories">
-            <EntityTypeMapping TypeName="gb_carmateModel.FuelCategories">
+            <EntityTypeMapping TypeName="Model.FuelCategories">
               <MappingFragment StoreEntitySet="FuelCategories">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="countryId" ColumnName="countryId" />
@@ -1606,7 +1607,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LogBook">
-            <EntityTypeMapping TypeName="gb_carmateModel.LogBook">
+            <EntityTypeMapping TypeName="Model.LogBook">
               <MappingFragment StoreEntitySet="LogBook">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="categoryid" ColumnName="categoryid" />
@@ -1618,7 +1619,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Placemarks">
-            <EntityTypeMapping TypeName="gb_carmateModel.Placemarks">
+            <EntityTypeMapping TypeName="Model.Placemarks">
               <MappingFragment StoreEntitySet="Placemarks">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="countryId" ColumnName="countryId" />
@@ -1634,7 +1635,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Prices">
-            <EntityTypeMapping TypeName="gb_carmateModel.Prices">
+            <EntityTypeMapping TypeName="Model.Prices">
               <MappingFragment StoreEntitySet="Prices">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="placemarkid" ColumnName="placemarkid" />
@@ -1649,7 +1650,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Regions">
-            <EntityTypeMapping TypeName="gb_carmateModel.Regions">
+            <EntityTypeMapping TypeName="Model.Regions">
               <MappingFragment StoreEntitySet="Regions">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="countryId" ColumnName="countryId" />
@@ -1660,7 +1661,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="gb_carmateModel.Users">
+            <EntityTypeMapping TypeName="Model.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RegionId" ColumnName="RegionId" />
@@ -1677,7 +1678,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VendorAliases">
-            <EntityTypeMapping TypeName="gb_carmateModel.VendorAliases">
+            <EntityTypeMapping TypeName="Model.VendorAliases">
               <MappingFragment StoreEntitySet="VendorAliases">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
@@ -1686,7 +1687,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Vendors">
-            <EntityTypeMapping TypeName="gb_carmateModel.Vendors">
+            <EntityTypeMapping TypeName="Model.Vendors">
               <MappingFragment StoreEntitySet="Vendors">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="countryId" ColumnName="countryId" />

@@ -73,20 +73,31 @@ namespace CarMate.Controllers
 
         public ActionResult Create(int carId)
         {
+            //var events =
+            //    db.CarEvents.Where(x => x.DateEvent <= DateTime.Now)
+            //        .OrderByDescending(x => x.DateEvent)
+            //        .FirstOrDefault();
+            var car = db.Cars.Find(carId);
+            CarAndUserInit(carId);
+            Owner(HttpContext);
+
+            if (this.UserId != car.UserId)
+            {
+                return HttpNotFound();
+            }
+
             var carEvents = new CarEvents
             {
                 CarId = carId,
                 DateEvent = DateTime.Now
             };
+            if (car.Odometer != null)
+            {
+                carEvents.Odometer = (int) car.Odometer;
+            }
             //InitViewBag(carEvents);
             ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", 1);
-            CarAndUserInit(carId);
-            Owner(HttpContext);
-            var car = db.Cars.Find(carId);
-            if (this.UserId != car.UserId)
-            {
-                return HttpNotFound();
-            }
+           
 
             return View(carEvents);
         }
@@ -100,6 +111,13 @@ namespace CarMate.Controllers
         {
             if (ModelState.IsValid)
             {
+                var carTmp = db.Cars.Find(carEvents.CarId);
+                if (carTmp.Odometer < carEvents.Odometer)
+                {
+                    carTmp.Odometer = carEvents.Odometer;
+                }
+                
+
                 carEvents.State = Consts.StateNew;
                 carEvents.DateCreate = DateTime.Now;
 

@@ -4,56 +4,56 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="59ee32a8187b46d6950169099982c7ef" Name="Diagram1">
-        <EntityTypeShape EntityType="gb_carmateModel.Aliases" Width="1.5" PointX="3" PointY="27" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CarBrands" Width="1.5" PointX="6" PointY="24.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CarDetails" Width="1.5" PointX="12.75" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CarEvents" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CarModels" Width="1.5" PointX="8.25" PointY="24" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CarModifications" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CarNode" Width="1.5" PointX="10.5" PointY="21" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Cars" Width="1.5" PointX="10.5" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CarTypes" Width="1.5" PointX="3.75" PointY="24.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Categories" Width="1.5" PointX="6" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.CategoryLog" Width="1.5" PointX="10.5" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Countries" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.EventTypes" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.FuelCategories" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.LogBook" Width="1.5" PointX="12.75" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Placemarks" Width="1.5" PointX="8.25" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Prices" Width="1.5" PointX="8.25" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Regions" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Users" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.VendorAliases" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="gb_carmateModel.Vendors" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
-        <AssociationConnector Association="gb_carmateModel.VendorAliases_fk_Alias" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_CarBrands_carTypeId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_CarModels_brandId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.CarDetails_fk_Car" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.CarDetails_fk_CarNode" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.Events_fk_EventType" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.Events_fk_FuelCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Charging_carId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Charging_chargingid" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Cars_modelId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Modifications_modelId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Cars_modificationId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Cars_userId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_LogBook_carId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Placemarks_categoryId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_CategoryLog_categoryid" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_FuelCategories_countryId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Placemarks_countryId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Regions_countryId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Vendors_countryId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Prices_fuelId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Placemarks_placemarkid" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Placemarks_regionId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Placemarks_vendorId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Prices_vendorId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.fk_Regions_regionId" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.Users_fk_Region" ManuallyRouted="false" />
-        <AssociationConnector Association="gb_carmateModel.VendorAliases_fk_Vendors" ManuallyRouted="false" />
+      <Diagram DiagramId="857c8db17eb643d7bb4ee847a6f52c66" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Aliases" Width="1.5" PointX="3" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CarBrands" Width="1.5" PointX="6" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CarDetails" Width="1.5" PointX="12.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CarEvents" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CarModels" Width="1.5" PointX="8.25" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CarModifications" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CarNode" Width="1.5" PointX="10.5" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Cars" Width="1.5" PointX="10.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CarTypes" Width="1.5" PointX="3.75" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Categories" Width="1.5" PointX="6" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CategoryLog" Width="1.5" PointX="10.5" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Countries" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EventTypes" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FuelCategories" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.LogBook" Width="1.5" PointX="12.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Placemarks" Width="1.5" PointX="8.25" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Prices" Width="1.5" PointX="8.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Regions" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Users" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.VendorAliases" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Vendors" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.VendorAliases_fk_Alias" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_CarBrands_carTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_CarModels_brandId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CarDetails_fk_Car" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CarDetails_fk_CarNode" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Events_fk_EventType" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Events_fk_FuelCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Charging_carId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Charging_chargingid" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Cars_modelId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Modifications_modelId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Cars_modificationId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Cars_userId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_LogBook_carId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Placemarks_categoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_CategoryLog_categoryid" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_FuelCategories_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Placemarks_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Regions_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Vendors_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Prices_fuelId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Placemarks_placemarkid" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Placemarks_regionId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Placemarks_vendorId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Prices_vendorId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_Regions_regionId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Users_fk_Region" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.VendorAliases_fk_Vendors" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
