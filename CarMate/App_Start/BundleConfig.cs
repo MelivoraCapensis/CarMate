@@ -37,6 +37,21 @@ namespace CarMate
                 "~/Scripts/highcharts/js/modules/drilldown.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/Script/landing").Include(
+    //            <script type="text/javascript" src="js/landing/jquery-1.9.1.min.js"></script>
+    //<script type="text/javascript" src="js/landing/jquery.placeholder.min.js"></script>
+    //<script type="text/javascript" src="js/landing/jquery.maskedinput.min.js"></script>
+    //<script type="text/javascript" src="js/landing/jquery.form.min.js"></script>
+    //<script type="text/javascript" src="js/landing/bjqs-1.3.js"></script>
+    //<script type="text/javascript" src="js/landing/script.js?v2"></script>
+                "~/js/landing/jquery-1.9.1.min.js",
+                "~/js/landing/jquery.placeholder.min.js",
+                "~/js/landing/jquery.maskedinput.js",
+                "~/js/landing/jquery.form.min.js",
+                "~/js/landing/bjqs-1.3.js",
+                "~/js/landing/script.js"
+                ));
+
 
 
             /* CSS */
@@ -64,7 +79,13 @@ namespace CarMate
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
 
-           
+            bundles.Add(new StyleBundle("~/Content/landing").Include(
+                 "~/Content/bjqs.css",
+                 "~/Content/style_landing.css",
+                 "~/Content/CSS_reset_landing.css"
+                 //,
+                 //"~/Content/stylish-portfolio.css"
+                 ));
 
         }
     }
