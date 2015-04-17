@@ -8,9 +8,9 @@
 }
 
 <ul class="nav nav-pills">
-    <li @CurrentItem("Car")>
+    @*<li @CurrentItem("Car")>
         @Html.ActionLink("Все", "Details", "Car", new { id = ViewBag.Car.Id }, null)
-    </li>
+    </li>*@
 
     <li @CurrentItem("CarEvents")>
         @Html.ActionLink("События", "Index", "CarEvents", new { carId = ViewBag.Car.Id }, null)

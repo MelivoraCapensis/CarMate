@@ -89,7 +89,7 @@
                 <div id="allCostStatistics" class="col-lg-12 col-md-12"></div>
                 <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
                 <div id="otherCostStatistics" class="col-lg-12 col-md-12"></div>
-                <div id="test" class="col-lg-12 col-md-12"></div>
+                @*<div id="test" class="col-lg-12 col-md-12"></div>*@
 
 
                 <pre id="tsv" style="display:none">Browser Version	Total Market Share
@@ -580,7 +580,7 @@
 
         $(function() {
             var carId = '@(ViewBag.Car.Id)';
-            $("#test").load('@(Url.Action("GetCostStatistics", "CarCostStatistics"))', { "carId": carId });
+            @*$("#test").load('@(Url.Action("GetCostStatistics", "CarCostStatistics"))', { "carId": carId });*@
 
             var brandsData = [];
             var drilldownSeries = [];
