@@ -1,13 +1,12 @@
 ﻿@model IEnumerable<CarMate.Cars>
 
 @{
-    ViewBag.Title = "Index";
-
+    ViewBag.Title = "Все транспортные средства";
 }
 
 <div class="container">
   
-        <h2>Транспортные средства:</h2>
+        <h2>@ViewBag.Title</h2>
 
         @foreach (var car in @Model)
         {

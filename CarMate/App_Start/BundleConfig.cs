@@ -47,8 +47,8 @@ namespace CarMate
                 "~/Content/bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap-datepicker").Include(
-                "~/Content/bootstrap-datepicker/datepicker3.css",
                 "~/Content/bootstrap-datepicker/datepicker.css"));
+                //"~/Content/bootstrap-datepicker/datepicker.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

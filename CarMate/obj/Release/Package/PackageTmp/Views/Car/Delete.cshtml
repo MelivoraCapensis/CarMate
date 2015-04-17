@@ -1,11 +1,11 @@
 ﻿@model CarMate.Cars
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Удаление транспортного средства";
 }
 
 <div class="container">
-    <h2>Удаление транспортного средства</h2>
+    <h2>@ViewBag.Title</h2>
     <h3>Вы уверены, что хотите удалить "@Model.CarModels.CarBrands.brand - @Model.CarModels.model - @Model.CarModifications.modification?"</h3>
 
     @using (Html.BeginForm())

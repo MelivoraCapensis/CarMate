@@ -28,7 +28,7 @@
         @Html.ActionLink("Статистика персональная", "Index", "CarPersonalStatistics", new { carId = ViewBag.Car.Id }, null)
     </li>
 
-    <li>
-        @Html.ActionLink("Планы", "Test", "Test")
+    <li @CurrentItem("Test")>
+        @Html.ActionLink("Планы", "Test", "Test", null, new { @class = "btn btn-default", disabled = true })
     </li>
 </ul>

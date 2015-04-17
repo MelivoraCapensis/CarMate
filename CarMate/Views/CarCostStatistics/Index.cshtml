@@ -37,11 +37,11 @@
             var result = fuelCosts.FirstOrDefault(x => x.Key.Year == carEvent.DateEvent.Year && x.Key.Month == carEvent.DateEvent.Month);
             if (result.Key != DateTime.MinValue)
             {
-                fuelCosts[result.Key] += carEvent.CostTotal;
+                fuelCosts[result.Key] = Math.Round(fuelCosts[result.Key] + carEvent.CostTotal, 2);
             }
             else
             {
-                fuelCosts.Add(new DateTime(carEvent.DateEvent.Year, carEvent.DateEvent.Month, 1), carEvent.CostTotal);
+                fuelCosts.Add(new DateTime(carEvent.DateEvent.Year, carEvent.DateEvent.Month, 1), Math.Round(carEvent.CostTotal, 2));
             }
         }
     }
@@ -80,7 +80,7 @@
             @Html.Partial("_PartCarMenu")
             <hr />
             <div id="carContainer">
-                <h2>@ViewBag.Title</h2>
+                @*<h2>@ViewBag.Title</h2>*@
                 <p>
                     Всего денег потрачено: @allCosts грн.
                 </p>
@@ -89,10 +89,11 @@
                 <div id="allCostStatistics" class="col-lg-12 col-md-12"></div>
                 <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
                 <div id="otherCostStatistics" class="col-lg-12 col-md-12"></div>
+                <div id="test" class="col-lg-12 col-md-12"></div>
 
 
                 <pre id="tsv" style="display:none">Browser Version	Total Market Share
-Ремонт 8.0	260.61%
+@*Ремонт 8.0	260.61%
 Ремонт 9.0	760.96%
 Техосмотр 18.0	48.01%
 Страховка 19.0	777.73%
@@ -129,9 +130,10 @@
 Техосмотр 11.0	0.10%
 Стоянка 14	20.10%
 Стоянка 2.0	20.09%
-Техосмотр 10.0	40.09%
+Техосмотр 10.0	40.09%*@
 Мойка 10.x	25.09%
-Ремонт 8.0 - Tencent Traveler Edition	0.09%</pre>
+Ремонт 8.0 - Tencent Traveler Edition	0.09%
+</pre>
             </div>
         </div>
     </div>
@@ -141,7 +143,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var dataKeyJson = '@(dataKeyJson)';
-        
+
         // Меняем все символы "&quot;" на кавычку
         dataKeyJson = dataKeyJson.replace(new RegExp('&quot;', 'g'), '\"');
         var dataKey = JSON.parse(dataKeyJson);
@@ -234,7 +236,7 @@
                     text: 'Затраты на топливо'
                 },
                 subtitle: {
-                    text: 'За период'
+                    text: 'За период (сумма за месяц)'
                 },
                 xAxis: {
                     //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -267,123 +269,422 @@
         });
 
 
-        $(function() {
-            Highcharts.data({
-                csv: document.getElementById('tsv').innerHTML,
-                itemDelimiter: '\t',
-                parsed: function(columns) {
+        @*$(function () {
+            var carId = '@(ViewBag.Car.Id)';
+            $("#test").load('@(Url.Action("GetCostStatistics","CarCostStatistics"))', { "carId": carId});
 
-                    var brands = {},
-                        brandsData = [],
-                        versions = {},
-                        drilldownSeries = [];
+            var brands = {};
+            var brandsData = [];
+            var versions = {};
+            var drilldownSeries = [];
+            var result = [];
 
-                    // Parse percentage strings
-                    columns[1] = $.map(columns[1], function(value) {
-                        if (value.indexOf('%') === value.length - 1) {
-                            value = parseFloat(value);
-                        }
-                        return value;
+            //jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function (items) {
+            //    //alert(items);
+            //    var series = [];
+            //    result = items;
+            //    jQuery.each(items, function(itemNo, item) {
+            //        //Get the items from the JSON and add then
+            //        //to the data array of the series                      
+            //        var date = Date(item.DateCreate);
+            //        //alert(date);
+            //        //var currDate = date.getDate();
+            //        //alert(currDate);
+            //        //var currMonth = date.getMonth() + 1;
+            //        //alert(currMonth);
+            //        //var currYear = date.getFullYear();
+            //        //alert(currYear);
+            //        //alert("item.Name = " + item.Name + "\nitem.DateCreate = " + currDate + "/" + currMonth + "/" + currYear);
+            //        //alert("item.Name = " + item.Name + "\nitem.DateCreate = " + date);
+            //        //brands.push({
+            //        //    name: item.Name
+            //        //});
+            //        //result[itemNo] = item;
+            //        //alert(result[itemNo].Name);
+
+
+            //        brandsData.push({
+            //            name: item.Name,
+            //            y: item.Summ,
+            //            drilldown: item.Name
+            //        });
+
+            //        //alert(item.Details[0].Cost);
+            //        $.each(item.Details, function (itemDetailsNo, itemDetails) {
+            //            alert("item.Name = " + item.Name + "\nitemDetails.Cost = " + itemDetails.Cost);
+            //            var date = new Date(itemDetails.CreateDate);
+            //            drilldownSeries.push({
+            //                name: itemDetailsNo,
+            //                id: item.Name,
+            //                data: itemDetails.Cost
+            //            });
+            //        });
+                     
+            //        brands[item.Name] = item.Summ;
+            //        $.each(item.Details, function (itemNo, itemDetails) {
+            //            //alert(item.Name);
+            //            //alert("itemDetails.DateCreate = " + itemDetails.DateCreate + "\itemDetails.Cost" + itemDetails.Cost);
+
+            //            if (!versions[item.Name]) {
+            //                versions[item.Name] = [];
+            //            }
+            //            var date = new Date(itemDetails.CreateDate);
+            //            versions[item.Name].push([date, itemDetails.Cost]);
+
+            //            //brandsData.push({
+            //            //    name: item.Name,
+            //            //    y: item.Summ,
+            //            //    drilldown: versions[itemNo] ? itemNo : null
+            //            //});
+            //        });
+                    
+            //        //if (!versions[item.Name]) {
+            //        //    versions[item.Name] = [];
+            //        //}
+            //        //versions[item.Name].push([' ', columns[1][i]]);
+            //    });
+            //    //options.series = series;
+            //    //alert(series);
+            //    //Create the chart
+            //    //chart = new Highcharts.Chart(options);
+            //    //chart.render();
+            //});
+
+            jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function (items) {
+                //alert(items);
+                var series = [];
+                result = items;
+                jQuery.each(items, function (itemNo, item) {
+                    //Get the items from the JSON and add then
+                    //to the data array of the series                      
+                    var date = Date(item.DateCreate);
+                    //alert(date);
+                    //var currDate = date.getDate();
+                    //alert(currDate);
+                    //var currMonth = date.getMonth() + 1;
+                    //alert(currMonth);
+                    //var currYear = date.getFullYear();
+                    //alert(currYear);
+                    //alert("item.Name = " + item.Name + "\nitem.DateCreate = " + currDate + "/" + currMonth + "/" + currYear);
+                    //alert("item.Name = " + item.Name + "\nitem.DateCreate = " + date);
+                    //brands.push({
+                    //    name: item.Name
+                    //});
+                    //result[itemNo] = item;
+                    //alert(result[itemNo].Name);
+
+
+                    brandsData.push({
+                        name: item.Name,
+                        y: item.Summ,
+                        drilldown: item.Name
                     });
 
-                    $.each(columns[0], function(i, name) {
-                        var brand,
-                            version;
-
-                        if (i > 0) {
-
-                            // Remove special edition notes
-                            name = name.split(' -')[0];
-
-                            // Split into brand and version
-                            version = name.match(/([0-9]+[\.0-9x]*)/);
-                            if (version) {
-                                version = version[0];
-                            }
-                            brand = name.replace(version, '');
-
-                            // Create the main data
-                            if (!brands[brand]) {
-                                brands[brand] = columns[1][i];
-                            } else {
-                                brands[brand] += columns[1][i];
-                            }
-
-                            // Create the version data
-                            if (version !== null) {
-                                if (!versions[brand]) {
-                                    versions[brand] = [];
-                                }
-                                versions[brand].push([' ', columns[1][i]]);
-                            }
-                        }
-
-                    });
-
-                    $.each(brands, function(name, y) {
-                        brandsData.push({
-                            name: name,
-                            y: y,
-                            drilldown: versions[name] ? name : null
-                        });
-                    });
-                    $.each(versions, function(key, value) {
+                    //alert(item.Details[0].Cost);
+                    $.each(item.Details, function (itemDetailsNo, itemDetails) {
+                        //alert("item.Name = " + item.Name + "\nitemDetails.Cost = " + itemDetails.Cost);
+                        var date = new Date(itemDetails.CreateDate);
                         drilldownSeries.push({
-                            name: key,
-                            id: key,
-                            data: value
+                            name: itemDetailsNo,
+                            id: item.Name,
+                            data: itemDetails.Cost
                         });
                     });
 
-                    // Create the chart
-                    $('#otherCostStatistics').highcharts({
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: 'Другие события'
-                        },
-                        subtitle: {
-                            text: 'Нажмите на колонку, для более подробной статистики'
-                        },
-                        xAxis: {
-                            type: 'category'
-                        },
-                        yAxis: {
+                    //brands[item.Name] = item.Summ;
+                    //$.each(item.Details, function (itemNo, itemDetails) {
+                    //    //alert(item.Name);
+                    //    //alert("itemDetails.DateCreate = " + itemDetails.DateCreate + "\itemDetails.Cost" + itemDetails.Cost);
+
+                    //    if (!versions[item.Name]) {
+                    //        versions[item.Name] = [];
+                    //    }
+                    //    var date = new Date(itemDetails.CreateDate);
+                    //    versions[item.Name].push([date, itemDetails.Cost]);
+
+                    //    //brandsData.push({
+                    //    //    name: item.Name,
+                    //    //    y: item.Summ,
+                    //    //    drilldown: versions[itemNo] ? itemNo : null
+                    //    //});
+                    //});
+
+                    //if (!versions[item.Name]) {
+                    //    versions[item.Name] = [];
+                    //}
+                    //versions[item.Name].push([' ', columns[1][i]]);
+                });
+
+                Highcharts.data({
+                    csv: document.getElementById('tsv').innerHTML,
+                    itemDelimiter: '\t',
+                    parsed: function (columns) {
+
+
+                        //var
+                        //    //brands = {},
+                        //    //brandsData = [],
+                        //    //versions = {},
+                        //    drilldownSeries = [];
+
+                        // Parse percentage strings
+                        //columns[1] = $.map(columns[1], function(value) {
+                        //    if (value.indexOf('%') === value.length - 1) {
+                        //        value = parseFloat(value);
+                        //    }
+                        //    return value;
+                        //});
+
+                        //$.each(columns[0], function (i, name) {
+                        //    var brand,
+                        //        version;
+
+                        //    if (i > 0) {
+
+                        //        // Remove special edition notes
+                        //        //name = name.split(' -')[0];
+
+                        //        // Split into brand and version
+                        //        //version = name.match(/([0-9]+[\.0-9x]*)/);
+                        //        //if (version) {
+                        //        //    version = version[0];
+                        //        //}
+                        //        //brand = name.replace(version, '');
+
+                        //        // Create the main data
+                        //        //if (!brands[brand]) {
+                        //        //    brands[brand] = columns[1][i];
+                        //        //    
+                        //        //}
+                        //        //else {
+                        //        //    brands[brand] += columns[1][i];
+                        //        //}
+                        //        alert(brand);
+                        //        // Create the version data
+                        //        //if (version !== null) {
+                        //        //    //if (!versions[brand]) {
+                        //        //    //    versions[brand] = [];
+                        //        //    //}
+                        //        //    //versions[brand].push([' ', columns[1][i]]);
+                        //        //    //alert(versions[brand]);
+                        //        //}
+                        //    }
+
+                        //});
+
+                        //$.each(result, function (itemNo, item) {
+                        //    //alert(item.Name);
+                        //    brandsData.push({
+                        //        name: item.Name,
+                        //        y: item.Summ,
+                        //        drilldown: item.Name
+                        //    });
+                        //});
+
+                        //$.each(result, function (itemNo, item) {
+                        //    //alert(item.Details[0].Cost);
+                        //    $.each(item.Details, function (itemDetailsNo, itemDetails) {
+                        //        alert("item.Name = " + item.Name + "\nitemDetails.Cost = " + itemDetails.Cost);
+                        //        var date = new Date(itemDetails.CreateDate);
+                        //        drilldownSeries.push({
+                        //            name: itemDetailsNo,
+                        //            id: item.Name,
+                        //            data: itemDetails.Cost
+                        //        });
+                        //    });
+                        //    //alert(item[0][1]);
+                        //    //drilldownSeries.push({
+                        //    //    name: itemNo,
+                        //    //    id: item[0][0],
+                        //    //    data: item[0][1]
+                        //    //});
+                        //});
+
+                        Highcharts.setOptions({
+                            lang: {
+                                drillUpText: 'Назад'
+                            }
+                        });
+
+                        //for (var prop in versions) {
+                        //    // если свойство унаследовано - continue
+                        //    alert(prop);
+
+                        //    // работа с prop
+                        //}
+                        //alert(brandsData);
+                        //alert(versions);
+                        //alert(drilldownSeries);
+                        // Create the chart
+                        $('#otherCostStatistics').highcharts({
+                            chart: {
+                                type: 'column'
+                            },
                             title: {
-                                text: 'Сумма за выбранный период'
-                            }
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        plotOptions: {
-                            series: {
-                                borderWidth: 0,
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '{point.y:.2f}'
+                                text: 'Другие события'
+                            },
+                            subtitle: {
+                                text: 'Нажмите на колонку, для более подробной статистики'
+                            },
+                            xAxis: {
+                                type: 'category'
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Сумма за выбранный период'
                                 }
-                            }
-                        },
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            plotOptions: {
+                                series: {
+                                    borderWidth: 0,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.y:.2f}'
+                                    }
+                                }
+                            },
 
-                        tooltip: {
-                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b>грн<br/>'
-                        },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b>грн<br/>'
+                            },
 
-                        series: [
-                            {
-                                name: 'Событие',
-                                colorByPoint: true,
-                                data: brandsData
+                            series: [
+                                {
+                                    name: 'Событие',
+                                    colorByPoint: true,
+                                    data: brandsData
+                                }
+                            ],
+                            drilldown: {
+                                series: drilldownSeries
                             }
-                        ],
-                        drilldown: {
-                            series: drilldownSeries
-                        }
+                        });
+                    }
+                });
+                //options.series = series;
+                //alert(series);
+                //Create the chart
+                //chart = new Highcharts.Chart(options);
+                //chart.render();
+            });
+        });*@
+
+
+
+
+
+
+        $(function() {
+            var carId = '@(ViewBag.Car.Id)';
+            $("#test").load('@(Url.Action("GetCostStatistics", "CarCostStatistics"))', { "carId": carId });
+
+            var brandsData = [];
+            var drilldownSeries = [];
+            
+
+            jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function(items) {
+                //alert(items);
+                jQuery.each(items, function (itemNo, item) {
+                    //alert("\"" + item.Name + "\"");
+                    brandsData.push({
+                        name: item.Name,
+                        y: item.Summ,
+                        drilldown: item.Name
                     });
-                }
+
+                    var versions = {};
+                    $.each(item.Details, function(itemDetailsNo, itemDetails) {
+                        //var date = new Date(item.Details.DateCreate);
+                        //var d = new Date(itemDetails.DateCreate);
+                        //alert(itemDetails.DateCreate.getDate());
+                        //alert("name: " + itemDetailsNo + "\nid: " + item.Name + "\ndata: " + itemDetails.Cost);
+                        //alert("\"" + item.Name + "\"");
+                        //if (!drilldownSeries[item.Name]) {
+                        //    drilldownSeries[item.Name] = [];
+                        //}
+                        if (!versions[item.Name]) {
+                            versions[item.Name] = [];
+                        }
+                        versions[item.Name].push([itemDetails.DateCreate, itemDetails.Cost]);
+
+                    });
+                    //alert(versions[item.Name]);
+                    drilldownSeries.push({
+                        name: item.Name,
+                        id: item.Name,
+                        data: versions[item.Name]
+                    });
+
+                    //$.each(drilldownSeries, function (itemNo, item) {
+                    //    //alert(item.name);
+                    //    alert(item.data);
+                    //});
+                });
+
+                Highcharts.data({
+                    csv: document.getElementById('tsv').innerHTML,
+                    itemDelimiter: '\t',
+                    parsed: function() {
+
+                        Highcharts.setOptions({
+                            lang: {
+                                drillUpText: 'Назад'
+                            }
+                        });
+
+                        $('#otherCostStatistics').highcharts({
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: 'Другие события'
+                            },
+                            subtitle: {
+                                text: 'Нажмите на колонку, для более подробной статистики'
+                            },
+                            xAxis: {
+                                type: 'category'
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Сумма за выбранный период'
+                                }
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            plotOptions: {
+                                series: {
+                                    borderWidth: 0,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.y:.2f}'
+                                    }
+                                }
+                            },
+
+                            tooltip: {
+                                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b>грн<br/>'
+                            },
+
+                            series: [
+                                {
+                                    name: 'Событие',
+                                    colorByPoint: true,
+                                    data: brandsData
+                                }
+                            ],
+                            drilldown: {
+                                series: drilldownSeries
+                            }
+                        });
+                    }
+                });
             });
         });
     });

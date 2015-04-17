@@ -1238,7 +1238,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-datepicker\datepicker.css" />
-    <Content Include="Content\bootstrap-datepicker\datepicker3.css" />
     <Content Include="Scripts\highcharts\examples\3d-column-interactive\index.htm" />
     <Content Include="Scripts\highcharts\examples\3d-column-null-values\index.htm" />
     <Content Include="Scripts\highcharts\examples\3d-column-stacking-grouping\index.htm" />

@@ -37,8 +37,8 @@ namespace CarMate
 
 
             OAuthWebSecurity.RegisterTwitterClient(
-               consumerKey: "zCObyj7ydgkh8zsMfqMha3VOG",
-               consumerSecret: "ZaxD0iGZYguKO4g5GVpRzufTc4zbgIThqCat2RMtBJRw5JBXFF");
+               consumerKey: "hlsGK041fy61i3BpkVhLYhBuN",
+               consumerSecret: "vnedzuDIj8BjprLzAAggrZSfMRC9oKMubQ7ah1P2OXT8tikyeK");
 
             //https://vk.com/apps
             OAuthWebSecurity.RegisterClient(
@@ -50,7 +50,7 @@ namespace CarMate
                 );
 
             //https://console.developers.google.com/project
-            OAuthWebSecurity.RegisterGoogleClient();
+            //OAuthWebSecurity.RegisterGoogleClient();
         }
     }
 }

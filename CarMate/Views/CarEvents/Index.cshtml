@@ -14,7 +14,7 @@
             @Html.Partial("_PartCarMenu")
             <hr/>
             <div id="carContainer">
-                <h2>@ViewBag.Title</h2>
+                @*<h2>@ViewBag.Title</h2>*@
                 @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                 {
                     <p>
@@ -46,6 +46,9 @@
                         <th>
                             Показать на карте
                         </th>
+
+                        <th>
+                        </th>
                     </tr>
 
                     @foreach (var carEvent in Model)
@@ -60,7 +63,7 @@
                             </td>
 
                             <td>
-                                @carEvent.DateEvent.ToString("dd/MM/yyyy HH:mm")
+                                @carEvent.DateEvent.ToString("dd/MM/yyyy")
                             </td>
 
                             <td>

@@ -43,7 +43,7 @@
                                 {
                                     @class = "form-control",
                                     data_provide = "datepicker",
-                                    @Value = Model.DateEvent.ToString("d"),
+                                    @Value = Model.DateEvent.ToString("dd/MM/yyyy"),
                                 })
                                 @Html.ValidationMessageFor(model => model.DateEvent, "", new { @class = "text-danger" })
                             </div>

@@ -8,7 +8,7 @@
         {
             @Html.ActionLink("Редактировать автомобиль", "Edit", "Car", new { id = Model.Id }, new { @class = "btn btn-primary" })
         }
-        @Html.ActionLink("Посмотреть все фото", "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Посмотреть все фото", "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-default", disabled = true })
     </div>
     <hr />
     <p>Марка: @Model.CarModels.CarBrands.brand</p>

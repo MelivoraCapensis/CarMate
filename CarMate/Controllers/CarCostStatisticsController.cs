@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -26,5 +27,61 @@ namespace CarMate.Controllers
             ViewBag.User = db.Users.Find(car.UserId);
         }
 
+        public JsonResult GetCostStatistics(int carId = 0)
+        {
+            var car = db.Cars.Find(carId);
+            if (car == null)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            var carEvents = db.CarEvents.OrderBy(x => x.DateEvent).ToList();
+
+            //Dictionary<string, double> costStatistics = new Dictionary<string, double>();
+            List<Test> tests = new List<Test>();
+
+            foreach (var carEvent in carEvents)
+            {
+                //if (costStatistics.ContainsKey(carEvent.EventTypes.Name))
+                var t = tests.FirstOrDefault(x => x.Name.Equals(carEvent.EventTypes.Name));
+                if (t != null)
+                {
+                    //costStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
+                    
+                    t.Details.Add(new Details {DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture), Cost = carEvent.CostTotal});
+                    t.Summ += carEvent.CostTotal;
+                }
+                else
+                {
+                    //costStatistics[carEvent.EventTypes.Name] = carEvent.CostTotal;
+                    t = new Test {Summ = carEvent.CostTotal, Name = carEvent.EventTypes.Name};
+                    t.Details.Add(new Details { DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture), Cost = carEvent.CostTotal });
+                    tests.Add(t);
+                }
+            }
+
+            return Json(tests, JsonRequestBehavior.AllowGet);
+        }
+
     }
+
+    public class Test
+    {
+        public string Name { set; get; }
+        public double Summ { set; get; }
+
+        public List<Details> Details { set; get; }
+
+        public Test()
+        {
+            Details = new List<Details>();
+        }
+    }
+
+    public class Details
+    {
+        public string DateCreate { set; get; }
+        public double Cost { set; get; }
+    }
+
+
 }

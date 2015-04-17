@@ -1,13 +1,13 @@
 ﻿@model CarMate.Cars
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создание транспортного средства";
 }
 
 
 
 <div class="container">
-    <h2>Создание автомобиля</h2>
+    <h2>@ViewBag.Title</h2>
 
     @using (Html.BeginForm("Create", "Car", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
