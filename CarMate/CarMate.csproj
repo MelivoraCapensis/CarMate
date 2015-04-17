@@ -1230,6 +1230,8 @@
     <None Include="Properties\PublishProfiles\CarMateStep - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\CarMateStep - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\dgfdg.pubxml" />
+    <None Include="Properties\PublishProfiles\huygy8 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\huygy8 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="img\bg.jpg" />
     <Content Include="img\callout.jpg" />
