@@ -80,9 +80,10 @@ namespace CarMate
                         "~/Content/themes/base/jquery.ui.theme.css"));
 
             bundles.Add(new StyleBundle("~/Content/landing").Include(
+                "~/Content/CSS_reset_landing.css",
                  "~/Content/bjqs.css",
-                 "~/Content/style_landing.css",
-                 "~/Content/CSS_reset_landing.css"
+                 "~/Content/style_landing.css"
+                 
                  //,
                  //"~/Content/stylish-portfolio.css"
                  ));
