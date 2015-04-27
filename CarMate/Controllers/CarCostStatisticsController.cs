@@ -46,15 +46,27 @@ namespace CarMate.Controllers
                 if (t != null)
                 {
                     //costStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
-                    
-                    t.Details.Add(new Details {DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture), Cost = carEvent.CostTotal});
+
+                    t.Details.Add(new Details
+                    {
+                        DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture),
+                        Cost = carEvent.CostTotal,
+                        Year = carEvent.DateEvent.Year,
+                        Month = carEvent.DateEvent.Month
+                    });
                     t.Summ += carEvent.CostTotal;
                 }
                 else
                 {
                     //costStatistics[carEvent.EventTypes.Name] = carEvent.CostTotal;
                     t = new Test {Summ = carEvent.CostTotal, Name = carEvent.EventTypes.Name};
-                    t.Details.Add(new Details { DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture), Cost = carEvent.CostTotal });
+                    t.Details.Add(new Details
+                    {
+                        DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture),
+                        Cost = carEvent.CostTotal,
+                        Year = carEvent.DateEvent.Year,
+                        Month = carEvent.DateEvent.Month
+                    });
                     tests.Add(t);
                 }
             }
@@ -80,8 +92,15 @@ namespace CarMate.Controllers
     public class Details
     {
         public string DateCreate { set; get; }
+        public int Year { set; get; }
+        public int Month { set; get; }
         public double Cost { set; get; }
     }
 
-
+    public class CostStatistic
+    {
+        public string AllEventsSumm { set; get; }  // Сумма за все события, за определенный период
+        public string EventName { set; get; }   // Название события
+        public string EventSumm { set; get; }   // Сумма за событие, за определенный период
+    }
 }
