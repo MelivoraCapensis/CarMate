@@ -13,7 +13,15 @@
     <hr />
     <p>Марка: @Model.CarModels.CarBrands.brand</p>
     <p>Модель: @Model.CarModels.model</p>
-    <p>Модификация: @Model.CarModifications.modification</p>
+    @if (Model.ModificationId != null)
+    {
+        <p>Модификация: @Model.CarModifications.modification</p>
+    }
+    else
+    {
+        <p>Модификация: Пусто</p>
+    }
+    
     <p>Год выпуска: @*@Model.Car.dateBuy</p>*@
     <p>Расход бензина: @Model.Consumption л/100км</p>
     <p>Одометр (пробег): @Model.Odometer км</p>

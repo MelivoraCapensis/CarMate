@@ -127,6 +127,7 @@ namespace CarMate.Controllers
                     {
                         car.ImgPath = imgPath;
                     }
+                   
 
                     car.DateCreate = DateTime.Now;
                     car.State = 0;

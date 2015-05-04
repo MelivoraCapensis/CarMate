@@ -2,15 +2,17 @@
 
 @{
     ViewBag.Title = "Редактирование транспортного средства";
+    var modificationId = 0;
 }
 
 <div class="container">
 
     <h4>
         Редактирование транспортного средства "@Model.CarModels.CarBrands.brand - @Model.CarModels.model -
-        @if (@Model.ModificationId != null)
+        @if (Model.ModificationId != null)
         {
             @: @Model.CarModifications.modification
+            modificationId = (int)Model.ModificationId;
         }
         "
     </h4>
@@ -103,16 +105,16 @@
     $(document).ready(function () {
         var carBrandId = '@(Model.CarModels.CarBrands.id)';
         var carModelId = '@(Model.CarModels.id)';
-        var carModificationId = '@(Model.CarModifications.id)';
-        
+        var carModificationId = '@(modificationId)';
+
         //alert("carBrandId = " + carBrandId);
         $('#brandId').trigger('change');    // Генерируем событие onchange для выпадающего списка с брендами автомобилей
-        
+
         // Функция отрабатывает, через секунду
         setTimeout(function () {
-            
+
             $("#modelId option[value='" + carModelId + "']").attr("selected", "selected");  // Выбираем марку автомобиля с определенным Id
-            $('#modelId').trigger('change');    // Генерируем событие onchange для выпадающего списка с марками автомобилей 
+            $('#modelId').trigger('change');    // Генерируем событие onchange для выпадающего списка с марками автомобилей
 
             // Функция отрабатывает, через секунду
             setTimeout(function () {
