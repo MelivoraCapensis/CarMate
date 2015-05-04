@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CarMate.CarEvents>
+﻿@using CarMate.Classes
+@model IEnumerable<CarMate.CarEvents>
 
 @{
     ViewBag.Title = "Все события";
@@ -9,7 +10,7 @@
     <h2>Владелец: "@ViewBag.User.Nickname"</h2>
 
     <div class="row">
-        @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
+        @Html.Partial("_PartCarInfo", (CarMate.Cars) ViewBag.Car)
         <div class="col-lg-9 col-md-9">
             @Html.Partial("_PartCarMenu")
             <hr/>
@@ -21,14 +22,12 @@
                         @Html.ActionLink("Добавить событие", "Create", "CarEvents", new {carId = ViewBag.Car.Id}, null)
                     </p>
                 }
+                <h4><b>Заправка</b></h4>
                 <table class="table">
                     <tr>
+                        @*событие/дата/стоимость/литры/пробег/коментарий*@
                         <th>
                             Событие
-                        </th>
-
-                        <th>
-                            Пробег
                         </th>
 
                         <th>
@@ -40,26 +39,31 @@
                         </th>
 
                         <th>
+                            Литры
+                        </th>
+
+                        <th>
+                            Пробег
+                        </th>
+
+                        <th>
                             Комментарий
                         </th>
 
                         <th>
-                            Показать на карте
-                        </th>
-
-                        <th>
+                            Опции
                         </th>
                     </tr>
 
                     @foreach (var carEvent in Model)
                     {
+                        if (!carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs))
+                        {
+                            continue;
+                        }
                         <tr>
                             <td>
                                 @Html.DisplayFor(x => carEvent.EventTypes.Name)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(x => carEvent.Odometer)
                             </td>
 
                             <td>
@@ -71,23 +75,163 @@
                             </td>
 
                             <td>
+                                @Html.DisplayFor(x => carEvent.FuelCount)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Odometer)
+                            </td>
+
+                            <td>
                                 @Html.DisplayFor(x => carEvent.Comment)
                             </td>
 
                             <td>
-                                @if (carEvent.Latitute != null && carEvent.Longitute != null)
+                                @Html.ActionLink("Детали", "Details", new {id = carEvent.Id})
+                                @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                                 {
-                                    @*@Html.ActionLink("Показать на карте", "", "", null, null)*@
-                                    @:Показать на карте
-                            }
+                                    @Html.ActionLink("Изменить", "Edit", new {id = carEvent.Id})
+                                    @Html.ActionLink("Удалить", "Delete", new {id = carEvent.Id})
+                                }
                             </td>
+                        </tr>
+                    }
+                </table>
+
+
+                <h4><b>Ремонт</b></h4>
+                <table class="table">
+                    <tr>
+                        @*событие/дата/стоимость/пробег/коментарий*@
+                        <th>
+                            Событие
+                        </th>
+
+                        <th>
+                            Дата
+                        </th>
+
+                        <th>
+                            Стоимость
+                        </th>
+
+                        <th>
+                            Пробег
+                        </th>
+
+                        <th>
+                            Комментарий
+                        </th>
+
+                        <th>
+                            Опции
+                        </th>
+                    </tr>
+
+                    @foreach (var carEvent in Model)
+                    {
+                        if (!carEvent.EventTypes.Name.Equals(Consts.EventTypeNameRepair))
+                        {
+                            continue;
+                        }
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => carEvent.EventTypes.Name)
+                            </td>
+
+                            <td>
+                                @carEvent.DateEvent.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.CostTotal)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Odometer)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Comment)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Детали", "Details", new {id = carEvent.Id})
+                                @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+                                {
+                                    @Html.ActionLink("Изменить", "Edit", new {id = carEvent.Id})
+                                    @Html.ActionLink("Удалить", "Delete", new {id = carEvent.Id})
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+
+
+                <h4><b>Другое</b> (мойка, ремонт, стоянка, страховка, техосмотр, штраф, эвакуатор)</h4>
+                <table class="table">
+                    <tr>
+                        @*событие/дата/стоимость/пробег/коментарий*@
+                        <th>
+                            Событие
+                        </th>
+
+                        <th>
+                            Дата
+                        </th>
+
+                        <th>
+                            Стоимость
+                        </th>
+
+                        <th>
+                            Пробег
+                        </th>
+
+                        <th>
+                            Комментарий
+                        </th>
+
+                        <th>
+                            Опции
+                        </th>
+                    </tr>
+
+                    @foreach (var carEvent in Model)
+                    {
+                        if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs) || carEvent.EventTypes.Name.Equals(Consts.EventTypeNameRepair))
+                        {
+                            continue;
+                        }
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => carEvent.EventTypes.Name)
+                            </td>
+
+                            <td>
+                                @carEvent.DateEvent.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.CostTotal)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Odometer)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(x => carEvent.Comment)
+                            </td>
+
 
                             <td>
                                 @Html.ActionLink("Детали", "Details", new { id = carEvent.Id })
                                 @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                                 {
-                                    @Html.ActionLink("Изменить", "Edit", new {id = carEvent.Id})
-                                    @Html.ActionLink("Удалить", "Delete", new {id = carEvent.Id})
+                                    @Html.ActionLink("Изменить", "Edit", new { id = carEvent.Id })
+                                    @Html.ActionLink("Удалить", "Delete", new { id = carEvent.Id })
                                 }
                             </td>
                         </tr>
