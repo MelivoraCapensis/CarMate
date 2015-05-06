@@ -121,65 +121,52 @@
 
         jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function (items) {
 
+            // График статистика расходов
+            $(function() {
+                var dataAll = []; // Создается пустой массив
+                jQuery.each(items, function(itemNo, item) {
+                    dataAll.push({ name: item.Name, y: item.Summ });
+                });
 
-        $(function() {
-            $('#allCostStatistics').highcharts({
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false
-                },
-                title: {
-                    text: 'Статистика расходов'
-                },
-                subtitle: {
-                    text: 'Период: '
-                },
-                //tooltip: {
-                //    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                //},
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                $('#allCostStatistics').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'Статистика расходов'
+                    },
+                    subtitle: {
+                        text: 'Период: '
+                    },
+                    tooltip: {
+                        headerFormat: '',
+                        pointFormat: '<b>{point.name}: {point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                //format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                format: '<b>{point.name}</b>: {point.y:.2f}грн', // Формат отображаемой надписи, рядом с каждой частью графика
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
                             }
                         }
-                    }
-                },
-                series: [
-                    {
-                        type: 'pie',
-                        name: 'Денег потрачено',
-                        data: [
-                            [dataKey[0], dataValue[0]],
-                            [dataKey[1], dataValue[1]],
-                            [dataKey[2], dataValue[2]],
-                            [dataKey[3], dataValue[3]],
-                            [dataKey[4], dataValue[4]],
-                            [dataKey[5], dataValue[5]],
-                            [dataKey[6], dataValue[6]],
-                            [dataKey[7], dataValue[7]],
-                            [dataKey[8], dataValue[8]]
-                            //['IE', 26.8],
-                            //{
-                            //    name: 'Техосмотр',
-                            //    y: 12.8,
-                            //    sliced: true,
-                            //    selected: true
-                            //},
-                            //['Штраф', 8.5],
-                            //['Мойка', 6.2],
-                            //['Others', 0.7]
-                        ]
-                    }
-                ]
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            name: 'Денег потрачено',
+                            data: dataAll
+                        }
+                    ]
+                });
             });
-        });
 
 
         @*var tmpFuelCostsJson = '@(tmpFuelCostsJson)';
@@ -187,78 +174,148 @@
 
         
 
-        // Затраты на бензин за определенный период
-        $(function () {
-            var tmpFuelCosts = [];
-            //jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function(items) {
-            jQuery.each(items, function (itemNo, item) {
-                //alert(item);
-                if (item.Name === "Заправка") {
-                    //alert("Заправка");
-                    //tmpFuelCosts = item.Details.Cost;
-                    var tmp = [];   // Создается пустой массив
-                    jQuery.each(item.Details, function (itemNo1, item1) {
-                        
-                        if (!tmp[item1.Year, item1.Month]) {
-                            tmp.push(item1.Cost);
-                            //alert(tmp.length);
-                        } else {
-                            tmp[item1.Year, item1.Month] += item1.Cost;
-                            //alert(tmp.length);
+            $(function() {
+                //$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
+
+                    var dataFuel = []; // Создается пустой массив
+                    jQuery.each(items, function (itemNo, item) {
+                        if (item.Name == "Заправка") {
+                            //alert("Заправка");
+                            jQuery.each(item.Details, function (itemNoDetails, itemDetails) {
+
+                                //alert("C# = " + itemDetails.Ticks + "\nJS = " + new Date().getTime());
+                                //alert("C# = " + itemDetails.Ticks + "\nJS = " + ((new Date(2015, 5, 4).getTime() * 10000) + 621355968000000000));
+                                var s = (itemDetails.Ticks - 621355968000000000) / 10000;
+                                //alert(itemDetails.Ticks);
+                                dataFuel.push({ x: s, y: itemDetails.Cost });
+                            });
                         }
                     });
-                    //alert(tmp[0]);
-                    tmpFuelCosts = tmp;
-                    //alert(tmpFuelCosts[0]);
-                    //alert(item.Details[0].Cost);
-                }
-            });
-            //});
 
-            var arr = new Array(tmpFuelCosts.length);
-            for (var j = 0; j < arr.length; j++) {
-                arr[j] = '';
-            }
 
-            $('#fuelCostStatistics').highcharts({
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: 'Затраты на топливо'
-                },
-                subtitle: {
-                    text: 'За период (сумма за месяц)'
-                },
-                xAxis: {
-                    //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                    categories: arr
-                },
-                yAxis: {
-                    title: {
-                        text: 'Денег потрачено'
-                    }
-                },
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true
+                    // Create the chart
+                $('#fuelCostStatistics').highcharts(
+                    'StockChart', {
+                        xAxis: {
+// Поменять настрокий отображаемой даты, в зависимости от того, какой режим отображения выбран
+                            type: 'datetime',
+                            dateTimeLabelFormats: {
+                                second: '%Y-%m-%d<br/>%H:%M:%S',
+                                minute: '%Y-%m-%d<br/>%H:%M',
+                                hour: '%Y-%m-%d<br/>%H:%M',
+                                day: '%Y<br/>%m-%d',
+                                week: '%Y<br/>%m-%d',
+                                month: '%Y-%m',
+                                year: '%Y'
+                            }
                         },
-                        enableMouseTracking: false
-                    }
-                },
-                series: [
-                    {
-                        name: 'Топливо',
-                        data: tmpFuelCosts
-                    }
-                    //, {
-                    //    name: 'London',
-                    //    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-                    //}
-                ]
+
+                        rangeSelector: {
+                            selected: 1
+                        },
+
+                        title: {
+                            text: 'Затраты на топливо'
+                        },
+
+                        series: [
+                        {
+                            name: 'AAPL Stock Price',
+                            data: dataFuel,
+                                    //    [
+                                    //    { x: 1147151200000, y: 312.23 },
+                                    //    { x: 1147251200000, y: 33.23 },
+                                    //    { x: 1147351200000, y: 4564.23 },
+                                    //    { x: 1147451200000, y: 645.23 },
+                                    //    { x: 1147551200000, y: 645.23 }
+                                    //],
+                                    marker: {
+                                        enabled: true,
+                                        radius: 3
+                                    },
+                                    shadow: true,
+                                    tooltip: {
+                                        valueDecimals: 2
+                                    }
+                                }
+                            ]
+                        });
+                //});
             });
-        });
+
+
+        // Затраты на бензин за определенный период
+        //$(function () {
+        //    var tmpFuelCosts = [];
+        //    //jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function(items) {
+        //    jQuery.each(items, function (itemNo, item) {
+        //        //alert(item);
+        //        if (item.Name === "Заправка") {
+        //            //alert("Заправка");
+        //            //tmpFuelCosts = item.Details.Cost;
+        //            var tmp = [];   // Создается пустой массив
+        //            jQuery.each(item.Details, function (itemNo1, item1) {
+                        
+        //                if (!tmp[item1.Year, item1.Month]) {
+        //                    tmp.push(item1.Cost);
+        //                    //alert(tmp.length);
+        //                } else {
+        //                    tmp[item1.Year, item1.Month] += item1.Cost;
+        //                    //alert(tmp.length);
+        //                }
+        //            });
+        //            //alert(tmp[0]);
+        //            tmpFuelCosts = tmp;
+        //            //alert(tmpFuelCosts[0]);
+        //            //alert(item.Details[0].Cost);
+        //        }
+        //    });
+        //    //});
+
+        //    var arr = new Array(tmpFuelCosts.length);
+        //    for (var j = 0; j < arr.length; j++) {
+        //        arr[j] = '';
+        //    }
+
+        //    $('#fuelCostStatistics').highcharts({
+        //        chart: {
+        //            type: 'line'
+        //        },
+        //        title: {
+        //            text: 'Затраты на топливо'
+        //        },
+        //        subtitle: {
+        //            text: 'За период (сумма за месяц)'
+        //        },
+        //        xAxis: {
+        //            //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        //            categories: arr
+        //        },
+        //        yAxis: {
+        //            title: {
+        //                text: 'Денег потрачено'
+        //            }
+        //        },
+        //        plotOptions: {
+        //            line: {
+        //                dataLabels: {
+        //                    enabled: true
+        //                },
+        //                enableMouseTracking: false
+        //            }
+        //        },
+        //        series: [
+        //            {
+        //                name: 'Топливо',
+        //                data: tmpFuelCosts
+        //            }
+        //            //, {
+        //            //    name: 'London',
+        //            //    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        //            //}
+        //        ]
+        //    });
+        //});
 
 
         $(function() {
@@ -357,6 +414,7 @@
 </script>
 
 @section scripts {
+    <script src="http://code.highcharts.com/stock/highstock.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/highcharts")
 }

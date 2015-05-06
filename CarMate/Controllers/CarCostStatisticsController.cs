@@ -34,7 +34,7 @@ namespace CarMate.Controllers
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }
-            var carEvents = db.CarEvents.OrderBy(x => x.DateEvent).ToList();
+            var carEvents = db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
 
             //Dictionary<string, double> costStatistics = new Dictionary<string, double>();
             List<Test> tests = new List<Test>();
@@ -50,6 +50,7 @@ namespace CarMate.Controllers
                     t.Details.Add(new Details
                     {
                         DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture),
+                        Ticks = carEvent.DateEvent.ToLocalTime().Ticks,
                         Cost = carEvent.CostTotal,
                         Year = carEvent.DateEvent.Year,
                         Month = carEvent.DateEvent.Month
@@ -63,6 +64,7 @@ namespace CarMate.Controllers
                     t.Details.Add(new Details
                     {
                         DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture),
+                        Ticks = carEvent.DateEvent.ToLocalTime().Ticks,
                         Cost = carEvent.CostTotal,
                         Year = carEvent.DateEvent.Year,
                         Month = carEvent.DateEvent.Month
@@ -95,6 +97,7 @@ namespace CarMate.Controllers
         public int Year { set; get; }
         public int Month { set; get; }
         public double Cost { set; get; }
+        public double Ticks { set; get; }
     }
 
     public class CostStatistic

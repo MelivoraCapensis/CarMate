@@ -24,9 +24,9 @@
         @Html.ActionLink("Статистика затрат", "Index", "CarCostStatistics", new { carId = ViewBag.Car.Id }, null)
     </li>
 
-    <li @CurrentItem("CarPersonalStatistics")>
+    @*<li @CurrentItem("CarPersonalStatistics")>
         @Html.ActionLink("Статистика персональная", "Index", "CarPersonalStatistics", new { carId = ViewBag.Car.Id }, null)
-    </li>
+    </li>*@
 
     <li @CurrentItem("Test")>
         @Html.ActionLink("Планы", "Test", "Test", null, new { @class = "btn btn-default", disabled = true })
