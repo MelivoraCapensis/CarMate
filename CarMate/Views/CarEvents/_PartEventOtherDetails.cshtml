@@ -3,9 +3,14 @@
 @*<h2>Нет в списке</h2>*@
 <div class="form-group">
     @Html.LabelFor(events => events.NameEvent, "Название", htmlAttributes: new { @class = "text-right col-md-2" })
-    <div class="col-md-5">
-        @*@Html.TextBoxFor(model => model.NameEvent, htmlAttributes: new { @class = "form-control" })
+    <div class="col-md-3">
+        @*<span id="NameEventDetails">*@@Html.DisplayFor(model => model.NameEvent)@*</span>*@
+        @*@Html.TextBoxFor(model => model.NameEvent, htmlAttributes: new
+        {
+            @class = "form-control",
+            @Id = "NameEventEdit",
+            @Style = "display: none;"
+        })
         @Html.ValidationMessageFor(model => model.NameEvent, "", new { @class = "text-danger" })*@
-        @Html.DisplayFor(model => model.NameEvent)
     </div>
 </div>

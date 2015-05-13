@@ -4,58 +4,58 @@
 
 @{
     ViewBag.Title = "Статистика затрат";
-    // Всего потрачено денег на группы событий (Заправка, ремонт), за определенный период
-    Dictionary<string, double> allCostStatistics = new Dictionary<string, double>();
-    // Всего потрачено денег, за определеный период
-    double allCosts = 0;
-    // Потрачено денег на бензин, за определенный период
-    Dictionary<DateTime, double> fuelCosts = new Dictionary<DateTime, double>();
-    // Потрачено денег на группы событий по месяцам, за определенный период
-    Dictionary<string, double> otherCostStatistics = new Dictionary<string, double>();
-    // Мойка, нет в списке, ремонт, стоянка, страховка, техосмотр, штраф, эвакуатор
+    //// Всего потрачено денег на группы событий (Заправка, ремонт), за определенный период
+    //Dictionary<string, double> allCostStatistics = new Dictionary<string, double>();
+    //// Всего потрачено денег, за определеный период
+    //double allCosts = 0;
+    //// Потрачено денег на бензин, за определенный период
+    //Dictionary<DateTime, double> fuelCosts = new Dictionary<DateTime, double>();
+    //// Потрачено денег на группы событий по месяцам, за определенный период
+    //Dictionary<string, double> otherCostStatistics = new Dictionary<string, double>();
+    //// Мойка, нет в списке, ремонт, стоянка, страховка, техосмотр, штраф, эвакуатор
     
-    // Получаем названия событий
-    foreach (var eventType in ViewBag.EventTypes)
-    {
-        allCostStatistics.Add(eventType, 0);
-        if (!eventType.Equals(Consts.EventTypeNameAzs))
-        {
-            otherCostStatistics.Add(eventType, 0);
-        }
-    }
+    //// Получаем названия событий
+    //foreach (var eventType in ViewBag.EventTypes)
+    //{
+    //    allCostStatistics.Add(eventType, 0);
+    //    if (!eventType.Equals(Consts.EventTypeNameAzs))
+    //    {
+    //        otherCostStatistics.Add(eventType, 0);
+    //    }
+    //}
 
-    foreach (var carEvent in Model)
-    {
-        allCostStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
-        if (otherCostStatistics.ContainsKey(carEvent.EventTypes.Name))
-        {
-            otherCostStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
-        }
-        allCosts += carEvent.CostTotal;
-        if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs))
-        {
-            var result = fuelCosts.FirstOrDefault(x => x.Key.Year == carEvent.DateEvent.Year && x.Key.Month == carEvent.DateEvent.Month);
-            if (result.Key != DateTime.MinValue)
-            {
-                fuelCosts[result.Key] = Math.Round(fuelCosts[result.Key] + carEvent.CostTotal, 2);
-            }
-            else
-            {
-                fuelCosts.Add(new DateTime(carEvent.DateEvent.Year, carEvent.DateEvent.Month, 1), Math.Round(carEvent.CostTotal, 2));
-            }
-        }
-    }
-    var dataKey = allCostStatistics.Keys.ToArray();
-    var dataValue = allCostStatistics.Values.ToArray();
+    //foreach (var carEvent in Model)
+    //{
+    //    allCostStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
+    //    if (otherCostStatistics.ContainsKey(carEvent.EventTypes.Name))
+    //    {
+    //        otherCostStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
+    //    }
+    //    allCosts += carEvent.CostTotal;
+    //    if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs))
+    //    {
+    //        var result = fuelCosts.FirstOrDefault(x => x.Key.Year == carEvent.DateEvent.Year && x.Key.Month == carEvent.DateEvent.Month);
+    //        if (result.Key != DateTime.MinValue)
+    //        {
+    //            fuelCosts[result.Key] = Math.Round(fuelCosts[result.Key] + carEvent.CostTotal, 2);
+    //        }
+    //        else
+    //        {
+    //            fuelCosts.Add(new DateTime(carEvent.DateEvent.Year, carEvent.DateEvent.Month, 1), Math.Round(carEvent.CostTotal, 2));
+    //        }
+    //    }
+    //}
+    //var dataKey = allCostStatistics.Keys.ToArray();
+    //var dataValue = allCostStatistics.Values.ToArray();
 
-    //string allCostStatisticsJson = JsonConvert.SerializeObject(allCostStatistics);
+    ////string allCostStatisticsJson = JsonConvert.SerializeObject(allCostStatistics);
 
-    string dataKeyJson = JsonConvert.SerializeObject(dataKey);
-    string dataValueJson = JsonConvert.SerializeObject(dataValue);
+    //string dataKeyJson = JsonConvert.SerializeObject(dataKey);
+    //string dataValueJson = JsonConvert.SerializeObject(dataValue);
 
-    List<double> tmpFuelCosts = new List<double>();
-    tmpFuelCosts.AddRange(fuelCosts.Values);
-    string tmpFuelCostsJson = JsonConvert.SerializeObject(tmpFuelCosts.ToArray());
+    //List<double> tmpFuelCosts = new List<double>();
+    //tmpFuelCosts.AddRange(fuelCosts.Values);
+    //string tmpFuelCostsJson = JsonConvert.SerializeObject(tmpFuelCosts.ToArray());
 
     //List<double> tmpСarwash = new List<double>();
     //foreach (var item in otherCostStatistics)
@@ -78,11 +78,25 @@
         @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
             @Html.Partial("_PartCarMenu")
-            <hr />
+            <hr/>
             <div id="carContainer">
-                @*<h2>@ViewBag.Title</h2>*@
+                @*<div>
+                    @using (Html.BeginForm())
+                    {
+                        @:Период с
+                        @Html.TextBox("PeriodStart")
+                        @:по
+                        @Html.TextBox("PeriodEnd", new
+                        {
+                            @class = "form-control",
+                            data_provide = "datepicker",
+                            @Value = DateTime.Now.ToString("dd/MM/yyyy")
+                        },null, null)
+                    }
+                </div>*@
+
                 <p>
-                    Всего денег потрачено: @allCosts грн.
+                    Денег потрачено за период: <span id="summ_period">0</span> грн.
                 </p>
 
 
@@ -97,29 +111,21 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         var carId = '@(ViewBag.Car.Id)';
 
+        Highcharts.setOptions({
+            lang: {
+                months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                weekdays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+            }
+        });
 
+        jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function(items) {
 
-
-        var dataKeyJson = '@(dataKeyJson)';
-
-        // Меняем все символы "&quot;" на кавычку
-        dataKeyJson = dataKeyJson.replace(new RegExp('&quot;', 'g'), '\"');
-        var dataKey = JSON.parse(dataKeyJson);
-
-        var dataValueJson = '@(dataValueJson)';
-        var dataValue = JSON.parse(dataValueJson);
-
-        //var arr = new Array();
-        //for (var i = 0; i < dataKey.length; i++) {
-        //    arr[dataKey[i]] = dataValue[i];
-        //    alert(arr[dataKey[i]]);
-        //}
-        //alert(arr["Заправка"]);
-
-        jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function (items) {
+            //alert(items[0].AllSumm);
+            $('#summ_period').text(items[0].AllSumm);
 
             // График статистика расходов
             $(function() {
@@ -169,162 +175,136 @@
             });
 
 
-        @*var tmpFuelCostsJson = '@(tmpFuelCostsJson)';
-        var tmpFuelCosts = JSON.parse(tmpFuelCostsJson);*@
-
-        
-
             $(function() {
-                //$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
+                var dataFuel = []; // Создается пустой массив
+                jQuery.each(items, function(itemNo, item) {
+                    //if (item.Name === "Заправка") {
+                        jQuery.each(item.Details, function(itemNoDetails, itemDetails) {
+                            var s = (itemDetails.Ticks - 621355968000000000) / 10000;
+                            dataFuel.push({ x: s, y: itemDetails.Cost, color: 'green' });
+                        });
+                    //}
+                });
 
-                    var dataFuel = []; // Создается пустой массив
-                    jQuery.each(items, function (itemNo, item) {
-                        if (item.Name == "Заправка") {
-                            //alert("Заправка");
-                            jQuery.each(item.Details, function (itemNoDetails, itemDetails) {
 
-                                //alert("C# = " + itemDetails.Ticks + "\nJS = " + new Date().getTime());
-                                //alert("C# = " + itemDetails.Ticks + "\nJS = " + ((new Date(2015, 5, 4).getTime() * 10000) + 621355968000000000));
-                                var s = (itemDetails.Ticks - 621355968000000000) / 10000;
-                                //alert(itemDetails.Ticks);
-                                dataFuel.push({ x: s, y: itemDetails.Cost });
-                            });
+                // Create the chart
+                $('#fuelCostStatistics').highcharts('StockChart', {
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            second: '%d-%m<br/>%Y',
+                            minute: '%d-%m<br/>%Y',
+                            hour: '%d-%m<br/>%Y',
+                            day: '%d-%m<br/>%Y',
+                            week: '%d-%m<br/>%Y',
+                            month: '%m-%Y',
+                            year: '%Y'
                         }
-                    });
+                    },
 
-
-                    // Create the chart
-                $('#fuelCostStatistics').highcharts(
-                    'StockChart', {
-                        xAxis: {
-// Поменять настрокий отображаемой даты, в зависимости от того, какой режим отображения выбран
-                            type: 'datetime',
-                            dateTimeLabelFormats: {
-                                second: '%Y-%m-%d<br/>%H:%M:%S',
-                                minute: '%Y-%m-%d<br/>%H:%M',
-                                hour: '%Y-%m-%d<br/>%H:%M',
-                                day: '%Y<br/>%m-%d',
-                                week: '%Y<br/>%m-%d',
-                                month: '%Y-%m',
-                                year: '%Y'
-                            }
-                        },
-
-                        rangeSelector: {
-                            selected: 1
-                        },
-
+                    yAxis: {
+                        //allowDecimals: false,
+                        showFirstLabel: true,
+                        showLastLabel: true,
+                        //labels: {
+                        //    y: 0,
+                        //    align: 'left'
+                        //},
                         title: {
-                            text: 'Затраты на топливо'
-                        },
+                            text: 'Деньги (грн)'
+                        }
+                    },
 
-                        series: [
+                    //colors: ['#434348'],
+
+                    //colors: ['#000000', '#434348', '#90ed7d', '#f7a35c', '#8085e9', 
+                    //'#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
+
+                    rangeSelector: {
+                        allButtonsEnabled: true,
+                        buttons: [
+                            {
+                                type: 'month',
+                                count: 3,
+                                text: 'День',
+                                dataGrouping: {
+                                    forced: true,
+                                    units: [['day', [1]]]
+                                }
+                            }, {
+                                type: 'all',
+                                text: 'Месяц',
+                                dataGrouping: {
+                                    forced: true,
+                                    units: [['month', [1]]],
+                                    // Суммирует все затраты на топливо за месяц
+                                    approximation: 'sum'
+                                }
+                            }, {
+                                type: 'all',
+                                count: 1,
+                                text: 'Год',
+                                dataGrouping: {
+                                    forced: true,
+                                    units: [['year', [1]]],
+                                    // Суммирует все затраты на топливо за год
+                                    approximation: 'sum'
+                                }
+                            }
+                        ],
+                        buttonTheme: {
+                            width: 60
+                        },
+                        selected: 0,
+                        // Убрать поля для задания периода
+                        inputEnabled: false
+                    },
+
+                    title: {
+                        text: 'Общие затраты'
+                    },
+
+                    series: [
                         {
                             name: 'AAPL Stock Price',
                             data: dataFuel,
-                                    //    [
-                                    //    { x: 1147151200000, y: 312.23 },
-                                    //    { x: 1147251200000, y: 33.23 },
-                                    //    { x: 1147351200000, y: 4564.23 },
-                                    //    { x: 1147451200000, y: 645.23 },
-                                    //    { x: 1147551200000, y: 645.23 }
-                                    //],
-                                    marker: {
-                                        enabled: true,
-                                        radius: 3
-                                    },
-                                    shadow: true,
-                                    tooltip: {
-                                        valueDecimals: 2
-                                    }
-                                }
-                            ]
-                        });
-                //});
+                            //[
+                            //    [1147651200000, 67.79],
+                            //    [1147737600000, 64.98],
+                            //    [1147824000000, 65.26],
+                            //    [1147910400000, 63.18],
+                            //    [1147996800000, 64.51],
+                            //    [1148256000000, 63.38],
+                            //    [1148342400000, 63.15],
+                            //    [1148428800000, 63.34],
+                            //    [1148515200000, 64.33],
+                            //    [1148601600000, 63.55],
+                            //    [1148947200000, 61.22],
+                            //    [1149033600000, 59.77]
+                            //],
+                            marker: {
+                                enabled: true,
+                                radius: 3
+                            },
+                            shadow: true,
+                            tooltip: {
+                                //'<b>' + Highcharts.dateFormat('%A, %b %e, %Y', this.x) + '</b>';
+                                headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                                pointFormat:
+                                    '<tr><td style="color: {series.color}">Денег потрачено: </td>' +
+                                        '<td style="text-align: right"><b>{point.y}грн.</b></td></tr>',
+                                valueDecimals: 2
+                            }
+                        }
+                    ]
+                });
             });
 
+            $(function() {
 
-        // Затраты на бензин за определенный период
-        //$(function () {
-        //    var tmpFuelCosts = [];
-        //    //jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function(items) {
-        //    jQuery.each(items, function (itemNo, item) {
-        //        //alert(item);
-        //        if (item.Name === "Заправка") {
-        //            //alert("Заправка");
-        //            //tmpFuelCosts = item.Details.Cost;
-        //            var tmp = [];   // Создается пустой массив
-        //            jQuery.each(item.Details, function (itemNo1, item1) {
-                        
-        //                if (!tmp[item1.Year, item1.Month]) {
-        //                    tmp.push(item1.Cost);
-        //                    //alert(tmp.length);
-        //                } else {
-        //                    tmp[item1.Year, item1.Month] += item1.Cost;
-        //                    //alert(tmp.length);
-        //                }
-        //            });
-        //            //alert(tmp[0]);
-        //            tmpFuelCosts = tmp;
-        //            //alert(tmpFuelCosts[0]);
-        //            //alert(item.Details[0].Cost);
-        //        }
-        //    });
-        //    //});
+                var brandsData = [];
+                var drilldownSeries = [];
 
-        //    var arr = new Array(tmpFuelCosts.length);
-        //    for (var j = 0; j < arr.length; j++) {
-        //        arr[j] = '';
-        //    }
-
-        //    $('#fuelCostStatistics').highcharts({
-        //        chart: {
-        //            type: 'line'
-        //        },
-        //        title: {
-        //            text: 'Затраты на топливо'
-        //        },
-        //        subtitle: {
-        //            text: 'За период (сумма за месяц)'
-        //        },
-        //        xAxis: {
-        //            //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        //            categories: arr
-        //        },
-        //        yAxis: {
-        //            title: {
-        //                text: 'Денег потрачено'
-        //            }
-        //        },
-        //        plotOptions: {
-        //            line: {
-        //                dataLabels: {
-        //                    enabled: true
-        //                },
-        //                enableMouseTracking: false
-        //            }
-        //        },
-        //        series: [
-        //            {
-        //                name: 'Топливо',
-        //                data: tmpFuelCosts
-        //            }
-        //            //, {
-        //            //    name: 'London',
-        //            //    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        //            //}
-        //        ]
-        //    });
-        //});
-
-
-        $(function() {
-
-            var brandsData = [];
-            var drilldownSeries = [];
-
-
-            //jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function(items) {
                 jQuery.each(items, function(itemNo, item) {
                     brandsData.push({
                         name: item.Name,
@@ -343,7 +323,7 @@
                         } else {
                             str = itemDetails.Month + "/" + itemDetails.Year;
                         }
-                        
+
                         versions[item.Name].push([str, itemDetails.Cost]);
                     });
 

@@ -7,77 +7,149 @@
 
     CarEvents carEvent = new CarEvents()
     {
+        //Comment = Model.Comment ?? "null",
+
+        //Latitute = Model.Latitute ?? 0.0,
+        //Longitute = Model.Longitute ?? 0.0,
+        NameEvent = Model.NameEvent,
         FuelCategoryId = Model.FuelCategoryId,
         FuelCount = Model.FuelCount,
         IsFullTank = Model.IsFullTank,
         IsMissedFilling = Model.IsMissedFilling,
-        PricePerLitr = Model.PricePerLitr
+        PricePerLitr = Model.PricePerLitr,
+        DateEvent = Model.DateEvent,
+
+        //CostTotal = Model.CostTotal,
+        //EventTypeId = Model.EventTypeId,
+        //Odometer = Model.Odometer,
+        //CarId = Model.CarId,
+        //Id = Model.Id
     };
     string str = JsonConvert.SerializeObject(carEvent);
+
+    //var comment = Model.Comment ?? "null";
+    //var latitute = Model.Latitute ?? 0.0;
+    //var longitute = Model.Longitute ?? 0.0;
+    //var nameEvent = Model.NameEvent ?? "null";
+    //var fuelCategoryId = Model.FuelCategoryId ?? 0;
+    //var fuelCount = Model.FuelCount ?? 0;
+    //var pricePerLitr = Model.PricePerLitr ?? 0;
+    //var dateEvent = Model.DateEvent.Ticks;
 }
 
 <div class="container">
     <h2>Владелец: "@ViewBag.User.Nickname"</h2>
     <div class="row">
-        @Html.Partial("_PartCarInfo", (Cars)ViewBag.Car)
+        @Html.Partial("_PartCarInfo", (Cars) ViewBag.Car)
         <div class="col-lg-9 col-md-9">
             @Html.Partial("_PartCarMenu")
-            <hr />
+            <hr/>
             <div id="carContainer">
                 <h2>@ViewBag.Title</h2>
+                @*@using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.CarId)
+                    @Html.HiddenFor(x => x.EventTypes.Name)*@
 
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new { @class = "text-right col-md-2" })
-                        <div class="col-md-5">
-                            @*@Html.DisplayFor(model => model.DateEvent)*@
-                            @Model.DateEvent.ToString("dd/MM/yyyy")
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new {@class = "text-right col-md-2"})
+                            <div class="col-md-3">
+                                @*@Html.DisplayFor(model => model.DateEvent)*@
+                                @*<span id="DateEventDetails">*@@Model.DateEvent.ToString("dd/MM/yyyy")@*</span>*@
+                                @*@Html.TextBoxFor(model => model.DateEvent, htmlAttributes: new
+                                {
+                                    @class = "form-control",
+                                    data_provide = "datepicker",
+                                    @Value = Model.DateEvent.ToString("dd/MM/yyyy"),
+                                    @Id = "DateEventEdit",
+                                    @Style = "display: none;"
+                                })
+                                @Html.ValidationMessageFor(model => model.DateEvent, "", new {@class = "text-danger"})*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new {@class = "text-right col-md-2"})
+                            <div class="col-md-3">
+                                @*<span id="OdometerDetails">*@@Html.DisplayFor(model => model.Odometer)@*</span>*@
+                                @*@Html.TextBoxFor(events => events.Odometer, htmlAttributes: new
+                                {
+                                    @class = "form-control",
+                                    @Id = "OdometerEdit",
+                                    @Style = "display: none;"
+                                })
+                                @Html.ValidationMessageFor(model => model.Odometer, "", new {@class = "text-danger"})*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.EventTypes.Name, "Событие", htmlAttributes: new {@class = "text-right col-md-2"})
+                            <div class="col-md-3">
+                                @*<span id="EventNameDetails">*@@Html.DisplayFor(model => model.EventTypes.Name)@*</span>*@
+                                @*@Html.DropDownList("EventTypeId", null, htmlAttributes: new
+                                {
+                                    @class = "form-control",
+                                    onchange = "GetEvent(this)",
+                                    @Id = "EventNameEdit",
+                                    @Style = "display: none;"
+                                })
+                                @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})*@
+                            </div>
+                        </div>
+
+                        <div id="carEventDetails">
+                            @Html.Action("GetEventDetails")
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new {@class = "text-right col-md-2"})
+                            <div class="col-md-3">
+                                @*<span id="CostTotalDetails">*@@Html.DisplayFor(model => model.CostTotal)@*</span>*@
+                                @*@Html.TextBoxFor(events => events.CostTotal, htmlAttributes: new
+                                {
+                                    @class = "form-control",
+                                    @Id = "CostTotalEdit",
+                                    @Style = "display: none;"
+                                })
+                                @Html.ValidationMessageFor(model => model.CostTotal, "", new {@class = "text-danger"})*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new {@class = "text-right col-md-2"})
+                            <div class="col-md-3">
+                                @*<span id="CommentDetails">*@@Html.DisplayFor(model => model.Comment)@*</span>*@
+                                @*@Html.TextAreaFor(model => model.Comment, 10, 30, htmlAttributes: new
+                                {
+                                    @class = "form-control",
+                                    @Id = "CommentEdit",
+                                    @Style = "-moz-resize:none; -ms-resize:none; -o-resize:none; resize:none; display: none;"
+                                })
+                                @Html.ValidationMessageFor(model => model.Comment, "", new {@class = "text-danger"})*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                @Html.ActionLink("Назад", "Index", "CarEvents", new {carId = Model.CarId}, new {@class = "btn btn-primary", @Id = "btBack"})
+                                @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
+                                {
+                                    @*<button id="btChange" onclick=" ChangeFromEdit() " class="btn btn-primary">Изменить</button>*@
+                                    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary"})
+
+                                    @*<button id="btSave" onclick=" save() " class="btn btn-primary" style="display: none;">Сохранить</button>*@
+                                    @*@Html.ActionLink("Сохранить", "Edit", "CarEvents", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })*@
+                                    @*<input type="submit" value="Сохранить" class="btn btn-primary" id="btChange" style="display: none;"/>*@
+                                @*@Html.ActionLink("Изменить", "Edit", new {id = Model.Id}, htmlAttributes: new {@class = "btn btn-default"})*@
+                                    @Html.ActionLink("Удалить", "Delete", new {id = Model.Id}, htmlAttributes: new {@class = "btn btn-primary"})
+                                }
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new { @class = "text-right col-md-2" })
-                        <div class="col-md-5">
-                            @Html.DisplayFor(model => model.Odometer)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(events => events.EventTypes.Name, "Событие", htmlAttributes: new { @class = "text-right col-md-2" })
-                        <div class="col-md-5">
-                            @Html.DisplayFor(model => model.EventTypes.Name)
-                        </div>
-                    </div>
-
-                    <div id="carEventDetails">
-                        @Html.Action("GetEventDetails")
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new { @class = "text-right col-md-2" })
-                        <div class="col-md-5">
-                            @Html.DisplayFor(model => model.CostTotal)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "text-right col-md-2" })
-                        <div class="col-md-5">
-                            @Html.DisplayFor(model => model.Comment)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, new { @class = "btn btn-default" })
-                            @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
-                            {
-                                @Html.ActionLink("Изменить", "Edit", new {id = Model.Id}, htmlAttributes: new {@class = "btn btn-default"})
-                                @Html.ActionLink("Удалить", "Delete", new {id = Model.Id}, htmlAttributes: new {@class = "btn btn-default"})
-                            }
-                        </div>
-                    </div>
-                </div>
+                @*}*@
             </div>
         </div>
     </div>
@@ -91,12 +163,247 @@
     }*@
 
 
-    $(document).ready(function () {
+    //$.ajax({
+    //    type: "PATCH",
+    //    url: '/api/1/user/buyer_profile/',
+    //    //url: '/api/1/user/buyer_profile/' + User.id() + '/',
+    //    data: new_data,
+    //    success: success_func,
+    //    error: error_func
+    //});
+
+
+    @*function GetEvent(selectElement) {
+        var name = selectElement.options[selectElement.selectedIndex].text;
+        var carEventModel = '@(str)';
+        //alert(carEventModel);
+        //var carEventModelJson = JSON.stringify(carEventModel, ["FuelCategoryId", "FuelCount", "IsFullTank", "IsMissedFilling", "PricePerLitr"]);
+        //alert(carEventModelJson);
+        // Подружаю PartialView и передаю в нее модель
+        $("#carEventDetails").load('@(Url.Action("GetEvent", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
+    }*@
+
+    @*$(document).ready(function() {
+        //alert('@(Model.IsFullTank)');
+        $('#EventNameEdit').trigger('change'); // Генерируем событие onchange для выпадающего списка с событиями автомобилей
+    });*@
+
+    @*function save() {
+        //var carEventModel = '@(str)';
+
+
+        var comment = $("#CommentEdit").val();
+        //alert(comment);
+        var costTotal = $("#CostTotalEdit").val();
+        var eventTypeId = $("#EventNameEdit").val();
+        var latitute = @(latitute);
+        var longitute = @(longitute);
+        var nameEvent = $("#NameEventEdit").val();
+        var fuelCategoryId = $("#FuelCategoryEdit").val();
+        var fuelCount = $("#FuelCountEdit").val();
+        var pricePerLitr = $("#PricePerLitrEdit").val();
+        var dateEvent = $("#DateEventEdit").val();
+
+        var odometer = $("#OdometerEdit").val();
+        var isFullTank = $("#IsFullTankEdit").val() === true;
+        var isMissedFilling = $("#IsMissedFillingEdit").val() === true;
+
+
+        $.ajax({
+            url: '/CarEvents/Test',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            //url: '/api/1/user/buyer_profile/',
+            //url: '/api/1/user/buyer_profile/' + User.id() + '/',
+            //data: { "carEvents": {} },
+            data: JSON.stringify({
+                carEvents: {
+                    Comment: comment,
+                    CostTotal: costTotal,
+                    DateEvent: dateEvent,
+                    EventTypeId: eventTypeId,
+                    Latitute: latitute,
+                    Longitute: longitute,
+                    Odometer: odometer,
+                    NameEvent: nameEvent,
+                    FuelCategoryId: fuelCategoryId,
+                    FuelCount: fuelCount,
+                    IsFullTank: isFullTank,
+                    IsMissedFilling: isMissedFilling,
+                    PricePerLitr: pricePerLitr,
+                    CarId: @(Model.CarId),
+                    Id: @(Model.Id)
+                }
+            }),
+            //data: JSON.stringify({ carEventJson: carEventModel }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: ChangeFromDetails,
+            //function (data) {
+            //    alert(data);
+            //},
+            error: function(xhr) {
+                alert('error');
+            }
+        });
+
+
+        //$.ajax({
+        //    url: '/User/Create',
+        //    dataType: "json",
+        //    type: "POST",
+        //    contentType: 'application/json; charset=utf-8',
+        //    data: JSON.stringify({ user: { name: 'Rintu', email: 'Rintu@gmial.com' } }),
+        //    async: true,
+        //    processData: false,
+        //    cache: false,
+        //    success: function (data) {
+        //        alert(data);
+        //    },
+        //    error: function (xhr) {
+        //        alert('error');
+        //    }
+        //})
+        ChangeFromDetails();
+    };*@
+
+
+    $(document).ready(function() {
         var name = '@(Model.EventTypes.Name)';
         var carEventModel = '@(str)';
-        //var carEventId = '@(Model.CarId)';
+        @*var carEventId = '@(Model.CarId)';*@
 
-        $('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
-        @*$('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventId": carEventId, "name": name });*@
+    $('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
+    @*$('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventId": carEventId, "name": name });*@
+    //ChangeFromDetails();
+    //$("#DateEventEdit").hide();
+    //$("#OdometerEdit").hide();
+    //$("#EventNameEdit").hide();
+    //$("#CostTotalEdit").hide();
+    //$("#CommentEdit").hide();
+
     });
+
+    //function ChangeFromEdit() {
+    //    $("#DateEventDetails").hide();
+    //    $("#DateEventEdit").show();
+
+    //    $("#OdometerDetails").hide();
+    //    $("#OdometerEdit").show();
+
+    //    $("#EventNameDetails").hide();
+    //    $("#EventNameEdit").show();
+
+
+    //    // PartEventFilling
+    //    $("#FuelCategoryDetails").hide();
+    //    $("#FuelCategoryEdit").show();
+
+    //    $("#FuelCountDetails").hide();
+    //    $("#FuelCountEdit").show();
+
+    //    $("#PricePerLitrDetails").hide();
+    //    $("#PricePerLitrEdit").show();
+
+    //    $("#IsFullTankDetails").hide();
+    //    $("#IsFullTankEdit").show();
+
+    //    $("#IsMissedFillingDetails").hide();
+    //    $("#IsMissedFillingEdit").show();
+    //    // end PartEventFilling
+
+    //    // PartEventOther
+    //    $("#NameEventDetails").hide();
+    //    $("#NameEventEdit").show();
+    //    // end PartEventFilling
+
+    //    $("#CostTotalDetails").hide();
+    //    $("#CostTotalEdit").show();
+
+    //    $("#CommentDetails").hide();
+    //    $("#CommentEdit").show();
+
+    //    $("#btChange").hide();
+    //    $("#btBack").hide();
+    //    $("#btSave").show();
+    //    $("#btCancel").show();
+    //}
+
+
+    @*function ChangeFromDetails() {
+        $("#DateEventDetails").show();
+        $("#DateEventEdit").hide();
+
+        $("#OdometerDetails").show();
+        $("#OdometerEdit").hide();
+
+        $("#EventNameDetails").show();
+        $("#EventNameEdit").hide();
+
+
+        // PartEventFilling
+        $("#FuelCategoryDetails").show();
+        $("#FuelCategoryEdit").hide();
+
+        $("#FuelCountDetails").show();
+        $("#FuelCountEdit").hide();
+
+        $("#PricePerLitrDetails").show();
+        $("#PricePerLitrEdit").hide();
+
+        $("#IsFullTankDetails").show();
+        $("#IsFullTankEdit").hide();
+
+        $("#IsMissedFillingDetails").show();
+        $("#IsMissedFillingEdit").hide();
+        // end PartEventFilling
+
+        // PartEventOther
+        $("#NameEventDetails").show();
+        $("#NameEventEdit").hide();
+        // end PartEventFilling
+
+        $("#CostTotalDetails").show();
+        $("#CostTotalEdit").hide();
+
+        $("#CommentDetails").show();
+        $("#CommentEdit").hide();
+
+        $("#btChange").show();
+        $("#btBack").show();
+        $("#btSave").hide();
+        $("#btCancel").hide();
+
+
+        $("#CommentDetails").text($("#CommentEdit").val());
+        //alert(comment);
+        $("#CostTotalDetails").text($("#CostTotalEdit").val());
+
+        $("#NameEventDetails").text($("#NameEventEdit").val());
+
+        $("#FuelCountDetails").text($("#FuelCountEdit").val());
+        $("#PricePerLitrDetails").text($("#PricePerLitrEdit").val());
+        $("#DateEventDetails").text($("#DateEventEdit").val());
+        $("#OdometerDetails").text($("#OdometerEdit").val());
+
+
+        //selectElement.options[selectElement.selectedIndex].text;
+        $("#EventNameDetails").text($("#EventNameEdit").options[$("#EventNameEdit").selectedIndex].val());
+        $("#FuelCategoryDetails").text($("#FuelCategoryEdit").options[$("#FuelCategoryEdit").selectedIndex].val());
+        //$("#FuelCategoryDetails").text($("#FuelCategoryEdit").text());
+
+        //$("#EventNameDetails").text($("#IsFullTankEdit").val());
+        //$("#EventNameDetails").text($("#IsMissedFillingEdit").val());
+
+
+
+
+    }*@
 </script>
+
+@*@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Script/bootstrap-datepicker")
+}*@

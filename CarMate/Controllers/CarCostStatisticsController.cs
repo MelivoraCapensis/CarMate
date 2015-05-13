@@ -38,7 +38,7 @@ namespace CarMate.Controllers
 
             //Dictionary<string, double> costStatistics = new Dictionary<string, double>();
             List<Test> tests = new List<Test>();
-
+            double allSumm = 0;
             foreach (var carEvent in carEvents)
             {
                 //if (costStatistics.ContainsKey(carEvent.EventTypes.Name))
@@ -56,11 +56,13 @@ namespace CarMate.Controllers
                         Month = carEvent.DateEvent.Month
                     });
                     t.Summ += carEvent.CostTotal;
+                    allSumm += carEvent.CostTotal;
                 }
                 else
                 {
                     //costStatistics[carEvent.EventTypes.Name] = carEvent.CostTotal;
                     t = new Test {Summ = carEvent.CostTotal, Name = carEvent.EventTypes.Name};
+                    allSumm += carEvent.CostTotal;
                     t.Details.Add(new Details
                     {
                         DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture),
@@ -72,6 +74,12 @@ namespace CarMate.Controllers
                     tests.Add(t);
                 }
             }
+            allSumm = Math.Round(allSumm, 2);
+
+            foreach (Test t in tests)
+            {
+                t.AllSumm = allSumm;
+            }
 
             return Json(tests, JsonRequestBehavior.AllowGet);
         }
@@ -82,6 +90,7 @@ namespace CarMate.Controllers
     {
         public string Name { set; get; }
         public double Summ { set; get; }
+        public double AllSumm { set; get; }
 
         public List<Details> Details { set; get; }
 

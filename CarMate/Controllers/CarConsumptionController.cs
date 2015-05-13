@@ -168,7 +168,83 @@ namespace CarMate.Controllers
 
             return json;
         }
+
+        public JsonResult GetConsumptionStatistics(int carId = 0)
+        {
+            var car = db.Cars.Find(carId);
+            if (car == null)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            var carEvents = db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+
+
+            List<TestDistance> distance = new List<TestDistance>();
+            // Проехано, за определенный период
+            //Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
+            int allDistance = 0;
+            int tmpOdometr = 0;
+            for (int i = 0; i < carEvents.Count; i++)
+            {
+                // Определяем общий пробег
+                if (i == 0)
+                {
+                    var begin = carEvents[i].Odometer;
+                    var end = carEvents[carEvents.Count - 1].Odometer;
+                    allDistance = end - begin;
+                    tmpOdometr = begin;
+                }
+
+                var result = distance.FirstOrDefault(x => x.DateCreate == carEvents[i].DateEvent);
+
+                if (result != null && result.DateCreate != DateTime.MinValue)
+                {
+                    result.Distance = carEvents[i].Odometer - tmpOdometr;
+                    //result.Ticks = new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1).ToLocalTime().Ticks;
+                    if (carEvents[i].FuelCount != null)
+                        result.SumLiters = (double)carEvents[i].FuelCount;
+                    else
+                        result.SumLiters = 0;
+                    result.SumMoney = carEvents[i].CostTotal;
+                    result.Name = carEvents[i].NameEvent;
+                }
+                else
+                {
+                    TestDistance t = new TestDistance
+                    {
+                        DateCreate = carEvents[i].DateEvent,
+                        Ticks = carEvents[i].DateEvent.ToLocalTime().Ticks,
+                        Distance = carEvents[i].Odometer - tmpOdometr
+                    };
+                    if (carEvents[i].FuelCount != null)
+                        t.SumLiters = (double)carEvents[i].FuelCount;
+                    else
+                        t.SumLiters = 0;
+                    t.SumMoney = carEvents[i].CostTotal;
+                    t.Name = carEvents[i].NameEvent;
+                    distance.Add(t);
+                }
+                tmpOdometr = carEvents[i].Odometer;
+            }
+            foreach (TestDistance d in distance)
+            {
+                d.AllDistance = allDistance;
+            }
+
+            return Json(distance, JsonRequestBehavior.AllowGet);
+        }
     }
 
+    public class TestDistance
+    {
+        public DateTime DateCreate { set; get; }
+        public double Ticks { set; get; }
+        public int Distance { set; get; }
+        public int AllDistance { set; get; }
+
+        public string Name { set; get; }
+        public double SumLiters { set; get; }
+        public double SumMoney { set; get; }
+    }
     
 }

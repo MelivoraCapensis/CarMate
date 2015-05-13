@@ -169,18 +169,113 @@ namespace CarMate.Controllers
             return View(carEvents);
         }
 
+
+
+        //public PartialViewResult GetEventDetails(string carEventJson, string name = "")
+        //{
+        //    CarEvents carEventsModel = null;
+        //    if (carEventJson != null)
+        //    {
+        //        carEventJson = carEventJson.Replace("&quot;", "\"");
+        //        carEventsModel = JsonConvert.DeserializeObject<CarEvents>(carEventJson);
+        //        carEventsModel.FuelCategories = db.FuelCategories.Find(carEventsModel.FuelCategoryId);
+        //    }
+
+        //    if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+        //        //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+        //        return PartialView("_PartEventFillingDetails", carEventsModel);
+        //    }
+        //    if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
+        //        return PartialView("_PartEventRepairDetails", carEventsModel);
+        //    }
+
+        //    return PartialView("_PartEventOtherDetails", carEventsModel);
+        //}
+
+        //[HttpPost]
+        //public JsonResult Test(CarEvents carEvents)
+        //{
+        //    //if (carEventJson != null)
+        //    //{
+        //    //    carEventJson = carEventJson.Replace("&quot;", "\"");
+                
+        //        //var carEvents = JsonConvert.DeserializeObject<CarEvents>(carEventJson);
+        //        //return Json(carEvents.Comment);
+        //        //carEvents.FuelCategories = db.FuelCategories.Find(carEvents.FuelCategoryId);
+
+        //        Owner(HttpContext);
+        //        var car = db.Cars.Find(carEvents.CarId);
+        //        if (this.UserId != car.UserId)
+        //        {
+        //            //return HttpNotFound();
+        //            return Json("Error in controller");
+        //        }
+        //        //if (ModelState.IsValid)
+        //        //{
+                
+        //            CarEvents carEventsFromDb = db.CarEvents.Find(carEvents.Id);
+                    
+        //            // При любом событии
+        //            carEventsFromDb.Comment = carEvents.Comment;
+        //            carEventsFromDb.CostTotal = carEvents.CostTotal;
+        //            carEventsFromDb.DateEvent = carEvents.DateEvent;
+        //            carEventsFromDb.EventTypeId = carEvents.EventTypeId;
+        //            carEventsFromDb.Latitute = carEvents.Latitute;
+        //            carEventsFromDb.Longitute = carEvents.Longitute;
+        //            carEventsFromDb.Odometer = carEvents.Odometer;
+        //            // Если название события пустое, то в название события записываем его тип
+        //            //carEventsFromDb.NameEvent = String.IsNullOrEmpty(carEvents.NameEvent) ? carEvents.EventTypes.Name : carEvents.NameEvent;
+
+        //            // Нет в списке
+        //            carEventsFromDb.NameEvent = carEvents.NameEvent;
+        //            // Заправка
+        //            carEventsFromDb.FuelCategoryId = carEvents.FuelCategoryId;
+        //            carEventsFromDb.FuelCount = carEvents.FuelCount;
+        //            carEventsFromDb.IsFullTank = carEvents.IsFullTank;
+        //            carEventsFromDb.IsMissedFilling = carEvents.IsMissedFilling;
+        //            carEventsFromDb.PricePerLitr = carEvents.PricePerLitr;
+
+        //            // Системное
+        //            carEventsFromDb.DateCreate = DateTime.Now;
+        //            carEventsFromDb.State = Consts.StateUpdate;
+
+        //            db.SaveChanges();
+
+        //            //return RedirectToAction("Index", new { carId = carEvents.CarId });
+        //            return Json("Response from Create");
+        //        //}
+        //    //}
+
+
+
+        //    //InitViewBag(carEvents);
+        //    //ViewBag.EventType = carEvents.EventTypes.Name;
+        //    ////ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
+        //    ////ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
+        //    ////ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carEvents.CarId);
+        //    //CarAndUserInit(carEvents.CarId);
+        //    ////return View(carEvents);
+        //    //return Json("Response from Create");
+        //    return Json("carEventJson == null");
+        //}
+
         //
         // POST: /CarEvents/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CarEvents carEvents)
+        public ActionResult  Edit(CarEvents carEvents)
         {
             Owner(HttpContext);
             var car = db.Cars.Find(carEvents.CarId);
             if (this.UserId != car.UserId)
             {
                 return HttpNotFound();
+                //return Json("Response from Create");
             }
 
             if (ModelState.IsValid)
@@ -213,6 +308,7 @@ namespace CarMate.Controllers
                 db.SaveChanges();
 
                 return RedirectToAction("Index", new { carId = carEvents.CarId });
+                //return Json("Response from Create");
             }
 
             InitViewBag(carEvents);
@@ -222,6 +318,7 @@ namespace CarMate.Controllers
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carEvents.CarId);
             CarAndUserInit(carEvents.CarId);
             return View(carEvents);
+            //return Json("Response from Create");
         }
 
         //
@@ -330,7 +427,7 @@ namespace CarMate.Controllers
 
             if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
             {
-                
+                ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 return PartialView("_PartEventFillingDetails", carEventsModel);
             }

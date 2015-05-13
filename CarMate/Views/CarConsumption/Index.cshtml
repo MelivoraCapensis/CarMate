@@ -128,6 +128,15 @@
                         </div>
                     </div>
                 }
+
+                <hr/>
+                <p>
+                    Проехано, за выбранный период: <span id="distance_period"></span> км.
+                </p>
+
+                <div id="distanceStatistics" class="col-lg-12 col-md-12"></div>
+
+                <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
             </div>
         </div>
     </div>
@@ -185,7 +194,294 @@
 </script>
 
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        var carId = '@(ViewBag.Car.Id)';
+
+        jQuery.getJSON("CarConsumption/GetConsumptionStatistics", { "carId": carId }, function(items) {
+
+            $('#distance_period').text(items[0].AllDistance);
+
+            $(function() {
+                var dataFuel = []; // Создается пустой массив
+                jQuery.each(items, function(itemNo, item) {
+                    //if (item.Name === "Заправка") {
+                    //jQuery.each(item.Details, function(itemNoDetails, itemDetails) {
+                    var s = (item.Ticks - 621355968000000000) / 10000;
+                    dataFuel.push({ x: s, y: item.Distance });
+                    //});
+                    //}
+                });
+
+                Highcharts.setOptions({
+                    lang: {
+                        months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                        shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                        weekdays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+                    }
+                });
+                // Create the chart
+                $('#distanceStatistics').highcharts('StockChart', {
+                    rangeSelector: {
+                        allButtonsEnabled: true,
+                        buttons: [
+                            {
+                                type: 'month',
+                                count: 3,
+                                text: 'День',
+                                dataGrouping: {
+                                    forced: true,
+                                    units: [['day', [1]]]
+                                    
+                                }
+                            }, {
+                                type: 'all',
+                                text: 'Месяц',
+                                dataGrouping: {
+                                    forced: true,
+                                    units: [['month', [1]]],
+                                    approximation: 'sum'    // Суммирует весь пробег за месяц
+                                }
+                            }, {
+                                type: 'all',
+                                count: 1,
+                                text: 'Год',
+                                dataGrouping: {
+                                    forced: true,
+                                    units: [['year', [1]]],
+                                    approximation: 'sum'    // Суммирует весь пробег за год
+                                }
+                            }
+                        ],
+                        buttonTheme: {
+                            width: 60
+                        },
+                        selected: 0,
+                        // Убрать поля для задания периода
+                        inputEnabled: false
+                    },
+
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            second: '%d-%m<br/>%Y',
+                            minute: '%d-%m<br/>%Y',
+                            hour: '%d-%m<br/>%Y',
+                            day: '%d-%m<br/>%Y',
+                            week: '%d-%m<br/>%Y',
+                            month: '%m-%Y',
+                            year: '%Y'
+                        }
+                    },
+
+                    yAxis: {
+                        //allowDecimals: false,
+                        showFirstLabel: true,
+                        showLastLabel: true,
+                        //labels: {
+                        //    y: 0,
+                        //    align: 'left'
+                        //},
+                        title: {
+                            text: 'Расстояние км'
+                        }
+                    },
+
+                    //rangeSelector: {
+                    //    selected: 5
+                    //},
+
+                    title: {
+                        text: 'Пробег'
+                    },
+
+                    series: [
+                        {
+                            name: 'AAPL Stock Price',
+                            data: dataFuel,
+                            marker: {
+                                enabled: true,
+                                radius: 3
+                            },
+                            shadow: true,
+                            tooltip: {
+                                //'<b>' + Highcharts.dateFormat('%A, %b %e, %Y', this.x) + '</b>';
+                                headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                                pointFormat:
+                                    '<tr><td style="color: {series.color}">Расстояния проехано: </td>' +
+                                        '<td style="text-align: right"><b>{point.y:.0f}км.</b></td></tr>',
+                                valueDecimals: 2
+                            }
+                        }
+                    ]
+                });
+            });
+
+
+
+
+            //$(function () {
+            //    var dataFuelAll = [];
+            //    var dataFuel = [];
+            //    jQuery.each(items, function (itemNo, item) {
+            //        //if (item.Name === "Заправка") {
+            //        //jQuery.each(item.Details, function(itemNoDetails, itemDetails) {
+            //        var s = (item.Ticks - 621355968000000000) / 10000;
+            //        dataFuel.push({ x: s, y: 22 });
+            //        //});
+            //        //}
+            //    });
+            //    dataFuelAll.push({ name: 'FuelCount', data: dataFuel });
+
+
+            //    var dataFuel1 = [];
+            //    jQuery.each(items, function (itemNo, item) {
+            //        //if (item.Name === "Заправка") {
+            //        //jQuery.each(item.Details, function(itemNoDetails, itemDetails) {
+            //        var s = (item.Ticks - 621355968000000000) / 10000;
+            //        dataFuel1.push({ x: s, y: 33 });
+            //        //});
+            //        //}
+            //    });
+            //    dataFuelAll.push({ name: 'CostTotal', data: dataFuel1 });
+
+            //    Highcharts.setOptions({
+            //        lang: {
+            //            months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            //            shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+            //            weekdays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+            //        }
+            //    });
+            //    // Create the chart
+            //    $('#fuelCostStatistics').highcharts('StockChart', {
+            //        rangeSelector: {
+            //            allButtonsEnabled: true,
+            //            buttons: [
+            //                {
+            //                    type: 'month',
+            //                    count: 3,
+            //                    text: 'День',
+            //                    dataGrouping: {
+            //                        forced: true,
+            //                        units: [['day', [1]]]
+
+            //                    }
+            //                }, {
+            //                    type: 'all',
+            //                    text: 'Месяц',
+            //                    dataGrouping: {
+            //                        forced: true,
+            //                        units: [['month', [1]]],
+            //                        // Суммирует весь пробег за месяц
+            //                        approximation: 'sum'    
+            //                    }
+            //                }, {
+            //                    type: 'all',
+            //                    count: 1,
+            //                    text: 'Год',
+            //                    dataGrouping: {
+            //                        forced: true,
+            //                        units: [['year', [1]]],
+            //                        // Суммирует весь пробег за год
+            //                        //approximation: 'sum'    
+            //                        approximation: function (arr) {
+            //                            if (arr.length === 0 && arr.hasNulls) {
+            //                                return null;
+            //                            }
+            //                            alert(arr['FuelCount'][0]);
+                                        
+
+            //                            var sum = 0.;
+            //                            $.each(arr, function (i, value) {
+            //                                if (sum != null) {
+            //                                    sum += value;
+            //                                    //alert(value);
+                                                
+            //                                }
+            //                            });
+            //                            return sum == null ? null : sum / arr.length;
+            //                        }
+            //                    }
+            //                }
+            //            ],
+            //            buttonTheme: {
+            //                width: 60
+            //            },
+            //            selected: 0,
+            //            // Убрать поля для задания периода
+            //            inputEnabled: false
+            //        },
+
+            //        xAxis: {
+            //            type: 'datetime',
+            //            dateTimeLabelFormats: {
+            //                second: '%d-%m<br/>%Y',
+            //                minute: '%d-%m<br/>%Y',
+            //                hour: '%d-%m<br/>%Y',
+            //                day: '%d-%m<br/>%Y',
+            //                week: '%d-%m<br/>%Y',
+            //                month: '%m-%Y',
+            //                year: '%Y'
+            //            }
+            //        },
+
+            //        yAxis: {
+            //            //allowDecimals: false,
+            //            showFirstLabel: true,
+            //            showLastLabel: true,
+            //            //labels: {
+            //            //    y: 0,
+            //            //    align: 'left'
+            //            //},
+            //            title: {
+            //                text: 'Расстояние км'
+            //            }
+            //        },
+
+            //        //rangeSelector: {
+            //        //    selected: 5
+            //        //},
+
+            //        title: {
+            //            text: 'Пробег'
+            //        },
+
+            //        series: dataFuelAll
+            //        //    [{
+            //        //    name: 'AAPL',
+            //        //    data: [
+            //        //        { y: 1, x: 1147651200000 },
+            //        //        { y: 2, x: 1147737600000 },
+            //        //        { y: 3, x: 1147824000000 },
+            //        //        { y: 4, x: 1147910400000 }
+            //        //    ]
+            //        //}, {
+            //        //    name: 'AAPL',
+            //        //    data: [
+            //        //        { y: 11, x: 1147651200000 },
+            //        //        { y: 12, x: 1147737600000 },
+            //        //        { y: 13, x: 1147824000000 },
+            //        //        { y: 14, x: 1147910400000 }
+            //        //    ]
+            //        //}, {
+            //        //    name: 'AAPL',
+            //        //    data: [
+            //        //        { y: 21, x: 1147651200000 },
+            //        //        { y: 22, x: 1147737600000 },
+            //        //        { y: 23, x: 1147824000000 },
+            //        //        { y: 24, x: 1147910400000 }
+            //        //    ]
+            //        //}]
+            //    });
+            //});
+        });
+    });
+</script>
+
+
+
 @section scripts {
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/highcharts")
 }
