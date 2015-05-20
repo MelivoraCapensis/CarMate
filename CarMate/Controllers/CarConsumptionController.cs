@@ -212,7 +212,9 @@ namespace CarMate.Controllers
                 {
                     var begin = carEvents[i].Odometer;
                     var end = carEvents[carEvents.Count - 1].Odometer;
-                    allDistance = end - begin;
+                    allDistance = end;
+                    // Конвертируем всю пройденную дистанцию в выбранные единицы измерения.
+                    allDistance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, allDistance));
                     tmpOdometr = begin;
                 }
 
@@ -220,8 +222,8 @@ namespace CarMate.Controllers
 
                 if (result != null && result.DateCreate != DateTime.MinValue)
                 {
-                    result.Distance = carEvents[i].Odometer - tmpOdometr;
-                    result.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, result.Distance));
+                    result.Distance += carEvents[i].Odometer - tmpOdometr;
+                    //result.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, result.Distance));
                     //result.Ticks = new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1).ToLocalTime().Ticks;
                     if (carEvents[i].FuelCount != null)
                         result.SumLiters = (double)carEvents[i].FuelCount;
@@ -238,7 +240,7 @@ namespace CarMate.Controllers
                         Ticks = carEvents[i].DateEvent.ToLocalTime().Ticks,
                         Distance = carEvents[i].Odometer - tmpOdometr
                     };
-                    t.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, t.Distance));
+                    //t.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, t.Distance));
                     if (carEvents[i].FuelCount != null)
                         t.SumLiters = (double)carEvents[i].FuelCount;
                     else
@@ -252,6 +254,7 @@ namespace CarMate.Controllers
             foreach (TestDistance d in distance)
             {
                 d.AllDistance = allDistance;
+                d.Distance = Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, d.Distance), 2);
             }
 
             return Json(distance, JsonRequestBehavior.AllowGet);
@@ -262,7 +265,7 @@ namespace CarMate.Controllers
     {
         public DateTime DateCreate { set; get; }
         public double Ticks { set; get; }
-        public int Distance { set; get; }
+        public double Distance { set; get; }
         public int AllDistance { set; get; }
 
         public string Name { set; get; }
