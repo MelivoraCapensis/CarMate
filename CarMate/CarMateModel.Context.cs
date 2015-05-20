@@ -32,7 +32,6 @@ namespace CarMate
         public DbSet<CarModels> CarModels { get; set; }
         public DbSet<CarModifications> CarModifications { get; set; }
         public DbSet<CarNode> CarNode { get; set; }
-        public DbSet<Cars> Cars { get; set; }
         public DbSet<CarTypes> CarTypes { get; set; }
         public DbSet<Categories> Categories { get; set; }
         public DbSet<CategoryLog> CategoryLog { get; set; }
@@ -43,8 +42,12 @@ namespace CarMate
         public DbSet<Placemarks> Placemarks { get; set; }
         public DbSet<Prices> Prices { get; set; }
         public DbSet<Regions> Regions { get; set; }
-        public DbSet<Users> Users { get; set; }
         public DbSet<VendorAliases> VendorAliases { get; set; }
         public DbSet<Vendors> Vendors { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<UnitFuelConsumption> UnitFuelConsumption { get; set; }
+        public DbSet<UnitDistance> UnitDistance { get; set; }
+        public DbSet<UnitVolume> UnitVolume { get; set; }
+        public DbSet<Cars> Cars { get; set; }
     }
 }

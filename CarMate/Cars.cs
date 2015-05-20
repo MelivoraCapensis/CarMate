@@ -25,9 +25,9 @@ namespace CarMate
         public int UserId { get; set; }
         public int ModelId { get; set; }
         public Nullable<int> ModificationId { get; set; }
-        public Nullable<int> Odometer { get; set; }
-        public Nullable<int> Tank { get; set; }
-        public Nullable<double> Consumption { get; set; }
+        public int Odometer { get; set; }
+        public int Tank { get; set; }
+        public double Consumption { get; set; }
         public string ImgPath { get; set; }
         public Nullable<System.DateTime> DateBuy { get; set; }
         public System.DateTime DateCreate { get; set; }

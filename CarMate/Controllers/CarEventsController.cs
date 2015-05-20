@@ -28,12 +28,25 @@ namespace CarMate.Controllers
                 .Where(x => x.CarId == carId)
                 .OrderByDescending(x=>x.DateEvent).ToList();
 
+            
+
             CarAndUserInit(carId);
 
             Owner(HttpContext);
             var car = db.Cars.Find(carId);
             ViewBag.IsOwner = this.UserId == car.UserId;
+            //ViewBag.UnitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            //ViewBag.UnitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
 
+            foreach (CarEvents carEvent in carEvents)
+            {
+                carEvent.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(ViewBag.UnitDistance, carEvent.Odometer));
+                if (carEvent.FuelCount != null)
+                {
+                    carEvent.FuelCount = Math.Round(
+                        ConverterUnitVolume.ConvertVolumeFromLiters(ViewBag.UnitVolume, (double) carEvent.FuelCount), 2);
+                }
+            }
 
             return View(carEvents);
             //return View(carevents.ToList());
@@ -46,6 +59,21 @@ namespace CarMate.Controllers
         public void CarAndUserInit(int carId)
         {
             var car = db.Cars.Find(carId);
+
+            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, car.Odometer));
+            ViewBag.UnitDistance = unitDistance;
+
+            string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
+            car.Consumption = Math.Round(
+                ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption, car.Consumption), 2);
+            ViewBag.UnitFuelConsumption = unitFuelConsumption;
+
+            string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
+            car.Tank = (int) Math.Round(
+                ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, car.Tank));
+            ViewBag.UnitVolume = unitVolume;
+
             ViewBag.Car = car;
             ViewBag.User = db.Users.Find(car.UserId);
         }
@@ -64,6 +92,16 @@ namespace CarMate.Controllers
 
             ViewBag.EventType = carEvents.EventTypes.Name;
             InitViewBag(carEvents);
+
+            ViewBag.UnitDistance = db.Users.Find(carEvents.Cars.UserId).UnitDistance.NameUnit;
+            carEvents.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(ViewBag.UnitDistance, carEvents.Odometer));
+
+            if (carEvents.FuelCount != null)
+            {
+                ViewBag.UnitVolume = db.Users.Find(carEvents.Cars.UserId).UnitVolume.NameUnit;
+                carEvents.FuelCount = Math.Round(
+                    ConverterUnitVolume.ConvertVolumeFromLiters(ViewBag.UnitVolume, (double)carEvents.FuelCount), 2);
+            }
 
             return View(carEvents);
         }
@@ -89,15 +127,16 @@ namespace CarMate.Controllers
             var carEvents = new CarEvents
             {
                 CarId = carId,
-                DateEvent = DateTime.Now
+                DateEvent = DateTime.Now,
+                Odometer = car.Odometer
             };
-            if (car.Odometer != null)
-            {
-                carEvents.Odometer = (int) car.Odometer;
-            }
+            //if (car.Odometer != null)
+            //{
+            //}
             //InitViewBag(carEvents);
             ViewBag.EventTypeId = new SelectList(db.EventTypes.OrderBy(x => x.Name), "Id", "Name", 1);
-           
+            ViewBag.UnitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            carEvents.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(ViewBag.UnitDistance, carEvents.Odometer));
 
             return View(carEvents);
         }
@@ -121,6 +160,18 @@ namespace CarMate.Controllers
                 carEvents.State = Consts.StateNew;
                 carEvents.DateCreate = DateTime.Now;
 
+                carEvents.CostTotal = Math.Round(carEvents.CostTotal, 2);
+
+                string unitDistance = db.Users.Find(carTmp.UserId).UnitDistance.NameUnit;
+                carEvents.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceToKm(unitDistance, carEvents.Odometer));
+
+                if (carEvents.FuelCount != null)
+                {
+                    string unitVolume = db.Users.Find(carTmp.UserId).UnitVolume.NameUnit;
+                    carEvents.FuelCount = Math.Round(
+                        ConverterUnitVolume.ConvertVolumeToLiters(unitVolume, (double)carEvents.FuelCount), 2);
+                }
+
                 db.CarEvents.Add(carEvents);
                 db.SaveChanges();
                 return RedirectToAction("Index", new {carId = carEvents.CarId});
@@ -134,6 +185,9 @@ namespace CarMate.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.UnitDistance = db.Users.Find(carEvents.Cars.UserId).UnitDistance.NameUnit;
+            carEvents.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(ViewBag.UnitDistance, carEvents.Odometer));
             //ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carevents.CarId);
@@ -163,6 +217,17 @@ namespace CarMate.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.UnitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            carEvents.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(ViewBag.UnitDistance, carEvents.Odometer));
+
+            if (carEvents.FuelCount != null)
+            {
+                string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
+                carEvents.FuelCount = Math.Round(
+                    ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, (double)carEvents.FuelCount), 2);
+            }
+
             //ViewBag.EventTypeId = new SelectList(db.EventTypes, "Id", "Name", carevents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carevents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carevents.CarId);
@@ -283,12 +348,22 @@ namespace CarMate.Controllers
                 CarEvents carEventsFromDb = db.CarEvents.Find(carEvents.Id);
                 // При любом событии
                 carEventsFromDb.Comment = carEvents.Comment;
-                carEventsFromDb.CostTotal = carEvents.CostTotal;
+                carEventsFromDb.CostTotal = Math.Round(carEvents.CostTotal, 2);
                 carEventsFromDb.DateEvent = carEvents.DateEvent;
                 carEventsFromDb.EventTypeId = carEvents.EventTypeId;
                 carEventsFromDb.Latitute = carEvents.Latitute;
                 carEventsFromDb.Longitute = carEvents.Longitute;
-                carEventsFromDb.Odometer = carEvents.Odometer;
+                //carEventsFromDb.Odometer = carEvents.Odometer;
+                string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+                carEventsFromDb.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceToKm(unitDistance, carEvents.Odometer));
+
+                if (carEvents.FuelCount != null)
+                {
+                    string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
+                    carEvents.FuelCount = Math.Round(
+                        ConverterUnitVolume.ConvertVolumeToLiters(unitVolume, (double)carEvents.FuelCount), 2);
+                }
+
                 // Если название события пустое, то в название события записываем его тип
                 //carEventsFromDb.NameEvent = String.IsNullOrEmpty(carEvents.NameEvent) ? carEvents.EventTypes.Name : carEvents.NameEvent;
 
@@ -301,6 +376,9 @@ namespace CarMate.Controllers
                 carEventsFromDb.IsMissedFilling = carEvents.IsMissedFilling;
                 carEventsFromDb.PricePerLitr = carEvents.PricePerLitr;
 
+                
+
+
                 // Системное
                 carEventsFromDb.DateCreate = DateTime.Now;
                 carEventsFromDb.State = Consts.StateUpdate;
@@ -310,6 +388,9 @@ namespace CarMate.Controllers
                 return RedirectToAction("Index", new { carId = carEvents.CarId });
                 //return Json("Response from Create");
             }
+
+            ViewBag.UnitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            carEvents.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(ViewBag.UnitDistance, carEvents.Odometer));
 
             InitViewBag(carEvents);
             ViewBag.EventType = carEvents.EventTypes.Name;
@@ -415,7 +496,7 @@ namespace CarMate.Controllers
             return PartialView("_PartEventOther", carEventsModel);
         }
 
-        public PartialViewResult GetEventDetails(string carEventJson, string name = "")
+        public PartialViewResult GetEventDetails(string carEventJson, int userId=0, string name = "")
         {
             CarEvents carEventsModel = null;
             if (carEventJson != null)
@@ -427,6 +508,7 @@ namespace CarMate.Controllers
 
             if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
             {
+                ViewBag.UnitVolume = db.Users.Find(userId).UnitVolume.NameUnit;
                 ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 return PartialView("_PartEventFillingDetails", carEventsModel);

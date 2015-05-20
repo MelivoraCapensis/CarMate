@@ -21,5 +21,15 @@ namespace CarMate.Classes
         public const string EventTypeNameInspection = "Техосмотр";
         public const string EventTypeNamePenalty = "Штраф";
         public const string EventTypeNameEvacuator = "Эвакуатор";
+
+        public const string UnitDistanceNameKm = "км";
+        public const string UnitDistanceNameMile = "миля";
+
+        public const string UnitVolumeNameLiter = "л";
+        public const string UnitVolumeNameGallon = "галлон";
+
+        public const string UnitFuelConsumptionNameLitersOn100Km = "л/100км";
+        public const string UnitFuelConsumptionNameMileOnGallon = "миль/галлон";
+
     }
 }

@@ -79,23 +79,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Cars">
-      <EntityTypeMapping TypeName="Model.Cars">
-        <MappingFragment StoreEntitySet="Cars">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
-          <ScalarProperty Name="ModificationId" ColumnName="ModificationId" />
-          <ScalarProperty Name="Odometer" ColumnName="Odometer" />
-          <ScalarProperty Name="Tank" ColumnName="Tank" />
-          <ScalarProperty Name="Consumption" ColumnName="Consumption" />
-          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
-          <ScalarProperty Name="DateBuy" ColumnName="DateBuy" />
-          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
-          <ScalarProperty Name="State" ColumnName="State" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CarTypes">
       <EntityTypeMapping TypeName="Model.CarTypes">
         <MappingFragment StoreEntitySet="CarTypes">
@@ -205,23 +188,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="Model.Users">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
-          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
-          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
-          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
-          <ScalarProperty Name="DateRegister" ColumnName="DateRegister" />
-          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
-          <ScalarProperty Name="State" ColumnName="State" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="VendorAliases">
       <EntityTypeMapping TypeName="Model.VendorAliases">
         <MappingFragment StoreEntitySet="VendorAliases">
@@ -240,6 +206,72 @@
           <ScalarProperty Name="icon" ColumnName="icon" />
           <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
           <ScalarProperty Name="state" ColumnName="state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="Model.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+          <ScalarProperty Name="UnitVolumeId" ColumnName="UnitVolumeId" />
+          <ScalarProperty Name="UnitDistanceId" ColumnName="UnitDistanceId" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="DateRegister" ColumnName="DateRegister" />
+          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitFuelConsumption">
+      <EntityTypeMapping TypeName="Model.UnitFuelConsumption">
+        <MappingFragment StoreEntitySet="UnitFuelConsumption">
+          <ScalarProperty Name="Correction" ColumnName="Correction" />
+          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitDistance">
+      <EntityTypeMapping TypeName="Model.UnitDistance">
+        <MappingFragment StoreEntitySet="UnitDistance">
+          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+          <ScalarProperty Name="Correction" ColumnName="Correction" />
+          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitVolume">
+      <EntityTypeMapping TypeName="Model.UnitVolume">
+        <MappingFragment StoreEntitySet="UnitVolume">
+          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+          <ScalarProperty Name="Correction" ColumnName="Correction" />
+          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="Model.Cars">
+        <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="DateBuy" ColumnName="DateBuy" />
+          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+          <ScalarProperty Name="Consumption" ColumnName="Consumption" />
+          <ScalarProperty Name="Tank" ColumnName="Tank" />
+          <ScalarProperty Name="Odometer" ColumnName="Odometer" />
+          <ScalarProperty Name="ModificationId" ColumnName="ModificationId" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -195,22 +195,18 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var carId = '@(ViewBag.Car.Id)';
 
-        jQuery.getJSON("CarConsumption/GetConsumptionStatistics", { "carId": carId }, function(items) {
+        jQuery.getJSON("CarConsumption/GetConsumptionStatistics", { "carId": carId }, function (items) {
 
             $('#distance_period').text(items[0].AllDistance);
 
-            $(function() {
+            $(function () {
                 var dataFuel = []; // Создается пустой массив
-                jQuery.each(items, function(itemNo, item) {
-                    //if (item.Name === "Заправка") {
-                    //jQuery.each(item.Details, function(itemNoDetails, itemDetails) {
+                jQuery.each(items, function (itemNo, item) {
                     var s = (item.Ticks - 621355968000000000) / 10000;
                     dataFuel.push({ x: s, y: item.Distance });
-                    //});
-                    //}
                 });
 
                 Highcharts.setOptions({
@@ -220,6 +216,7 @@
                         weekdays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
                     }
                 });
+
                 // Create the chart
                 $('#distanceStatistics').highcharts('StockChart', {
                     rangeSelector: {
@@ -232,7 +229,7 @@
                                 dataGrouping: {
                                     forced: true,
                                     units: [['day', [1]]]
-                                    
+
                                 }
                             }, {
                                 type: 'all',
@@ -283,7 +280,7 @@
                         //    align: 'left'
                         //},
                         title: {
-                            text: 'Расстояние км'
+                            text: 'Расстояние (@(ViewBag.UnitDistance))'
                         }
                     },
 
@@ -309,7 +306,7 @@
                                 headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
                                 pointFormat:
                                     '<tr><td style="color: {series.color}">Расстояния проехано: </td>' +
-                                        '<td style="text-align: right"><b>{point.y:.0f}км.</b></td></tr>',
+                                        '<td style="text-align: right"><b>{point.y:.0f}(@(ViewBag.UnitDistance)).</b></td></tr>',
                                 valueDecimals: 2
                             }
                         }
@@ -373,7 +370,7 @@
             //                        forced: true,
             //                        units: [['month', [1]]],
             //                        // Суммирует весь пробег за месяц
-            //                        approximation: 'sum'    
+            //                        approximation: 'sum'
             //                    }
             //                }, {
             //                    type: 'all',
@@ -383,20 +380,20 @@
             //                        forced: true,
             //                        units: [['year', [1]]],
             //                        // Суммирует весь пробег за год
-            //                        //approximation: 'sum'    
+            //                        //approximation: 'sum'
             //                        approximation: function (arr) {
             //                            if (arr.length === 0 && arr.hasNulls) {
             //                                return null;
             //                            }
             //                            alert(arr['FuelCount'][0]);
-                                        
+
 
             //                            var sum = 0.;
             //                            $.each(arr, function (i, value) {
             //                                if (sum != null) {
             //                                    sum += value;
             //                                    //alert(value);
-                                                
+
             //                                }
             //                            });
             //                            return sum == null ? null : sum / arr.length;

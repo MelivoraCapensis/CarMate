@@ -85,6 +85,52 @@ namespace CarMate.Controllers
             //});
         }
 
+        [HttpPost]
+        [Authorize]
+        //[ValidateAntiForgeryToken]
+        //public JsonResult Edit(int unitDistanceId, int unitVolumeId)
+        public JsonResult Edit(int unitFuelConsumptionId)
+        {
+            Owner(HttpContext);
+            //if (this.UserId != user.Id)
+            //{
+            //    return Json("Error in controller1");
+            //}
+
+            if (ModelState.IsValid)
+            {
+                Users userFromDb = db.Users.Find(UserId);
+                userFromDb.UnitFuelConsumptionId = unitFuelConsumptionId;
+                var unitDistanceId = db.UnitDistance.FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumptionId);
+                if (unitDistanceId != null)
+                    userFromDb.UnitDistanceId = unitDistanceId.Id;
+
+                var unitVolumeId = db.UnitVolume.FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumptionId);
+                if (unitVolumeId != null)
+                    userFromDb.UnitVolumeId = unitVolumeId.Id;
+                //userFromDb.UnitVolumeId = unitVolumeId;
+
+                db.SaveChanges();
+                return Json("Ok");
+            }
+
+            return Json("Error in controller2");
+        }
+
+        public void Owner(HttpContextBase httpContext)
+        {
+            // Если пользователь авторизован
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                this.UserId = db.Users
+                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+
+                //ViewBag.Owner = this.UserId;
+            }
+        }
+
         public ActionResult Garage()
         {
             if (HttpContext.User.Identity.IsAuthenticated)

@@ -67,6 +67,21 @@ namespace CarMate.Controllers
         public void CarAndUserInit(int carId)
         {
             var car = db.Cars.Find(carId);
+
+            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, car.Odometer));
+            ViewBag.UnitDistance = unitDistance;
+
+            string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
+            car.Consumption = Math.Round(
+                ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption, car.Consumption), 2);
+            ViewBag.UnitFuelConsumption = unitFuelConsumption;
+
+            string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
+            car.Tank = (int)Math.Round(
+                ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, car.Tank));
+            ViewBag.UnitVolume = unitVolume;
+
             ViewBag.Car = car;
             ViewBag.User = db.Users.Find(car.UserId);
         }

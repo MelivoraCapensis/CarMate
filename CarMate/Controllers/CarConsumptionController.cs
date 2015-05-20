@@ -20,6 +20,8 @@ namespace CarMate.Controllers
             ViewBag.AvgConsumption = avgConsumption;
             ViewBag.MaxConsumption = maxConsumption;
 
+
+
             return View(fullTankCharging);
         }
 
@@ -154,6 +156,20 @@ namespace CarMate.Controllers
             var car = db.Cars.Find(carId);
             ViewBag.Car = car;
             ViewBag.User = db.Users.Find(car.UserId);
+
+            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, car.Odometer));
+            ViewBag.UnitDistance = unitDistance;
+
+            string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
+            car.Consumption = Math.Round(
+                ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption, car.Consumption), 2);
+            ViewBag.UnitFuelConsumption = unitFuelConsumption;
+
+            string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
+            car.Tank = (int)Math.Round(
+                ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, car.Tank));
+            ViewBag.UnitVolume = unitVolume;
         }
 
         public string GetConsumptionFromPeriod(int carId, DateTime beginDate, DateTime endDate)
@@ -184,6 +200,11 @@ namespace CarMate.Controllers
             //Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
             int allDistance = 0;
             int tmpOdometr = 0;
+            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            ViewBag.UnitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            
+            
+
             for (int i = 0; i < carEvents.Count; i++)
             {
                 // Определяем общий пробег
@@ -200,6 +221,7 @@ namespace CarMate.Controllers
                 if (result != null && result.DateCreate != DateTime.MinValue)
                 {
                     result.Distance = carEvents[i].Odometer - tmpOdometr;
+                    result.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, result.Distance));
                     //result.Ticks = new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1).ToLocalTime().Ticks;
                     if (carEvents[i].FuelCount != null)
                         result.SumLiters = (double)carEvents[i].FuelCount;
@@ -216,6 +238,7 @@ namespace CarMate.Controllers
                         Ticks = carEvents[i].DateEvent.ToLocalTime().Ticks,
                         Distance = carEvents[i].Odometer - tmpOdometr
                     };
+                    t.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, t.Distance));
                     if (carEvents[i].FuelCount != null)
                         t.SumLiters = (double)carEvents[i].FuelCount;
                     else

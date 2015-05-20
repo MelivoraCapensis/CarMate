@@ -222,6 +222,9 @@
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Classes\Consts.cs" />
+    <Compile Include="Classes\ConverterUnitDistance.cs" />
+    <Compile Include="Classes\ConverterUnitFuelConsumption.cs" />
+    <Compile Include="Classes\ConverterUnitVolume.cs" />
     <Compile Include="Classes\MyException.cs" />
     <Compile Include="Classes\MyProxy.cs" />
     <Compile Include="Code\VKontakteAuthenticationClient.cs" />
@@ -278,6 +281,15 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitDistance.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitFuelConsumption.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitVolume.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">

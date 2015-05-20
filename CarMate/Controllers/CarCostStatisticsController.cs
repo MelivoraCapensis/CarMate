@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CarMate.Classes;
 
 namespace CarMate.Controllers
 {
@@ -25,6 +26,20 @@ namespace CarMate.Controllers
             var car = db.Cars.Find(carId);
             ViewBag.Car = car;
             ViewBag.User = db.Users.Find(car.UserId);
+
+            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, car.Odometer));
+            ViewBag.UnitDistance = unitDistance;
+
+            string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
+            car.Consumption = Math.Round(
+                ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption, car.Consumption), 2);
+            ViewBag.UnitFuelConsumption = unitFuelConsumption;
+
+            string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
+            car.Tank = (int)Math.Round(
+                ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, car.Tank));
+            ViewBag.UnitVolume = unitVolume;
         }
 
         public JsonResult GetCostStatistics(int carId = 0)

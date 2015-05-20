@@ -18,7 +18,7 @@ namespace CarMate
         public int CarId { get; set; }
         public int CarNodeId { get; set; }
     
-        public virtual Cars Cars { get; set; }
         public virtual CarNode CarNode { get; set; }
+        public virtual Cars Cars { get; set; }
     }
 }

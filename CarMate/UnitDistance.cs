@@ -12,17 +12,19 @@ namespace CarMate
     using System;
     using System.Collections.Generic;
     
-    public partial class LogBook
+    public partial class UnitDistance
     {
-        public int id { get; set; }
-        public int categoryid { get; set; }
-        public int chargingid { get; set; }
-        public int carId { get; set; }
-        public Nullable<float> total_cost { get; set; }
-        public Nullable<System.DateTime> dateCharging { get; set; }
+        public UnitDistance()
+        {
+            this.Users = new HashSet<Users>();
+        }
     
-        public virtual CarEvents CarEvents { get; set; }
-        public virtual CategoryLog CategoryLog { get; set; }
-        public virtual Cars Cars { get; set; }
+        public int Id { get; set; }
+        public string NameUnit { get; set; }
+        public double Correction { get; set; }
+        public Nullable<int> UnitFuelConsumptionId { get; set; }
+    
+        public virtual UnitFuelConsumption UnitFuelConsumption { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

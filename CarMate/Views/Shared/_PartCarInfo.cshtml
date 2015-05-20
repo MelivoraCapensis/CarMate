@@ -21,11 +21,19 @@
     {
         <p>Модификация: Пусто</p>
     }
-    
+
     <p>Год выпуска: @*@Model.Car.dateBuy</p>*@
-    <p>Расход бензина: @Model.Consumption л/100км</p>
-    <p>Одометр (пробег): @Model.Odometer км</p>
-    <p>Объем бака: @Model.Tank л</p>
+    @*@if (@ViewBag.UnitDistance.Equals("миля"))
+    {*@
+        <p>Расход бензина: @Model.Consumption @ViewBag.UnitFuelConsumption</p>
+    @*}
+    else
+    {*@
+        @*<p>Расход бензина: @Model.Consumption л/100км</p>*@
+    @*}*@
+    
+    <p>Одометр (пробег): @Model.Odometer @ViewBag.UnitDistance</p>
+    <p>Объем бака: @Model.Tank @ViewBag.UnitVolume</p>
     <p>Топливо: @*@Model.Car.dateBuy</p>*@
     <p>Цвет: @*@Model.Car.dateBuy</p>*@
     <p>Дата покупки: @*@Model.Car.dateBuy</p>*@

@@ -18,15 +18,14 @@
         IsMissedFilling = Model.IsMissedFilling,
         PricePerLitr = Model.PricePerLitr,
         DateEvent = Model.DateEvent,
-
         //CostTotal = Model.CostTotal,
         //EventTypeId = Model.EventTypeId,
         //Odometer = Model.Odometer,
         //CarId = Model.CarId,
-        //Id = Model.Id
+        Id = Model.Id
     };
     string str = JsonConvert.SerializeObject(carEvent);
-
+    int userId = @Model.Cars.UserId;
     //var comment = Model.Comment ?? "null";
     //var latitute = Model.Latitute ?? 0.0;
     //var longitute = Model.Longitute ?? 0.0;
@@ -74,7 +73,7 @@
                         <div class="form-group">
                             @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new {@class = "text-right col-md-2"})
                             <div class="col-md-3">
-                                @*<span id="OdometerDetails">*@@Html.DisplayFor(model => model.Odometer)@*</span>*@
+                                @*<span id="OdometerDetails">*@@Html.DisplayFor(model => model.Odometer) @ViewBag.UnitDistance@*</span>*@
                                 @*@Html.TextBoxFor(events => events.Odometer, htmlAttributes: new
                                 {
                                     @class = "form-control",
@@ -273,9 +272,10 @@
     $(document).ready(function() {
         var name = '@(Model.EventTypes.Name)';
         var carEventModel = '@(str)';
+        var userId = '@(userId)';
         @*var carEventId = '@(Model.CarId)';*@
 
-    $('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
+        $('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventJson": carEventModel, "userId": userId, "name": name });
     @*$('#carEventDetails').load('@(Url.Action("GetEventDetails", "CarEvents"))', { "carEventId": carEventId, "name": name });*@
     //ChangeFromDetails();
     //$("#DateEventEdit").hide();

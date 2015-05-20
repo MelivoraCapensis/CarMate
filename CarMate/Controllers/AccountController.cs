@@ -121,6 +121,8 @@ namespace CarMate.Controllers
                             //region = model.Region,
                             //city = model.City,
                             DateRegister = date,
+                            UnitDistanceId = 1,
+                            UnitVolumeId = 1,
                             //UserPassword = model.Password,
 
                             DateCreate = date,
@@ -187,8 +189,42 @@ namespace CarMate.Controllers
                 : message == ManageMessageId.RemoveLoginSuccess ? "Внешняя учетная запись удалена."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            
+            InitViewBag();
+
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
+        }
+
+        public void InitViewBag()
+        {
+            // Заменить на DAL
+            using (CarMateEntities carMateDb = new CarMateEntities())
+            {
+                if (HttpContext.User.Identity.IsAuthenticated)
+                {
+                    var user = carMateDb.Users.FirstOrDefault(x => x.Nickname.Equals(HttpContext.User.Identity.Name));
+                    if (user != null)
+                    {
+                        ViewBag.UnitDistanceId = new SelectList(
+                            carMateDb.UnitDistance.OrderBy(x => x.NameUnit).ToList(),
+                            "Id", "NameUnit", user.UnitDistanceId);
+                        ViewBag.UnitVolumeId = new SelectList(carMateDb.UnitVolume.OrderBy(x => x.NameUnit).ToList(),
+                            "Id", "NameUnit", user.UnitVolumeId);
+                        ViewBag.UnitFuelConsumptionId = new SelectList(carMateDb.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(),
+                            "Id", "NameUnit", user.UnitFuelConsumptionId);
+                    }
+                    else
+                    {
+                        ViewBag.UnitDistanceId = new SelectList(
+                            carMateDb.UnitDistance.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
+                        ViewBag.UnitVolumeId = new SelectList(
+                            carMateDb.UnitVolume.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
+                        ViewBag.UnitFuelConsumptionId = new SelectList(
+                            carMateDb.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
+                    }
+                }
+            }
         }
 
         //
@@ -201,6 +237,9 @@ namespace CarMate.Controllers
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");
+
+            InitViewBag();
+
             if (hasLocalAccount)
             {
                 if (ModelState.IsValid)
@@ -437,7 +476,7 @@ namespace CarMate.Controllers
         {
             ChangePasswordSuccess,
             SetPasswordSuccess,
-            RemoveLoginSuccess,
+            RemoveLoginSuccess
         }
 
         internal class ExternalLoginResult : ActionResult

@@ -28,8 +28,83 @@
         <h3>Добавить внешнюю учетную запись</h3>
         @Html.Action("ExternalLoginsList", new {ReturnUrl = ViewBag.ReturnUrl})
     </section>
+
+    @*@using (Html.BeginForm("Edit", "User"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)*@
+
+        @*@Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.UserId)*@
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.Label("UnitDistanceId", "Одометр", htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-3">
+                    @Html.DropDownList("UnitDistanceId", null, htmlAttributes: new {@class = "form-control"})
+                    @*@Html.ValidationMessageFor(model => model.CarModels.brandId, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("UnitVolumeId", "Бак", htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-3">
+                    @Html.DropDownList("UnitVolumeId", null, htmlAttributes: new {@class = "form-control"})
+                    @*@Html.ValidationMessageFor(model => model.CarModels.brandId, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("UnitFuelConsumptionId", "Расход топлива", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownList("UnitFuelConsumptionId", null, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.CarModels.brandId, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            
+
+            <button id="btSave" onclick=" save() " class="btn btn-primary">Сохранить</button>
+            @*<p>
+                <input type="submit" value="Сохранить" class="btn btn-primary"/>
+                @Html.ActionLink("Назад", "Details", "User", new { id = Model.UserId }, new { @class = "btn btn-primary" })
+            </p>*@
+        </div>
+    @*}*@
+
 </div>
 
-    @section Scripts {
+<script type="text/javascript">
+    function save() {
+        var unitDistanceId = $("#UnitDistanceId").val();
+        var unitVolumeId = $("#UnitVolumeId").val();
+        var unitFuelConsumptionId = $("#UnitFuelConsumptionId").val();
+        //alert(unitDistanceId);
+        $.ajax({
+            url: '/User/Edit',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            //url: '/api/1/user/buyer_profile/',
+            //url: '/api/1/user/buyer_profile/' + User.id() + '/',
+            //data: { "carEvents": {} },
+            //data: JSON.stringify({ unitDistanceId: unitDistanceId, unitVolumeId: unitVolumeId }),
+            data: JSON.stringify({ unitFuelConsumptionId: unitFuelConsumptionId }),
+            async: true,
+            processData: false,
+            cache: false,
+            success:
+                function(data) {
+                    alert(data);
+                },
+            error: function(xhr) {
+                alert('error');
+            }
+        });
+
+
+    }
+</script>
+
+@section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
