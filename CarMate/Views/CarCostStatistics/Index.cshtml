@@ -3,7 +3,7 @@
 @model IEnumerable<CarMate.CarEvents>
 
 @{
-    ViewBag.Title = "Статистика затрат";
+    ViewBag.Title = Resources.CarCostStatistics.CostStatistics;
     //// Всего потрачено денег на группы событий (Заправка, ремонт), за определенный период
     //Dictionary<string, double> allCostStatistics = new Dictionary<string, double>();
     //// Всего потрачено денег, за определеный период
@@ -73,7 +73,7 @@
 
 @*<h2>Index</h2>*@
 <div class="container">
-    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <h2>@Resources.Car.Owner: "@ViewBag.User.Nickname"</h2>
     <div class="row">
         @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
@@ -96,7 +96,7 @@
                 </div>*@
 
                 <p>
-                    Денег потрачено за период: <span id="summ_period">0</span> грн.
+                    @Resources.CarCostStatistics.MoneySpentPeriod: <span id="summ_period">0</span> грн.
                 </p>
 
 
@@ -111,26 +111,34 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $("#car_rating").rating({ readOnly: true });
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
         var carId = '@(ViewBag.Car.Id)';
 
         Highcharts.setOptions({
             lang: {
-                months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-                weekdays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+                months: ['@(Resources.Hicharts.January)', '@(Resources.Hicharts.February)', '@(Resources.Hicharts.March)', '@(Resources.Hicharts.April)', '@(Resources.Hicharts.May)', '@(Resources.Hicharts.June)', '@(Resources.Hicharts.July)', '@(Resources.Hicharts.August)', '@(Resources.Hicharts.September)', '@(Resources.Hicharts.October)', '@(Resources.Hicharts.November)', '@(Resources.Hicharts.December)'],
+                shortMonths: ['@(Resources.Hicharts.ShortJanuary)', '@(Resources.Hicharts.ShortFebruary)', '@(Resources.Hicharts.ShortMarch)', '@(Resources.Hicharts.ShortApril)', '@(Resources.Hicharts.ShortMay)', '@(Resources.Hicharts.ShortJune)', '@(Resources.Hicharts.ShortJuly)', '@(Resources.Hicharts.ShortAugust)', '@(Resources.Hicharts.ShortSeptember)', '@(Resources.Hicharts.ShortOctober)', '@(Resources.Hicharts.ShortNovember)', '@(Resources.Hicharts.ShortDecember)'],
+                weekdays: ['@(Resources.Hicharts.Sunday)', '@(Resources.Hicharts.Monday)', '@(Resources.Hicharts.Tuesday)', '@(Resources.Hicharts.Wednesday)', '@(Resources.Hicharts.Thursday)', '@(Resources.Hicharts.Friday)', '@(Resources.Hicharts.Saturday)'],
+                rangeSelectorZoom: "@(Resources.Hicharts.ButtonTitle)"
             }
         });
 
-        jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function(items) {
+        jQuery.getJSON("CarCostStatistics/GetCostStatistics", { "carId": carId }, function (items) {
 
             //alert(items[0].AllSumm);
             $('#summ_period').text(items[0].AllSumm);
 
             // График статистика расходов
-            $(function() {
+            $(function () {
                 var dataAll = []; // Создается пустой массив
-                jQuery.each(items, function(itemNo, item) {
+                jQuery.each(items, function (itemNo, item) {
                     dataAll.push({ name: item.Name, y: item.Summ });
                 });
 
@@ -141,10 +149,10 @@
                         plotShadow: false
                     },
                     title: {
-                        text: 'Статистика расходов'
+                        text: '@(Resources.CarCostStatistics.CostStatistics)'
                     },
                     subtitle: {
-                        text: 'Период: '
+                        text: '@(Resources.Hicharts.Period): '
                     },
                     tooltip: {
                         headerFormat: '',
@@ -167,7 +175,7 @@
                     series: [
                         {
                             type: 'pie',
-                            name: 'Денег потрачено',
+                            name: '@(Resources.CarCostStatistics.MoneySpent)',
                             data: dataAll
                         }
                     ]
@@ -175,14 +183,14 @@
             });
 
 
-            $(function() {
+            $(function () {
                 var dataFuel = []; // Создается пустой массив
-                jQuery.each(items, function(itemNo, item) {
+                jQuery.each(items, function (itemNo, item) {
                     //if (item.Name === "Заправка") {
-                        jQuery.each(item.Details, function(itemNoDetails, itemDetails) {
-                            var s = (itemDetails.Ticks - 621355968000000000) / 10000;
-                            dataFuel.push({ x: s, y: itemDetails.Cost, color: 'green' });
-                        });
+                    jQuery.each(item.Details, function (itemNoDetails, itemDetails) {
+                        var s = (itemDetails.Ticks - 621355968000000000) / 10000;
+                        dataFuel.push({ x: s, y: itemDetails.Cost, color: 'green' });
+                    });
                     //}
                 });
 
@@ -211,13 +219,13 @@
                         //    align: 'left'
                         //},
                         title: {
-                            text: 'Деньги (грн)'
+                            text: '@(Resources.CarCostStatistics.Money) (грн)'
                         }
                     },
 
                     //colors: ['#434348'],
 
-                    //colors: ['#000000', '#434348', '#90ed7d', '#f7a35c', '#8085e9', 
+                    //colors: ['#000000', '#434348', '#90ed7d', '#f7a35c', '#8085e9',
                     //'#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
 
                     rangeSelector: {
@@ -226,14 +234,14 @@
                             {
                                 type: 'month',
                                 count: 3,
-                                text: 'День',
+                                text: '@(Resources.Hicharts.Day)',
                                 dataGrouping: {
                                     forced: true,
                                     units: [['day', [1]]]
                                 }
                             }, {
                                 type: 'all',
-                                text: 'Месяц',
+                                text: '@(Resources.Hicharts.Month)',
                                 dataGrouping: {
                                     forced: true,
                                     units: [['month', [1]]],
@@ -243,7 +251,7 @@
                             }, {
                                 type: 'all',
                                 count: 1,
-                                text: 'Год',
+                                text: '@(Resources.Hicharts.Year)',
                                 dataGrouping: {
                                     forced: true,
                                     units: [['year', [1]]],
@@ -261,12 +269,12 @@
                     },
 
                     title: {
-                        text: 'Общие затраты'
+                        text: '@(Resources.CarCostStatistics.TotalCosts)'
                     },
 
                     series: [
                         {
-                            name: 'AAPL Stock Price',
+                            //name: 'AAPL Stock Price',
                             data: dataFuel,
                             //[
                             //    [1147651200000, 67.79],
@@ -291,7 +299,7 @@
                                 //'<b>' + Highcharts.dateFormat('%A, %b %e, %Y', this.x) + '</b>';
                                 headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
                                 pointFormat:
-                                    '<tr><td style="color: {series.color}">Денег потрачено: </td>' +
+                                    '<tr><td style="color: {series.color}">@Resources.CarCostStatistics.MoneySpent: </td>' +
                                         '<td style="text-align: right"><b>{point.y}грн.</b></td></tr>',
                                 valueDecimals: 2
                             }
@@ -300,12 +308,12 @@
                 });
             });
 
-            $(function() {
+            $(function () {
 
                 var brandsData = [];
                 var drilldownSeries = [];
 
-                jQuery.each(items, function(itemNo, item) {
+                jQuery.each(items, function (itemNo, item) {
                     brandsData.push({
                         name: item.Name,
                         y: item.Summ,
@@ -313,7 +321,7 @@
                     });
 
                     var versions = {};
-                    $.each(item.Details, function(itemDetailsNo, itemDetails) {
+                    $.each(item.Details, function (itemDetailsNo, itemDetails) {
                         if (!versions[item.Name]) {
                             versions[item.Name] = [];
                         }
@@ -337,7 +345,7 @@
 
                 Highcharts.setOptions({
                     lang: {
-                        drillUpText: 'Назад'
+                        drillUpText: '@Resources.CarCostStatistics.Back'
                     }
                 });
 
@@ -346,17 +354,17 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Другие события'
+                        text: '@Resources.CarCostStatistics.OtherEvents'
                     },
                     subtitle: {
-                        text: 'Нажмите на колонку, для более подробной статистики'
+                        text: '@Resources.CarCostStatistics.PressColumn'
                     },
                     xAxis: {
                         type: 'category'
                     },
                     yAxis: {
                         title: {
-                            text: 'Сумма за выбранный период'
+                            text: '@Resources.CarCostStatistics.MoneySpent'
                         }
                     },
                     legend: {
@@ -379,7 +387,7 @@
 
                     series: [
                         {
-                            name: 'Событие',
+                            name: '@Resources.CarCostStatistics.Event',
                             colorByPoint: true,
                             data: brandsData
                         }
@@ -397,4 +405,5 @@
     <script src="http://code.highcharts.com/stock/highstock.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/highcharts")
+    @Scripts.Render("~/Scripts/rating")
 }

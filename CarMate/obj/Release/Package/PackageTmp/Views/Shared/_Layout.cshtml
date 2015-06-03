@@ -40,13 +40,13 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     @*@Styles.Render("~/Content/css")*@
     @Styles.Render("~/Content/bootstrap-datepicker")
+    @Styles.Render("~/Content/rating")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/highcharts")
-    @*@Styles.Render("~/Content/customStyles.css")*@
-    @*<script type="text/javascript" src="~/Scripts/Highcharts/js/highcharts.js"></script>*@
-    @*<script type="text/javascript" src="~/Scripts/Highcharts/js/themes/gray.js"></script>*@
-    @*<script type="text/javascript" src="~/Scripts/Highcharts/js/modules/exporting.js"></script>*@
+    @*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    @Scripts.Render("~/Scripts/rating")*@
+    
 </head>
 <body style="border-top:none;">
     <!-- Navigation -->
@@ -122,6 +122,7 @@
         </div>
     </footer>
     @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/Scripts/rating")*@
     @RenderSection("scripts", required: false)
     <!-- jQuery -->
     @*<script src="js/jquery.js"></script>*@

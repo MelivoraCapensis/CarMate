@@ -1,11 +1,11 @@
 ﻿@model CarMate.CarEvents
 
 @{
-    ViewBag.Title = "Удаление события";
+    ViewBag.Title = Resources.CarEvents.DeleteEvent;
 }
 
 <div class="container">
-    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <h2>@Resources.Car.Owner: "@ViewBag.User.Nickname"</h2>
     <div class="row">
         @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
@@ -13,16 +13,26 @@
             <hr />
             <div id="carContainer">
                 <h2>@ViewBag.Title</h2>
-                <h3>Вы точно хотите удалить событие "@Model.EventTypes.Name"?</h3>
+                <h3>@Resources.CarEvents.DeleteEventAnswer "@Model.EventTypes.Name"?</h3>
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
                     <p>
-                        <input class="btn btn-default" type="submit" value="Удалить" />
-                        @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, htmlAttributes: new {@class = "btn btn-default"})
+                        <input class="btn btn-default" type="submit" value="@Resources.Global.Delete" />
+                        @Html.ActionLink(Resources.Global.Back, "Index", "CarEvents", new { carId = Model.CarId }, htmlAttributes: new {@class = "btn btn-default"})
                     </p>
                 }
             </div>
         </div>
     </div>
 </div><!-- /class container -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#car_rating").rating({ readOnly: true });
+    });
+</script>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/rating")
+}

@@ -18,7 +18,26 @@ namespace CarMate.Controllers
             CarAndUserInit(carId);
             ViewBag.EventTypes = db.EventTypes.OrderBy(x => x.Name).Select(x => x.Name).ToList();
             var carEevEvents = db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+
+            Owner(HttpContext);
+            Cars car = db.Cars.Find(carId);
+            ViewBag.IsOwner = this.UserId == car.UserId;
+
             return View(carEevEvents);
+        }
+
+        public void Owner(HttpContextBase httpContext)
+        {
+            // Если пользователь авторизован
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                this.UserId = db.Users
+                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+
+                ViewBag.Owner = this.UserId;
+            }
         }
 
         public void CarAndUserInit(int carId)
@@ -28,18 +47,29 @@ namespace CarMate.Controllers
             ViewBag.User = db.Users.Find(car.UserId);
 
             string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
-            car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, car.Odometer));
             ViewBag.UnitDistance = unitDistance;
+            if (car.Odometer != null)
+            {
+                car.Odometer = (int) Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, (double) car.Odometer));
+            }
+
 
             string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
-            car.Consumption = Math.Round(
-                ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption, car.Consumption), 2);
             ViewBag.UnitFuelConsumption = unitFuelConsumption;
+            if (car.Consumption != null)
+            {
+                car.Consumption = Math.Round(
+                    ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption,
+                        (double) car.Consumption), 2);
+            }
+
 
             string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
-            car.Tank = (int)Math.Round(
-                ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, car.Tank));
             ViewBag.UnitVolume = unitVolume;
+            if (car.Tank != null)
+            {
+                car.Tank = (int) Math.Round(ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, (int) car.Tank));
+            }
         }
 
         public JsonResult GetCostStatistics(int carId = 0)

@@ -19,10 +19,10 @@ namespace CarMate
             this.Placemarks = new HashSet<Placemarks>();
         }
     
-        public int id { get; set; }
-        public string category { get; set; }
-        public System.DateTime dateCreate { get; set; }
-        public int state { get; set; }
+        public int Id { get; set; }
+        public string Category { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public int State { get; set; }
     
         public virtual ICollection<Placemarks> Placemarks { get; set; }
     }

@@ -22,7 +22,7 @@ namespace CarMate
         public int Id { get; set; }
         public string NameUnit { get; set; }
         public double Correction { get; set; }
-        public Nullable<int> UnitFuelConsumptionId { get; set; }
+        public int UnitFuelConsumptionId { get; set; }
     
         public virtual UnitFuelConsumption UnitFuelConsumption { get; set; }
         public virtual ICollection<Users> Users { get; set; }

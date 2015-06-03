@@ -27,7 +27,8 @@ namespace CarMate.ViewModel
         {
             OldCarEvent = oldCarEvent;
             NewCarEvent = newCarEvent;
-            Mileage = newCarEvent.Odometer - oldCarEvent.Odometer;
+            if (newCarEvent.Odometer != null && oldCarEvent.Odometer != null)
+                Mileage = (int)(newCarEvent.Odometer - oldCarEvent.Odometer);
             Consumption = consumption;
         }
 

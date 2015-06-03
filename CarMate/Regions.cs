@@ -21,11 +21,11 @@ namespace CarMate
             this.Users = new HashSet<Users>();
         }
     
-        public int id { get; set; }
-        public int countryId { get; set; }
-        public string region { get; set; }
-        public System.DateTime dateCreate { get; set; }
-        public int state { get; set; }
+        public int Id { get; set; }
+        public int CountryId { get; set; }
+        public string Region { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public int State { get; set; }
     
         public virtual Countries Countries { get; set; }
         public virtual ICollection<Placemarks> Placemarks { get; set; }

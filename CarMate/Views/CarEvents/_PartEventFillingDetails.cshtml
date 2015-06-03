@@ -3,9 +3,9 @@
 @*<h2>Заправка</h2>*@
 
 <div class="form-group">
-    @Html.LabelFor(events => events.FuelCategories.category, "Тип топлива", htmlAttributes: new { @class = "text-right col-md-2" })
+    @Html.LabelFor(events => events.FuelCategories.Category, Resources.CarEvents.FuelType, htmlAttributes: new { @class = "text-right col-md-2" })
     <div class="col-md-3">
-        @*<span id="FuelCategoryDetails">*@@Html.DisplayFor(model => model.FuelCategories.category)@*</span>*@
+        @*<span id="FuelCategoryDetails">*@@Html.DisplayFor(model => model.FuelCategories.Category)@*</span>*@
         @*@Html.DropDownList("FuelCategoryId", null, htmlAttributes: new
         {
             @class = "form-control",
@@ -15,7 +15,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(events => events.FuelCount, "Залито топлива", htmlAttributes: new { @class = "text-right col-md-2" })
+    @Html.LabelFor(events => events.FuelCount, Resources.CarEvents.FuelCount, htmlAttributes: new { @class = "text-right col-md-2" })
     <div class="col-md-3">
         @*<span id="FuelCountDetails">*@@Html.DisplayFor(model => model.FuelCount) @ViewBag.UnitVolume@*</span>*@
         @*@Html.TextBoxFor(model => model.FuelCount, htmlAttributes: new
@@ -30,7 +30,7 @@
 
 <div class="form-group">
     @{
-        string price = "Цена за " + ViewBag.UnitVolume;
+        string price = Resources.CarEvents.PricePerLitr + ViewBag.UnitVolume;
     }
     @Html.LabelFor(events => events.PricePerLitr, price, htmlAttributes: new { @class = "text-right col-md-2" })
     <div class="col-md-3">
@@ -46,7 +46,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(events => events.IsFullTank, "Полный бак", htmlAttributes: new { @class = "text-right col-md-2" })
+    @Html.LabelFor(events => events.IsFullTank, Resources.CarEvents.FullTank, htmlAttributes: new { @class = "text-right col-md-2" })
     <div class="col-md-3">
         @*<span id="IsFullTankDetails">*@@Html.DisplayFor(model => model.IsFullTank)@*</span>*@
         @*@Html.CheckBoxFor(model => model.IsFullTank, htmlAttributes: new
@@ -60,7 +60,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(events => events.IsMissedFilling, "Пропустил заправку", htmlAttributes: new { @class = "text-right col-md-2" })
+    @Html.LabelFor(events => events.IsMissedFilling, Resources.CarEvents.MissedFilling, htmlAttributes: new { @class = "text-right col-md-2" })
     <div class="col-md-3">
         @*<span id="IsMissedFillingDetails">*@@Html.DisplayFor(model => model.IsMissedFilling)@*</span>*@
         @*@Html.CheckBoxFor(model => model.IsMissedFilling, htmlAttributes: new

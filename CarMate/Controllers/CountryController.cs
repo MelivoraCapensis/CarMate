@@ -21,8 +21,8 @@ namespace CarMate.Controllers
                 model.CountryList = CountryList.Select(x =>
                     new SelectListItem()
                     {
-                        Text=x.country,
-                        Value=x.id.ToString()
+                        Text = x.Country,
+                        Value = x.Id.ToString()
                     });
             }
             return PartialView(model);

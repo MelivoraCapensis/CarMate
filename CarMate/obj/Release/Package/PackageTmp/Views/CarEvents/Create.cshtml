@@ -1,13 +1,24 @@
-﻿@model CarMate.CarEvents
+﻿@using CarMate
+@using Newtonsoft.Json
+@model CarMate.CarEvents
 
 @{
-    ViewBag.Title = "Создание события";
+    ViewBag.Title = Resources.CarEvents.CreateEvent;
+
+    // ВНИМАНИЕ КОСТЫЛЬ!
+    // Создаю новый объект на подобии модели, чтобы конвертировать его в JSON и передать в контроллер
+    // Для заполнения PartialView данными (тоесть PartialView будет прилетать с заполнеными данными)
+    CarEvents carEvent = new CarEvents()
+    {
+        CarId = Model.CarId
+    };
+    string str = JsonConvert.SerializeObject(carEvent);
 }
 
 @*<h2>@ViewBag.Title</h2>*@
 
 <div class="container">
-    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <h2>@Resources.Car.Owner: "@ViewBag.User.Nickname"</h2>
     <div class="row">
         @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
@@ -23,7 +34,7 @@
 
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.LabelFor(events => events.DateEvent, "Дата", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(events => events.DateEvent, Resources.CarEvents.Date, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
                                 @Html.TextBoxFor(model => model.DateEvent, htmlAttributes: new
                                 {
@@ -36,7 +47,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(events => events.Odometer, "Пробег", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(events => events.Odometer, Resources.CarEvents.Odometer, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
                                 @Html.TextBoxFor(events => events.Odometer, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Odometer, "", new { @class = "text-danger" })
@@ -44,7 +55,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(events => events.EventTypeId, "Событие", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(events => events.EventTypeId, Resources.CarEvents.Event, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
                                 @Html.DropDownList("EventTypeId", null, htmlAttributes: new { @class = "form-control", onchange = "GetEvent(this)" })
                                 @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
@@ -56,7 +67,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(events => events.CostTotal, "Общая стоимость", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(events => events.CostTotal, Resources.CarEvents.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
                                 @Html.TextBoxFor(events => events.CostTotal, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.CostTotal, "", new { @class = "text-danger" })
@@ -64,7 +75,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(events => events.Comment, "Комментарий", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(events => events.Comment, Resources.CarEvents.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
                                 @Html.TextAreaFor(model => model.Comment, 10, 30, htmlAttributes: new { @class = "form-control", @style = "-moz-resize:none;-ms-resize:none;-o-resize:none;resize:none;" })
                                 @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
@@ -73,8 +84,8 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Сохранить" class="btn btn-default" />
-                                @Html.ActionLink("Назад", "Index", "CarEvents", new { carId = Model.CarId }, new { @class = "btn btn-default" })
+                                <input type="submit" value="@Resources.Global.Save" class="btn btn-default" />
+                                @Html.ActionLink(Resources.Global.Back, "Index", "CarEvents", new { carId = Model.CarId }, new { @class = "btn btn-default" })
                             </div>
                         </div>
                     </div>
@@ -88,19 +99,31 @@
 
 <script type="text/javascript">
     @* При изменении события автомобиля подружаем разные поля *@
-    function GetEvent(selectElement) {
+    @*function GetEvent(selectElement) {
         var name = selectElement.options[selectElement.selectedIndex].text;
         $("#car_event").load('@(Url.Action("GetEvent","CarEvents"))', { "name": name });
+    }*@
+
+    function GetEvent(selectElement) {
+        var name = selectElement.options[selectElement.selectedIndex].text;
+        var carEventModel = '@(str)';
+        $("#car_event").load('@(Url.Action("GetEvent", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
     }
 
 
     $(document).ready(function () {
         $('#EventTypeId').trigger('change');    // Генерируем событие onchange для выпадающего списка с событиями автомобилей
     });
+
+    $(document).ready(function () {
+        $("#car_rating").rating({ readOnly: true });
+    });
 </script>
+
 
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/bootstrap-datepicker")
+    @Scripts.Render("~/Scripts/rating")
 }

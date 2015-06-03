@@ -19,8 +19,8 @@ namespace CarMate
             this.LogBook = new HashSet<LogBook>();
         }
     
-        public int id { get; set; }
-        public string category { get; set; }
+        public int Id { get; set; }
+        public string Category { get; set; }
     
         public virtual ICollection<LogBook> LogBook { get; set; }
     }

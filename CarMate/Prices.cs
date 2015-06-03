@@ -14,15 +14,15 @@ namespace CarMate
     
     public partial class Prices
     {
-        public int id { get; set; }
-        public int placemarkid { get; set; }
-        public int vendorId { get; set; }
-        public int regionId { get; set; }
-        public int fuelId { get; set; }
-        public Nullable<double> price { get; set; }
-        public Nullable<double> userPrice { get; set; }
-        public System.DateTime dateCreate { get; set; }
-        public int state { get; set; }
+        public int Id { get; set; }
+        public int PlacemarkId { get; set; }
+        public int VendorId { get; set; }
+        public int RegionId { get; set; }
+        public int FuelId { get; set; }
+        public Nullable<double> Price { get; set; }
+        public Nullable<double> UserPrice { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public int State { get; set; }
     
         public virtual FuelCategories FuelCategories { get; set; }
         public virtual Placemarks Placemarks { get; set; }

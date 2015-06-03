@@ -137,24 +137,24 @@ namespace CarMate.Controllers
             {            
                 var placemarks = from p in placemarksRepository.GetPlacemarks()
                              select p;            
-                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();                  
+                placemarks = placemarks.Where(x => x.CategoryId == categoryId).ToList();                  
                 foreach (var p in placemarks)
                 {
-                    if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                    if (DistanceBetweenPlaces(p.Latitude, p.Longitude, latitude, longitude) <= radius)
                     {
-                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                        List<double?> prices = db.Prices.Where(x => x.PlacemarkId == p.Id).Select(x => x.Price).ToList();//выбор цен по точке
                         List<double?> pricesSquirrel = new List<double?>();
-                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.CountryId == p.CountryId).Select(x => x.Category).ToList();//выбор категорий по стране
                         foreach (var v in prices)
                         {
                             pricesSquirrel.Add(v);
                         }
-                        formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                        formatted_address = GetforrmatedAdress(p.Latitude, p.Longitude);
                         markers.Add(new Squirrel()
                         {
-                            Lat = p.latitude.ToString(),
-                            Long = p.longitude.ToString(),
-                            Vendore = p.description,
+                            Lat = p.Latitude.ToString(),
+                            Long = p.Longitude.ToString(),
+                            Vendore = p.Description,
                             Adress = formatted_address,
                             Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
                             FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям 
@@ -177,13 +177,13 @@ namespace CarMate.Controllers
                 }
                 var placemarks = from p in placemarksRepository.GetPlacemarks()
                                  select p;
-                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                placemarks = placemarks.Where(x => x.CategoryId == categoryId).ToList();
                 foreach (var p in placemarks)
                 {
-                    if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                    if (DistanceBetweenPlaces(p.Latitude, p.Longitude, latitude, longitude) <= radius)
                     {
                         
-                            List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                            List<double?> prices = db.Prices.Where(x => x.PlacemarkId == p.Id).Select(x => x.Price).ToList();//выбор цен по точке
                             if (prices.Count == 0)
                                 continue;
                             for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
@@ -192,17 +192,17 @@ namespace CarMate.Controllers
                                 if (prices[tempId-1] != 0)
                                 {
                                     List<double?> pricesSquirrel = new List<double?>();
-                                    List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                                    List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.CountryId == p.CountryId).Select(x => x.Category).ToList();//выбор категорий по стране
                                     foreach (var v in prices)
                                     {
                                         pricesSquirrel.Add(v);
                                     }
-                                    formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                    formatted_address = GetforrmatedAdress(p.Latitude, p.Longitude);
                                     Squirrel temp = new Squirrel()
                                     {
-                                        Lat = p.latitude.ToString(),
-                                        Long = p.longitude.ToString(),
-                                        Vendore = p.description,
+                                        Lat = p.Latitude.ToString(),
+                                        Long = p.Longitude.ToString(),
+                                        Vendore = p.Description,
                                         Adress = formatted_address,
                                         Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
                                         FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям
@@ -228,13 +228,13 @@ namespace CarMate.Controllers
                 }
                 var placemarks = from p in placemarksRepository.GetPlacemarks()
                                  select p;
-                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                placemarks = placemarks.Where(x => x.CategoryId == categoryId).ToList();
                 foreach (var p in placemarks)
                 {
-                    if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                    if (DistanceBetweenPlaces(p.Latitude, p.Longitude, latitude, longitude) <= radius)
                     {
 
-                        List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();//выбор цен по точке
+                        List<double?> prices = db.Prices.Where(x => x.PlacemarkId == p.Id).Select(x => x.Price).ToList();//выбор цен по точке
                         if (prices.Count == 0)
                             continue;
                         for (int i = 0; i < fuelcategoryid.Count; i++)//перебираeм id-шники fuelсаtegory    
@@ -243,17 +243,17 @@ namespace CarMate.Controllers
                             if (prices[tempId - 1] != 0)
                             {
                                 List<double?> pricesSquirrel = new List<double?>();
-                                List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();//выбор категорий по стране
+                                List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.CountryId == p.CountryId).Select(x => x.Category).ToList();//выбор категорий по стране
                                 foreach (var v in prices)
                                 {
                                     pricesSquirrel.Add(v);
                                 }
-                                formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                formatted_address = GetforrmatedAdress(p.Latitude, p.Longitude);
                                 Squirrel temp = new Squirrel()
                                 {
-                                    Lat = p.latitude.ToString(),
-                                    Long = p.longitude.ToString(),
-                                    Vendore = p.description,
+                                    Lat = p.Latitude.ToString(),
+                                    Long = p.Longitude.ToString(),
+                                    Vendore = p.Description,
                                     Adress = formatted_address,
                                     Prices = pricesSquirrel.ToArray(),//формируем ответ по ценам
                                     FuelCategories = fuelcatsSquirrel.ToArray()//формируем ответ по категориям
@@ -326,7 +326,7 @@ namespace CarMate.Controllers
 
                 var placemarks = from p in placemarksRepository.GetPlacemarks()
                                  select p;
-                placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                placemarks = placemarks.Where(x => x.CategoryId == categoryId).ToList();
 
 
                 foreach (var poisqurrel in incominglstSquirrel)
@@ -342,22 +342,22 @@ namespace CarMate.Controllers
                     foreach (var p in placemarks)
                     {
 
-                        if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                        if (DistanceBetweenPlaces(p.Latitude, p.Longitude, latitude, longitude) <= radius)
                         {
 
-                            List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
+                            List<double?> prices = db.Prices.Where(x => x.PlacemarkId == p.Id).Select(x => x.Price).ToList();
                             List<double?> pricesSquirrel = new List<double?>();
-                            List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
+                            List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.CountryId == p.CountryId).Select(x => x.Category).ToList();
                             foreach (var v in prices)
                             {
                                 pricesSquirrel.Add(v);
                             }
-                            formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                            formatted_address = GetforrmatedAdress(p.Latitude, p.Longitude);
                             Squirrel temp = new Squirrel()
                             {
-                                Lat = p.latitude.ToString(),
-                                Long = p.longitude.ToString(),
-                                Vendore = p.description,
+                                Lat = p.Latitude.ToString(),
+                                Long = p.Longitude.ToString(),
+                                Vendore = p.Description,
                                 Adress = formatted_address,
                                 Prices = pricesSquirrel.ToArray(),
                                 FuelCategories = fuelcatsSquirrel.ToArray()
@@ -384,7 +384,7 @@ namespace CarMate.Controllers
 
                     var placemarks = from p in placemarksRepository.GetPlacemarks()
                                      select p;
-                    placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                    placemarks = placemarks.Where(x => x.CategoryId == categoryId).ToList();
 
 
                     foreach (var poisqurrel in incominglstSquirrel)
@@ -400,10 +400,10 @@ namespace CarMate.Controllers
                         foreach (var p in placemarks)
                         {
 
-                            if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                            if (DistanceBetweenPlaces(p.Latitude, p.Longitude, latitude, longitude) <= radius)
                             {
 
-                                List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
+                                List<double?> prices = db.Prices.Where(x => x.PlacemarkId == p.Id).Select(x => x.Price).ToList();
                                 if (prices.Count == 0)
                                     continue;
 
@@ -413,17 +413,17 @@ namespace CarMate.Controllers
                                     if (prices[tempId - 1] != 0)
                                     {
                                         List<double?> pricesSquirrel = new List<double?>();
-                                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
+                                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.CountryId == p.CountryId).Select(x => x.Category).ToList();
                                         foreach (var v in prices)
                                         {
                                             pricesSquirrel.Add(v);
                                         }
-                                        formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                        formatted_address = GetforrmatedAdress(p.Latitude, p.Longitude);
                                         Squirrel temp = new Squirrel()
                                         {
-                                            Lat = p.latitude.ToString(),
-                                            Long = p.longitude.ToString(),
-                                            Vendore = p.description,
+                                            Lat = p.Latitude.ToString(),
+                                            Long = p.Longitude.ToString(),
+                                            Vendore = p.Description,
                                             Adress = formatted_address,
                                             Prices = pricesSquirrel.ToArray(),
                                             FuelCategories = fuelcatsSquirrel.ToArray()
@@ -452,7 +452,7 @@ namespace CarMate.Controllers
 
                     var placemarks = from p in placemarksRepository.GetPlacemarks()
                                      select p;
-                    placemarks = placemarks.Where(x => x.categoryId == categoryId).ToList();
+                    placemarks = placemarks.Where(x => x.CategoryId == categoryId).ToList();
 
 
                     foreach (var poisqurrel in incominglstSquirrel)
@@ -468,10 +468,10 @@ namespace CarMate.Controllers
                         foreach (var p in placemarks)
                         {
 
-                            if (DistanceBetweenPlaces(p.latitude, p.longitude, latitude, longitude) <= radius)
+                            if (DistanceBetweenPlaces(p.Latitude, p.Longitude, latitude, longitude) <= radius)
                             {
 
-                                List<double?> prices = db.Prices.Where(x => x.placemarkid == p.id).Select(x => x.price).ToList();
+                                List<double?> prices = db.Prices.Where(x => x.PlacemarkId == p.Id).Select(x => x.Price).ToList();
                                 if (prices.Count == 0)
                                     continue;
 
@@ -481,17 +481,17 @@ namespace CarMate.Controllers
                                     if (prices[tempId - 1] != 0)
                                     {
                                         List<double?> pricesSquirrel = new List<double?>();
-                                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.countryId == p.countryId).Select(x => x.category).ToList();
+                                        List<string> fuelcatsSquirrel = db.FuelCategories.Where(x => x.CountryId == p.CountryId).Select(x => x.Category).ToList();
                                         foreach (var v in prices)
                                         {
                                             pricesSquirrel.Add(v);
                                         }
-                                        formatted_address = GetforrmatedAdress(p.latitude, p.longitude);
+                                        formatted_address = GetforrmatedAdress(p.Latitude, p.Longitude);
                                         Squirrel temp = new Squirrel()
                                         {
-                                            Lat = p.latitude.ToString(),
-                                            Long = p.longitude.ToString(),
-                                            Vendore = p.description,
+                                            Lat = p.Latitude.ToString(),
+                                            Long = p.Longitude.ToString(),
+                                            Vendore = p.Description,
                                             Adress = formatted_address,
                                             Prices = pricesSquirrel.ToArray(),
                                             FuelCategories = fuelcatsSquirrel.ToArray()

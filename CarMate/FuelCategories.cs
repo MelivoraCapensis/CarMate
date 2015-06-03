@@ -18,16 +18,18 @@ namespace CarMate
         {
             this.CarEvents = new HashSet<CarEvents>();
             this.Prices = new HashSet<Prices>();
+            this.Cars = new HashSet<Cars>();
         }
     
-        public int id { get; set; }
-        public int countryId { get; set; }
-        public string category { get; set; }
-        public System.DateTime dateCreate { get; set; }
-        public int state { get; set; }
+        public int Id { get; set; }
+        public int CountryId { get; set; }
+        public string Category { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public int State { get; set; }
     
         public virtual ICollection<CarEvents> CarEvents { get; set; }
         public virtual Countries Countries { get; set; }
         public virtual ICollection<Prices> Prices { get; set; }
+        public virtual ICollection<Cars> Cars { get; set; }
     }
 }

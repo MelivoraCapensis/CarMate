@@ -46,7 +46,7 @@
                                                 for (int i = 0; i < cars.Count; i++)
                                                 {
                                                     var car = cars[i];
-                                                    @Html.ActionLink(car.CarModels.CarBrands.brand + " - " + car.CarModels.model, "Details", "Car", new {id = car.Id}, null)
+                                                    @Html.ActionLink(car.CarModels.CarBrands.Brand + " - " + car.CarModels.Model, "Details", "Car", new {id = car.Id}, null)
                                                 @*@car.Charging.Count*@
                                                     if (i < cars.Count - 1)
                                                     {

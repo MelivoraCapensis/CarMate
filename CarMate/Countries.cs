@@ -22,10 +22,10 @@ namespace CarMate
             this.Vendors = new HashSet<Vendors>();
         }
     
-        public int id { get; set; }
-        public string country { get; set; }
-        public System.DateTime dateCreate { get; set; }
-        public int state { get; set; }
+        public int Id { get; set; }
+        public string Country { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public int State { get; set; }
     
         public virtual ICollection<FuelCategories> FuelCategories { get; set; }
         public virtual ICollection<Placemarks> Placemarks { get; set; }

@@ -6,42 +6,42 @@
 
 
     // Проехано, за определенный период
-    Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
-    int allDistance = 0;
-    var carEvents = Model.ToList();
-    int tmpOdometr = 0;
-    for (int i = 0; i < carEvents.Count(); i++)
-    {
-        if (i == 0)
-        {
-            var begin = carEvents[i].Odometer;
-            var end = carEvents[carEvents.Count - 1].Odometer;
-            allDistance = end - begin;
-            //break;
-        }
-        //if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs))
-        //{
-        var result = distance.FirstOrDefault(x => x.Key.Year == carEvents[i].DateEvent.Year && x.Key.Month == carEvents[i].DateEvent.Month);
-        if (result.Key != DateTime.MinValue)
-        {
-            distance[result.Key] += carEvents[i].Odometer - tmpOdometr;
-        }
-        else
-        {
-            distance.Add(new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1), carEvents[i].Odometer - tmpOdometr);
-        }
-        tmpOdometr = carEvents[i].Odometer;
-        //}
-    }
+    //Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
+    //int allDistance = 0;
+    //var carEvents = Model.ToList();
+    //int tmpOdometr = 0;
+    //for (int i = 0; i < carEvents.Count(); i++)
+    //{
+    //    if (i == 0)
+    //    {
+    //        var begin = carEvents[i].Odometer;
+    //        var end = carEvents[carEvents.Count - 1].Odometer;
+    //        allDistance = end - begin;
+    //        //break;
+    //    }
+    //    //if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs))
+    //    //{
+    //    var result = distance.FirstOrDefault(x => x.Key.Year == carEvents[i].DateEvent.Year && x.Key.Month == carEvents[i].DateEvent.Month);
+    //    if (result.Key != DateTime.MinValue)
+    //    {
+    //        distance[result.Key] += carEvents[i].Odometer - tmpOdometr;
+    //    }
+    //    else
+    //    {
+    //        distance.Add(new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1), carEvents[i].Odometer - tmpOdometr);
+    //    }
+    //    tmpOdometr = carEvents[i].Odometer;
+    //    //}
+    //}
 
-    List<double> tmpDistance = new List<double>();
-    tmpDistance.AddRange(distance.Values);
-    string tmpDistanceJson = JsonConvert.SerializeObject(tmpDistance.ToArray());
+    //List<double> tmpDistance = new List<double>();
+    //tmpDistance.AddRange(distance.Values);
+    //string tmpDistanceJson = JsonConvert.SerializeObject(tmpDistance.ToArray());
     
     
 }
 
-<div class="container">
+@*<div class="container">
     <h2>Владелец: "@ViewBag.User.Nickname"</h2>
     <div class="row">
         @Html.Partial("_PartCarInfo", (CarMate.Cars) ViewBag.Car)
@@ -49,7 +49,6 @@
             @Html.Partial("_PartCarMenu")
             <hr/>
             <div id="carContainer">
-                @*<h2>@ViewBag.Title</h2>*@
                 <p>
                     Проехано, за выбранный период: @allDistance км.
                 </p>
@@ -114,4 +113,4 @@
 
     @section scripts {
     @Scripts.Render("~/Script/highcharts")
-}
+}*@

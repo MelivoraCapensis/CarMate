@@ -1,7 +1,7 @@
 ﻿@model CarMate.CarModifications
 
-@Html.Label("modificationId", "Модификация", htmlAttributes: new { @class = "control-label col-md-2" })
+@Html.Label("modificationId", Resources.Car.Modification, htmlAttributes: new { @class = "control-label col-md-2" })
 <div class="col-md-3">
-    @Html.DropDownList("modificationId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "-выберите модификацию-")
+    @Html.DropDownList("modificationId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: Resources.Car.SelectModification)
     @Html.ValidationMessage("modificationId", "", new { @class = "text-danger" })
 </div>

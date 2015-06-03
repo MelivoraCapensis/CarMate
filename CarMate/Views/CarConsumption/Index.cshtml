@@ -3,14 +3,14 @@
 @model IEnumerable<CarMate.ViewModel.CarConsumptionViewModel>
 
 @{
-    ViewBag.Title = "Расход топлива";
+    ViewBag.Title = Resources.CarConsumption.FuelConsumption;
 
     var comsumption = Model.OrderBy(x=>x.NewCarEvent.DateEvent).Select(x => x.Consumption).ToArray();
     string comsumptionJson = JsonConvert.SerializeObject(comsumption);
 }
 
 <div class="container">
-    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <h2>@Resources.Car.Owner: "@ViewBag.User.Nickname"</h2>
     <div class="row">
         @Html.Partial("_PartCarInfo", (CarMate.Cars)ViewBag.Car)
         <div class="col-lg-9 col-md-9">
@@ -25,23 +25,23 @@
                     <table class="table">
                         <tr>
                             <th>
-                                Дата
+                                @Resources.CarConsumption.Date
                             </th>
 
                             <th>
-                                Название
+                                @Resources.CarConsumption.Name
                             </th>
 
                             <th>
-                                Пробег
+                                @Resources.CarConsumption.Odometer
                             </th>
 
                             <th>
-                                Расход
+                                @Resources.CarConsumption.FuelConsumption
                             </th>
 
                             <th>
-
+                                @Resources.CarConsumption.Options
                             </th>
                         </tr>
 
@@ -89,7 +89,7 @@
                                 </td>
 
                                 <td>
-                                    @Html.ActionLink("К событию", "Details", "CarEvents", new {id = carEvent.NewCarEvent.Id}, new {@class = "btn btn-default"})
+                                    @Html.ActionLink(Resources.CarConsumption.GoToEvent, "Details", "CarEvents", new { id = carEvent.NewCarEvent.Id }, new { @class = "btn btn-default" })
                                 </td>
                             </tr>
 
@@ -108,15 +108,15 @@
                                 <td></td>
 
                                 <td>
-                                    @Html.ActionLink("К событию", "Details", "CarEvents", new {id = carEvent.OldCarEvent.Id}, new {@class = "btn btn-default"})
+                                    @Html.ActionLink(@Resources.CarConsumption.GoToEvent, "Details", "CarEvents", new {id = carEvent.OldCarEvent.Id}, new {@class = "btn btn-default"})
                                 </td>
                             </tr>
                         }
                     </table>
 
-                    @:Минимальный: @ViewBag.MinConsumption;
-                    @:Средний: @ViewBag.AvgConsumption;
-                    @:Максимальный: @ViewBag.MaxConsumption;
+                    @:@Resources.CarConsumption.Min: @ViewBag.MinConsumption;
+                    @:@Resources.CarConsumption.Avg: @ViewBag.AvgConsumption;
+                    @:@Resources.CarConsumption.Max: @ViewBag.MaxConsumption;
 
                     <div id="fuelConsamptionHighcharts" class="col-lg-12 col-md-12"></div>
                 }
@@ -124,14 +124,14 @@
                 {
                     <div class="col-lg-12">
                         <div class="alert alert-danger">
-                            Пользоавать еще не запправлял полный бак 2 раза подряд.
+                            @Resources.CarConsumption.FillTwoTimes
                         </div>
                     </div>
                 }
 
                 <hr/>
                 <p>
-                    Проехано, за выбранный период: <span id="distance_period"></span> @ViewBag.UnitDistance.
+                    @Resources.CarConsumption.DroveFromPeriod: <span id="distance_period"></span> @ViewBag.UnitDistance.
                 </p>
 
                 <div id="distanceStatistics" class="col-lg-12 col-md-12"></div>
@@ -142,9 +142,17 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#car_rating").rating({ readOnly: true });
+    });
+</script>
+
 
 <script type="text/javascript">
     $(document).ready(function () {
+        
+
         var json = '@(comsumptionJson)';
         var dataConsumption = JSON.parse(json);
 
@@ -196,6 +204,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var distance = '@(Resources.CarConsumption.Distance)';
+        var mileage = '@(Resources.CarConsumption.Mileage)';
+
         var carId = '@(ViewBag.Car.Id)';
 
         jQuery.getJSON("CarConsumption/GetConsumptionStatistics", { "carId": carId }, function (items) {
@@ -211,11 +222,18 @@
 
                 Highcharts.setOptions({
                     lang: {
-                        months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                        shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-                        weekdays: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+                        months: ['@(Resources.Hicharts.January)', '@(Resources.Hicharts.February)', '@(Resources.Hicharts.March)', '@(Resources.Hicharts.April)', '@(Resources.Hicharts.May)', '@(Resources.Hicharts.June)', '@(Resources.Hicharts.July)', '@(Resources.Hicharts.August)', '@(Resources.Hicharts.September)', '@(Resources.Hicharts.October)', '@(Resources.Hicharts.November)', '@(Resources.Hicharts.December)'],
+                        shortMonths: ['@(Resources.Hicharts.ShortJanuary)', '@(Resources.Hicharts.ShortFebruary)', '@(Resources.Hicharts.ShortMarch)', '@(Resources.Hicharts.ShortApril)', '@(Resources.Hicharts.ShortMay)', '@(Resources.Hicharts.ShortJune)', '@(Resources.Hicharts.ShortJuly)', '@(Resources.Hicharts.ShortAugust)', '@(Resources.Hicharts.ShortSeptember)', '@(Resources.Hicharts.ShortOctober)', '@(Resources.Hicharts.ShortNovember)', '@(Resources.Hicharts.ShortDecember)'],
+                        weekdays: ['@(Resources.Hicharts.Sunday)', '@(Resources.Hicharts.Monday)', '@(Resources.Hicharts.Tuesday)', '@(Resources.Hicharts.Wednesday)', '@(Resources.Hicharts.Thursday)', '@(Resources.Hicharts.Friday)', '@(Resources.Hicharts.Saturday)'],
+                        rangeSelectorZoom: "@(Resources.Hicharts.ButtonTitle)"
                     }
                 });
+
+                //['ShortMonthsJanuary', 'ShortMonthsFebruary', 'ShortMonthsMarch', 'ShortMonthsApril',
+                // 'ShortMonthsMay', 'ShortMonthsJune', 'ShortMonthsJuly', 'ShortMonthsAugust', 'ShortMonthsSeptember',
+                // 'ShortMonthsOctober', 'ShortMonthsNovember', 'ShortMonthsDecember']
+
+                //['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
                 // Create the chart
                 $('#distanceStatistics').highcharts('StockChart', {
@@ -225,7 +243,7 @@
                             {
                                 type: 'month',
                                 count: 3,
-                                text: 'День',
+                                text: '@(Resources.Hicharts.Day)',
                                 dataGrouping: {
                                     forced: true,
                                     units: [['day', [1]]]
@@ -233,7 +251,7 @@
                                 }
                             }, {
                                 type: 'all',
-                                text: 'Месяц',
+                                text: '@(Resources.Hicharts.Month)',
                                 dataGrouping: {
                                     forced: true,
                                     units: [['month', [1]]],
@@ -242,7 +260,7 @@
                             }, {
                                 type: 'all',
                                 count: 1,
-                                text: 'Год',
+                                text: '@(Resources.Hicharts.Year)',
                                 dataGrouping: {
                                     forced: true,
                                     units: [['year', [1]]],
@@ -280,7 +298,7 @@
                         //    align: 'left'
                         //},
                         title: {
-                            text: 'Расстояние (@(ViewBag.UnitDistance))'
+                            text: distance + '(@(ViewBag.UnitDistance))'
                         }
                     },
 
@@ -289,12 +307,12 @@
                     //},
 
                     title: {
-                        text: 'Пробег'
+                        text: '@(Resources.CarConsumption.Mileage)'
                     },
 
                     series: [
                         {
-                            name: 'AAPL Stock Price',
+                            //name: 'AAPL Stock Price',
                             data: dataFuel,
                             marker: {
                                 enabled: true,
@@ -305,7 +323,7 @@
                                 //'<b>' + Highcharts.dateFormat('%A, %b %e, %Y', this.x) + '</b>';
                                 headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
                                 pointFormat:
-                                    '<tr><td style="color: {series.color}">Расстояния проехано: </td>' +
+                                    '<tr><td style="color: {series.color}">@(Resources.CarConsumption.DistancesDrove): </td>' +
                                         '<td style="text-align: right"><b>{point.y:.2f}(@(ViewBag.UnitDistance)).</b></td></tr>',
                                 valueDecimals: 2
                             }
@@ -481,4 +499,5 @@
 <script src="http://code.highcharts.com/stock/highstock.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/highcharts")
+    @Scripts.Render("~/Scripts/rating")
 }

@@ -1,19 +1,24 @@
 ﻿@model CarMate.Cars
 
 @{
-    ViewBag.Title = "Удаление транспортного средства";
+    ViewBag.Title = Resources.Car.DeleteVehicle;
 }
 
 <div class="container">
     <h2>@ViewBag.Title</h2>
-    <h3>Вы уверены, что хотите удалить "@Model.CarModels.CarBrands.brand - @Model.CarModels.model - @Model.CarModifications.modification?"</h3>
+    <h3>@Resources.Global.RequestRemove "@Model.CarModels.CarBrands.Brand - @Model.CarModels.Model
+    @if (Model.CarModifications != null)
+    {
+        @: - @Model.CarModifications.Modification
+    }
+    ?"</h3>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <p>
-            <input type="submit" value="Удалить" class="btn btn-primary"/>
-            @Html.ActionLink("Назад", "Details", "User", new {id = @Model.UserId}, new {@class = "btn btn-primary"})
+            <input type="submit" value="@Resources.Global.Delete" class="btn btn-primary" />
+            @Html.ActionLink(@Resources.Global.Back, "Details", "User", new { id = @Model.UserId }, new { @class = "btn btn-primary" })
         </p>
     }
 </div>

@@ -15,12 +15,12 @@ namespace CarMate.Controllers
             using (CarMateEntities context = new CarMateEntities())
             {
                
-                var regions = context.Regions.Where(x => x.countryId == id).ToList();
+                var regions = context.Regions.Where(x => x.CountryId == id).ToList();
                 model.RegionList = regions.Select(x =>
-                    new SelectListItem() 
-                    {            
-                       Text=x.region,
-                       Value = x.id.ToString(),
+                    new SelectListItem()
+                    {
+                        Text = x.Region,
+                        Value = x.Id.ToString(),
                     });
             }
             return PartialView(model);

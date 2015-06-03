@@ -2,42 +2,73 @@
 
 <div class="col-lg-3 col-md-3 thumbnail">
     <div class="text-center">
-        <img src="@Model.ImgPath" class="col-lg-12" />
+        <img src="@Model.ImgPath" class="col-lg-12"/>
         @*<img src="" class="col-lg-12" />*@
         @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
         {
-            @Html.ActionLink("Редактировать автомобиль", "Edit", "Car", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink(Resources.Global.Edit, "Edit", "Car", new {id = Model.Id}, new {@class = "btn btn-primary"})
         }
-        @Html.ActionLink("Посмотреть все фото", "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-default", disabled = true })
+        @Html.ActionLink(Resources.Car.SeeAllPhotos, "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-default", disabled = true })
     </div>
-    <hr />
-    <p>Марка: @Model.CarModels.CarBrands.brand</p>
-    <p>Модель: @Model.CarModels.model</p>
+    <hr/>
+    <p>@Resources.Car.Brand: @Model.CarModels.CarBrands.Brand</p>
+    <p>@Resources.Car.Model: @Model.CarModels.Model</p>
     @if (Model.ModificationId != null)
     {
-        <p>Модификация: @Model.CarModifications.modification</p>
+        <p>@Resources.Car.Modification: @Model.CarModifications.Modification</p>
     }
     else
     {
-        <p>Модификация: Пусто</p>
+        <p>@Resources.Car.Modification:</p>
+    }
+    <p>@Resources.Car.GraduationYear: @*@Model.Car.dateBuy</p>*@
+    <p>@Resources.Car.Consumption: @Model.Consumption @ViewBag.UnitFuelConsumption</p>
+    <p>@Resources.Car.Odometr: @Model.Odometer @ViewBag.UnitDistance</p>
+    <p>@Resources.Car.Tank: @Model.Tank @ViewBag.UnitVolume</p>
+    @if (Model.FuelCategories != null)
+    {
+        <p>@Resources.Car.PreferredTypeFuel: @Model.FuelCategories.Category</p>
+    }
+    else
+    {
+        <p>@Resources.Car.PreferredTypeFuel:</p>
     }
 
-    <p>Год выпуска: @*@Model.Car.dateBuy</p>*@
-    @*@if (@ViewBag.UnitDistance.Equals("миля"))
-    {*@
-        <p>Расход бензина: @Model.Consumption @ViewBag.UnitFuelConsumption</p>
-    @*}
+    <p>@Resources.Car.Color: @*@Model.Car.dateBuy</p>*@
+    @if (Model.DateBuy != null)
+    {
+        <p>@Resources.Car.DateBuy: @Model.DateBuy.Value.ToString("dd.MM.yyyy")</p>
+    }
     else
-    {*@
-        @*<p>Расход бензина: @Model.Consumption л/100км</p>*@
-    @*}*@
-    
-    <p>Одометр (пробег): @Model.Odometer @ViewBag.UnitDistance</p>
-    <p>Объем бака: @Model.Tank @ViewBag.UnitVolume</p>
-    <p>Топливо: @*@Model.Car.dateBuy</p>*@
-    <p>Цвет: @*@Model.Car.dateBuy</p>*@
-    <p>Дата покупки: @*@Model.Car.dateBuy</p>*@
-    <p>Коробка: @*@Model.Car.dateBuy</p>*@
-    <p>Комментарий/отзыв: @*@Model.Car.dateBuy</p>*@
-    <p>Оценка пользователя: @*@Model.Car.dateBuy</p>*@
+    {
+        <p>@Resources.Car.DateBuy:</p>
+    }
+
+    @if (Model.CarTransmission != null)
+    {
+        <p>@Resources.Car.CarTransmission: @Model.CarTransmission.NameTransmission</p>
+    }
+    else
+    {
+        <p>@Resources.Car.CarTransmission:</p>
+    }
+
+    <p>@Resources.Car.CommentOrReview: @*@Model.Car.dateBuy*@</p>
+    <p>
+        @Resources.Car.UserRating:
+        <div class="rating" id="car_rating">
+            <input name="val" value="@Model.Rating" type="hidden" />
+        </div>
+    </p>
+    @*@if (Model.Rating != null)
+    {
+        <p>Оценка пользователя: @Model.Rating</p>
+    }
+    else
+    {
+        <p>Оценка пользователя:</p>
+    }*@
+
 </div>
+
+

@@ -14,12 +14,12 @@ namespace CarMate
     
     public partial class LogBook
     {
-        public int id { get; set; }
-        public int categoryid { get; set; }
-        public int chargingid { get; set; }
-        public int carId { get; set; }
-        public Nullable<float> total_cost { get; set; }
-        public Nullable<System.DateTime> dateCharging { get; set; }
+        public int Id { get; set; }
+        public int CategoryId { get; set; }
+        public int ChargingId { get; set; }
+        public int CarId { get; set; }
+        public Nullable<float> TotalCost { get; set; }
+        public Nullable<System.DateTime> DateCharging { get; set; }
     
         public virtual CarEvents CarEvents { get; set; }
         public virtual CategoryLog CategoryLog { get; set; }

@@ -19,16 +19,16 @@ namespace CarMate
             this.Prices = new HashSet<Prices>();
         }
     
-        public int id { get; set; }
-        public int countryId { get; set; }
-        public Nullable<int> regionId { get; set; }
-        public int categoryId { get; set; }
-        public Nullable<int> vendorId { get; set; }
-        public double latitude { get; set; }
-        public double longitude { get; set; }
-        public string description { get; set; }
-        public System.DateTime dateCreate { get; set; }
-        public int state { get; set; }
+        public int Id { get; set; }
+        public int CountryId { get; set; }
+        public Nullable<int> RegionId { get; set; }
+        public int CategoryId { get; set; }
+        public Nullable<int> VendorId { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public string Description { get; set; }
+        public System.DateTime DateCreate { get; set; }
+        public int State { get; set; }
     
         public virtual Categories Categories { get; set; }
         public virtual Countries Countries { get; set; }

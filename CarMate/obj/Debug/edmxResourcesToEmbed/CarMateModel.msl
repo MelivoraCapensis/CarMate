@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="CarMateEntities">
+  <EntityContainerMapping StorageEntityContainer="CarMateModelStoreContainer" CdmEntityContainer="CarMateEntities">
     <EntitySetMapping Name="Aliases">
-      <EntityTypeMapping TypeName="Model.Aliases">
+      <EntityTypeMapping TypeName="CarMateModel.Aliases">
         <MappingFragment StoreEntitySet="Aliases">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Alias" ColumnName="Alias" />
@@ -10,16 +10,16 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CarBrands">
-      <EntityTypeMapping TypeName="Model.CarBrands">
+      <EntityTypeMapping TypeName="CarMateModel.CarBrands">
         <MappingFragment StoreEntitySet="CarBrands">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="carTypeId" ColumnName="carTypeId" />
-          <ScalarProperty Name="brand" ColumnName="brand" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CarTypeId" ColumnName="CarTypeId" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CarDetails">
-      <EntityTypeMapping TypeName="Model.CarDetails">
+      <EntityTypeMapping TypeName="CarMateModel.CarDetails">
         <MappingFragment StoreEntitySet="CarDetails">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CarId" ColumnName="CarId" />
@@ -28,7 +28,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CarEvents">
-      <EntityTypeMapping TypeName="Model.CarEvents">
+      <EntityTypeMapping TypeName="CarMateModel.CarEvents">
         <MappingFragment StoreEntitySet="CarEvents">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CarId" ColumnName="CarId" />
@@ -51,72 +51,80 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CarModels">
-      <EntityTypeMapping TypeName="Model.CarModels">
+      <EntityTypeMapping TypeName="CarMateModel.CarModels">
         <MappingFragment StoreEntitySet="CarModels">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="brandId" ColumnName="brandId" />
-          <ScalarProperty Name="model" ColumnName="model" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CarModifications">
-      <EntityTypeMapping TypeName="Model.CarModifications">
+      <EntityTypeMapping TypeName="CarMateModel.CarModifications">
         <MappingFragment StoreEntitySet="CarModifications">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="modelId" ColumnName="modelId" />
-          <ScalarProperty Name="modification" ColumnName="modification" />
-          <ScalarProperty Name="horsePower" ColumnName="horsePower" />
-          <ScalarProperty Name="yearBegin" ColumnName="yearBegin" />
-          <ScalarProperty Name="yearEnd" ColumnName="yearEnd" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="Modification" ColumnName="Modification" />
+          <ScalarProperty Name="HorsePower" ColumnName="HorsePower" />
+          <ScalarProperty Name="YearBegin" ColumnName="YearBegin" />
+          <ScalarProperty Name="YearEnd" ColumnName="YearEnd" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CarNode">
-      <EntityTypeMapping TypeName="Model.CarNode">
+      <EntityTypeMapping TypeName="CarMateModel.CarNode">
         <MappingFragment StoreEntitySet="CarNode">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CarTransmission">
+      <EntityTypeMapping TypeName="CarMateModel.CarTransmission">
+        <MappingFragment StoreEntitySet="CarTransmission">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameTransmission" ColumnName="NameTransmission" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CarTypes">
-      <EntityTypeMapping TypeName="Model.CarTypes">
+      <EntityTypeMapping TypeName="CarMateModel.CarTypes">
         <MappingFragment StoreEntitySet="CarTypes">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="carType" ColumnName="carType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CarType" ColumnName="CarType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="Model.Categories">
+      <EntityTypeMapping TypeName="CarMateModel.Categories">
         <MappingFragment StoreEntitySet="Categories">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="category" ColumnName="category" />
-          <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CategoryLog">
-      <EntityTypeMapping TypeName="Model.CategoryLog">
+      <EntityTypeMapping TypeName="CarMateModel.CategoryLog">
         <MappingFragment StoreEntitySet="CategoryLog">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Countries">
-      <EntityTypeMapping TypeName="Model.Countries">
+      <EntityTypeMapping TypeName="CarMateModel.Countries">
         <MappingFragment StoreEntitySet="Countries">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="country" ColumnName="country" />
-          <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="EventTypes">
-      <EntityTypeMapping TypeName="Model.EventTypes">
+      <EntityTypeMapping TypeName="CarMateModel.EventTypes">
         <MappingFragment StoreEntitySet="EventTypes">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -124,72 +132,121 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="FuelCategories">
-      <EntityTypeMapping TypeName="Model.FuelCategories">
+      <EntityTypeMapping TypeName="CarMateModel.FuelCategories">
         <MappingFragment StoreEntitySet="FuelCategories">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="countryId" ColumnName="countryId" />
-          <ScalarProperty Name="category" ColumnName="category" />
-          <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LogBook">
-      <EntityTypeMapping TypeName="Model.LogBook">
+      <EntityTypeMapping TypeName="CarMateModel.LogBook">
         <MappingFragment StoreEntitySet="LogBook">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="categoryid" ColumnName="categoryid" />
-          <ScalarProperty Name="chargingid" ColumnName="chargingid" />
-          <ScalarProperty Name="carId" ColumnName="carId" />
-          <ScalarProperty Name="total_cost" ColumnName="total_cost" />
-          <ScalarProperty Name="dateCharging" ColumnName="dateCharging" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="ChargingId" ColumnName="ChargingId" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+          <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+          <ScalarProperty Name="DateCharging" ColumnName="DateCharging" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Placemarks">
-      <EntityTypeMapping TypeName="Model.Placemarks">
+      <EntityTypeMapping TypeName="CarMateModel.Placemarks">
         <MappingFragment StoreEntitySet="Placemarks">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="countryId" ColumnName="countryId" />
-          <ScalarProperty Name="regionId" ColumnName="regionId" />
-          <ScalarProperty Name="categoryId" ColumnName="categoryId" />
-          <ScalarProperty Name="vendorId" ColumnName="vendorId" />
-          <ScalarProperty Name="latitude" ColumnName="latitude" />
-          <ScalarProperty Name="longitude" ColumnName="longitude" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Prices">
-      <EntityTypeMapping TypeName="Model.Prices">
+      <EntityTypeMapping TypeName="CarMateModel.Prices">
         <MappingFragment StoreEntitySet="Prices">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="placemarkid" ColumnName="placemarkid" />
-          <ScalarProperty Name="vendorId" ColumnName="vendorId" />
-          <ScalarProperty Name="regionId" ColumnName="regionId" />
-          <ScalarProperty Name="fuelId" ColumnName="fuelId" />
-          <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="userPrice" ColumnName="userPrice" />
-          <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PlacemarkId" ColumnName="PlacemarkId" />
+          <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="FuelId" ColumnName="FuelId" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="UserPrice" ColumnName="UserPrice" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Regions">
-      <EntityTypeMapping TypeName="Model.Regions">
+      <EntityTypeMapping TypeName="CarMateModel.Regions">
         <MappingFragment StoreEntitySet="Regions">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="countryId" ColumnName="countryId" />
-          <ScalarProperty Name="region" ColumnName="region" />
-          <ScalarProperty Name="dateCreate" ColumnName="dateCreate" />
-          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitDistance">
+      <EntityTypeMapping TypeName="CarMateModel.UnitDistance">
+        <MappingFragment StoreEntitySet="UnitDistance">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+          <ScalarProperty Name="Correction" ColumnName="Correction" />
+          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitFuelConsumption">
+      <EntityTypeMapping TypeName="CarMateModel.UnitFuelConsumption">
+        <MappingFragment StoreEntitySet="UnitFuelConsumption">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+          <ScalarProperty Name="Correction" ColumnName="Correction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitVolume">
+      <EntityTypeMapping TypeName="CarMateModel.UnitVolume">
+        <MappingFragment StoreEntitySet="UnitVolume">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+          <ScalarProperty Name="Correction" ColumnName="Correction" />
+          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="CarMateModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+          <ScalarProperty Name="DateRegister" ColumnName="DateRegister" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="UnitDistanceId" ColumnName="UnitDistanceId" />
+          <ScalarProperty Name="UnitVolumeId" ColumnName="UnitVolumeId" />
+          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="VendorAliases">
-      <EntityTypeMapping TypeName="Model.VendorAliases">
+      <EntityTypeMapping TypeName="CarMateModel.VendorAliases">
         <MappingFragment StoreEntitySet="VendorAliases">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="VendorId" ColumnName="VendorId" />
@@ -198,7 +255,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Vendors">
-      <EntityTypeMapping TypeName="Model.Vendors">
+      <EntityTypeMapping TypeName="CarMateModel.Vendors">
         <MappingFragment StoreEntitySet="Vendors">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="countryId" ColumnName="countryId" />
@@ -209,58 +266,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="Model.Users">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
-          <ScalarProperty Name="UnitVolumeId" ColumnName="UnitVolumeId" />
-          <ScalarProperty Name="UnitDistanceId" ColumnName="UnitDistanceId" />
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
-          <ScalarProperty Name="DateRegister" ColumnName="DateRegister" />
-          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
-          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
-          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
-          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UnitFuelConsumption">
-      <EntityTypeMapping TypeName="Model.UnitFuelConsumption">
-        <MappingFragment StoreEntitySet="UnitFuelConsumption">
-          <ScalarProperty Name="Correction" ColumnName="Correction" />
-          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UnitDistance">
-      <EntityTypeMapping TypeName="Model.UnitDistance">
-        <MappingFragment StoreEntitySet="UnitDistance">
-          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
-          <ScalarProperty Name="Correction" ColumnName="Correction" />
-          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UnitVolume">
-      <EntityTypeMapping TypeName="Model.UnitVolume">
-        <MappingFragment StoreEntitySet="UnitVolume">
-          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
-          <ScalarProperty Name="Correction" ColumnName="Correction" />
-          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Cars">
-      <EntityTypeMapping TypeName="Model.Cars">
+      <EntityTypeMapping TypeName="CarMateModel.Cars">
         <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="CarTransmissionId" ColumnName="CarTransmissionId" />
+          <ScalarProperty Name="FuelCategoryId" ColumnName="FuelCategoryId" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
           <ScalarProperty Name="DateBuy" ColumnName="DateBuy" />

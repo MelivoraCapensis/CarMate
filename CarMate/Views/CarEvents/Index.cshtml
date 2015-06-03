@@ -2,12 +2,12 @@
 @model IEnumerable<CarMate.CarEvents>
 
 @{
-    ViewBag.Title = "Все события";
+    ViewBag.Title = Resources.CarEvents.AllEvents;
 }
 
 <div class="container">
 
-    <h2>Владелец: "@ViewBag.User.Nickname"</h2>
+    <h2>@Resources.Car.Owner: "@ViewBag.User.Nickname"</h2>
 
     <div class="row">
         @Html.Partial("_PartCarInfo", (CarMate.Cars) ViewBag.Car)
@@ -19,10 +19,10 @@
                 @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                 {
                     <p>
-                        @Html.ActionLink("Добавить событие", "Create", "CarEvents", new {carId = ViewBag.Car.Id}, null)
+                        @Html.ActionLink(Resources.CarEvents.AddEvent, "Create", "CarEvents", new { carId = ViewBag.Car.Id }, null)
                     </p>
                 }
-                <h4><b>Заправка</b></h4>
+                <h4><b>@Resources.CarEvents.Filling</b></h4>
                 <table class="table">
                     <tr>
                         @*событие/дата/стоимость/литры/пробег/коментарий*@
@@ -31,27 +31,27 @@
                         </th>*@
 
                         <th>
-                            Дата
+                            @Resources.CarEvents.Date
                         </th>
 
                         <th>
-                            Стоимость
+                            @Resources.CarEvents.Cost
                         </th>
 
                         <th>
-                            Залито топлива
+                            @Resources.CarEvents.FuelCount
                         </th>
 
                         <th>
-                            Пробег
+                            @Resources.CarEvents.Odometer
                         </th>
 
                         <th>
-                            Комментарий
+                            @Resources.CarEvents.Comment
                         </th>
 
                         <th>
-                            Опции
+                            @Resources.CarEvents.Options
                         </th>
                     </tr>
 
@@ -109,7 +109,7 @@
                 </table>
 
 
-                <h4><b>Ремонт</b></h4>
+                <h4><b>@Resources.CarEvents.Repair</b></h4>
                 <table class="table">
                     <tr>
                         @*событие/дата/стоимость/пробег/коментарий*@
@@ -118,23 +118,23 @@
                         </th>*@
 
                         <th>
-                            Дата
+                            @Resources.CarEvents.Date
                         </th>
 
                         <th>
-                            Стоимость
+                            @Resources.CarEvents.Cost
                         </th>
 
                         <th>
-                            Пробег
+                            @Resources.CarEvents.Odometer
                         </th>
 
                         <th>
-                            Комментарий
+                            @Resources.CarEvents.Comment
                         </th>
 
                         <th>
-                            Опции
+                            @Resources.CarEvents.Options
                         </th>
                     </tr>
 
@@ -189,32 +189,32 @@
 
 
 
-                <h4><b>Другое</b> (мойка, ремонт, стоянка, страховка, техосмотр, штраф, эвакуатор)</h4>
+                <h4><b>@Resources.CarEvents.Other</b> (мойка, ремонт, стоянка, страховка, техосмотр, штраф, эвакуатор)</h4>
                 <table class="table">
                     <tr>
                         @*событие/дата/стоимость/пробег/коментарий*@
                         <th>
-                            Событие
+                            @Resources.CarEvents.Event
                         </th>
 
                         <th>
-                            Дата
+                            @Resources.CarEvents.Date
                         </th>
 
                         <th>
-                            Стоимость
+                            @Resources.CarEvents.Cost
                         </th>
 
                         <th>
-                            Пробег
+                            @Resources.CarEvents.Odometer
                         </th>
 
                         <th>
-                            Комментарий
+                            @Resources.CarEvents.Comment
                         </th>
 
                         <th>
-                            Опции
+                            @Resources.CarEvents.Options
                         </th>
                     </tr>
 
@@ -272,3 +272,13 @@
     </div>
 </div> <!-- End General Container -->
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#car_rating").rating({ readOnly: true });
+    });
+</script>
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/rating")
+}

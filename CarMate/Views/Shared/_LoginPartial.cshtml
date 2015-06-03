@@ -19,16 +19,16 @@
                 @*<a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>*@
                 @*@Html.ActionLink("Dashboard", "Dashboard", "Map")*@
                 <li>
-                    @Html.ActionLink("Мой гараж", "Garage", "User", routeValues: null, htmlAttributes: new {@class = "btn btn-light"})
+                    @Html.ActionLink(Resources.Global.MyGarage, "Garage", "User", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
                 </li>
                 <li>
-                    @Html.ActionLink("Настройки", "Manage", "Account", routeValues: null, htmlAttributes: new {@class = "btn btn-light"})
+                    @Html.ActionLink(Resources.Global.Settings, "Manage", "Account", routeValues: null, htmlAttributes: new {@class = "btn btn-light"})
                 </li>
                 @*<li>
                     @Html.ActionLink("Карта", "GetMap", "Map", htmlAttributes: new { @class = "btn btn-light" })
                 </li>*@
                 <li>
-                    <input type="submit" value="Выйти" class="btn" />
+                    <input type="submit" value="@Resources.Global.SignOut" class="btn" />
                 </li>
             }
     </text>
@@ -43,13 +43,13 @@ else
 
         <li>
             <button id="registerButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#register">
-                Регистрация
+                @Resources.Global.SignUp
             </button>
         </li>
 
         <li>
             <button id="loginButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login">
-                Войти
+                @Resources.Global.SignIn
             </button>
         </li>
 

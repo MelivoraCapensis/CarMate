@@ -212,6 +212,9 @@
     <Compile Include="Cars.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CarTransmission.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CarTypes.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
@@ -282,6 +285,86 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CarConsumption\CarConsumption.en.Designer.cs">
+      <DependentUpon>CarConsumption.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CarConsumption\CarConsumption.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarConsumption.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CarCostStatistics\CarCostStatistics.en.Designer.cs">
+      <DependentUpon>CarCostStatistics.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CarCostStatistics\CarCostStatistics.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarCostStatistics.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CarEvents\CarEvents.en.Designer.cs">
+      <DependentUpon>CarEvents.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CarEvents\CarEvents.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarEvents.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Car\Car.en.Designer.cs">
+      <DependentUpon>Car.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Car\Car.Designer.cs">
+      <DependentUpon>Car.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Global\Global.en.Designer.cs">
+      <DependentUpon>Global.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Global\Global.Designer.cs">
+      <DependentUpon>Global.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Hicharts\Hicharts.en.Designer.cs">
+      <DependentUpon>Hicharts.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Hicharts\Hicharts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Hicharts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Home.en.Designer.cs">
+      <DependentUpon>Home.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Home.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Home.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\User\User.en.Designer.cs">
+      <DependentUpon>User.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\User\User.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>User.resx</DependentUpon>
     </Compile>
     <Compile Include="UnitDistance.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
@@ -737,6 +820,8 @@
     <Content Include="Content\images\auto.jpg" />
     <Content Include="Content\landing.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\rating\jquery.rating.css" />
+    <Content Include="Content\rating\styles.css" />
     <Content Include="Content\style_landing.css" />
     <Content Include="Content\stylish-portfolio.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1163,8 +1248,6 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="gmaps.js" />
-    <Content Include="Gruntfile.js" />
     <Content Include="Images\advantages\1.png" />
     <Content Include="Images\advantages\2.png" />
     <Content Include="Images\advantages\3.png" />
@@ -1207,6 +1290,8 @@
     <Content Include="Images\slider\img2.png" />
     <Content Include="Images\slider\img3.png" />
     <Content Include="Images\smile-bg.png" />
+    <Content Include="Images\rating\ajax-loader.gif" />
+    <Content Include="Images\rating\stars.png" />
     <Content Include="js\landing\bjqs-1.3.js" />
     <Content Include="Content\bjqs.css" />
     <Content Include="js\landing\editor.js" />
@@ -1280,8 +1365,6 @@
     <Content Include="lib\gmaps.streetview.js" />
     <Content Include="lib\gmaps.styles.js" />
     <Content Include="lib\gmaps.utils.js" />
-    <Content Include="nprogress.css" />
-    <Content Include="nprogress.js" />
     <Content Include="PlaceMarkers\Bar.png" />
     <Content Include="PlaceMarkers\car_repair.png" />
     <Content Include="PlaceMarkers\Coffee.png" />
@@ -1421,6 +1504,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\rating\jquery.rating-2.0.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -1483,7 +1567,6 @@
     <Content Include="Views\Shared\_PartLogin.cshtml" />
     <Content Include="Views\Shared\_PartRegister.cshtml" />
     <Content Include="Views\CarEvents\_PartEventRepair.cshtml" />
-    <Content Include="Views\CarEvents\_PartEvents.cshtml" />
     <Content Include="Views\Shared\_PartCarInfo.cshtml" />
     <Content Include="Views\Shared\_PartCarMenu.cshtml" />
     <Content Include="Views\CarConsumption\Index.cshtml" />
@@ -1505,6 +1588,88 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CarConsumption\CarConsumption.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CarConsumption.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CarConsumption\CarConsumption.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CarConsumption.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CarCostStatistics\CarCostStatistics.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CarCostStatistics.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CarCostStatistics\CarCostStatistics.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CarCostStatistics.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CarEvents\CarEvents.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CarEvents.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CarEvents\CarEvents.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CarEvents.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Car\Car.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Car.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Car\Car.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Car.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Global\Global.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Global\Global.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Hicharts\Hicharts.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Hicharts.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Hicharts\Hicharts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Hicharts.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Home.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Home.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\User\User.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\User\User.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

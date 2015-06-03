@@ -19,9 +19,9 @@ namespace CarMate
             this.CarModels = new HashSet<CarModels>();
         }
     
-        public int id { get; set; }
-        public int carTypeId { get; set; }
-        public string brand { get; set; }
+        public int Id { get; set; }
+        public int CarTypeId { get; set; }
+        public string Brand { get; set; }
     
         public virtual CarTypes CarTypes { get; set; }
         public virtual ICollection<CarModels> CarModels { get; set; }

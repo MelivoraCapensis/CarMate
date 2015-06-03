@@ -13,15 +13,15 @@
     </li>*@
 
     <li @CurrentItem("CarEvents")>
-        @Html.ActionLink("События", "Index", "CarEvents", new { carId = ViewBag.Car.Id }, null)
+        @Html.ActionLink(Resources.Global.CarEventsMenu, "Index", "CarEvents", new { carId = ViewBag.Car.Id }, null)
     </li>
 
     <li @CurrentItem("CarConsumption")>
-        @Html.ActionLink("Расход топлива", "Index", "CarConsumption", new { carId = ViewBag.Car.Id }, null)
+        @Html.ActionLink(Resources.Global.CarConsumptionMenu, "Index", "CarConsumption", new { carId = ViewBag.Car.Id }, null)
     </li>
 
     <li @CurrentItem("CarCostStatistics")>
-        @Html.ActionLink("Статистика затрат", "Index", "CarCostStatistics", new { carId = ViewBag.Car.Id }, null)
+        @Html.ActionLink(Resources.Global.CarCostStatisticsMenu, "Index", "CarCostStatistics", new { carId = ViewBag.Car.Id }, null)
     </li>
 
     @*<li @CurrentItem("CarPersonalStatistics")>
@@ -29,6 +29,6 @@
     </li>*@
 
     <li @CurrentItem("Test")>
-        @Html.ActionLink("Планы", "Test", "Test", null, new { @class = "btn btn-default", disabled = true })
+        @Html.ActionLink(Resources.Global.CarPlansMenu, "Test", "Test", null, new { @class = "btn btn-default", disabled = true })
     </li>
 </ul>

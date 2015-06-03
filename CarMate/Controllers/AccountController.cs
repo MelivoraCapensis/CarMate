@@ -123,6 +123,7 @@ namespace CarMate.Controllers
                             DateRegister = date,
                             UnitDistanceId = 1,
                             UnitVolumeId = 1,
+                            UnitFuelConsumptionId = 1,
                             //UserPassword = model.Password,
 
                             DateCreate = date,

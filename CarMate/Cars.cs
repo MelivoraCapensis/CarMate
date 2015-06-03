@@ -25,18 +25,23 @@ namespace CarMate
         public int UserId { get; set; }
         public int ModelId { get; set; }
         public Nullable<int> ModificationId { get; set; }
-        public int Odometer { get; set; }
-        public int Tank { get; set; }
-        public double Consumption { get; set; }
+        public Nullable<int> Odometer { get; set; }
+        public Nullable<int> Tank { get; set; }
+        public Nullable<double> Consumption { get; set; }
         public string ImgPath { get; set; }
         public Nullable<System.DateTime> DateBuy { get; set; }
         public System.DateTime DateCreate { get; set; }
         public int State { get; set; }
+        public Nullable<int> FuelCategoryId { get; set; }
+        public Nullable<int> CarTransmissionId { get; set; }
+        public Nullable<int> Rating { get; set; }
     
         public virtual ICollection<CarDetails> CarDetails { get; set; }
         public virtual ICollection<CarEvents> CarEvents { get; set; }
         public virtual CarModels CarModels { get; set; }
         public virtual CarModifications CarModifications { get; set; }
+        public virtual CarTransmission CarTransmission { get; set; }
+        public virtual FuelCategories FuelCategories { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<LogBook> LogBook { get; set; }
     }

@@ -1,12 +1,12 @@
 ﻿@model CarMate.Cars
 
 @{
-    ViewBag.Title = "Детали";
+    ViewBag.Title = Resources.Global.Details;
 }
 
 <div class="container">
 
-        <h2>Владелец: "@Model.Users.Nickname"</h2>
+        <h2>@Resources.Car.Owner: "@Model.Users.Nickname"</h2>
 
         <div class="row">
             @Html.Partial("_PartCarInfo")
@@ -226,11 +226,21 @@
             ]
         });
     });
+    
+    
 
 
 </script>*@
 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#car_rating").rating({ readOnly: true });
+    });
+</script>
+
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/rating")
 }

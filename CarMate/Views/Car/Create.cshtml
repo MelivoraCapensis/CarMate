@@ -1,7 +1,7 @@
 ﻿@model CarMate.Cars
 
 @{
-    ViewBag.Title = "Создание транспортного средства";
+    ViewBag.Title = Resources.Car.CreateVehicle;
 }
 
 
@@ -17,10 +17,10 @@
 
         <div class="form-horizontal">
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.CarModels.brandId, "Марка", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.CarModels.BrandId, Resources.Car.Brand, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.DropDownList("brandId", null, htmlAttributes: new {@class = "form-control", onchange = "GetModels(this)"}, optionLabel: "-выберите марку-")
-                    @Html.ValidationMessageFor(model => model.CarModels.brandId, "", new {@class = "text-danger"})
+                    @Html.DropDownList("brandId", null, htmlAttributes: new { @class = "form-control", onchange = "GetModels(this)" }, optionLabel: Resources.Car.SelectBrand)
+                    @Html.ValidationMessageFor(model => model.CarModels.BrandId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
 
 
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Odometer, "Пробег", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.Odometer, Resources.Car.Odometr, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
                     @Html.TextBoxFor(cars => cars.Odometer, null, htmlAttributes: new {@class = "form-control"})
                     @Html.ValidationMessageFor(model => model.Odometer, "", new {@class = "text-danger"})
@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Tank, "Объем бака", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.Tank, Resources.Car.Tank, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
                     @Html.TextBoxFor(cars => cars.Tank, null, htmlAttributes: new {@class = "form-control"})
                     @Html.ValidationMessageFor(model => model.Tank, "", new {@class = "text-danger"})
@@ -52,7 +52,7 @@
             </div>
 
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Consumption, "Расход топлива", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.Consumption, Resources.Car.Consumption, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
                     @Html.TextBoxFor(cars => cars.Consumption, null, htmlAttributes: new {@class = "form-control"})
                     @Html.ValidationMessageFor(cars => cars.Consumption, "", new {@class = "text-danger"})
@@ -60,31 +60,56 @@
             </div>
 
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.DateBuy, "Дата покупки", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(model => model.FuelCategoryId, Resources.Car.PreferredTypeFuel, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(model => model.FuelCategoryId, null, htmlAttributes: new { @class = "form-control" }, optionLabel: Resources.Car.SelectTypeTransmission)
+                    @Html.ValidationMessageFor(model => model.FuelCategoryId, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                @Html.LabelFor(model => model.CarTransmissionId, Resources.Car.CarTransmission, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(model => model.CarTransmissionId, null, htmlAttributes: new { @class = "form-control" }, optionLabel: Resources.Car.SelectTypeTransmission)
+                    @Html.ValidationMessageFor(model => model.CarTransmissionId, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                @Html.LabelFor(model => model.DateBuy, Resources.Car.DateBuy, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
                     @Html.TextBoxFor(model => model.DateBuy, htmlAttributes: new
                     {
                         @class = "form-control",
                         data_provide = "datepicker",
-                        @Value = Model.DateBuy.Value.ToString("d")
+                        @Value = Model.DateBuy.Value.ToString("dd/MM/yyyy")
                     })
                     @Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})
                 </div>
             </div>
-        </div>
 
-        <div class="form-group col-md-12">
-            @*<label class="control-label col-md-3" for="file">Выберите аватар автомобиля</label>*@
-            @Html.LabelFor(model => model.ImgPath, "Фотография автомобиля", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="file" value="Выбрать картинку"/>
+            <div class="form-group col-md-12">
+                @Html.LabelFor(model => model.Rating, Resources.Car.UserRating, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    <div class="rating" id="car_rating">
+                        <input name="val" value="@Model.Rating" type="hidden"/>
+                    </div>
+                    @Html.HiddenFor(model => model.Rating)
+                </div>
             </div>
-        </div>
 
-        <p>
-            <input type="submit" value="Создать" class="btn btn-primary"/>
-            @Html.ActionLink("Назад", "Index", "Car", null, new {@class = "btn btn-primary"})
-        </p>
+            <div class="form-group col-md-12">
+                @Html.LabelFor(model => model.ImgPath, Resources.Car.CarPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="file" value="@Resources.Global.SelectPicture" />
+                </div>
+            </div>
+
+            <p>
+                <input type="submit" value="@Resources.Global.Create" class="btn btn-primary" onclick="CheckVote()" />
+                @Html.ActionLink(Resources.Global.Back, "Index", "Car", null, new { @class = "btn btn-primary" })
+            </p>
+        </div>
     }
 </div> <!-- /class container-->
 
@@ -95,20 +120,34 @@
     @* При изенении марки автомобиля подружаем модели *@
     function GetModels(id) {
         var brandId = id.value;
-        $("#car_model").load('@(Url.Action("GetModels","Car"))', { "brandId": brandId });
-        $("#car_modification").load('@(Url.Action("GetModifications","Car"))', { "modelId": 0 });
+        $("#car_model").load('@(Url.Action("GetModels", "Car"))', { "brandId": brandId });
+        $("#car_modification").load('@(Url.Action("GetModifications", "Car"))', { "modelId": 0 });
     }
 
     @* При изенении модеои автомобиля подружаем модификации *@
     function GetModifications(id) {
         var modelId = id.value;
-        $("#car_modification").load('@(Url.Action("GetModifications","Car"))', { "modelId": modelId });
+        $("#car_modification").load('@(Url.Action("GetModifications", "Car"))', { "modelId": modelId });
     }
+
+
+    $(document).ready(function () {
+        $("#car_rating").rating({ readOnly: false });
+    });
+
+    // заносим данные в модель
+    function CheckVote() {
+        //alert($("#vote-rating").text());
+        $("#Rating").val(($("#vote-rating").text()));
+    }
+
 </script>
+
 
 
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/bootstrap-datepicker")
+    @Scripts.Render("~/Scripts/rating")
 }

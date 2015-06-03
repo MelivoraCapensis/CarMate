@@ -6,12 +6,12 @@
             <div class="col-lg-12">
                 <div class="input-group">
                     <span>
-                        <input id="category@(category.id)"
+                        <input id="category@(category.Id)"
                                type="checkbox"
                                name="SelectedCategoryIDs"
-                               value="@category.id"
-                               @(Model.SelectedCategoryIDs.Contains(category.id) ? "checked" : "") />
-                        <label for="category@(category.id)">@category.category</label>
+                               value="@category.Id"
+                               @(Model.SelectedCategoryIDs.Contains(category.Id) ? "checked" : "") />
+                        <label for="category@(category.Id)">@category.Category</label>
                     </span>
                     <div id="categoryDetails"></div>
                 </div>

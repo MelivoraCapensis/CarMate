@@ -17,7 +17,7 @@ namespace CarMate.Controllers
             FuelCategoryModel model = new FuelCategoryModel();
             using (CarMateEntities context = new CarMateEntities())
             {
-                var fuelcategories = context.FuelCategories.Where(x => x.countryId == id).Select(x => x).ToList();
+                var fuelcategories = context.FuelCategories.Where(x => x.CountryId == id).Select(x => x).ToList();
                 model.FuelCategoryList = fuelcategories;
                 model.SelectedFuelCategoryIDs = new List<int>() {7};
             }

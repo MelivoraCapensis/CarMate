@@ -30,13 +30,13 @@ namespace CarMate
         public System.DateTime DateRegister { get; set; }
         public System.DateTime DateCreate { get; set; }
         public int State { get; set; }
-        public Nullable<int> UnitDistanceId { get; set; }
-        public Nullable<int> UnitVolumeId { get; set; }
-        public Nullable<int> UnitFuelConsumptionId { get; set; }
+        public int UnitDistanceId { get; set; }
+        public int UnitVolumeId { get; set; }
+        public int UnitFuelConsumptionId { get; set; }
     
         public virtual Regions Regions { get; set; }
-        public virtual UnitFuelConsumption UnitFuelConsumption { get; set; }
         public virtual UnitDistance UnitDistance { get; set; }
+        public virtual UnitFuelConsumption UnitFuelConsumption { get; set; }
         public virtual UnitVolume UnitVolume { get; set; }
         public virtual ICollection<Cars> Cars { get; set; }
     }

@@ -23,7 +23,7 @@ namespace CarMate
         public int CarId { get; set; }
         public int EventTypeId { get; set; }
         public Nullable<int> FuelCategoryId { get; set; }
-        public int Odometer { get; set; }
+        public Nullable<int> Odometer { get; set; }
         public double CostTotal { get; set; }
         public System.DateTime DateEvent { get; set; }
         public string Comment { get; set; }

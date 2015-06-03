@@ -67,23 +67,33 @@ namespace CarMate.Controllers
         public void CarAndUserInit(int carId)
         {
             var car = db.Cars.Find(carId);
-
-            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
-            car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, car.Odometer));
-            ViewBag.UnitDistance = unitDistance;
-
-            string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
-            car.Consumption = Math.Round(
-                ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption, car.Consumption), 2);
-            ViewBag.UnitFuelConsumption = unitFuelConsumption;
-
-            string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
-            car.Tank = (int)Math.Round(
-                ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, car.Tank));
-            ViewBag.UnitVolume = unitVolume;
-
             ViewBag.Car = car;
             ViewBag.User = db.Users.Find(car.UserId);
+
+            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
+            ViewBag.UnitDistance = unitDistance;
+            if (car.Odometer != null)
+            {
+                car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, (double)car.Odometer));
+            }
+
+
+            string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
+            ViewBag.UnitFuelConsumption = unitFuelConsumption;
+            if (car.Consumption != null)
+            {
+                car.Consumption = Math.Round(
+                    ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption,
+                        (double)car.Consumption), 2);
+            }
+
+
+            string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
+            ViewBag.UnitVolume = unitVolume;
+            if (car.Tank != null)
+            {
+                car.Tank = (int)Math.Round(ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, (int)car.Tank));
+            }
         }
 
         //
@@ -101,7 +111,8 @@ namespace CarMate.Controllers
             Cars car = new Cars
             {
                 UserId = this.UserId,
-                DateBuy = DateTime.Now
+                DateBuy = DateTime.Now,
+                Rating = 0
             };
             
             InitViewBag(car);
@@ -179,10 +190,10 @@ namespace CarMate.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand", car.CarModels.CarBrands.id);
+            ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand", car.CarModels.CarBrands.Id);
             ViewBag.modelId = new SelectList(db.CarModels, "id", "model", car.ModelId);
             ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification", car.ModificationId);
-            
+            InitViewBag(car);
             return View(car);
         }
 
@@ -208,14 +219,20 @@ namespace CarMate.Controllers
                 carFromDb.Consumption = car.Consumption;
                 carFromDb.Odometer = car.Odometer;
                 carFromDb.Tank = car.Tank;
+                carFromDb.FuelCategoryId = car.FuelCategoryId;
+                carFromDb.DateBuy = car.DateBuy;
+                carFromDb.CarTransmissionId = car.CarTransmissionId;
+                carFromDb.Rating = car.Rating;
+                carFromDb.ImgPath = car.ImgPath;
 
                 db.SaveChanges();
                 return RedirectToAction("Details", "User", new { id = car.UserId });
             }
 
-            ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand", car.CarModels.CarBrands.id);
+            ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand", car.CarModels.CarBrands.Id);
             ViewBag.modelId = new SelectList(db.CarModels, "id", "model", car.ModelId);
             ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification", car.ModificationId);
+            InitViewBag(car);
             return View(car);
         }
 
@@ -271,7 +288,14 @@ namespace CarMate.Controllers
         public void InitViewBag(Cars car)
         {
             ViewBag.User = db.Users.Find(this.UserId);
-            ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand");
+            if (car.CarModels != null)
+                ViewBag.BrandId = new SelectList(db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand", car.CarModels.BrandId);
+            else
+            {
+                ViewBag.BrandId = new SelectList(db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand");
+            }
+            ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.Category), "Id", "Category", car.FuelCategoryId);
+            ViewBag.CarTransmissionId = new SelectList(db.CarTransmission.OrderBy(x => x.NameTransmission), "Id", "NameTransmission", car.CarTransmissionId);
         }
 
         public bool IsAuthenticated()
@@ -282,9 +306,9 @@ namespace CarMate.Controllers
         public PartialViewResult GetModels(int brandId = 0)
         {
             ViewBag.ModelId = new SelectList(
-                db.CarModels.Where(x => x.brandId == brandId)
-                    .Select(x => new {modelId = x.id, x.model})
-                    .OrderBy(x => x.model)
+                db.CarModels.Where(x => x.BrandId == brandId)
+                    .Select(x => new {modelId = x.Id, x.Model})
+                    .OrderBy(x => x.Model)
                     .ToList(),
                 "ModelId",
                 "Model"
@@ -296,9 +320,9 @@ namespace CarMate.Controllers
         public PartialViewResult GetModifications(int modelId = 0)
         {
             ViewBag.ModificationId = new SelectList(
-                db.CarModifications.Where(x => x.modelId == modelId)
-                    .Select(x => new {modificationId = x.id, x.modification})
-                    .OrderBy(x => x.modification)
+                db.CarModifications.Where(x => x.ModelId == modelId)
+                    .Select(x => new {modificationId = x.Id, x.Modification})
+                    .OrderBy(x => x.Modification)
                     .ToList(),
                 "ModificationId",
                 "Modification"

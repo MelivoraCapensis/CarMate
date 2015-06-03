@@ -9,9 +9,9 @@
                         <input id="fuelcategory"
                                type="checkbox"
                                name="SelectedFuelCategoryIDs"
-                               value="@fuelcategory.id"
-                               @(Model.SelectedFuelCategoryIDs.Contains(fuelcategory.id) ? "checked" : "") />
-                        <label for="fuelcategory@(fuelcategory.id)">@fuelcategory.category</label>
+                               value="@fuelcategory.Id"
+                               @(Model.SelectedFuelCategoryIDs.Contains(fuelcategory.Id) ? "checked" : "") />
+                        <label for="fuelcategory@(fuelcategory.Id)">@fuelcategory.Category</label>
                     </span>
                 </div>
             </div>
