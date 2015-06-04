@@ -117,7 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Register" xml:space="preserve">
-    <value>Регистрация</value>
+  <data name="AccountManagement" xml:space="preserve">
+    <value>Управление учетной записью</value>
+  </data>
+  <data name="AddNewAccount" xml:space="preserve">
+    <value>Добавить внешнюю учетную запись</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Изменить пароль</value>
+  </data>
+  <data name="ChangingPassword" xml:space="preserve">
+    <value>Изменение пароля</value>
+  </data>
+  <data name="CheckSuccess" xml:space="preserve">
+    <value>Вы прошли проверку через</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Подтверждение пароля</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Адрес электронной почты</value>
+  </data>
+  <data name="EndRegister" xml:space="preserve">
+    <value>Введите имя пользователя на этом сайте ниже и нажмите кнопку "Регистрация", чтобы завершить вход.</value>
+  </data>
+  <data name="FuelConsumption" xml:space="preserve">
+    <value>Расход топлива</value>
+  </data>
+  <data name="LinkAaccount" xml:space="preserve">
+    <value>Свяжите свою учетную запись в</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Логин</value>
+  </data>
+  <data name="LoginError" xml:space="preserve">
+    <value>Ошибка при входе</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Новый пароль</value>
+  </data>
+  <data name="NewPasswordInfo" xml:space="preserve">
+    <value>У вас нет локального пароля для этого сайта. Добавьте локальный пароль, чтобы входить без внешней учетной записи.</value>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Старый пароль</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="RegisteredExternalAccounts" xml:space="preserve">
+    <value>Зарегистрированные внешние учетные записи</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Запомнить меня</value>
+  </data>
+  <data name="ServiceError" xml:space="preserve">
+    <value>Не удалось войти через службу.</value>
+  </data>
+  <data name="SetPassword" xml:space="preserve">
+    <value>Задать пароль</value>
+  </data>
+  <data name="SignInWithAnotherService" xml:space="preserve">
+    <value>Вход через другую службу</value>
+  </data>
+  <data name="YouLoggedAs" xml:space="preserve">
+    <value>Вы вошли как</value>
   </data>
 </root>

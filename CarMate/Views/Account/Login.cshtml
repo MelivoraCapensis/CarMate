@@ -1,7 +1,7 @@
 ﻿@model CarMate.Models.LoginModel
 
 @{
-    ViewBag.Title = "Вход";
+    ViewBag.Title = Resources.Global.SignIn;
 }
 
 
@@ -111,7 +111,7 @@
 
             <h2>Войти с помощью:</h2>
             @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })*@
-            <h4 class="text-center">Вход</h4>
+            <h4 class="text-center">@ViewBag.Title</h4>
             @*@Html.Partial("_PartLogin")*@
 
 
@@ -122,7 +122,7 @@
 
                 <div class="form-horizontal">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.UserName, "Логин", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.UserName, Resources.Account.Login, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-lg-8 col-md-8">
                             @Html.TextBoxFor(model => model.UserName, new { @class = "form-control input-lg" })
                             @Html.ValidationMessageFor(model => model.UserName)
@@ -130,7 +130,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Password, "Пароль", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Password, Resources.Account.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-lg-8 col-md-8">
                             @Html.PasswordFor(model => model.Password, new { @class = "form-control input-lg" })
                             @Html.ValidationMessageFor(model => model.Password)
@@ -139,15 +139,15 @@
 
                     <div class="form-group">
                         <div class="col-lg-offset-1 col-md-offset-1 col-lg-10 col-md-10">
-                            <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block" />
+                            <input type="submit" value="@Resources.Global.SignIn" class="btn btn-primary btn-lg btn-block" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8">
                             @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                            @Html.ActionLink("Регистрация", "Register", "Account", null, null)
+                            @Html.LabelFor(m => m.RememberMe, Resources.Account.RememberMe)
+                            @Html.ActionLink(Resources.Global.SignUp, "Register", "Account", null, null)
                         </div>
                     </div>
                 </div>

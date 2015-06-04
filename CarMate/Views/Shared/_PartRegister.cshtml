@@ -19,7 +19,7 @@
 
                         <div class="form-horizontal">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.UserName, "Логин", htmlAttributes: new {@class = "control-label col-md-4"})
+                                @Html.LabelFor(model => model.UserName, Resources.Account.Login, htmlAttributes: new {@class = "control-label col-md-4"})
                                 <div class="col-lg-5 col-md-5">
                                     @Html.TextBoxFor(model => model.UserName, htmlAttributes: new {@class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.UserName, "", new {@class = "text-danger"})
@@ -27,7 +27,7 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Password, "Пароль", htmlAttributes: new {@class = "control-label col-md-4"})
+                                @Html.LabelFor(model => model.Password, Resources.Account.Password, htmlAttributes: new {@class = "control-label col-md-4"})
                                 <div class="col-lg-5 col-md-5">
                                     @Html.PasswordFor(model => model.Password, htmlAttributes: new {@class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.ConfirmPassword, "Подтверждение пароля", htmlAttributes: new {@class = "control-label col-md-4"})
+                                @Html.LabelFor(model => model.ConfirmPassword, Resources.Account.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-lg-5 col-md-5">
                                     @Html.PasswordFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
@@ -43,7 +43,7 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Email, "Адрес электронной почты", htmlAttributes: new {@class = "control-label col-md-4"})
+                                @Html.LabelFor(model => model.Email, Resources.Account.Email, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-lg-5 col-md-5">
                                     @Html.TextBoxFor(model => model.Email, htmlAttributes: new {@class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
@@ -59,7 +59,7 @@
 
                             <div class="form-group">
                                 <div class="col-lg-offset-1 col-md-offset-1 col-lg-10 col-md-10">
-                                    <input type="submit" value="Регистрация" class="btn btn-primary btn-lg btn-block"/>
+                                    <input type="submit" value="@Resources.Global.SignUp" class="btn btn-primary btn-lg btn-block" />
                                 </div>
                             </div>
 

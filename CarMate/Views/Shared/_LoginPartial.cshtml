@@ -66,7 +66,7 @@ else
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="registerCloseButton" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title text-center" id="registerLabel">Регистрация</h4>
+                        <h4 class="modal-title text-center" id="registerLabel">@Resources.Global.SignUp</h4>
                     </div>
                     <div class="modal-body">
                         @Html.Partial("_PartRegister", new CarMate.Models.RegisterModel())
@@ -83,7 +83,7 @@ else
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="loginCloseButton" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title text-center" id="loginLabel">Вход</h4>
+                        <h4 class="modal-title text-center" id="loginLabel">@Resources.Global.SignIn</h4>
                     </div>
                     <div class="modal-body">
                         @Html.Partial("_PartLogin", new CarMate.Models.LoginModel())

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "CarMate мониторинг цен топлива, бортовой журнал";
+    ViewBag.Title = Resources.Home.Title;
     Layout = null;
 }
 
@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>CarMate мониторинг цен топлива, бортовой журнал</title>
+    <title>@ViewBag.Title</title>
 
     <meta name="keywords" content="АЗС, топливо, бензин, заправиться, события, бортовой журнал">
     <meta name="description" content="">
@@ -33,8 +33,8 @@
                         <a class="menu_items" href="@Url.Action("GetMap", "Map")"><img src="~/Images/p2.png" alt="" /></a>
                         <a class="menu_items" href="@Url.Action("Index", "Car")"><img src="~/Images/p3.png" alt="" /></a>
                     </address>
-                    <a href="@Url.Action("Register", "Account")" class="bl-link call-request-btn">Регистрация</a>
-                    <a href="@Url.Action("Login", "Account")" class="enter"><span class="bl-link">Войти<i class="icon-auth"></i></span></a>
+                    <a href="@Url.Action("Register", "Account")" class="bl-link call-request-btn">@Resources.Global.SignUp</a>
+                    <a href="@Url.Action("Login", "Account")" class="enter"><span class="bl-link">@Resources.Global.SignIn<i class="icon-auth"></i></span></a>
                 </div><!--end b-request-->
             </div><!--end conteiner-->
         </div><!--end head-top-row-->
@@ -42,8 +42,8 @@
             <div class="conteiner clr">
                 <div class="head-tile-col">
                     <div class="title-block" id="ib-block2">
-                        <h1>Мониторинг цен топлива</h1>
-                        <p class="post-title">Учет затрат на автомобиль, статистика расходов, сравнение показателей</p>
+                        <h1>@Resources.Home.MonitoringFuelPrices</h1>
+                        <p class="post-title">@Resources.Home.Description</p>
                     </div>
                     <div id="slider" style="width: 610px; height: 220px; position: relative;">
                         <ul class="bjqs" style="height: 220px; width: 610px; display: block;">
@@ -69,8 +69,8 @@
                     </div>
                 </div>
                 <div class="head-form-col">
-                    <div id="ib-block3"><h3 class="form-title">Зачем это?</h3></div>
-                    <div id="ib-block4"> Если водитель хочет экономить, мы предоставляем ему инструмент «Веб приложение» и «Длинные руки» в виде мобильного приложения. К этому пользователь добавляет свою мотивацию и в итоге получается ожидаемый результат – экономия.</div>
+                    <div id="ib-block3"><h3 class="form-title">@Resources.Home.WhyIsThis</h3></div>
+                    <div id="ib-block4">@Resources.Home.WhyIsThisAnswer</div>
                 </div>
             </div><!--end head-down-row-->
         </div><!--end conteiner-->
@@ -79,53 +79,53 @@
     <div class="stat-block">
         <div class="conteiner">
             <div class="stat-info clr">
-                <div class="wrap-num" id="ib-block5"><span class="num">114</span> <span class="num-title">брендов АЗС</span></div>
+                <div class="wrap-num" id="ib-block5"><span class="num">114</span> <span class="num-title">@Resources.Home.BrandsAzs</span></div>
                 <div class="wrap-num" id="ib-block6">
                     <span class="num">900</span>
-                    <span class="num-title">марок автомобилей</span>
+                    <span class="num-title">@Resources.Home.MarkAuto</span>
                 </div>
             </div>
         </div><!--conteiner-->
     </div><!--end stat-block-->
     <div class="how-work-service">
         <div class="conteiner" id="ib-block7">
-            <h2>Как работает?</h2>
+            <h2>@Resources.Home.HowWork</h2>
             <ul class="service-list clr">
                 <li>
                     <div class="service-img"><img alt="" height="110" src="~/Images/service/1.gif" width="110"></div>
-                    Регистрация
+                    @Resources.Home.Registration
                 </li>
                 <li>
                     <div class="service-img"><img alt="" height="110" src="~/Images/service/2.gif" width="110"></div>
-                    Наполнение данными
+                    @Resources.Home.FillingData
                 </li>
                 <li>
                     <div class="service-img"><img alt="" height="110" src="~/Images/service/3.gif" width="110"></div>
-                    Получение данных
+                    @Resources.Home.RetrievingData
                 </li>
                 <li>
                     <div class="service-img"><img alt="" height="110" src="~/Images/service/4.gif" width="110"></div>
-                    Распространение данных
+                    @Resources.Home.DisseminationData
                 </li>
                 <li>
                     <div class="service-img"><img alt="" height="110" src="~/Images/service/5.gif" width="110"></div>
-                    Экономия!
+                    @Resources.Home.Saving
                 </li>
             </ul>
         </div><!--end service-->
     </div><!--end how-work-service-->
     <div class="our-advantages pattern-bg">
         <div class="conteiner" id="ib-block8">
-            <h2>Преимущества сервиса:</h2>
+            <h2>@Resources.Home.AdvantagesService</h2>
             <ul class="advantages-list clr">
-                <li><img src="~/Images/advantages/1.png" alt="" width="69" height="69"><span>Личный профиль</span></li>
-                <li class="right-col"><img src="~/Images/advantages/5.png" alt="" width="69" height="69"><span>Комментарии и рейтинг</span></li>
-                <li><img src="~/Images/advantages/2.png" alt="" width="69" height="69"><span>Сохраняются события</span></li>
-                <li class="right-col"><img src="~/Images/advantages/6.png" alt="" width="69" height="69"><span>Данные от других пользователей</span></li>
-                <li><img src="~/Images/advantages/3.png" alt="" width="69" height="69"><span>Показывает местоположение</span></li>
-                <li class="right-col"><img src="~/Images/advantages/7.png" alt="" width="69" height="69"><span>Отображение на карте</span></li>
-                <li><img src="~/Images/advantages/4.png" alt="" width="69" height="69"><span>Показывает цену</span></li>
-                <li class="right-col"><img src="~/Images/advantages/8.png" alt="" width="69" height="69"><span>Помогает экономить</span></li>
+                <li><img src="~/Images/advantages/1.png" alt="" width="69" height="69"><span>@Resources.Home.PersonalProfile</span></li>
+                <li class="right-col"><img src="~/Images/advantages/5.png" alt="" width="69" height="69"><span>@Resources.Home.CommentsAndRatings</span></li>
+                <li><img src="~/Images/advantages/2.png" alt="" width="69" height="69"><span>@Resources.Home.StoredEvents</span></li>
+                <li class="right-col"><img src="~/Images/advantages/6.png" alt="" width="69" height="69"><span>@Resources.Home.DataFromOtherUsers</span></li>
+                <li><img src="~/Images/advantages/3.png" alt="" width="69" height="69"><span>@Resources.Home.ShowLocation</span></li>
+                <li class="right-col"><img src="~/Images/advantages/7.png" alt="" width="69" height="69"><span>@Resources.Home.DisplayOnMap</span></li>
+                <li><img src="~/Images/advantages/4.png" alt="" width="69" height="69"><span>@Resources.Home.ShowPrice</span></li>
+                <li class="right-col"><img src="~/Images/advantages/8.png" alt="" width="69" height="69"><span>@Resources.Home.HelpsSaving</span></li>
             </ul>
         </div><!--end conteiner-->
     </div><!--end our-advantages-->
@@ -135,19 +135,19 @@
     </div>
     <div class="problem-block">
         <div class="conteiner clr" id="ib-block9">
-            <h2>Какие проблемы мы решаем?</h2>
+            <h2>@Resources.Home.WhatProblemsWeSolve</h2>
             <ul class="problem-list">
-                <li>Где заправиться дешевле и нужным топливом?</li>
-                <li>Где находиться нужная сеть АЗС?</li>
-                <li>Сколько денег потрачено на содержание автомобиля за текущий год?</li>
-                <li>Когда нужно сделать ТО или поменять масло и другие расходники?</li>
-                <li>Сравнение своего авто с другими владельцами такого же авто</li>
+                <li>@Resources.Home.WhereRefuelCheaperAndFuelFit</li>
+                <li>@Resources.Home.WhereDesiredNetworkGasStations</li>
+                <li>@Resources.Home.HowMoneySpent</li>
+                <li>@Resources.Home.WhenNeedMaintenance</li>
+                <li>@Resources.Home.ComparisonCars</li>
             </ul><ul class="problem-list plus-list">
-                <li>Отображение цен на топливо из разных источников</li>
-                <li>Получение POI точек и показ на карте</li>
-                <li>Запоминание событий связанных с автомобилем и ведение статистики</li>
-                <li>Планирование и составление графика будущего тех обслуживания</li>
-                <li>Предоставление информации о других авто</li>
+                <li>@Resources.Home.DisplayFuelPrices</li>
+                <li>@Resources.Home.GettingPoiPoints</li>
+                <li>@Resources.Home.RememberEvents</li>
+                <li>@Resources.Home.PlanningService</li>
+                <li>@Resources.Home.ProvidingInformationAboutOtherCars</li>
             </ul>
         </div><!--end-conteiner-->
     </div><!--end problem-block-->

@@ -286,6 +286,16 @@
     <Compile Include="Regions.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Account\Account.en.Designer.cs">
+      <DependentUpon>Account.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Account\Account.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Account.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\CarConsumption\CarConsumption.en.Designer.cs">
       <DependentUpon>CarConsumption.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -346,12 +356,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Hicharts.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Home.en.Designer.cs">
+    <Compile Include="Resources\Home\Home.en.Designer.cs">
       <DependentUpon>Home.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\Home.Designer.cs">
+    <Compile Include="Resources\Home\Home.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Home.resx</DependentUpon>
@@ -1590,6 +1600,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Account\Account.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Account.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Account\Account.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Account.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\CarConsumption\CarConsumption.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CarConsumption.en.Designer.cs</LastGenOutput>
@@ -1650,12 +1670,12 @@
       <LastGenOutput>Hicharts.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Home.en.resx">
+    <EmbeddedResource Include="Resources\Home\Home.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Home.en.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Home.resx">
+    <EmbeddedResource Include="Resources\Home\Home.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Home.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>

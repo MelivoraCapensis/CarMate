@@ -1,28 +1,13 @@
 ﻿@model CarMate.Models.RegisterExternalLoginModel
 @{
-    ViewBag.Title = "Регистрация";
+    ViewBag.Title = Resources.Global.SignUp;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div class="container">
 
     <hgroup class="title">
         <h1>@ViewBag.Title.</h1>
-        <h2>Свяжите свою учетную запись в @ViewBag.ProviderDisplayName.</h2>
+        <h2>@Resources.Account.LinkAaccount @ViewBag.ProviderDisplayName.</h2>
     </hgroup>
 
     @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new {ReturnUrl = ViewBag.ReturnUrl}))
@@ -35,13 +20,12 @@
         <div class="form-horizontal">
 
             <p>
-                Вы прошли проверку через <strong>@ViewBag.ProviderDisplayName</strong>.
-                Введите имя пользователя на этом сайте ниже и нажмите кнопку "Регистрация", чтобы
-                завершить вход.
+                @Resources.Account.CheckSuccess <strong>@ViewBag.ProviderDisplayName</strong>.
+                @Resources.Account.EndRegister
             </p>
 
             <div class="form-group col-md-12">
-                @Html.LabelFor(m => m.UserName, "Имя пользователя", htmlAttributes: new {@class = "control-label col-md-2"})
+                @Html.LabelFor(m => m.UserName, Resources.Account.Nickname, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
                     @Html.TextBoxFor(m => m.UserName, null, htmlAttributes: new {@class = "form-control"})
                     @Html.ValidationMessageFor(m => m.UserName, "", new {@class = "text-danger"})
@@ -58,7 +42,7 @@
         </div>
 
         <p>
-            <input type="submit" value="Регистрация" class="btn btn-primary"/>
+            <input type="submit" value="@Resources.Global.SignUp" class="btn btn-primary"/>
             @*@Html.ActionLink("Назад", "Index", "Car", null, new { @class = "btn btn-primary" })*@
         </p>
 

@@ -91,7 +91,7 @@ namespace CarMate.Controllers
         //public JsonResult Edit(int unitDistanceId, int unitVolumeId)
         public JsonResult Edit(int unitFuelConsumptionId)
         {
-            return Json("Ok");
+            //return Json("Ok");
             Owner(HttpContext);
             //if (this.UserId != user.Id)
             //{

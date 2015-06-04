@@ -117,7 +117,103 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Register" xml:space="preserve">
-    <value>Register</value>
+  <data name="AdvantagesService" xml:space="preserve">
+    <value>Преимущества сервиса:</value>
+  </data>
+  <data name="BrandsAzs" xml:space="preserve">
+    <value>брендов АЗС</value>
+  </data>
+  <data name="CommentsAndRatings" xml:space="preserve">
+    <value>Комментарии и рейтинг</value>
+  </data>
+  <data name="ComparisonCars" xml:space="preserve">
+    <value>Сравнение своего авто с другими владельцами такого же авто</value>
+  </data>
+  <data name="DataFromOtherUsers" xml:space="preserve">
+    <value>Данные от других пользователей</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Учет затрат на автомобиль, статистика расходов, сравнение показателей</value>
+  </data>
+  <data name="DisplayFuelPrices" xml:space="preserve">
+    <value>Отображение цен на топливо из разных источников</value>
+  </data>
+  <data name="DisplayOnMap" xml:space="preserve">
+    <value>Отображение на карте</value>
+  </data>
+  <data name="DisseminationData" xml:space="preserve">
+    <value>Распространение данных</value>
+  </data>
+  <data name="FillingData" xml:space="preserve">
+    <value>Наполнение данными</value>
+  </data>
+  <data name="GettingPoiPoints" xml:space="preserve">
+    <value>Получение POI точек и показ на карте</value>
+  </data>
+  <data name="HelpsSaving" xml:space="preserve">
+    <value>Помогает экономить</value>
+  </data>
+  <data name="HowMoneySpent" xml:space="preserve">
+    <value>Сколько денег потрачено на содержание автомобиля за текущий год?</value>
+  </data>
+  <data name="HowWork" xml:space="preserve">
+    <value>Как работает?</value>
+  </data>
+  <data name="MarkAuto" xml:space="preserve">
+    <value>марок автомобилей</value>
+  </data>
+  <data name="MonitoringFuelPrices" xml:space="preserve">
+    <value>Мониторинг цен топлива</value>
+  </data>
+  <data name="PersonalProfile" xml:space="preserve">
+    <value>Личный профиль</value>
+  </data>
+  <data name="PlanningService" xml:space="preserve">
+    <value>Планирование и составление графика будущего тех обслуживания</value>
+  </data>
+  <data name="ProvidingInformationAboutOtherCars" xml:space="preserve">
+    <value>Предоставление информации о других авто</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="RememberEvents" xml:space="preserve">
+    <value>Запоминание событий связанных с автомобилем и ведение статистики</value>
+  </data>
+  <data name="RetrievingData" xml:space="preserve">
+    <value>Получение данных</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Экономия!</value>
+  </data>
+  <data name="ShowLocation" xml:space="preserve">
+    <value>Показывает местоположение</value>
+  </data>
+  <data name="ShowPrice" xml:space="preserve">
+    <value>Показывает цену</value>
+  </data>
+  <data name="StoredEvents" xml:space="preserve">
+    <value>Сохраняются события</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>CarMate мониторинг цен топлива, бортовой журнал</value>
+  </data>
+  <data name="WhatProblemsWeSolve" xml:space="preserve">
+    <value>Какие проблемы мы решаем?</value>
+  </data>
+  <data name="WhenNeedMaintenance" xml:space="preserve">
+    <value>Когда нужно сделать ТО или поменять масло и другие расходники?</value>
+  </data>
+  <data name="WhereDesiredNetworkGasStations" xml:space="preserve">
+    <value>Где находиться нужная сеть АЗС?</value>
+  </data>
+  <data name="WhereRefuelCheaperAndFuelFit" xml:space="preserve">
+    <value>Где заправиться дешевле и нужным топливом?</value>
+  </data>
+  <data name="WhyIsThis" xml:space="preserve">
+    <value>Зачем это?</value>
+  </data>
+  <data name="WhyIsThisAnswer" xml:space="preserve">
+    <value>Если водитель хочет экономить, мы предоставляем ему инструмент «Веб приложение» и «Длинные руки» в виде мобильного приложения. К этому пользователь добавляет свою мотивацию и в итоге получается ожидаемый результат – экономия.</value>
   </data>
 </root>
