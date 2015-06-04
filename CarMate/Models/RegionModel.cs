@@ -15,7 +15,8 @@ namespace CarMate.Models
         {
             RegionList = new List<SelectListItem>();
         }
-        [Display(Name = "Регион")]
+
+        [Display(Name = "Region", ResourceType = typeof(Resources.Map))]
         public int Id { set; get; }
         public IEnumerable<SelectListItem> RegionList { set; get; }
     }

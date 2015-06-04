@@ -54,10 +54,10 @@
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-            <li @CurrentItem("User", "Index")>@Html.ActionLink("Пользователи", "Index", "User", null, null)</li>
-            <li @CurrentItem("Car", "Index")>@Html.ActionLink("Транспортные средства", "Index", "Car", null, null)</li>
+            <li @CurrentItem("User", "Index")>@Html.ActionLink(Resources.Layout.Users, "Index", "User", null, null)</li>
+            <li @CurrentItem("Car", "Index")>@Html.ActionLink(Resources.Layout.MeansTransport, "Index", "Car", null, null)</li>
             <li id="menu_map">
-                @Html.ActionLink("Карта", "GetMap", "Map")
+                @Html.ActionLink(Resources.Layout.Map, "GetMap", "Map")
             </li>
         </ul>
     </nav>
@@ -94,9 +94,9 @@
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
                     <h4>
-                        <strong>Start Up</strong>
+                        <strong>@Resources.Layout.Startup</strong>
                     </h4>
-                    <p>Академия ШАГ<br>Запорожье, Украина</p>
+                    <p>@Resources.Layout.StepAcademy<br>@Resources.Layout.ZaporozhyeUkraine</p>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-phone fa-fw"></i> (096) 812-0884</li>
                         <li>

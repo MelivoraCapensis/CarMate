@@ -13,7 +13,7 @@ namespace CarMate.Models
         {
             CountryList = new List<SelectListItem>();
         }
-        [Display(Name = "Страна")]
+        [Display(Name = "Country", ResourceType = typeof(Resources.Map))]
         public int Id { get; set; }
         public IEnumerable<SelectListItem> CountryList { set; get; }
     }

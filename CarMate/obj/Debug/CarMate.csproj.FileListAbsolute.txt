@@ -1007,9 +1007,7 @@ D:\CarMate\CarMate\CarMate\obj\Debug\CarMate.csprojResolveAssemblyReference.cach
 D:\CarMate\CarMate\CarMate\obj\Debug\CarMate.dll
 D:\CarMate\CarMate\CarMate\obj\Debug\CarMate.pdb
 D:\Git\CarMate\CarMate\obj\Debug\CarMate.csproj.GenerateResource.Cache
-D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Home.resources
 D:\Git\CarMate\CarMate\bin\en\CarMate.resources.dll
-D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Home.en.resources
 D:\Git\CarMate\CarMate\obj\Debug\en\CarMate.resources.dll
 D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Car.Car.resources
 D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Car.Car.en.resources
@@ -1046,3 +1044,11 @@ D:\CarMate\CarMate\CarMate\obj\Debug\CarMate.Resources.Account.Account.resources
 D:\CarMate\CarMate\CarMate\obj\Debug\CarMate.Resources.Account.Account.en.resources
 D:\CarMate\CarMate\CarMate\obj\Debug\CarMate.Resources.Home.Home.resources
 D:\CarMate\CarMate\CarMate\obj\Debug\CarMate.Resources.Home.Home.en.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Account.Account.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Home.Home.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Layout.Layout.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Account.Account.en.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Home.Home.en.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Layout.Layout.en.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Map.Map.resources
+D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Map.Map.en.resources

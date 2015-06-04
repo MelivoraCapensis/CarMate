@@ -1,12 +1,12 @@
 ﻿@model CarMate.Users
 
 @{
-    ViewBag.Title = "Гараж пользовалетя " + Model.Nickname;
+    ViewBag.Title = Resources.User.GarageUser + Model.Nickname;
 }
 
 <div class="container">
 
-        <h2>Гараж пользовалетя @Model.Nickname</h2>
+        <h2>@ViewBag.Title</h2>
 
     <div class="row"> <!-- users wrapper row -->
         <div class="col-lg-12"> <!-- users wrapper col -->
@@ -18,7 +18,7 @@
                             @if (ViewBag.IsOwner != null && ViewBag.IsOwner == false)
                             {
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#SendMessage_@Model.Nickname">
-                                    Отправить сообщение
+                                    @Resources.User.SendMessage
                                 </button>
 
                                 @Html.Partial("_PartSendMessage", Model)
@@ -26,11 +26,11 @@
                         </div>
                         <div class="col-xs-8">
                             @*<p>Страна: @Model.country, Область: , Город: @Model.city</p>*@
-                            <p>Дата регистрации: @Model.DateRegister.ToString("dd.MM.yyyy")</p>
+                            <p>@Resources.User.DateRegister: @Model.DateRegister.ToString("dd.MM.yyyy")</p>
                             @{
                                 int day = (DateTime.Now - @Model.DateRegister.AddDays(-1)).Days;
                             }
-                            <p>Дней с сайтом: @day</p>
+                            <p>@Resources.User.DaysWithSite: @day</p>
                         </div><!-- End col -->
                     </div><!-- End row -->
                 </div> <!-- End Container-fluid -->
@@ -42,7 +42,7 @@
         <div class=" col-lg-offset-3 col-lg-6 text-center">
             @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
             {
-                @Html.ActionLink("Добавить транспортное средство", "Create", "Car", new { userId = @Model.Id }, new { @class = "btn btn-primary btn-lg btn-block" })
+                @Html.ActionLink(Resources.User.AddVehicle, "Create", "Car", new { userId = @Model.Id }, new { @class = "btn btn-primary btn-lg btn-block" })
             }
         </div>
     </div>
@@ -73,27 +73,27 @@
                                             <h3>@car.CarModels.CarBrands.Brand @(" - ") @car.CarModels.Model</h3>
                                         }
 
-                                        <p>Марка: @car.CarModels.CarBrands.Brand</p>
-                                        <p>Модель: @car.CarModels.Model</p>
+                                        <p>@Resources.Car.Brand: @car.CarModels.CarBrands.Brand</p>
+                                        <p>@Resources.Car.Model: @car.CarModels.Model</p>
 
                                         <p>
-                                            Модификация:
+                                            @Resources.Car.Modification:
                                             @if (@car.ModificationId != null)
                                             {
                                                 @car.CarModifications.Modification
                                             }
                                         </p>
 
-                                        <p>Количество просмотров: @*@car.viewCount*@</p>
+                                        <p>@Resources.User.ViewsCount: @*@car.viewCount*@</p>
                                         @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                                         {
                                             <p>
-                                                @Html.ActionLink("Удалить", "Delete", "Car", new {id = car.Id}, new {@class = "btn btn-primary"})
-                                                @Html.ActionLink("Редактировать", "Edit", "Car", new {id = car.Id}, new {@class = "btn btn-primary"})
+                                                @Html.ActionLink(Resources.Global.Delete, "Delete", "Car", new {id = car.Id}, new {@class = "btn btn-primary"})
+                                                @Html.ActionLink(Resources.Global.Edit, "Edit", "Car", new { id = car.Id }, new { @class = "btn btn-primary" })
                                             </p>
                                         }
                                         @*@Html.ActionLink("Подробнее", "Details", "Car", new {id = car.Id}, new {@class = "btn btn-success"})*@
-                                        @Html.ActionLink("Подробнее", "Index", "CarEvents", new { carId = car.Id }, new { @class = "btn btn-success" })
+                                        @Html.ActionLink(Resources.Global.Details, "Index", "CarEvents", new { carId = car.Id }, new { @class = "btn btn-success" })
                                     </div><!-- End col 12-->
                                 </div><!-- End row-->
                             </div> <!-- End container-fluid -->
@@ -105,7 +105,7 @@
                 {
                     <div class="col-lg-12">
                         <div class="alert alert-danger">
-                            У пользователя в гараже нет транспортных средств.
+                            @Resources.User.UserDontHaveVechicle
                         </div>
                     </div>
                 }

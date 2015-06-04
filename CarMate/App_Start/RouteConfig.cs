@@ -35,6 +35,7 @@ namespace CarMate
                 new {controller = "Region", action = "RegionByCountry"},
                 new[] {"CarMate.Controllers"});
 
+            // БЕЗ НЕГО НЕ РАБОТАЕТ КАРТА
             routes.MapRoute("PostlstSquirrel",
                 "map/postlstSquirrel",
                 new {controller = "Map", action = "PostlstSquirrel"},

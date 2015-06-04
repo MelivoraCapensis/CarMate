@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CarMate.Users>
 
 @{
-    ViewBag.Title = "Все пользователи";
+    ViewBag.Title = Resources.User.AllUsers;
 }
 
 <div class="container">
@@ -33,13 +33,13 @@
                                         <h4 class="media-heading">@Html.ActionLink(@user.Nickname, "Details", new {id = user.Id})</h4>
 
                                         @*<p>Страна: @user.ccountry, Область: , Город: @user.city</p>*@
-                                        <p>Дата регистрации: @user.DateRegister.ToString("dd.MM.yyyy")</p>
+                                        <p>@Resources.User.DateRegister: @user.DateRegister.ToString("dd.MM.yyyy")</p>
                                         @{
                                             int day = (DateTime.Now - @user.DateRegister.AddDays(-1)).Days;
                                         }
-                                        <p>Дней с сайтом: @day</p>
+                                        <p>@Resources.User.DaysWithSite: @day</p>
                                         <div>
-                                            Гараж:
+                                            @Resources.User.Garage:
                                             @if (user.Cars.Any())
                                             {
                                                 var cars = user.Cars.ToList();
@@ -64,7 +64,7 @@
                                         @if (ViewBag.Owner != null && ViewBag.Owner != @user.Id)
                                         {
                                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#SendMessage_@user.Nickname">
-                                                Отправить сообщение
+                                                @Resources.User.SendMessage
                                             </button>
 
                                             @Html.Partial("_PartSendMessage", user)
