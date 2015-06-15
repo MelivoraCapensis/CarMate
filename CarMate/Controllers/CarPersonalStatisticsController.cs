@@ -14,16 +14,16 @@ namespace CarMate.Controllers
         public ActionResult Index(int carId)
         {
             CarAndUserInit(carId);
-            var carEvents = db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+            var carEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
 
             return View(carEvents);
         }
 
         public void CarAndUserInit(int carId)
         {
-            var car = db.Cars.Find(carId);
+            var car = Db.Cars.Find(carId);
             ViewBag.Car = car;
-            ViewBag.User = db.Users.Find(car.UserId);
+            ViewBag.User = Db.Users.Find(car.UserId);
         }
 
     }

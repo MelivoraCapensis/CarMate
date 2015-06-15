@@ -19,11 +19,29 @@ namespace CarMate
             //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             //);
 
+            // Моя локализация
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{culture}/{controller}/{action}/{id}",
+            //    defaults: new {culture = "ru", controller = "Home", action = "Index", id = UrlParameter.Optional}
+            //);
+
             routes.MapRoute(
-                name: "Default",
-                url: "{culture}/{controller}/{action}/{id}",
-                defaults: new {culture = "ru", controller = "Home", action = "Index", id = UrlParameter.Optional}
+                name: "lang",
+                url: "{lang}/{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                constraints: new { lang = @"ru|en" },
+                namespaces: new[] { "CarMate.Controllers" }
             );
+
+            routes.MapRoute(
+                name: "default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, lang = "ru" },
+                namespaces: new[] { "CarMate.Controllers" }
+            );
+
+
 
             routes.MapRoute("ByCountry",
                 "country/bycountry",

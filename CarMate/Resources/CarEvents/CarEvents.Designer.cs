@@ -223,6 +223,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Поле Одометр обязательно для заполнения.
+        /// </summary>
+        public static string OdometerRequired {
+            get {
+                return ResourceManager.GetString("OdometerRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Опции.
         /// </summary>
         public static string Options {

@@ -100,6 +100,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarTransmissionLang">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarTransmissionId" Type="int" Nullable="false" />
+          <Property Name="LanguageId" Type="int" Nullable="false" />
           <Property Name="NameTransmission" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="CarTypes">
@@ -140,6 +148,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LanguageId" Type="int" />
         </EntityType>
         <EntityType Name="FuelCategories">
           <Key>
@@ -150,6 +159,14 @@
           <Property Name="Category" Type="nvarchar" MaxLength="20" />
           <Property Name="DateCreate" Type="datetime" Nullable="false" />
           <Property Name="State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="LogBook">
           <Key>
@@ -206,9 +223,18 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NameUnit" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Correction" Type="float" Nullable="false" />
           <Property Name="UnitFuelConsumptionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UnitDistanceLang">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitDistanceId" Type="int" Nullable="false" />
+          <Property Name="LanguageId" Type="int" Nullable="false" />
+          <Property Name="NameUnit" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UnitFuelConsumption">
           <Key>
@@ -245,6 +271,7 @@
           <Property Name="UnitDistanceId" Type="int" Nullable="false" />
           <Property Name="UnitVolumeId" Type="int" Nullable="false" />
           <Property Name="UnitFuelConsumptionId" Type="int" Nullable="false" />
+          <Property Name="LanguageId" Type="int" />
         </EntityType>
         <EntityType Name="VendorAliases">
           <Key>
@@ -310,6 +337,30 @@
             </Principal>
             <Dependent Role="Cars">
               <PropertyRef Name="FuelCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarTransmissionLang_fk_CarTransmissin">
+          <End Role="CarTransmission" Type="Self.CarTransmission" Multiplicity="1" />
+          <End Role="CarTransmissionLang" Type="Self.CarTransmissionLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarTransmission">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarTransmissionLang">
+              <PropertyRef Name="CarTransmissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarTransmissionLang_fk_Language">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="CarTransmissionLang" Type="Self.CarTransmissionLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarTransmissionLang">
+              <PropertyRef Name="LanguageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -601,6 +652,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="UnitDistanceLang_fk_Language">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="UnitDistanceLang" Type="Self.UnitDistanceLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitDistanceLang">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UnitDistanceLang_fk_UnitDistance">
+          <End Role="UnitDistance" Type="Self.UnitDistance" Multiplicity="1" />
+          <End Role="UnitDistanceLang" Type="Self.UnitDistanceLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitDistance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitDistanceLang">
+              <PropertyRef Name="UnitDistanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="UnitVolume_fk_UnitFuelConsumption">
           <End Role="UnitFuelConsumption" Type="Self.UnitFuelConsumption" Multiplicity="1" />
           <End Role="UnitVolume" Type="Self.UnitVolume" Multiplicity="*" />
@@ -610,6 +685,18 @@
             </Principal>
             <Dependent Role="UnitVolume">
               <PropertyRef Name="UnitFuelConsumptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Users_fk_Langusges">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="LanguageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -695,17 +782,20 @@
           <EntitySet Name="CarNode" EntityType="Self.CarNode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarTransmission" EntityType="Self.CarTransmission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarTransmissionLang" EntityType="Self.CarTransmissionLang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarTypes" EntityType="Self.CarTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventTypes" EntityType="Self.EventTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FuelCategories" EntityType="Self.FuelCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogBook" EntityType="Self.LogBook" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Placemarks" EntityType="Self.Placemarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prices" EntityType="Self.Prices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Regions" EntityType="Self.Regions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitDistance" EntityType="Self.UnitDistance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitDistanceLang" EntityType="Self.UnitDistanceLang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitFuelConsumption" EntityType="Self.UnitFuelConsumption" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitVolume" EntityType="Self.UnitVolume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -726,6 +816,14 @@
           <AssociationSet Name="Cars_fk_FuelCategory" Association="Self.Cars_fk_FuelCategory">
             <End Role="FuelCategories" EntitySet="FuelCategories" />
             <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CarTransmissionLang_fk_CarTransmissin" Association="Self.CarTransmissionLang_fk_CarTransmissin">
+            <End Role="CarTransmission" EntitySet="CarTransmission" />
+            <End Role="CarTransmissionLang" EntitySet="CarTransmissionLang" />
+          </AssociationSet>
+          <AssociationSet Name="CarTransmissionLang_fk_Language" Association="Self.CarTransmissionLang_fk_Language">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="CarTransmissionLang" EntitySet="CarTransmissionLang" />
           </AssociationSet>
           <AssociationSet Name="Events_fk_EventType" Association="Self.Events_fk_EventType">
             <End Role="EventTypes" EntitySet="EventTypes" />
@@ -823,9 +921,21 @@
             <End Role="UnitFuelConsumption" EntitySet="UnitFuelConsumption" />
             <End Role="UnitDistance" EntitySet="UnitDistance" />
           </AssociationSet>
+          <AssociationSet Name="UnitDistanceLang_fk_Language" Association="Self.UnitDistanceLang_fk_Language">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="UnitDistanceLang" EntitySet="UnitDistanceLang" />
+          </AssociationSet>
+          <AssociationSet Name="UnitDistanceLang_fk_UnitDistance" Association="Self.UnitDistanceLang_fk_UnitDistance">
+            <End Role="UnitDistance" EntitySet="UnitDistance" />
+            <End Role="UnitDistanceLang" EntitySet="UnitDistanceLang" />
+          </AssociationSet>
           <AssociationSet Name="UnitVolume_fk_UnitFuelConsumption" Association="Self.UnitVolume_fk_UnitFuelConsumption">
             <End Role="UnitFuelConsumption" EntitySet="UnitFuelConsumption" />
             <End Role="UnitVolume" EntitySet="UnitVolume" />
+          </AssociationSet>
+          <AssociationSet Name="Users_fk_Langusges" Association="Self.Users_fk_Langusges">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="Users_fk_Region" Association="Self.Users_fk_Region">
             <End Role="Regions" EntitySet="Regions" />
@@ -905,10 +1015,10 @@
           <Property Name="NameEvent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateCreate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="State" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EventTypes" Relationship="Self.Events_fk_EventType" FromRole="CarEvents" ToRole="EventTypes" />
           <NavigationProperty Name="FuelCategories" Relationship="Self.Events_fk_FuelCategory" FromRole="CarEvents" ToRole="FuelCategories" />
           <NavigationProperty Name="LogBook" Relationship="Self.fk_Charging_chargingid" FromRole="CarEvents" ToRole="LogBook" />
           <NavigationProperty Name="Cars" Relationship="CarMateModel.fk_Charging_carId" FromRole="CarEvents" ToRole="Cars" />
+          <NavigationProperty Name="EventTypes" Relationship="CarMateModel.Events_fk_EventType" FromRole="CarEvents" ToRole="EventTypes" />
         </EntityType>
         <EntityType Name="CarModels">
           <Key>
@@ -941,14 +1051,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="CarDetails" Relationship="Self.CarDetails_fk_CarNode" FromRole="CarNode" ToRole="CarDetails" />
-        </EntityType>
-        <EntityType Name="CarTransmission">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameTransmission" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Cars" Relationship="CarMateModel.Cars_fk_CarTransmission" FromRole="CarTransmission" ToRole="Cars" />
         </EntityType>
         <EntityType Name="CarTypes">
           <Key>
@@ -988,14 +1090,6 @@
           <NavigationProperty Name="Placemarks" Relationship="Self.fk_Placemarks_countryId" FromRole="Countries" ToRole="Placemarks" />
           <NavigationProperty Name="Regions" Relationship="Self.fk_Regions_countryId" FromRole="Countries" ToRole="Regions" />
           <NavigationProperty Name="Vendors" Relationship="Self.fk_Vendors_countryId" FromRole="Countries" ToRole="Vendors" />
-        </EntityType>
-        <EntityType Name="EventTypes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="CarEvents" Relationship="Self.Events_fk_EventType" FromRole="EventTypes" ToRole="CarEvents" />
         </EntityType>
         <EntityType Name="FuelCategories">
           <Key>
@@ -1077,17 +1171,6 @@
           <NavigationProperty Name="Prices" Relationship="Self.fk_Regions_regionId" FromRole="Regions" ToRole="Prices" />
           <NavigationProperty Name="Users" Relationship="Self.Users_fk_Region" FromRole="Regions" ToRole="Users" />
         </EntityType>
-        <EntityType Name="UnitDistance">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameUnit" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Correction" Type="Double" Nullable="false" />
-          <Property Name="UnitFuelConsumptionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UnitFuelConsumption" Relationship="Self.UnitDistance_fk_UnitFuelConsumtion" FromRole="UnitDistance" ToRole="UnitFuelConsumption" />
-          <NavigationProperty Name="Users" Relationship="Self.Users_fk_UnitDistance" FromRole="UnitDistance" ToRole="Users" />
-        </EntityType>
         <EntityType Name="UnitFuelConsumption">
           <Key>
             <PropertyRef Name="Id" />
@@ -1095,9 +1178,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameUnit" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Correction" Type="Double" Nullable="false" />
-          <NavigationProperty Name="UnitDistance" Relationship="Self.UnitDistance_fk_UnitFuelConsumtion" FromRole="UnitFuelConsumption" ToRole="UnitDistance" />
           <NavigationProperty Name="UnitVolume" Relationship="Self.UnitVolume_fk_UnitFuelConsumption" FromRole="UnitFuelConsumption" ToRole="UnitVolume" />
           <NavigationProperty Name="Users" Relationship="Self.Users_fk_UnitFuelConsumption" FromRole="UnitFuelConsumption" ToRole="Users" />
+          <NavigationProperty Name="UnitDistance" Relationship="CarMateModel.UnitDistance_fk_UnitFuelConsumtion" FromRole="UnitFuelConsumption" ToRole="UnitDistance" />
         </EntityType>
         <EntityType Name="UnitVolume">
           <Key>
@@ -1129,10 +1212,12 @@
           <Property Name="UnitVolumeId" Type="Int32" Nullable="false" />
           <Property Name="UnitFuelConsumptionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Regions" Relationship="Self.Users_fk_Region" FromRole="Users" ToRole="Regions" />
-          <NavigationProperty Name="UnitDistance" Relationship="Self.Users_fk_UnitDistance" FromRole="Users" ToRole="UnitDistance" />
           <NavigationProperty Name="UnitFuelConsumption" Relationship="Self.Users_fk_UnitFuelConsumption" FromRole="Users" ToRole="UnitFuelConsumption" />
           <NavigationProperty Name="UnitVolume" Relationship="Self.Users_fk_UnitVolume" FromRole="Users" ToRole="UnitVolume" />
           <NavigationProperty Name="Cars" Relationship="CarMateModel.fk_Cars_userId" FromRole="Users" ToRole="Cars" />
+          <Property Name="LanguageId" Type="Int32" />
+          <NavigationProperty Name="Languages" Relationship="CarMateModel.Users_fk_Langusges" FromRole="Users" ToRole="Languages" />
+          <NavigationProperty Name="UnitDistance" Relationship="CarMateModel.Users_fk_UnitDistance" FromRole="Users" ToRole="UnitDistance" />
         </EntityType>
         <EntityType Name="VendorAliases">
           <Key>
@@ -1204,18 +1289,6 @@
             </Principal>
             <Dependent Role="CarDetails">
               <PropertyRef Name="CarNodeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Events_fk_EventType">
-          <End Role="EventTypes" Type="Self.EventTypes" Multiplicity="1" />
-          <End Role="CarEvents" Type="Self.CarEvents" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EventTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CarEvents">
-              <PropertyRef Name="EventTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1411,30 +1484,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UnitDistance_fk_UnitFuelConsumtion">
-          <End Role="UnitFuelConsumption" Type="Self.UnitFuelConsumption" Multiplicity="1" />
-          <End Role="UnitDistance" Type="Self.UnitDistance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UnitFuelConsumption">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UnitDistance">
-              <PropertyRef Name="UnitFuelConsumptionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Users_fk_UnitDistance">
-          <End Role="UnitDistance" Type="Self.UnitDistance" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UnitDistance">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="UnitDistanceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="UnitVolume_fk_UnitFuelConsumption">
           <End Role="UnitFuelConsumption" Type="Self.UnitFuelConsumption" Multiplicity="1" />
           <End Role="UnitVolume" Type="Self.UnitVolume" Multiplicity="*" />
@@ -1491,18 +1540,15 @@
           <EntitySet Name="CarModels" EntityType="Self.CarModels" />
           <EntitySet Name="CarModifications" EntityType="Self.CarModifications" />
           <EntitySet Name="CarNode" EntityType="Self.CarNode" />
-          <EntitySet Name="CarTransmission" EntityType="Self.CarTransmission" />
           <EntitySet Name="CarTypes" EntityType="Self.CarTypes" />
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" />
           <EntitySet Name="Countries" EntityType="Self.Countries" />
-          <EntitySet Name="EventTypes" EntityType="Self.EventTypes" />
           <EntitySet Name="FuelCategories" EntityType="Self.FuelCategories" />
           <EntitySet Name="LogBook" EntityType="Self.LogBook" />
           <EntitySet Name="Placemarks" EntityType="Self.Placemarks" />
           <EntitySet Name="Prices" EntityType="Self.Prices" />
           <EntitySet Name="Regions" EntityType="Self.Regions" />
-          <EntitySet Name="UnitDistance" EntityType="Self.UnitDistance" />
           <EntitySet Name="UnitFuelConsumption" EntityType="Self.UnitFuelConsumption" />
           <EntitySet Name="UnitVolume" EntityType="Self.UnitVolume" />
           <EntitySet Name="Users" EntityType="Self.Users" />
@@ -1523,10 +1569,6 @@
           <AssociationSet Name="CarDetails_fk_CarNode" Association="Self.CarDetails_fk_CarNode">
             <End Role="CarNode" EntitySet="CarNode" />
             <End Role="CarDetails" EntitySet="CarDetails" />
-          </AssociationSet>
-          <AssociationSet Name="Events_fk_EventType" Association="Self.Events_fk_EventType">
-            <End Role="EventTypes" EntitySet="EventTypes" />
-            <End Role="CarEvents" EntitySet="CarEvents" />
           </AssociationSet>
           <AssociationSet Name="Events_fk_FuelCategory" Association="Self.Events_fk_FuelCategory">
             <End Role="FuelCategories" EntitySet="FuelCategories" />
@@ -1592,14 +1634,6 @@
             <End Role="Regions" EntitySet="Regions" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="UnitDistance_fk_UnitFuelConsumtion" Association="Self.UnitDistance_fk_UnitFuelConsumtion">
-            <End Role="UnitFuelConsumption" EntitySet="UnitFuelConsumption" />
-            <End Role="UnitDistance" EntitySet="UnitDistance" />
-          </AssociationSet>
-          <AssociationSet Name="Users_fk_UnitDistance" Association="Self.Users_fk_UnitDistance">
-            <End Role="UnitDistance" EntitySet="UnitDistance" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="UnitVolume_fk_UnitFuelConsumption" Association="Self.UnitVolume_fk_UnitFuelConsumption">
             <End Role="UnitFuelConsumption" EntitySet="UnitFuelConsumption" />
             <End Role="UnitVolume" EntitySet="UnitVolume" />
@@ -1633,10 +1667,6 @@
             <End Role="CarModifications" EntitySet="CarModifications" />
             <End Role="Cars" EntitySet="Cars" />
           </AssociationSet>
-          <AssociationSet Name="Cars_fk_CarTransmission" Association="CarMateModel.Cars_fk_CarTransmission">
-            <End Role="CarTransmission" EntitySet="CarTransmission" />
-            <End Role="Cars" EntitySet="Cars" />
-          </AssociationSet>
           <AssociationSet Name="Cars_fk_FuelCategory" Association="CarMateModel.Cars_fk_FuelCategory">
             <End Role="FuelCategories" EntitySet="FuelCategories" />
             <End Role="Cars" EntitySet="Cars" />
@@ -1648,6 +1678,48 @@
           <AssociationSet Name="fk_LogBook_carId" Association="CarMateModel.fk_LogBook_carId">
             <End Role="Cars" EntitySet="Cars" />
             <End Role="LogBook" EntitySet="LogBook" />
+          </AssociationSet>
+          <EntitySet Name="Languages" EntityType="CarMateModel.Languages" />
+          <AssociationSet Name="Users_fk_Langusges" Association="CarMateModel.Users_fk_Langusges">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="EventTypes" EntityType="CarMateModel.EventTypes" />
+          <AssociationSet Name="Events_fk_EventType" Association="CarMateModel.Events_fk_EventType">
+            <End Role="EventTypes" EntitySet="EventTypes" />
+            <End Role="CarEvents" EntitySet="CarEvents" />
+          </AssociationSet>
+          <EntitySet Name="CarTransmission" EntityType="CarMateModel.CarTransmission" />
+          <EntitySet Name="CarTransmissionLang" EntityType="CarMateModel.CarTransmissionLang" />
+          <AssociationSet Name="Cars_fk_CarTransmission" Association="CarMateModel.Cars_fk_CarTransmission">
+            <End Role="CarTransmission" EntitySet="CarTransmission" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CarTransmissionLang_fk_CarTransmissin" Association="CarMateModel.CarTransmissionLang_fk_CarTransmissin">
+            <End Role="CarTransmission" EntitySet="CarTransmission" />
+            <End Role="CarTransmissionLang" EntitySet="CarTransmissionLang" />
+          </AssociationSet>
+          <AssociationSet Name="CarTransmissionLang_fk_Language" Association="CarMateModel.CarTransmissionLang_fk_Language">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="CarTransmissionLang" EntitySet="CarTransmissionLang" />
+          </AssociationSet>
+          <EntitySet Name="UnitDistance" EntityType="CarMateModel.UnitDistance" />
+          <EntitySet Name="UnitDistanceLang" EntityType="CarMateModel.UnitDistanceLang" />
+          <AssociationSet Name="UnitDistanceLang_fk_Language" Association="CarMateModel.UnitDistanceLang_fk_Language">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="UnitDistanceLang" EntitySet="UnitDistanceLang" />
+          </AssociationSet>
+          <AssociationSet Name="UnitDistance_fk_UnitFuelConsumtion" Association="CarMateModel.UnitDistance_fk_UnitFuelConsumtion">
+            <End Role="UnitFuelConsumption" EntitySet="UnitFuelConsumption" />
+            <End Role="UnitDistance" EntitySet="UnitDistance" />
+          </AssociationSet>
+          <AssociationSet Name="UnitDistanceLang_fk_UnitDistance" Association="CarMateModel.UnitDistanceLang_fk_UnitDistance">
+            <End Role="UnitDistance" EntitySet="UnitDistance" />
+            <End Role="UnitDistanceLang" EntitySet="UnitDistanceLang" />
+          </AssociationSet>
+          <AssociationSet Name="Users_fk_UnitDistance" Association="CarMateModel.Users_fk_UnitDistance">
+            <End Role="UnitDistance" EntitySet="UnitDistance" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Cars">
@@ -1672,10 +1744,10 @@
           <NavigationProperty Name="CarEvents" Relationship="CarMateModel.fk_Charging_carId" FromRole="Cars" ToRole="CarEvents" />
           <NavigationProperty Name="CarModels" Relationship="CarMateModel.fk_Cars_modelId" FromRole="Cars" ToRole="CarModels" />
           <NavigationProperty Name="CarModifications" Relationship="CarMateModel.fk_Cars_modificationId" FromRole="Cars" ToRole="CarModifications" />
-          <NavigationProperty Name="CarTransmission" Relationship="CarMateModel.Cars_fk_CarTransmission" FromRole="Cars" ToRole="CarTransmission" />
           <NavigationProperty Name="FuelCategories" Relationship="CarMateModel.Cars_fk_FuelCategory" FromRole="Cars" ToRole="FuelCategories" />
           <NavigationProperty Name="Users" Relationship="CarMateModel.fk_Cars_userId" FromRole="Cars" ToRole="Users" />
           <NavigationProperty Name="LogBook" Relationship="CarMateModel.fk_LogBook_carId" FromRole="Cars" ToRole="LogBook" />
+          <NavigationProperty Name="CarTransmission" Relationship="CarMateModel.Cars_fk_CarTransmission" FromRole="Cars" ToRole="CarTransmission" />
         </EntityType>
         <Association Name="CarDetails_fk_Car">
           <End Type="CarMateModel.Cars" Role="Cars" Multiplicity="1" />
@@ -1725,18 +1797,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Cars_fk_CarTransmission">
-          <End Type="CarMateModel.CarTransmission" Role="CarTransmission" Multiplicity="0..1" />
-          <End Type="CarMateModel.Cars" Role="Cars" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CarTransmission">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Cars">
-              <PropertyRef Name="CarTransmissionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Cars_fk_FuelCategory">
           <End Type="CarMateModel.FuelCategories" Role="FuelCategories" Multiplicity="0..1" />
           <End Type="CarMateModel.Cars" Role="Cars" Multiplicity="*" />
@@ -1770,6 +1830,176 @@
             </Principal>
             <Dependent Role="LogBook">
               <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="CarMateModel.Users_fk_Langusges" FromRole="Languages" ToRole="Users" />
+          <NavigationProperty Name="CarTransmissionLang" Relationship="CarMateModel.CarTransmissionLang_fk_Language" FromRole="Languages" ToRole="CarTransmissionLang" />
+          <NavigationProperty Name="UnitDistanceLang" Relationship="CarMateModel.UnitDistanceLang_fk_Language" FromRole="Languages" ToRole="UnitDistanceLang" />
+        </EntityType>
+        <Association Name="Users_fk_Langusges">
+          <End Type="CarMateModel.Languages" Role="Languages" Multiplicity="0..1" />
+          <End Type="CarMateModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EventTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageId" Type="Int32" />
+          <NavigationProperty Name="CarEvents" Relationship="CarMateModel.Events_fk_EventType" FromRole="EventTypes" ToRole="CarEvents" />
+        </EntityType>
+        <Association Name="Events_fk_EventType">
+          <End Type="CarMateModel.EventTypes" Role="EventTypes" Multiplicity="1" />
+          <End Type="CarMateModel.CarEvents" Role="CarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarEvents">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CarTransmission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Cars" Relationship="CarMateModel.Cars_fk_CarTransmission" FromRole="CarTransmission" ToRole="Cars" />
+          <NavigationProperty Name="CarTransmissionLang" Relationship="CarMateModel.CarTransmissionLang_fk_CarTransmissin" FromRole="CarTransmission" ToRole="CarTransmissionLang" />
+        </EntityType>
+        <EntityType Name="CarTransmissionLang">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarTransmissionId" Type="Int32" Nullable="false" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="NameTransmission" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CarTransmission" Relationship="CarMateModel.CarTransmissionLang_fk_CarTransmissin" FromRole="CarTransmissionLang" ToRole="CarTransmission" />
+          <NavigationProperty Name="Languages" Relationship="CarMateModel.CarTransmissionLang_fk_Language" FromRole="CarTransmissionLang" ToRole="Languages" />
+        </EntityType>
+        <Association Name="Cars_fk_CarTransmission">
+          <End Type="CarMateModel.CarTransmission" Role="CarTransmission" Multiplicity="0..1" />
+          <End Type="CarMateModel.Cars" Role="Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarTransmission">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="CarTransmissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarTransmissionLang_fk_CarTransmissin">
+          <End Type="CarMateModel.CarTransmission" Role="CarTransmission" Multiplicity="1" />
+          <End Type="CarMateModel.CarTransmissionLang" Role="CarTransmissionLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarTransmission">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarTransmissionLang">
+              <PropertyRef Name="CarTransmissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarTransmissionLang_fk_Language">
+          <End Type="CarMateModel.Languages" Role="Languages" Multiplicity="1" />
+          <End Type="CarMateModel.CarTransmissionLang" Role="CarTransmissionLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarTransmissionLang">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UnitDistance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Correction" Type="Double" Nullable="false" />
+          <Property Name="UnitFuelConsumptionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UnitFuelConsumption" Relationship="CarMateModel.UnitDistance_fk_UnitFuelConsumtion" FromRole="UnitDistance" ToRole="UnitFuelConsumption" />
+          <NavigationProperty Name="UnitDistanceLang" Relationship="CarMateModel.UnitDistanceLang_fk_UnitDistance" FromRole="UnitDistance" ToRole="UnitDistanceLang" />
+          <NavigationProperty Name="Users" Relationship="CarMateModel.Users_fk_UnitDistance" FromRole="UnitDistance" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UnitDistanceLang">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitDistanceId" Type="Int32" Nullable="false" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="NameUnit" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Languages" Relationship="CarMateModel.UnitDistanceLang_fk_Language" FromRole="UnitDistanceLang" ToRole="Languages" />
+          <NavigationProperty Name="UnitDistance" Relationship="CarMateModel.UnitDistanceLang_fk_UnitDistance" FromRole="UnitDistanceLang" ToRole="UnitDistance" />
+        </EntityType>
+        <Association Name="UnitDistanceLang_fk_Language">
+          <End Type="CarMateModel.Languages" Role="Languages" Multiplicity="1" />
+          <End Type="CarMateModel.UnitDistanceLang" Role="UnitDistanceLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitDistanceLang">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UnitDistance_fk_UnitFuelConsumtion">
+          <End Type="CarMateModel.UnitFuelConsumption" Role="UnitFuelConsumption" Multiplicity="1" />
+          <End Type="CarMateModel.UnitDistance" Role="UnitDistance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitFuelConsumption">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitDistance">
+              <PropertyRef Name="UnitFuelConsumptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UnitDistanceLang_fk_UnitDistance">
+          <End Type="CarMateModel.UnitDistance" Role="UnitDistance" Multiplicity="1" />
+          <End Type="CarMateModel.UnitDistanceLang" Role="UnitDistanceLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitDistance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnitDistanceLang">
+              <PropertyRef Name="UnitDistanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Users_fk_UnitDistance">
+          <End Type="CarMateModel.UnitDistance" Role="UnitDistance" Multiplicity="1" />
+          <End Type="CarMateModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitDistance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UnitDistanceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1857,14 +2087,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CarTransmission">
-            <EntityTypeMapping TypeName="CarMateModel.CarTransmission">
-              <MappingFragment StoreEntitySet="CarTransmission">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="NameTransmission" ColumnName="NameTransmission" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CarTypes">
             <EntityTypeMapping TypeName="CarMateModel.CarTypes">
               <MappingFragment StoreEntitySet="CarTypes">
@@ -1898,14 +2120,6 @@
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="State" ColumnName="State" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventTypes">
-            <EntityTypeMapping TypeName="CarMateModel.EventTypes">
-              <MappingFragment StoreEntitySet="EventTypes">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1974,16 +2188,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UnitDistance">
-            <EntityTypeMapping TypeName="CarMateModel.UnitDistance">
-              <MappingFragment StoreEntitySet="UnitDistance">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
-                <ScalarProperty Name="Correction" ColumnName="Correction" />
-                <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UnitFuelConsumption">
             <EntityTypeMapping TypeName="CarMateModel.UnitFuelConsumption">
               <MappingFragment StoreEntitySet="UnitFuelConsumption">
@@ -2006,6 +2210,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CarMateModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RegionId" ColumnName="RegionId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -2060,6 +2265,61 @@
                 <ScalarProperty Name="ModificationId" ColumnName="ModificationId" />
                 <ScalarProperty Name="ModelId" ColumnName="ModelId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="CarMateModel.Languages">
+              <MappingFragment StoreEntitySet="Languages">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="CarMateModel.EventTypes">
+              <MappingFragment StoreEntitySet="EventTypes">
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarTransmission">
+            <EntityTypeMapping TypeName="CarMateModel.CarTransmission">
+              <MappingFragment StoreEntitySet="CarTransmission">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarTransmissionLang">
+            <EntityTypeMapping TypeName="CarMateModel.CarTransmissionLang">
+              <MappingFragment StoreEntitySet="CarTransmissionLang">
+                <ScalarProperty Name="NameTransmission" ColumnName="NameTransmission" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="CarTransmissionId" ColumnName="CarTransmissionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitDistance">
+            <EntityTypeMapping TypeName="CarMateModel.UnitDistance">
+              <MappingFragment StoreEntitySet="UnitDistance">
+                <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+                <ScalarProperty Name="Correction" ColumnName="Correction" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitDistanceLang">
+            <EntityTypeMapping TypeName="CarMateModel.UnitDistanceLang">
+              <MappingFragment StoreEntitySet="UnitDistanceLang">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="UnitDistanceId" ColumnName="UnitDistanceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

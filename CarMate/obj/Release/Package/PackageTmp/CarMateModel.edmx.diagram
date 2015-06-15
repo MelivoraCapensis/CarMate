@@ -12,18 +12,15 @@
         <EntityTypeShape EntityType="CarMateModel.CarModels" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CarModifications" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CarNode" Width="1.5" PointX="11.25" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarMateModel.CarTransmission" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CarTypes" Width="1.5" PointX="1.5" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.Categories" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CategoryLog" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.Countries" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarMateModel.EventTypes" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.FuelCategories" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.LogBook" Width="1.5" PointX="10.5" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.Placemarks" Width="1.5" PointX="5.25" PointY="23.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.Prices" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.Regions" Width="1.5" PointX="3" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarMateModel.UnitDistance" Width="1.5" PointX="6" PointY="31" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.UnitFuelConsumption" Width="1.5" PointX="3.75" PointY="31" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.UnitVolume" Width="1.5" PointX="6" PointY="33.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.Users" Width="1.5" PointX="8.25" PointY="20.125" IsExpanded="true" />
@@ -33,7 +30,6 @@
         <AssociationConnector Association="CarMateModel.fk_CarBrands_carTypeId" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.fk_CarModels_brandId" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.CarDetails_fk_CarNode" ManuallyRouted="false" />
-        <AssociationConnector Association="CarMateModel.Events_fk_EventType" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.Events_fk_FuelCategory" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.fk_Charging_chargingid" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.fk_Modifications_modelId" ManuallyRouted="false" />
@@ -50,8 +46,6 @@
         <AssociationConnector Association="CarMateModel.fk_Prices_vendorId" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.fk_Regions_regionId" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.Users_fk_Region" ManuallyRouted="false" />
-        <AssociationConnector Association="CarMateModel.UnitDistance_fk_UnitFuelConsumtion" ManuallyRouted="false" />
-        <AssociationConnector Association="CarMateModel.Users_fk_UnitDistance" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.UnitVolume_fk_UnitFuelConsumption" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.Users_fk_UnitFuelConsumption" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.Users_fk_UnitVolume" ManuallyRouted="false" />
@@ -61,10 +55,24 @@
         <AssociationConnector Association="CarMateModel.fk_Charging_carId" />
         <AssociationConnector Association="CarMateModel.fk_Cars_modelId" />
         <AssociationConnector Association="CarMateModel.fk_Cars_modificationId" />
-        <AssociationConnector Association="CarMateModel.Cars_fk_CarTransmission" />
         <AssociationConnector Association="CarMateModel.Cars_fk_FuelCategory" />
         <AssociationConnector Association="CarMateModel.fk_Cars_userId" />
         <AssociationConnector Association="CarMateModel.fk_LogBook_carId" />
+        <EntityTypeShape EntityType="CarMateModel.Languages" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="CarMateModel.Users_fk_Langusges" />
+        <EntityTypeShape EntityType="CarMateModel.EventTypes" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="CarMateModel.Events_fk_EventType" />
+        <EntityTypeShape EntityType="CarMateModel.CarTransmission" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="CarMateModel.CarTransmissionLang" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="CarMateModel.Cars_fk_CarTransmission" />
+        <AssociationConnector Association="CarMateModel.CarTransmissionLang_fk_CarTransmissin" />
+        <AssociationConnector Association="CarMateModel.CarTransmissionLang_fk_Language" />
+        <EntityTypeShape EntityType="CarMateModel.UnitDistance" Width="1.5" PointX="6" PointY="37" />
+        <EntityTypeShape EntityType="CarMateModel.UnitDistanceLang" Width="1.5" PointX="8.25" PointY="16.875" />
+        <AssociationConnector Association="CarMateModel.UnitDistanceLang_fk_Language" />
+        <AssociationConnector Association="CarMateModel.UnitDistance_fk_UnitFuelConsumtion" />
+        <AssociationConnector Association="CarMateModel.UnitDistanceLang_fk_UnitDistance" />
+        <AssociationConnector Association="CarMateModel.Users_fk_UnitDistance" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

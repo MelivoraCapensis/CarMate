@@ -40,9 +40,9 @@ namespace CarMate
         public virtual ICollection<CarEvents> CarEvents { get; set; }
         public virtual CarModels CarModels { get; set; }
         public virtual CarModifications CarModifications { get; set; }
-        public virtual CarTransmission CarTransmission { get; set; }
         public virtual FuelCategories FuelCategories { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<LogBook> LogBook { get; set; }
+        public virtual CarTransmission CarTransmission { get; set; }
     }
 }

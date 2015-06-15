@@ -21,6 +21,7 @@ namespace CarMate
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<int> LanguageId { get; set; }
     
         public virtual ICollection<CarEvents> CarEvents { get; set; }
     }

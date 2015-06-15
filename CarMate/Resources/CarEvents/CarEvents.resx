@@ -171,6 +171,9 @@
   <data name="Odometer" xml:space="preserve">
     <value>Пробег</value>
   </data>
+  <data name="OdometerRequired" xml:space="preserve">
+    <value>Поле Одометр обязательно для заполнения</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Опции</value>
   </data>

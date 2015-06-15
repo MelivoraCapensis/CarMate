@@ -18,7 +18,7 @@ namespace CarMate.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                this.UserId = db.Users
+                this.UserId = Db.Users
                     .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
                     .Select(x => x.Id)
                     .FirstOrDefault();
@@ -30,7 +30,7 @@ namespace CarMate.Controllers
                 this.UserId = 0;
             }
 
-            return View(db.Users.ToList());
+            return View(Db.Users.ToList());
             //return View(new List<Users> { new Users(){
             //    LastName = "qewr", 
             //    FirstName = "fgdggf",
@@ -54,7 +54,7 @@ namespace CarMate.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            var user = db.Users.Find(id);
+            var user = Db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -62,7 +62,7 @@ namespace CarMate.Controllers
 
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                this.UserId = db.Users
+                this.UserId = Db.Users
                     .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
                     .Select(x => x.Id)
                     .FirstOrDefault();
@@ -101,18 +101,18 @@ namespace CarMate.Controllers
 
             if (ModelState.IsValid)
             {
-                Users userFromDb = db.Users.Find(UserId);
+                Users userFromDb = Db.Users.Find(UserId);
                 userFromDb.UnitFuelConsumptionId = unitFuelConsumptionId;
-                var unitDistanceId = db.UnitDistance.FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumptionId);
+                var unitDistanceId = Db.UnitDistance.FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumptionId);
                 if (unitDistanceId != null)
                     userFromDb.UnitDistanceId = unitDistanceId.Id;
 
-                var unitVolumeId = db.UnitVolume.FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumptionId);
+                var unitVolumeId = Db.UnitVolume.FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumptionId);
                 if (unitVolumeId != null)
                     userFromDb.UnitVolumeId = unitVolumeId.Id;
                 //userFromDb.UnitVolumeId = unitVolumeId;
 
-                db.SaveChanges();
+                Db.SaveChanges();
                 return Json("Ok");
             }
 
@@ -124,7 +124,7 @@ namespace CarMate.Controllers
             // Если пользователь авторизован
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                this.UserId = db.Users
+                this.UserId = Db.Users
                     .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
                     .Select(x => x.Id)
                     .FirstOrDefault();
@@ -137,7 +137,7 @@ namespace CarMate.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                this.UserId = db.Users
+                this.UserId = Db.Users
                     .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
                     .Select(x => x.Id)
                     .FirstOrDefault();
@@ -155,7 +155,7 @@ namespace CarMate.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            Db.Dispose();
             base.Dispose(disposing);
         }
 

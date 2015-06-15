@@ -16,15 +16,16 @@ namespace CarMate
     {
         public UnitDistance()
         {
+            this.UnitDistanceLang = new HashSet<UnitDistanceLang>();
             this.Users = new HashSet<Users>();
         }
     
         public int Id { get; set; }
-        public string NameUnit { get; set; }
         public double Correction { get; set; }
         public int UnitFuelConsumptionId { get; set; }
     
         public virtual UnitFuelConsumption UnitFuelConsumption { get; set; }
+        public virtual ICollection<UnitDistanceLang> UnitDistanceLang { get; set; }
         public virtual ICollection<Users> Users { get; set; }
     }
 }

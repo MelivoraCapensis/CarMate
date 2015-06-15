@@ -7,7 +7,7 @@ namespace CarMate.Classes
 {
     public static class ConverterUnitFuelConsumption
     {
-        public static double ConvertFuelConsumptionFromLitersOn100Km(string unitName, double fuelConsumption)
+        public static double ConverterFuelConsumptionLoad(string unitName, double fuelConsumption)
         {
             if (String.IsNullOrEmpty(unitName))
                 throw new ArgumentNullException();
@@ -24,7 +24,7 @@ namespace CarMate.Classes
             return fuelConsumption;
         }
 
-        public static double ConvertDistanceToLitersOn100Km(string unitName, double fuelConsumption)
+        public static double ConverterFuelConsumptionSave(string unitName, double fuelConsumption)
         {
             if (String.IsNullOrEmpty(unitName))
                 throw new ArgumentNullException();

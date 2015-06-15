@@ -20,7 +20,7 @@ namespace CarMate.Controllers
         // GET: /Car/
         public ActionResult Index()
         {
-            var cars = db.Cars.Include(c => c.CarModels).Include(c => c.CarModifications).Include(c => c.Users);
+            var cars = Db.Cars.Include(c => c.CarModels).Include(c => c.CarModifications).Include(c => c.Users);
             Owner(HttpContext);
 
             return View(cars.ToList());
@@ -33,7 +33,7 @@ namespace CarMate.Controllers
             // Если пользователь авторизован
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                this.UserId = db.Users
+                this.UserId = Db.Users
                     .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
                     .Select(x => x.Id)
                     .FirstOrDefault();
@@ -47,7 +47,7 @@ namespace CarMate.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Cars cars = db.Cars.Find(id);
+            Cars cars = Db.Cars.Find(id);
             if (cars == null)
             {
                 return HttpNotFound();
@@ -55,6 +55,11 @@ namespace CarMate.Controllers
             
             // Если пользователь авторизирован, ищем его Id в БД
             Owner(HttpContext);
+
+            InitViewBag(cars);
+            ConvertOdometrLoad(cars);
+            ConvertTankLoad(cars);
+            ConvertConsumptionLoad(cars);
 
             CarAndUserInit(id);
 
@@ -66,34 +71,53 @@ namespace CarMate.Controllers
 
         public void CarAndUserInit(int carId)
         {
-            var car = db.Cars.Find(carId);
+            var car = Db.Cars.Find(carId);
             ViewBag.Car = car;
-            ViewBag.User = db.Users.Find(car.UserId);
+            ViewBag.User = Db.Users.Find(car.UserId);
 
-            string unitDistance = db.Users.Find(car.UserId).UnitDistance.NameUnit;
-            ViewBag.UnitDistance = unitDistance;
-            if (car.Odometer != null)
-            {
-                car.Odometer = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, (double)car.Odometer));
-            }
+            //var unitDistanceLang = Db.Users.Find(car.UserId).UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);
+            //if (unitDistanceLang != null)
+            //{
+            //    string unitDistance = unitDistanceLang.NameUnit;
+            //    ViewBag.UnitDistance = unitDistance;
+            //    if (car.Odometer != null)
+            //    {
+            //        car.Odometer = (int)Math.Round(ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, unitDistance, (double)car.Odometer));
+            //    }
+            //}
+
+            //var unitDistanceLang = Db.Users.Find(car.UserId).UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);
+            //if (ViewBag.UnitDistance != null)
+            //{
+            //    if (car.Odometer != null)
+            //    {
+            //        car.Odometer = (int)Math.Round(
+            //            ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, ViewBag.UnitDistance, (double)car.Odometer));
+            //    }
+            //}
 
 
-            string unitFuelConsumption = db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
-            ViewBag.UnitFuelConsumption = unitFuelConsumption;
-            if (car.Consumption != null)
-            {
-                car.Consumption = Math.Round(
-                    ConverterUnitFuelConsumption.ConvertFuelConsumptionFromLitersOn100Km(unitFuelConsumption,
-                        (double)car.Consumption), 2);
-            }
+            //string unitFuelConsumption = Db.Users.Find(car.UserId).UnitFuelConsumption.NameUnit;
+            //ViewBag.UnitFuelConsumption = unitFuelConsumption;
+            //if (ViewBag.UnitFuelConsumption != null)
+            //{
+            //    if (car.Consumption != null)
+            //    {
+            //        car.Consumption = Math.Round(
+            //            ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption, (double)car.Consumption), 2);
+            //    }
+            //}
 
 
-            string unitVolume = db.Users.Find(car.UserId).UnitVolume.NameUnit;
-            ViewBag.UnitVolume = unitVolume;
-            if (car.Tank != null)
-            {
-                car.Tank = (int)Math.Round(ConverterUnitVolume.ConvertVolumeFromLiters(unitVolume, (int)car.Tank));
-            }
+            //string unitVolume = Db.Users.Find(car.UserId).UnitVolume.NameUnit;
+            //ViewBag.UnitVolume = unitVolume;
+            //if (ViewBag.UnitVolume != null)
+            //{
+            //    if (car.Tank != null)
+            //    {
+            //        car.Tank = (int)Math.Round(ConverterUnitVolume.ConvertVolumeFromLiters(ViewBag.UnitVolume, (int)car.Tank));
+            //    }
+            //}
         }
 
         //
@@ -153,12 +177,16 @@ namespace CarMate.Controllers
                     {
                         car.ImgPath = imgPath;
                     }
-                   
+
+                    InitViewBag(car);
+                    ConvertOdometrSave(car);
+                    ConvertTankSave(car);
+                    ConvertConsumptionSave(car);
 
                     car.DateCreate = DateTime.Now;
                     car.State = 0;
-                    db.Cars.Add(car);
-                    db.SaveChanges();
+                    Db.Cars.Add(car);
+                    Db.SaveChanges();
                     return RedirectToAction("Details", "Car", new { id = car.Id });
                 }
                 catch (Exception exc)
@@ -171,6 +199,8 @@ namespace CarMate.Controllers
             return View(car);
         }
 
+        
+
         //
         // GET: /Car/Edit/5
         //[ChildActionOnly]
@@ -179,7 +209,7 @@ namespace CarMate.Controllers
         {
             Owner(HttpContext);
 
-            Cars car = db.Cars.Find(id);
+            Cars car = Db.Cars.Find(id);
             if (car == null)
             {
                 return HttpNotFound();
@@ -190,12 +220,19 @@ namespace CarMate.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand", car.CarModels.CarBrands.Id);
-            ViewBag.modelId = new SelectList(db.CarModels, "id", "model", car.ModelId);
-            ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification", car.ModificationId);
+            ViewBag.brandId = new SelectList(Db.CarBrands, "id", "brand", car.CarModels.CarBrands.Id);
+            ViewBag.modelId = new SelectList(Db.CarModels, "id", "model", car.ModelId);
+            ViewBag.modificationId = new SelectList(Db.CarModifications, "id", "modification", car.ModificationId);
+
             InitViewBag(car);
+            ConvertOdometrLoad(car);
+            ConvertTankLoad(car);
+            ConvertConsumptionLoad(car);
+
             return View(car);
         }
+
+        
 
         //
         // POST: /Car/Edit/5
@@ -213,28 +250,39 @@ namespace CarMate.Controllers
 
             if (ModelState.IsValid)
             {
-                Cars carFromDb = db.Cars.Find(car.Id);
+                Cars carFromDb = Db.Cars.Find(car.Id);
                 carFromDb.ModelId = car.ModelId;
                 carFromDb.ModificationId = car.ModificationId;
-                carFromDb.Consumption = car.Consumption;
+                
+
+                InitViewBag(car);
+                ConvertOdometrSave(car);
                 carFromDb.Odometer = car.Odometer;
+
+                ConvertTankSave(car);
                 carFromDb.Tank = car.Tank;
+
+                ConvertConsumptionSave(car);
+                carFromDb.Consumption = car.Consumption;
+
                 carFromDb.FuelCategoryId = car.FuelCategoryId;
                 carFromDb.DateBuy = car.DateBuy;
                 carFromDb.CarTransmissionId = car.CarTransmissionId;
                 carFromDb.Rating = car.Rating;
                 carFromDb.ImgPath = car.ImgPath;
 
-                db.SaveChanges();
+                Db.SaveChanges();
                 return RedirectToAction("Details", "User", new { id = car.UserId });
             }
 
-            ViewBag.brandId = new SelectList(db.CarBrands, "id", "brand", car.CarModels.CarBrands.Id);
-            ViewBag.modelId = new SelectList(db.CarModels, "id", "model", car.ModelId);
-            ViewBag.modificationId = new SelectList(db.CarModifications, "id", "modification", car.ModificationId);
+            ViewBag.brandId = new SelectList(Db.CarBrands, "id", "brand", car.CarModels.CarBrands.Id);
+            ViewBag.modelId = new SelectList(Db.CarModels, "id", "model", car.ModelId);
+            ViewBag.modificationId = new SelectList(Db.CarModifications, "id", "modification", car.ModificationId);
             InitViewBag(car);
             return View(car);
         }
+
+        
 
         //
         // GET: /Car/Delete/5
@@ -243,7 +291,7 @@ namespace CarMate.Controllers
         {
             Owner(HttpContext);
 
-            Cars car = db.Cars.Find(id);
+            Cars car = Db.Cars.Find(id);
             if (car == null)
             {
                 return HttpNotFound();
@@ -267,35 +315,45 @@ namespace CarMate.Controllers
         {
             Owner(HttpContext);
 
-            Cars car = db.Cars.Find(id);
+            Cars car = Db.Cars.Find(id);
 
             if (this.UserId != car.UserId)
             {
                 return HttpNotFound();
             }
 
-            db.Cars.Remove(car);
-            db.SaveChanges();
+            Db.Cars.Remove(car);
+            Db.SaveChanges();
             return RedirectToAction("Details", "User", new {id = car.UserId});
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            Db.Dispose();
             base.Dispose(disposing);
         }
 
         public void InitViewBag(Cars car)
         {
-            ViewBag.User = db.Users.Find(this.UserId);
+            ViewBag.User = Db.Users.Find(this.UserId);
             if (car.CarModels != null)
-                ViewBag.BrandId = new SelectList(db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand", car.CarModels.BrandId);
+                ViewBag.BrandId = new SelectList(Db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand", car.CarModels.BrandId);
             else
             {
-                ViewBag.BrandId = new SelectList(db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand");
+                ViewBag.BrandId = new SelectList(Db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand");
             }
-            ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.Category), "Id", "Category", car.FuelCategoryId);
-            ViewBag.CarTransmissionId = new SelectList(db.CarTransmission.OrderBy(x => x.NameTransmission), "Id", "NameTransmission", car.CarTransmissionId);
+            ViewBag.FuelCategoryId = new SelectList(Db.FuelCategories.OrderBy(x => x.Category), "Id", "Category", car.FuelCategoryId);
+            ViewBag.CarTransmissionId = new SelectList(RepProvider.CarTransmission.Select(this.CurrentLang.Id).OrderBy(x => x.NameTransmission), "Id", "NameTransmission", car.CarTransmissionId);
+
+            Users user = Db.Users.Find(car.UserId);
+            var unitDistanceLang = user.UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);
+            if (unitDistanceLang != null)
+            {
+                ViewBag.UnitDistance = unitDistanceLang.NameUnit;
+            }
+            ViewBag.UnitFuelConsumption = user.UnitFuelConsumption.NameUnit;
+            ViewBag.UnitVolume = user.UnitVolume.NameUnit;
+            ViewBag.LanguageId = this.CurrentLang.Id;
         }
 
         public bool IsAuthenticated()
@@ -303,10 +361,88 @@ namespace CarMate.Controllers
             return HttpContext.User.Identity.IsAuthenticated;
         }
 
+        public void ConvertTankLoad(Cars car)
+        {
+            if (ViewBag.UnitVolume != null)
+            {
+                if (car.Tank != null)
+                {
+                    //ViewBag.UnitVolume = Db.Users.Find(carEvents.Cars.UserId).UnitVolume.NameUnit;
+                    car.Tank = (int)Math.Round(
+                        ConverterUnitVolume.ConvertVolumeFromLiters(ViewBag.UnitVolume, (double)car.Tank));
+                }
+            }
+        }
+
+        public void ConvertTankSave(Cars car)
+        {
+            if (ViewBag.UnitVolume != null)
+            {
+                if (car.Tank != null)
+                {
+                    //ViewBag.UnitVolume = Db.Users.Find(carEvents.Cars.UserId).UnitVolume.NameUnit;
+                    car.Tank = (int)Math.Round(
+                        ConverterUnitVolume.ConvertVolumeToLiters(ViewBag.UnitVolume, (double)car.Tank));
+                }
+            }
+        }
+
+        public void ConvertConsumptionLoad(Cars car)
+        {
+            if (ViewBag.UnitFuelConsumption != null)
+            {
+                if (car.Consumption != null)
+                {
+                    //ViewBag.UnitVolume = Db.Users.Find(carEvents.Cars.UserId).UnitVolume.NameUnit;
+                    car.Consumption = Math.Round(
+                        ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption, (double)car.Consumption), 2);
+                }
+            }
+        }
+
+        public void ConvertConsumptionSave(Cars car)
+        {
+            if (ViewBag.UnitFuelConsumption != null)
+            {
+                if (car.Consumption != null)
+                {
+                    //ViewBag.UnitVolume = Db.Users.Find(carEvents.Cars.UserId).UnitVolume.NameUnit;
+                    car.Consumption = Math.Round(
+                        ConverterUnitFuelConsumption.ConverterFuelConsumptionSave(ViewBag.UnitFuelConsumption, (double)car.Consumption), 2);
+                }
+            }
+        }
+
+        public void ConvertOdometrLoad(Cars car)
+        {
+            if (ViewBag.UnitDistance != null)
+            {
+                if (car.Odometer != null)
+                {
+                    car.Odometer = (int)Math.Round(
+                        ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, ViewBag.UnitDistance,
+                            (int)car.Odometer));
+                }
+            }
+        }
+
+        public void ConvertOdometrSave(Cars car)
+        {
+            if (ViewBag.UnitDistance != null)
+            {
+                if (car.Odometer != null)
+                {
+                    car.Odometer = (int)Math.Round(
+                        ConverterUnitDistance.ConverterDistanceSave(RepProvider, CurrentLang.Id, ViewBag.UnitDistance,
+                            (int)car.Odometer));
+                }
+            }
+        }
+
         public PartialViewResult GetModels(int brandId = 0)
         {
             ViewBag.ModelId = new SelectList(
-                db.CarModels.Where(x => x.BrandId == brandId)
+                Db.CarModels.Where(x => x.BrandId == brandId)
                     .Select(x => new {modelId = x.Id, x.Model})
                     .OrderBy(x => x.Model)
                     .ToList(),
@@ -320,7 +456,7 @@ namespace CarMate.Controllers
         public PartialViewResult GetModifications(int modelId = 0)
         {
             ViewBag.ModificationId = new SelectList(
-                db.CarModifications.Where(x => x.ModelId == modelId)
+                Db.CarModifications.Where(x => x.ModelId == modelId)
                     .Select(x => new {modificationId = x.Id, x.Modification})
                     .OrderBy(x => x.Modification)
                     .ToList(),

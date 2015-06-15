@@ -171,6 +171,9 @@
   <data name="Odometer" xml:space="preserve">
     <value>Odometer</value>
   </data>
+  <data name="OdometerRequired" xml:space="preserve">
+    <value>Odometer field is required</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>

@@ -69,8 +69,8 @@
                         <div class="form-group">
                             @Html.LabelFor(events => events.CostTotal, Resources.CarEvents.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-3">
-                                @Html.TextBoxFor(events => events.CostTotal, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.CostTotal, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(events => events.CostTotal, htmlAttributes: new {@class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.CostTotal, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
@@ -117,6 +117,44 @@
 
     $(document).ready(function () {
         $("#car_rating").rating({ readOnly: true });
+    });
+
+
+        //function ChangeFuelCount() {
+        //    //$('#FuelCount').change(function() {
+        //    alert("ChangeFuelCount");
+        //    //});
+        //};
+
+        
+    $(document).ready(function() {
+        // При изменении в поле "Общая стоимость"
+        $('#CostTotal').blur(function () {
+            // Получаем данные из поля CostTotal (общая стоимость)
+            var costTotal = $('#CostTotal').val();
+            // Если CostTotal (общая стоимость) не число - выходим
+            if (!$.isNumeric(costTotal)) {
+                return;
+            }
+            // Получаем данные из поля PricePerLitr (цена за литр)
+            var pricePerLitr = $('#PricePerLitr').val();
+            // Если PricePerLitr (цена за литр) не число - выходим
+            if (!$.isNumeric(pricePerLitr)) {
+                return;
+            }
+            // Считаем количество залитого бензина
+            var fuelCount = costTotal / pricePerLitr;
+
+            // Если fuelCount (Залито топлива) не число - выходим
+            if (!$.isNumeric(fuelCount)) {
+                return;
+            }
+            // Округляем до 2-х знаков, после запятой
+            fuelCount = fuelCount.toFixed(2);
+            
+            // Результат вычисления помещаем в поле FuelCount (Залито топлива)
+            $('#FuelCount').val(fuelCount);
+        });
     });
 </script>
 

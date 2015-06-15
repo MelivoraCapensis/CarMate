@@ -215,6 +215,9 @@
     <Compile Include="CarTransmission.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CarTransmissionLang.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CarTypes.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
@@ -248,14 +251,21 @@
     <Compile Include="Countries.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\BaseRep.cs" />
     <Compile Include="DAL\CategoryRepository.cs" />
     <Compile Include="DAL\CountriesRepository.cs" />
     <Compile Include="DAL\ICategoryRepository.cs" />
     <Compile Include="DAL\ICountriesRepository.cs" />
     <Compile Include="DAL\IPlacemarksRepository.cs" />
     <Compile Include="DAL\IRegionRepository.cs" />
+    <Compile Include="DAL\PartCarTransmission.cs" />
     <Compile Include="DAL\PlacemarksRepository.cs" />
     <Compile Include="DAL\RegionRepository.cs" />
+    <Compile Include="DAL\RepCarTransmission.cs" />
+    <Compile Include="DAL\RepEventTypes.cs" />
+    <Compile Include="DAL\RepositoryProvider.cs" />
+    <Compile Include="DAL\PartUnitDistance.cs" />
+    <Compile Include="DAL\RepUnitDistance.cs" />
     <Compile Include="EventTypes.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
@@ -265,6 +275,10 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\LangHelper.cs" />
+    <Compile Include="Languages.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LogBook.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
@@ -397,6 +411,9 @@
       <DependentUpon>User.resx</DependentUpon>
     </Compile>
     <Compile Include="UnitDistance.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitDistanceLang.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitFuelConsumption.cs">
@@ -1346,6 +1363,7 @@
     </Content>
     <Content Include="CarMateModel.edmx.diagram">
       <DependentUpon>CarMateModel.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="CarMateModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

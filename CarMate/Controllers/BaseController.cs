@@ -1,38 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using CarMate.DAL;
 
 namespace CarMate.Controllers
 {
     public class BaseController : Controller
     {
-        protected CarMateEntities db = new CarMateEntities();
+        //protected Entities Db;
+        protected RepositoryProvider RepProvider;
+
+        protected CarMateEntities Db = new CarMateEntities();
         protected int UserId;
+        //public static string HostName = string.Empty;
 
-        #region С хабра методы, для перенаправления на страницы
+        public string CurrentLangCode { get; protected set; }
 
-        protected static string ErrorPage = "~/Error";
-        protected static string NotFoundPage = "~/NotFoundPage";
-        protected static string LoginPage = "~/Login";
+        public Languages CurrentLang { get; protected set; }
 
-        public RedirectResult RedirectToNotFoundPage
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
-            get { return Redirect(NotFoundPage); }
+            RepProvider = new RepositoryProvider(Db);
+
+            //if (requestContext.HttpContext.Request.Url != null)
+            //{
+            //    HostName = requestContext.HttpContext.Request.Url.Authority;
+            //}
+
+            if (requestContext.RouteData.Values["lang"] != null && requestContext.RouteData.Values["lang"] as string != "null")
+            {
+                CurrentLangCode = requestContext.RouteData.Values["lang"] as string;
+                CurrentLang = Db.Languages.FirstOrDefault(p => p.Code == CurrentLangCode);
+
+                var ci = new CultureInfo(CurrentLangCode);
+                Thread.CurrentThread.CurrentUICulture = ci;
+                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
+            }
+            base.Initialize(requestContext);
         }
 
-        public RedirectResult RedirectToLoginPage
-        {
-            get { return Redirect(LoginPage); }
-        }
 
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            base.OnException(filterContext);
+        //#region С хабра методы, для перенаправления на страницы
 
-            filterContext.Result = Redirect(ErrorPage);
-        }
-        #endregion
+        //protected static string ErrorPage = "~/Error";
+        //protected static string NotFoundPage = "~/NotFoundPage";
+        //protected static string LoginPage = "~/Login";
+
+        //public RedirectResult RedirectToNotFoundPage
+        //{
+        //    get { return Redirect(NotFoundPage); }
+        //}
+
+        //public RedirectResult RedirectToLoginPage
+        //{
+        //    get { return Redirect(LoginPage); }
+        //}
+
+        //protected override void OnException(ExceptionContext filterContext)
+        //{
+        //    base.OnException(filterContext);
+
+        //    filterContext.Result = Redirect(ErrorPage);
+        //}
+        //#endregion
     }
 }

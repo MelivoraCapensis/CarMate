@@ -46,7 +46,7 @@
 
     @if (Model.CarTransmission != null)
     {
-        <p>@Resources.Car.CarTransmission: @Model.CarTransmission.NameTransmission</p>
+        <p>@Resources.Car.CarTransmission: @Model.CarTransmission.CarTransmissionLang.First(x => x.LanguageId == ViewBag.LanguageId).NameTransmission</p>
     }
     else
     {

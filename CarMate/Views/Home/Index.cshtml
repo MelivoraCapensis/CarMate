@@ -1,4 +1,5 @@
-﻿@{
+﻿@using CarMate.Helper
+@{
     ViewBag.Title = Resources.Home.Title;
     Layout = null;
 }
@@ -142,7 +143,8 @@
                 <li>@Resources.Home.HowMoneySpent</li>
                 <li>@Resources.Home.WhenNeedMaintenance</li>
                 <li>@Resources.Home.ComparisonCars</li>
-            </ul><ul class="problem-list plus-list">
+            </ul>
+            <ul class="problem-list plus-list">
                 <li>@Resources.Home.DisplayFuelPrices</li>
                 <li>@Resources.Home.GettingPoiPoints</li>
                 <li>@Resources.Home.RememberEvents</li>
@@ -155,6 +157,10 @@
     <div class="footer">
         <div>
             <div class="inner clearfix">
+                <ul>
+                    @Url.LangSwitcher("English", ViewContext.RouteData, "en")
+                    @Url.LangSwitcher("Русский", ViewContext.RouteData, "ru")
+                </ul>
                 <span class="left"></span>
                 <span class="right"></span>
             </div>

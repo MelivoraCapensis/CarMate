@@ -16,7 +16,7 @@ namespace CarMate.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         //
         // GET: /Account/Login
@@ -207,8 +207,11 @@ namespace CarMate.Controllers
                     var user = carMateDb.Users.FirstOrDefault(x => x.Nickname.Equals(HttpContext.User.Identity.Name));
                     if (user != null)
                     {
+                        //var unitDistanceLang =
+                        //    user.UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);
                         ViewBag.UnitDistanceId = new SelectList(
-                            carMateDb.UnitDistance.OrderBy(x => x.NameUnit).ToList(),
+                            //carMateDb.UnitDistance.OrderBy(x => x.NameUnit).ToList(),
+                            RepProvider.UnitDistance.Select(CurrentLang.Id).OrderBy(x => x.NameUnit).ToList(),
                             "Id", "NameUnit", user.UnitDistanceId);
                         ViewBag.UnitVolumeId = new SelectList(carMateDb.UnitVolume.OrderBy(x => x.NameUnit).ToList(),
                             "Id", "NameUnit", user.UnitVolumeId);
@@ -218,7 +221,9 @@ namespace CarMate.Controllers
                     else
                     {
                         ViewBag.UnitDistanceId = new SelectList(
-                            carMateDb.UnitDistance.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
+                            //carMateDb.UnitDistance.OrderBy(x => x.NameUnit).ToList(),
+                            RepProvider.UnitDistance.Select(CurrentLang.Id).OrderBy(x => x.NameUnit).ToList(),
+                            "Id", "NameUnit");
                         ViewBag.UnitVolumeId = new SelectList(
                             carMateDb.UnitVolume.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
                         ViewBag.UnitFuelConsumptionId = new SelectList(

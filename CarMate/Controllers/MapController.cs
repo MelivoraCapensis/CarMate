@@ -14,7 +14,7 @@ using CarMate.Models;
 
 namespace CarMate.Controllers
 {
-    public class MapController : Controller
+    public class MapController : BaseController
     {
         private CarMateEntities db = new CarMateEntities();
        

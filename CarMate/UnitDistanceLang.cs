@@ -12,17 +12,15 @@ namespace CarMate
     using System;
     using System.Collections.Generic;
     
-    public partial class CarTransmission
+    public partial class UnitDistanceLang
     {
-        public CarTransmission()
-        {
-            this.Cars = new HashSet<Cars>();
-            this.CarTransmissionLang = new HashSet<CarTransmissionLang>();
-        }
-    
         public int Id { get; set; }
+        public int UnitDistanceId { get; set; }
+        public int LanguageId { get; set; }
+        public string NameUnit { get; set; }
+        public string Comment { get; set; }
     
-        public virtual ICollection<Cars> Cars { get; set; }
-        public virtual ICollection<CarTransmissionLang> CarTransmissionLang { get; set; }
+        public virtual Languages Languages { get; set; }
+        public virtual UnitDistance UnitDistance { get; set; }
     }
 }
