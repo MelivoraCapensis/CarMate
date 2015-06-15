@@ -350,7 +350,7 @@
                 var pos = new google.maps.LatLng(position.coords.latitude,
                                                     position.coords.longitude);
                 //NProgress.set(0.8);
-                image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
+                image = new google.maps.MarkerImage("/PlaceMarkers/Nav.png");
                 var marker = new google.maps.Marker({
                     position: pos,
                     map: map,
@@ -400,7 +400,7 @@
                 route_markers = [];
 
             }
-            image = new google.maps.MarkerImage("../PlaceMarkers/route.png");
+            image = new google.maps.MarkerImage("/PlaceMarkers/route.png");
             var marker = new google.maps.Marker({
                 position: event.latLng,
                 map: map,
@@ -418,7 +418,7 @@
 
         // выставляется маркеров места интереса на карте
         google.maps.event.addListener(map, 'rightclick', function (event) {
-            image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
+            image = new google.maps.MarkerImage("/PlaceMarkers/Nav.png");
             var marker = new google.maps.Marker({
                 position: event.latLng,
                 map: map,
@@ -540,7 +540,7 @@
                 var lng = document.getElementById('longitude').value;
                 getFoursquare(lat,lng);
             }
-            image = new google.maps.MarkerImage("../PlaceMarkers/Nav.png");
+            image = new google.maps.MarkerImage("/PlaceMarkers/Nav.png");
             marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: map,
@@ -644,7 +644,7 @@
     }
 
     function repaircallback(results, status) {
-        image = new google.maps.MarkerImage("../PlaceMarkers/car_repair.png");
+        image = new google.maps.MarkerImage("/PlaceMarkers/car_repair.png");
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 createMarker(results[i], image, repair_markers);
@@ -667,7 +667,7 @@
     }
 
     function parkingcallback(results, status) {
-        image = new google.maps.MarkerImage("../PlaceMarkers/Garage2.png");
+        image = new google.maps.MarkerImage("/PlaceMarkers/Garage2.png");
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 createMarker(results[i], image, parking_markers);
@@ -690,7 +690,7 @@
     }
 
     function wairepaircallback(results, status) {
-        image = new google.maps.MarkerImage("../PlaceMarkers/car_repair.png");
+        image = new google.maps.MarkerImage("/PlaceMarkers/car_repair.png");
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 createMarker(results[i], image, wairepair_markers);
@@ -713,7 +713,7 @@
     }
 
     function waiparkingcallback(results, status) {
-        image = new google.maps.MarkerImage("../PlaceMarkers/Garage2.png");
+        image = new google.maps.MarkerImage("/PlaceMarkers/Garage2.png");
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 createMarker(results[i], image, waiparking_markers);
@@ -743,7 +743,7 @@
     function getFoursquare(lat, lng) {
 
 
-        var image = new google.maps.MarkerImage("../PlaceMarkers/Coffee.png");
+        var image = new google.maps.MarkerImage("/PlaceMarkers/Coffee.png");
         $.getJSON('https://api.foursquare.com/v2/venues/search?client_id=4G0ZYJBKXRKRJ5VGLULFCGQPRNJADTJZIHQPE5NRT33WKVMV&client_secret=VU4NZM13SM3AFZ30NDA2U4B1ZYOLKZ5JNQJQKW2RYZXSFKZL&v=20130815&ll=' + lat + ',' + lng + '&query=cafe',
             function(data) {
                 $.each(data.response.venues, function(i, venues) {
@@ -801,6 +801,8 @@
     //передача json объекта и загрузка данных из контролера
     //от точки местоположения в радиусе выбираются маркеры из бд
     function postSquirrel(squirrel) {
+        //alert("squirrel = " + squirrel);
+        //alert("lat = " + squirrel.lat + "\nlng = " + squirrel.lng + "\ncategory = " + squirrel.category + "\nradius = " + squirrel.radius + "\nfuelcategory_id = " + squirrel.fuelcategory_id + "\ncheaper = " + squirrel.cheaper);
         this.launchSquirrel = function() {
             $('body').show();
             $.ajax({
@@ -830,7 +832,7 @@
                             + pricecontent
                             + "</tr></tbody></table>";
 
-                        var image = new google.maps.MarkerImage("../PlaceMarkers/Fuel.png");
+                        var image = new google.maps.MarkerImage("/PlaceMarkers/Fuel.png");
                         var infowindow = new google.maps.InfoWindow({
                             content: '<p>' + content + '</p>'
                         });
@@ -942,7 +944,7 @@
                                 };
                                 //alert("Lat: " + squirrel.Lat + "Lng: " + squirrel.Long + " Cat: " + squirrel.Category + "Радиус: " + squirrel.Radius)
                                 squirrel_data.push(squirrel);
-                                image = new google.maps.MarkerImage("../PlaceMarkers/media.png");
+                                image = new google.maps.MarkerImage("/PlaceMarkers/media.png");
                                 var marker = new google.maps.Marker({
                                     position: path,
                                     map: map,
@@ -974,7 +976,7 @@
                                     //alert(rad);
                                     getWaiParkingGoogle(path.lat(), path.lng(), radius);
                                 }
-                                image = new google.maps.MarkerImage("../PlaceMarkers/media.png");
+                                image = new google.maps.MarkerImage("/PlaceMarkers/media.png");
                                 var marker = new google.maps.Marker({
                                     position: path,
                                     map: map,
@@ -1039,7 +1041,7 @@
                                            + pricecontent
                                            + "</tr></tbody></table>";
 
-                        var image = new google.maps.MarkerImage("../PlaceMarkers/Fuel.png");
+                        var image = new google.maps.MarkerImage("/PlaceMarkers/Fuel.png");
                         var pos = new google.maps.LatLng(lat, lng);
                         var marker = new google.maps.Marker({
                             position: pos,
