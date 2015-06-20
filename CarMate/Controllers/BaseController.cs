@@ -40,6 +40,8 @@ namespace CarMate.Controllers
                 Thread.CurrentThread.CurrentUICulture = ci;
                 //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
             }
+            ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit), "Id", "NameUnit");
+
             base.Initialize(requestContext);
         }
 

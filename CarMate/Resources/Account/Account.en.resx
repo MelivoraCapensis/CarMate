@@ -135,8 +135,20 @@
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>
   </data>
+  <data name="ConfirmPasswordCompare" xml:space="preserve">
+    <value>New password and confirmation do not match</value>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>Confirm password required field</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email required field</value>
+  </data>
+  <data name="EmailType" xml:space="preserve">
+    <value>Invalid Email address</value>
   </data>
   <data name="EndRegister" xml:space="preserve">
     <value>Enter your username on the site below and click "Register" to complete the entry.</value>
@@ -153,11 +165,17 @@
   <data name="LoginError" xml:space="preserve">
     <value>Login error</value>
   </data>
+  <data name="LoginRequired" xml:space="preserve">
+    <value>Login required field</value>
+  </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
   </data>
   <data name="NewPasswordInfo" xml:space="preserve">
     <value>You do not have a local password for this site. Add a local password to enter without an external account.</value>
+  </data>
+  <data name="NewPasswordRequired" xml:space="preserve">
+    <value>New password required field</value>
   </data>
   <data name="Nickname" xml:space="preserve">
     <value>Nickname</value>
@@ -165,8 +183,17 @@
   <data name="OldPassword" xml:space="preserve">
     <value>Old password</value>
   </data>
+  <data name="OldPasswordRequired" xml:space="preserve">
+    <value>Old password required field</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password required field</value>
+  </data>
+  <data name="PasswordStringLength" xml:space="preserve">
+    <value>The value \"{0}\" must contain not less than {2} characters</value>
   </data>
   <data name="RegisteredExternalAccounts" xml:space="preserve">
     <value>Registered external accounts</value>
@@ -185,6 +212,9 @@
   </data>
   <data name="UnitFuelConsumption" xml:space="preserve">
     <value>Units of fuel consumption</value>
+  </data>
+  <data name="UnitFuelConsumptionRequired" xml:space="preserve">
+    <value>Units of fuel consumption are not selected</value>
   </data>
   <data name="YouLoggedAs" xml:space="preserve">
     <value>You are logged in as</value>

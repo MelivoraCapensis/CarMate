@@ -115,11 +115,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Новый пароль и его подтверждение не совпадают.
+        /// </summary>
+        public static string ConfirmPasswordCompare {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordCompare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подтверждение пароля обязательное поле.
+        /// </summary>
+        public static string ConfirmPasswordRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Адрес электронной почты.
         /// </summary>
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Адрес электронной почты обязательное поле.
+        /// </summary>
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Некорректный Адрес электронной почты.
+        /// </summary>
+        public static string EmailType {
+            get {
+                return ResourceManager.GetString("EmailType", resourceCulture);
             }
         }
         
@@ -169,6 +205,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Логин обязательное поле.
+        /// </summary>
+        public static string LoginRequired {
+            get {
+                return ResourceManager.GetString("LoginRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Новый пароль.
         /// </summary>
         public static string NewPassword {
@@ -183,6 +228,15 @@ namespace Resources {
         public static string NewPasswordInfo {
             get {
                 return ResourceManager.GetString("NewPasswordInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Новый пароль обязательное поле.
+        /// </summary>
+        public static string NewPasswordRequired {
+            get {
+                return ResourceManager.GetString("NewPasswordRequired", resourceCulture);
             }
         }
         
@@ -205,11 +259,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Старый пароль обязательное поле.
+        /// </summary>
+        public static string OldPasswordRequired {
+            get {
+                return ResourceManager.GetString("OldPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Пароль.
         /// </summary>
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пароль обязательное поле.
+        /// </summary>
+        public static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение \&quot;{0}\&quot; должно содержать не менее {2} символов.
+        /// </summary>
+        public static string PasswordStringLength {
+            get {
+                return ResourceManager.GetString("PasswordStringLength", resourceCulture);
             }
         }
         
@@ -264,6 +345,15 @@ namespace Resources {
         public static string UnitFuelConsumption {
             get {
                 return ResourceManager.GetString("UnitFuelConsumption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Единицы расхода топлива не выбраны.
+        /// </summary>
+        public static string UnitFuelConsumptionRequired {
+            get {
+                return ResourceManager.GetString("UnitFuelConsumptionRequired", resourceCulture);
             }
         }
         

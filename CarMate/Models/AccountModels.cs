@@ -29,17 +29,17 @@ namespace CarMate.Models
 
     public class RegisterExternalLoginModel
     {
-        [Required]
-        [Display(Name = "Имя пользователя")]
+        [Required(ErrorMessageResourceName = "LoginRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [Display(Name = "Login", ResourceType = typeof(Resources.Account))]
         public string UserName { get; set; }
 
         //[Required(ErrorMessage = "Адрес электронной почты - обязательное поле")]
-        //[Display(Name = "Адрес электронной почты")]
+        //[Display(Name = "Email", ResourceType = typeof(Resources.Account))]
         //[DataType(DataType.EmailAddress)]
         //public string Email { get; set; }
 
-        [Required(ErrorMessage = "Единицы расхода топлива не выбраны")]
-        [Display(Name = "Единицы расхода топлива")]
+        [Required(ErrorMessageResourceName = "UnitFuelConsumptionRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [Display(Name = "UnitFuelConsumption", ResourceType = typeof(Resources.Account))]
         public int UnitFuelConsumptionId { set; get; }
 
         public string ExternalLoginData { get; set; }
@@ -47,54 +47,54 @@ namespace CarMate.Models
 
     public class LocalPasswordModel
     {
-        [Required]
+        [Required(ErrorMessageResourceName = "OldPasswordRequired", ErrorMessageResourceType = typeof(Resources.Account))]
         [DataType(DataType.Password)]
-        [Display(Name = "Текущий пароль")]
+        [Display(Name = "OldPassword", ResourceType = typeof(Resources.Account))]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "Значение \"{0}\" должно содержать не менее {2} символов.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceName = "NewPasswordRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [StringLength(100, ErrorMessageResourceName = "PasswordStringLength", ErrorMessageResourceType = typeof(Resources.Account), MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Новый пароль")]
+        [Display(Name = "NewPassword", ResourceType = typeof(Resources.Account))]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Подтверждение пароля")]
-        [Compare("NewPassword", ErrorMessage = "Новый пароль и его подтверждение не совпадают.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Account))]
+        [Compare("NewPassword", ErrorMessageResourceName="ConfirmPasswordCompare", ErrorMessageResourceType = typeof(Resources.Account))]
         public string ConfirmPassword { get; set; }
     }
 
     public class LoginModel
     {
-        [Required(ErrorMessage = "Логин - обязательное поле")]
-        [Display(Name = "Имя пользователя")]
+        [Required(ErrorMessageResourceName = "LoginRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [Display(Name = "Login", ResourceType = typeof(Resources.Account))]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Пароль - обязательное поле")]
+        [Required(ErrorMessageResourceName = "PasswordRequired", ErrorMessageResourceType = typeof(Resources.Account))]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Account))]
         public string Password { get; set; }
 
-        [Display(Name = "Запомнить меня")]
+        [Display(Name = "RememberMe", ResourceType = typeof(Resources.Account))]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
-        [Required(ErrorMessage = "Логин - обязательное поле")]
-        [Display(Name = "Имя пользователя")]
+        [Required(ErrorMessageResourceName = "LoginRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [Display(Name = "Login", ResourceType = typeof(Resources.Account))]
         public string UserName { get; set; }
 
-        [Required (ErrorMessage = "Пароль - обязательное поле")]
-        [StringLength(100, ErrorMessage = "Значение \"{0}\" должно содержать не менее {2} символов.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceName = "PasswordRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [StringLength(100, ErrorMessageResourceName = "PasswordStringLength", ErrorMessageResourceType = typeof(Resources.Account), MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Account))]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Подтверждение пароля - обязательное поле")]
+        [Required(ErrorMessageResourceName = "ConfirmPasswordRequired", ErrorMessageResourceType = typeof(Resources.Account))]
         [DataType(DataType.Password)]
-        [Display(Name = "Подтверждение пароля")]
-        [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Account))]
+        [Compare("NewPassword", ErrorMessageResourceName = "ConfirmPasswordCompare", ErrorMessageResourceType = typeof(Resources.Account))]
         public string ConfirmPassword { get; set; }
 
 
@@ -102,34 +102,34 @@ namespace CarMate.Models
 
 
 
-        [Required(ErrorMessage = "Адрес электронной почты - обязательное поле")]
-        [Display(Name = "Адрес электронной почты")]
+        [Required(ErrorMessageResourceName = "EmailRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Account))]
         //[DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage = "Некорректный Адрес электронной почты ")]
+        [EmailAddress(ErrorMessageResourceName = "EmailType", ErrorMessageResourceType = typeof(Resources.Account), ErrorMessage = null)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Единицы расхода топлива не выбраны")]
-        [Display(Name = "Единицы расхода топлива")]
+        [Required(ErrorMessageResourceName = "UnitFuelConsumptionRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [Display(Name = "UnitFuelConsumption", ResourceType = typeof(Resources.Account))]
         public int UnitFuelConsumptionId { set; get; }
 
-        [Display(Name = "Имя")]
-        public string FirstName { get; set; }
+        //[Display(Name = "Имя", ResourceType = typeof(Resources.Account))]
+        //public string FirstName { get; set; }
 
-        [Display(Name = "Фамилия")]
-        public string LastName { get; set; }
+        //[Display(Name = "Фамилия", ResourceType = typeof(Resources.Account))]
+        //public string LastName { get; set; }
 
-        [Display(Name = "День рождения")]
-        [DataType(DataType.Date)]
-        public DateTime? Year { get; set; }
+        //[Display(Name = "День рождения", ResourceType = typeof(Resources.Account))]
+        //[DataType(DataType.Date)]
+        //public DateTime? Year { get; set; }
 
-        [Display(Name = "Страна")]
-        public string Country { get; set; }
+        //[Display(Name = "Страна", ResourceType = typeof(Resources.Account))]
+        //public string Country { get; set; }
 
-        [Display(Name = "Регион")]
-        public string Region { get; set; }
+        //[Display(Name = "Регион", ResourceType = typeof(Resources.Account))]
+        //public string Region { get; set; }
 
-        [Display(Name = "Город")]
-        public string City { get; set; }
+        //[Display(Name = "Город", ResourceType = typeof(Resources.Account))]
+        //public string City { get; set; }
     }
 
     public class ExternalLogin
