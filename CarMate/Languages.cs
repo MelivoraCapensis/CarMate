@@ -16,17 +16,17 @@ namespace CarMate
     {
         public Languages()
         {
-            this.Users = new HashSet<Users>();
             this.CarTransmissionLang = new HashSet<CarTransmissionLang>();
             this.UnitDistanceLang = new HashSet<UnitDistanceLang>();
+            this.Users = new HashSet<Users>();
         }
     
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<Users> Users { get; set; }
         public virtual ICollection<CarTransmissionLang> CarTransmissionLang { get; set; }
         public virtual ICollection<UnitDistanceLang> UnitDistanceLang { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

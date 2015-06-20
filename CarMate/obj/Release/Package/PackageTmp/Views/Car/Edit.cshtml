@@ -86,13 +86,16 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.DateBuy, Resources.Car.DateBuy, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.DateBuy, htmlAttributes: new
+                    @Html.TextBoxFor(model => model.DateBuy, "{0:dd.MM.yyyy}", htmlAttributes: new
                     {
-                        @class = "form-control",
-                        data_provide = "datepicker",
-                        @Value = Model.DateBuy.Value.ToString("dd.MM.yyyy")
+                        @class = "form-control"
+                        //data_provide = "datepicker",
+                        //@Value = Model.DateBuy.Value.ToString("dd.MM.yyyy")
                     })
-                    @Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i>
+                    </span>
+                    @*@Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})*@
                 </div>
             </div>
 
@@ -123,6 +126,19 @@
 </div>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        // Получаем язык пользователя
+        var lang = '@ViewBag.LanguageName';
+        $('#DateBuy').datepicker({
+            format: "dd.mm.yyyy",
+            weekStart: 1,
+            todayBtn: "linked",
+            language: lang,
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+
     @* При изенении марки автомобиля подружаем модели *@
     function GetModels(id) {
         var brandId = id.value;
@@ -137,7 +153,7 @@
     }
 
     $(document).ready(function () {
-        var carBrandId = '@(Model.CarModels.CarBrands.Id)';
+        //var carBrandId = '@(Model.CarModels.CarBrands.Id)';
         var carModelId = '@(Model.CarModels.Id)';
         var carModificationId = '@(modificationId)';
 

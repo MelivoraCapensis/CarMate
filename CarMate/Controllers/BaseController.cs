@@ -38,7 +38,7 @@ namespace CarMate.Controllers
 
                 var ci = new CultureInfo(CurrentLangCode);
                 Thread.CurrentThread.CurrentUICulture = ci;
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
+                //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
             }
             base.Initialize(requestContext);
         }

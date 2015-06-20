@@ -62,7 +62,7 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.FuelCategoryId, Resources.Car.PreferredTypeFuel, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.FuelCategoryId, null, htmlAttributes: new { @class = "form-control" }, optionLabel: Resources.Car.SelectTypeTransmission)
+                    @Html.DropDownListFor(model => model.FuelCategoryId, null, htmlAttributes: new { @class = "form-control" }, optionLabel: Resources.Car.SelectTypeFuel)
                     @Html.ValidationMessageFor(model => model.FuelCategoryId, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -78,13 +78,16 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.DateBuy, Resources.Car.DateBuy, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.DateBuy, htmlAttributes: new
+                    @Html.TextBoxFor(model => model.DateBuy, "{0:dd.MM.yyyy}", htmlAttributes: new
                     {
-                        @class = "form-control",
-                        data_provide = "datepicker",
-                        @Value = Model.DateBuy.Value.ToString("dd/MM/yyyy")
+                        @class = "form-control"
+                        //data_provide = "datepicker",
+                        //@Value = Model.DateBuy.Value.ToString("dd/MM/yyyy")
                     })
-                    @Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i>
+                    </span>
+                    @*@Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})*@
                 </div>
             </div>
 
@@ -117,6 +120,19 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        // Получаем язык пользователя
+        var lang = '@ViewBag.LanguageName';
+        $('#DateBuy').datepicker({
+            format: "dd.mm.yyyy",
+            weekStart: 1,
+            todayBtn: "linked",
+            language: lang,
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+
     @* При изенении марки автомобиля подружаем модели *@
     function GetModels(id) {
         var brandId = id.value;
@@ -124,7 +140,7 @@
         $("#car_modification").load('@(Url.Action("GetModifications", "Car"))', { "modelId": 0 });
     }
 
-    @* При изенении модеои автомобиля подружаем модификации *@
+    @* При изенении модели автомобиля подружаем модификации *@
     function GetModifications(id) {
         var modelId = id.value;
         $("#car_modification").load('@(Url.Action("GetModifications", "Car"))', { "modelId": modelId });

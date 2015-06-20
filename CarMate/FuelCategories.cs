@@ -17,8 +17,8 @@ namespace CarMate
         public FuelCategories()
         {
             this.CarEvents = new HashSet<CarEvents>();
-            this.Prices = new HashSet<Prices>();
             this.Cars = new HashSet<Cars>();
+            this.Prices = new HashSet<Prices>();
         }
     
         public int Id { get; set; }
@@ -28,8 +28,8 @@ namespace CarMate
         public int State { get; set; }
     
         public virtual ICollection<CarEvents> CarEvents { get; set; }
+        public virtual ICollection<Cars> Cars { get; set; }
         public virtual Countries Countries { get; set; }
         public virtual ICollection<Prices> Prices { get; set; }
-        public virtual ICollection<Cars> Cars { get; set; }
     }
 }

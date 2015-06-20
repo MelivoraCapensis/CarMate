@@ -35,11 +35,11 @@ namespace CarMate
         public int UnitFuelConsumptionId { get; set; }
         public Nullable<int> LanguageId { get; set; }
     
-        public virtual Regions Regions { get; set; }
-        public virtual UnitFuelConsumption UnitFuelConsumption { get; set; }
-        public virtual UnitVolume UnitVolume { get; set; }
         public virtual ICollection<Cars> Cars { get; set; }
         public virtual Languages Languages { get; set; }
         public virtual UnitDistance UnitDistance { get; set; }
+        public virtual UnitFuelConsumption UnitFuelConsumption { get; set; }
+        public virtual UnitVolume UnitVolume { get; set; }
+        public virtual Regions Regions { get; set; }
     }
 }

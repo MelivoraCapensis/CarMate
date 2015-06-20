@@ -22,7 +22,7 @@ namespace CarMate
         public Nullable<System.DateTime> DateCharging { get; set; }
     
         public virtual CarEvents CarEvents { get; set; }
-        public virtual CategoryLog CategoryLog { get; set; }
         public virtual Cars Cars { get; set; }
+        public virtual CategoryLog CategoryLog { get; set; }
     }
 }

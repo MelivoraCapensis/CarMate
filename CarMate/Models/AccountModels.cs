@@ -38,6 +38,10 @@ namespace CarMate.Models
         //[DataType(DataType.EmailAddress)]
         //public string Email { get; set; }
 
+        [Required(ErrorMessage = "Единицы расхода топлива не выбраны")]
+        [Display(Name = "Единицы расхода топлива")]
+        public int UnitFuelConsumptionId { set; get; }
+
         public string ExternalLoginData { get; set; }
     }
 
@@ -103,6 +107,10 @@ namespace CarMate.Models
         //[DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Некорректный Адрес электронной почты ")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Единицы расхода топлива не выбраны")]
+        [Display(Name = "Единицы расхода топлива")]
+        public int UnitFuelConsumptionId { set; get; }
 
         [Display(Name = "Имя")]
         public string FirstName { get; set; }

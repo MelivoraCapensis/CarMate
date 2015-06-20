@@ -159,41 +159,50 @@ namespace CarMate.Controllers
                 return HttpNotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    HttpPostedFileBase pf = Request.Files["file"];
-                    string imgPath = "";
-                    if (pf != null && pf.ContentLength != 0)
-                    {
-                        string fileName = car.UserId + car.Odometer + Path.GetExtension(pf.FileName);
-                        imgPath = "/Content/Images/" + fileName;
-                        pf.SaveAs(Server.MapPath(imgPath));
-                    }
-                    else
-                        imgPath = "/Content/Images/auto.jpg";
-                    if (!String.IsNullOrEmpty(imgPath))
-                    {
-                        car.ImgPath = imgPath;
-                    }
+            //if (car.ModelId != 0)
+            //{
 
-                    InitViewBag(car);
-                    ConvertOdometrSave(car);
-                    ConvertTankSave(car);
-                    ConvertConsumptionSave(car);
 
-                    car.DateCreate = DateTime.Now;
-                    car.State = 0;
-                    Db.Cars.Add(car);
-                    Db.SaveChanges();
-                    return RedirectToAction("Details", "Car", new { id = car.Id });
-                }
-                catch (Exception exc)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("", MyException.GetFullExceptionMessage(exc));
+                    try
+                    {
+                        HttpPostedFileBase pf = Request.Files["file"];
+                        string imgPath = "";
+                        if (pf != null && pf.ContentLength != 0)
+                        {
+                            string fileName = car.UserId + car.Odometer + Path.GetExtension(pf.FileName);
+                            imgPath = "/Content/Images/" + fileName;
+                            pf.SaveAs(Server.MapPath(imgPath));
+                        }
+                        else
+                            imgPath = "/Content/Images/auto.jpg";
+                        if (!String.IsNullOrEmpty(imgPath))
+                        {
+                            car.ImgPath = imgPath;
+                        }
+
+                        InitViewBag(car);
+                        ConvertOdometrSave(car);
+                        ConvertTankSave(car);
+                        ConvertConsumptionSave(car);
+
+                        car.DateCreate = DateTime.Now;
+                        car.State = 0;
+                        Db.Cars.Add(car);
+                        Db.SaveChanges();
+                        return RedirectToAction("Details", "Car", new {id = car.Id});
+                    }
+                    catch (Exception exc)
+                    {
+                        ModelState.AddModelError("", MyException.GetFullExceptionMessage(exc));
+                    }
                 }
-            }
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError("brandId", "Поле Model обязательно для заполнения");
+            //}
 
             InitViewBag(car);
             return View(car);
@@ -354,6 +363,7 @@ namespace CarMate.Controllers
             ViewBag.UnitFuelConsumption = user.UnitFuelConsumption.NameUnit;
             ViewBag.UnitVolume = user.UnitVolume.NameUnit;
             ViewBag.LanguageId = this.CurrentLang.Id;
+            ViewBag.LanguageName = this.CurrentLang.Code;
         }
 
         public bool IsAuthenticated()

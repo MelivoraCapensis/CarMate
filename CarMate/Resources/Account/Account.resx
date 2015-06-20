@@ -183,6 +183,9 @@
   <data name="SignInWithAnotherService" xml:space="preserve">
     <value>Вход через другую службу</value>
   </data>
+  <data name="UnitFuelConsumption" xml:space="preserve">
+    <value>Единицы расхода топлива</value>
+  </data>
   <data name="YouLoggedAs" xml:space="preserve">
     <value>Вы вошли как</value>
   </data>

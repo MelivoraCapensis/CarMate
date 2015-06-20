@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Пользователь еще не заправляет полный бак 2 раза подряд..
+        ///   Looks up a localized string similar to Пользователь еще не заправлял полный бак 2 раза подряд..
         /// </summary>
         public static string FillTwoTimes {
             get {

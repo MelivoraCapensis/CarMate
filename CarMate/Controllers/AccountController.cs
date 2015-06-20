@@ -40,15 +40,15 @@ namespace CarMate.Controllers
             {
                 //return RedirectToLocal(returnUrl);
                 //return View(model);
-                using (CarMateEntities db = new CarMateEntities())
-                {
-                    var userId = db.Users
+                //using (CarMateEntities db = new CarMateEntities())
+                //{
+                    var userId = Db.Users
                     .Where(x => x.Nickname.Equals(model.UserName))
                     .Select(x => x.Id)
                     .FirstOrDefault();
 
                     return RedirectToAction("Details", "User", new { id = userId });
-                }
+                //}
                 
             }
 
@@ -76,6 +76,7 @@ namespace CarMate.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit), "Id", "NameUnit");
             return View();
         }
 
@@ -107,8 +108,8 @@ namespace CarMate.Controllers
                         imgPath = "/Content/Images/anonim.jpg";
 
                     Users user = null;
-                    using (CarMateEntities db = new CarMateEntities())
-                    {
+                    //using (CarMateEntities db = new CarMateEntities())
+                    //{
                         DateTime date = DateTime.Now;
                         user = new Users
                         {
@@ -121,22 +122,43 @@ namespace CarMate.Controllers
                             //region = model.Region,
                             //city = model.City,
                             DateRegister = date,
-                            UnitDistanceId = 1,
-                            UnitVolumeId = 1,
-                            UnitFuelConsumptionId = 1,
+                            //UnitDistanceId = 1,
+                            //UnitFuelConsumptionId = model.UnitFuelConsumptionId,
                             //UserPassword = model.Password,
 
                             DateCreate = date,
                             State = 0
                         };
+
+                        var unitFuelConsumption = Db.UnitFuelConsumption.Find(model.UnitFuelConsumptionId);
+                        if (unitFuelConsumption != null)
+                        {
+                            user.UnitFuelConsumptionId = unitFuelConsumption.Id;
+
+                            var unitVolume = unitFuelConsumption.UnitVolume
+                                .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
+                            if (unitVolume != null)
+                            {
+                                user.UnitVolumeId = unitVolume.Id;
+                            }
+
+                            var unitDistance = RepProvider.UnitDistance
+                                .Select(this.CurrentLang.Id)
+                                .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
+                            if (unitDistance != null)
+                            {
+                                user.UnitDistanceId = unitDistance.Id;
+                            }
+                        }
+
                         if (!String.IsNullOrEmpty(imgPath))
                         {
                             user.ImgPath = imgPath;
                         }
 
-                        db.Users.Add(user);
-                        db.SaveChanges();
-                    }
+                        Db.Users.Add(user);
+                        Db.SaveChanges();
+                    //}
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Details", "User", new {id = user.Id});
                 }
@@ -146,6 +168,7 @@ namespace CarMate.Controllers
                 }
             }
 
+            ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit), "Id", "NameUnit");
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             return View(model);
         }
@@ -181,6 +204,64 @@ namespace CarMate.Controllers
 
         //
         // GET: /Account/Manage
+
+        public JsonResult DeleteAccount()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                using (UsersContext db = new UsersContext())
+                {
+                    string userName = HttpContext.User.Identity.Name;
+                    var user = db.UserProfiles.FirstOrDefault(x => x.UserName.Equals(userName));
+                    if (user != null)
+                    {
+                        // Выход из учетной записи
+                        WebSecurity.Logout();
+
+                        #region Таблицы, созданные с помощью стандартной программы aspnet_regsql.exe
+                        // Удаление профиля пользователя
+                        var webpagesMembership = Db.webpages_Membership.FirstOrDefault(x => x.UserId == user.UserId);
+                        if (webpagesMembership != null)
+                            Db.webpages_Membership.Remove(webpagesMembership);
+
+                        // Удаление внешних учетных записей
+                        var webpagesOAuthMembership = Db.webpages_OAuthMembership.FirstOrDefault(x => x.UserId == user.UserId);
+                        if (webpagesOAuthMembership != null)
+                            Db.webpages_OAuthMembership.Remove(webpagesOAuthMembership);
+
+                        // Удаление профиля пользователя
+                        db.UserProfiles.Remove(user);
+                        db.SaveChanges();
+                        #endregion
+
+                        #region Наши таблицы
+                        // Удаление всех событий пользователя
+                        var carEvents = Db.CarEvents.Where(x => x.Cars.Users.Nickname.Equals(userName));
+                        foreach (var carEvent in carEvents)
+                        {
+                            Db.CarEvents.Remove(carEvent);
+                        }
+
+                        // Удаление всех транспортных средств пользователя
+                        var cars = Db.Cars.Where(x => x.Users.Nickname.Equals(userName));
+                        foreach (var car in cars)
+                        {
+                            Db.Cars.Remove(car);
+                        }
+
+                        // Удаление пользователя
+                        var users = Db.Users.FirstOrDefault(x => x.Nickname.Equals(userName));
+                        if(users != null)
+                        {
+                            Db.Users.Remove(users);
+                        }
+                        Db.SaveChanges();
+                        #endregion
+                    }
+                }
+            }
+            return Json("Ok", JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Manage(ManageMessageId? message)
         {
@@ -316,6 +397,7 @@ namespace CarMate.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
+            ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit), "Id", "NameUnit");
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
             if (!result.IsSuccessful)
             {
@@ -393,6 +475,27 @@ namespace CarMate.Controllers
                                 State = 0
                             };
 
+                            var unitFuelConsumption = Db.UnitFuelConsumption.Find(model.UnitFuelConsumptionId);
+                            if (unitFuelConsumption != null)
+                            {
+                                u.UnitFuelConsumptionId = unitFuelConsumption.Id;
+
+                                var unitVolume = unitFuelConsumption.UnitVolume
+                                    .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
+                                if (unitVolume != null)
+                                {
+                                    u.UnitVolumeId = unitVolume.Id;
+                                }
+
+                                var unitDistance = RepProvider.UnitDistance
+                                    .Select(this.CurrentLang.Id)
+                                    .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
+                                if (unitDistance != null)
+                                {
+                                    u.UnitDistanceId = unitDistance.Id;
+                                }
+                            }
+
                             carMateDb.Users.Add(u);
                             carMateDb.SaveChanges();
                         }
@@ -410,6 +513,7 @@ namespace CarMate.Controllers
                 }
             }
 
+            ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit), "Id", "NameUnit");
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
             ViewBag.ReturnUrl = returnUrl;
             return View(model);

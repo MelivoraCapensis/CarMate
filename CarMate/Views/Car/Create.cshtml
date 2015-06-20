@@ -62,7 +62,7 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.FuelCategoryId, Resources.Car.PreferredTypeFuel, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.FuelCategoryId, null, htmlAttributes: new { @class = "form-control" }, optionLabel: Resources.Car.SelectTypeTransmission)
+                    @Html.DropDownListFor(model => model.FuelCategoryId, null, htmlAttributes: new { @class = "form-control" }, optionLabel: Resources.Car.SelectTypeFuel)
                     @Html.ValidationMessageFor(model => model.FuelCategoryId, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -78,13 +78,18 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.DateBuy, Resources.Car.DateBuy, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.DateBuy, htmlAttributes: new
-                    {
-                        @class = "form-control",
-                        data_provide = "datepicker",
-                        @Value = Model.DateBuy.Value.ToString("dd/MM/yyyy")
-                    })
-                    @Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})
+                    <div class="input-group" role="group">
+                        @Html.TextBoxFor(model => model.DateBuy, "{0:dd.MM.yyyy}", htmlAttributes: new
+                        {
+                            @class = "form-control"
+                            //data_provide = "datepicker",
+                            //@Value = Model.DateBuy.Value.ToString("dd/MM/yyyy")
+                        })
+                        <span class="input-group-addon" onclick=" OpenDatepicker() ">
+                            <i class="glyphicon glyphicon-th" id="icon_datepicker"></i>
+                        </span>
+                        @*@Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})*@
+                    </div>
                 </div>
             </div>
 
@@ -124,23 +129,47 @@
         $("#car_modification").load('@(Url.Action("GetModifications", "Car"))', { "modelId": 0 });
     }
 
-    @* При изенении модеои автомобиля подружаем модификации *@
+    @* При изенении модели автомобиля подружаем модификации *@
     function GetModifications(id) {
         var modelId = id.value;
         $("#car_modification").load('@(Url.Action("GetModifications", "Car"))', { "modelId": modelId });
     }
 
-
-    $(document).ready(function () {
-        $("#car_rating").rating({ readOnly: false });
-    });
-
     // заносим данные в модель
     function CheckVote() {
-        //alert($("#vote-rating").text());
         $("#Rating").val(($("#vote-rating").text()));
     }
 
+    function OpenDatepicker() {
+        $('#DateBuy').datepicker('show');
+    }
+
+    $(document).ready(function () {
+        // Получаем язык пользователя
+        var lang = '@ViewBag.LanguageName';
+        // Инициализация календаря
+        $('#DateBuy').datepicker({
+            format: "dd.mm.yyyy",
+            weekStart: 1,
+            todayBtn: "linked",
+            language: lang,
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        // Инициализация рейтинга
+        $("#car_rating").rating({ readOnly: false });
+
+        // При наведении на иконку календаря меняется курсор
+        $('#icon_datepicker').mouseenter(function () {
+            $(this).css({ cursor: 'default' });
+        });
+
+        // При наведении на поле ввода календаря меняется курсор
+        $('#DateBuy').mouseenter(function () {
+            $(this).css({ cursor: 'default' });
+        });
+    });
 </script>
 
 

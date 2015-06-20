@@ -86,13 +86,18 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.DateBuy, Resources.Car.DateBuy, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.DateBuy, htmlAttributes: new
-                    {
-                        @class = "form-control",
-                        data_provide = "datepicker",
-                        @Value = Model.DateBuy.Value.ToString("dd.MM.yyyy")
-                    })
-                    @Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})
+                    <div class="input-group" role="group">
+                        @Html.TextBoxFor(model => model.DateBuy, "{0:dd.MM.yyyy}", htmlAttributes: new
+                        {
+                            @class = "form-control"
+                            //data_provide = "datepicker",
+                            //@Value = Model.DateBuy.Value.ToString("dd.MM.yyyy")
+                        })
+                        <span class="input-group-addon" onclick=" OpenDatepicker() ">
+                            <i class="glyphicon glyphicon-th" id="icon_datepicker"></i>
+                        </span>
+                        @*@Html.ValidationMessageFor(model => model.DateBuy, "", new {@class = "text-danger"})*@
+                    </div>
                 </div>
             </div>
 
@@ -136,8 +141,42 @@
         $("#car_modification").load('@(Url.Action("GetModifications","Car"))', { "modelId": modelId });
     }
 
+    // заносим данные в модель
+    function CheckVote() {
+        $("#Rating").val(($("#vote-rating").text()));
+    }
+
+    function OpenDatepicker() {
+        $('#DateBuy').datepicker('show');
+    }
+
     $(document).ready(function () {
-        var carBrandId = '@(Model.CarModels.CarBrands.Id)';
+        // Получаем язык пользователя
+        var lang = '@ViewBag.LanguageName';
+        // Инициализация календаря
+        $('#DateBuy').datepicker({
+            format: "dd.mm.yyyy",
+            weekStart: 1,
+            todayBtn: "linked",
+            language: lang,
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        // Инициализация рейтинга
+        $("#car_rating").rating({ readOnly: false });
+
+        // При наведении на иконку календаря меняется курсор
+        $('#icon_datepicker').mouseenter(function () {
+            $(this).css({ cursor: 'default' });
+        });
+
+        // При наведении на поле ввода календаря меняется курсор
+        $('#DateBuy').mouseenter(function () {
+            $(this).css({ cursor: 'default' });
+        });
+
+        //var carBrandId = '@(Model.CarModels.CarBrands.Id)';
         var carModelId = '@(Model.CarModels.Id)';
         var carModificationId = '@(modificationId)';
 
@@ -155,19 +194,7 @@
                 $("#modificationId option[value='" + carModificationId + "']").attr("selected", "selected");    // Выбираем модификацию автомобиля с определенным Id
             }, 1000);
         }, 1000);
-
-
     });
-
-    $(document).ready(function () {
-        $("#car_rating").rating({ readOnly: false });
-    });
-
-    // заносим данные в модель
-    function CheckVote() {
-        $("#Rating").val(($("#vote-rating").text()));
-    }
-
 </script>
 
 @section scripts {

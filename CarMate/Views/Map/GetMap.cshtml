@@ -850,7 +850,8 @@
                         addMarker(marker, gas_markers);
                     });
                     console.log(data);
-                    vendorDetails(data);
+                    if(data != '')
+                        vendorDetails(data);
                 },
                 error: function(data) { console.log(data) }
             });
@@ -1069,7 +1070,8 @@
 
                     //  alert("Загружено!!!");
                     console.log(data);
-                    vendorDetails(data);//получить инфу о азс на карте
+                    if (data != '')
+                        vendorDetails(data);//получить инфу о азс на карте
                     //NProgress.done();
                 },
                 error: function (data) { console.log(data) }

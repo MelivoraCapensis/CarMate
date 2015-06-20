@@ -133,7 +133,7 @@
     <value>Проехано, за выбранный период</value>
   </data>
   <data name="FillTwoTimes" xml:space="preserve">
-    <value>Пользователь еще не заправляет полный бак 2 раза подряд.</value>
+    <value>Пользователь еще не заправлял полный бак 2 раза подряд.</value>
   </data>
   <data name="FuelConsumption" xml:space="preserve">
     <value>Расход топлива</value>

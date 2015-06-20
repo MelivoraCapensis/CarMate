@@ -13,7 +13,7 @@
 <div class="form-group">
     @Html.LabelFor(events => events.FuelCount, Resources.CarEvents.FuelCount, htmlAttributes: new {@class = "control-label col-md-2"})
     <div class="col-md-3">
-        @Html.TextBoxFor(model => model.FuelCount, htmlAttributes: new {@class = "form-control"})
+        @Html.TextBoxFor(model => model.FuelCount, htmlAttributes: new { @class = "form-control"})
         @Html.ValidationMessageFor(model => model.FuelCount, "", new {@class = "text-danger"})
     </div>
 </div>
@@ -39,9 +39,64 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(events => events.IsMissedFilling, Resources.CarEvents.MissedFilling, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(events => events.IsMissedFilling, Resources.CarEvents.MissedFilling, htmlAttributes: new {@class = "control-label col-md-2"})
     <div class="col-md-3">
-        @Html.CheckBoxFor(model => model.IsMissedFilling, htmlAttributes: new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.IsMissedFilling, "", new { @class = "text-danger" })
+        @Html.CheckBoxFor(model => model.IsMissedFilling, htmlAttributes: new {@class = "form-control"})
+        @Html.ValidationMessageFor(model => model.IsMissedFilling, "", new {@class = "text-danger"})
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // При изменении в поле "Залито топлива"
+        $('#FuelCount').keyup(function () {
+            // Получаем данные из поля FuelCount (Залито топлива)
+            var fuelCount = $('#FuelCount').val();
+            // Если FuelCount (Залито топлива) не число - выходим
+            if (!$.isNumeric(fuelCount)) {
+                return;
+            }
+            // Получаем данные из поля PricePerLitr (цена за литр)
+            var pricePerLitr = $('#PricePerLitr').val();
+            // Если PricePerLitr (цена за литр) не число - выходим
+            if (!$.isNumeric(pricePerLitr)) {
+                return;
+            }
+            // Считаем общую стоимость
+            var costTotal = fuelCount * pricePerLitr;
+            // Если CostTotal (общая стоимость) не число - выходим
+            if (!$.isNumeric(costTotal)) {
+                return;
+            }
+            // Округляем до 2-х знаков, после запятой
+            costTotal = costTotal.toFixed(2);
+            // Результат вычисления помещаем в поле CostTotal (общая стоимость)
+            $('#CostTotal').val(costTotal);
+        });
+
+        $('#PricePerLitr').keyup(function () {
+            // Получаем данные из поля FuelCount (Залито топлива)
+            var fuelCount = $('#FuelCount').val();
+            // Если FuelCount (Залито топлива) не число - выходим
+            if (!$.isNumeric(fuelCount)) {
+                return;
+            }
+            // Получаем данные из поля PricePerLitr (цена за литр)
+            var pricePerLitr = $('#PricePerLitr').val();
+            // Если PricePerLitr (цена за литр) не число - выходим
+            if (!$.isNumeric(pricePerLitr)) {
+                return;
+            }
+            // Считаем общую стоимость
+            var costTotal = fuelCount * pricePerLitr;
+            // Если CostTotal (общая стоимость) не число - выходим
+            if (!$.isNumeric(costTotal)) {
+                return;
+            }
+            // Округляем до 2-х знаков, после запятой
+            costTotal = costTotal.toFixed(2);
+            // Результат вычисления помещаем в поле CostTotal (общая стоимость)
+            $('#CostTotal').val(costTotal);
+        });
+    });
+</script>

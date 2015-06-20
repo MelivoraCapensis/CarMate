@@ -34,15 +34,22 @@
 
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.LabelFor(events => events.DateEvent, Resources.CarEvents.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(events => events.DateEvent, Resources.CarEvents.Date, htmlAttributes: new {@class = "control-label col-md-2"})
                             <div class="col-md-3">
-                                @Html.TextBoxFor(model => model.DateEvent, htmlAttributes: new
-                                {
-                                    @class = "form-control",
-                                    data_provide = "datepicker",
-                                    @Value = Model.DateEvent.ToString("dd/MM/yyyy")
-                                })
-                                @Html.ValidationMessageFor(model => model.DateEvent, "", new { @class = "text-danger" })
+                                <div class="input-group" role="group" aria-label="...">
+                                    @Html.TextBoxFor(model => model.DateEvent, "{0:dd.MM.yyyy}", htmlAttributes: new
+                                    {
+                                        @class = "form-control"
+                                        //disabled = "",
+                                        //data_provide = "datepicker"
+                                        //@Value = Model.DateEvent.ToString("dd.mm.yyyy")
+                                        //onclick="OpenDatepicker()"
+                                    })
+                                    <span class="input-group-addon" onclick="OpenDatepicker()">
+                                        <i class="glyphicon glyphicon-th" id="icon_datepicker"></i>
+                                    </span>
+                                    @*@Html.ValidationMessageFor(model => model.DateEvent, "", new {@class = "text-danger"})*@
+                                </div>
                             </div>
                         </div>
 
@@ -103,6 +110,10 @@
         var name = selectElement.options[selectElement.selectedIndex].text;
         $("#car_event").load('@(Url.Action("GetEvent","CarEvents"))', { "name": name });
     }*@
+   
+    function OpenDatepicker() {
+        $('#DateEvent').datepicker('show');
+    }
 
     function GetEvent(selectElement) {
         var name = selectElement.options[selectElement.selectedIndex].text;
@@ -110,24 +121,35 @@
         $("#car_event").load('@(Url.Action("GetEvent", "CarEvents"))', { "carEventJson": carEventModel, "name": name });
     }
 
-
     $(document).ready(function () {
-        $('#EventTypeId').trigger('change');    // Генерируем событие onchange для выпадающего списка с событиями автомобилей
-    });
+        // Генерируем событие onchange для выпадающего списка с событиями автомобилей
+        $('#EventTypeId').trigger('change');
 
-    $(document).ready(function () {
+        // Инициализация рейтинга
         $("#car_rating").rating({ readOnly: true });
-    });
 
+        // При наведении на иконку календаря меняется курсор
+        $('#icon_datepicker').mouseenter(function () {
+            $(this).css({ cursor: 'default' });
+        });
 
-        //function ChangeFuelCount() {
-        //    //$('#FuelCount').change(function() {
-        //    alert("ChangeFuelCount");
-        //    //});
-        //};
+        // При наведении на поле ввода календаря меняется курсор
+        $('#DateEvent').mouseenter(function () {
+            $(this).css({ cursor: 'default' });
+        });
 
-        
-    $(document).ready(function() {
+        // Получаем язык пользователя
+        var lang = '@ViewBag.LanguageName';
+        // Инициализация календаря
+        $('#DateEvent').datepicker({
+            format: "dd.mm.yyyy",
+            weekStart: 1,
+            todayBtn: "linked",
+            language: lang,
+            autoclose: true,
+            todayHighlight: true
+        });
+
         // При изменении в поле "Общая стоимость"
         $('#CostTotal').blur(function () {
             // Получаем данные из поля CostTotal (общая стоимость)
@@ -151,7 +173,7 @@
             }
             // Округляем до 2-х знаков, после запятой
             fuelCount = fuelCount.toFixed(2);
-            
+
             // Результат вычисления помещаем в поле FuelCount (Залито топлива)
             $('#FuelCount').val(fuelCount);
         });

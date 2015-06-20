@@ -28,6 +28,7 @@ namespace CarMate.Classes
         {
             if (String.IsNullOrEmpty(unitName))
                 throw new ArgumentNullException();
+            
             switch (unitName)
             {
                 case Consts.UnitFuelConsumptionNameLitersOn100Km:
