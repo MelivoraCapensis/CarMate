@@ -19,9 +19,10 @@
             <div id="carContainer">
                 @*<h2>@ViewBag.Title</h2>*@
 
+                
+
                 @if (Model.Any())
                 {
-
                     <table class="table">
                         <tr>
                             <th>
@@ -130,14 +131,29 @@
                 }
 
                 <hr/>
-                <p>
-                    @Resources.CarConsumption.DroveFromPeriod: <span id="distance_period"></span> @ViewBag.UnitDistance.
-                </p>
 
-                <div id="distanceStatistics" class="col-lg-12 col-md-12"></div>
+                <div class="row">
+                    <div class="col-lg-7 col-md-7">
+                        <div class="input-daterange input-group" id="datepicker_period">
+                            <span class="input-group-addon">За период: </span>
+                            <span class="input-group-addon">с</span>
+                            <input type="text" class="input form-control" name="start" />
+                            <span class="input-group-addon">по</span>
+                            <input type="text" class="input form-control" name="end" />
+                        </div>
+                        <button class="btn btn-success" id="search_period">Найти</button>
+                    </div>
+                </div>
 
-                <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
-            </div>
+                    <div id="period_result"></div>
+                    @*<p>
+                @Resources.CarConsumption.DroveFromPeriod: <span id="distance_period"></span> @ViewBag.UnitDistance.
+            </p>*@
+
+                    <div id="distanceStatistics" class="col-lg-12 col-md-12"></div>
+
+                    <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
+                </div>
         </div>
     </div>
 </div>
@@ -203,136 +219,161 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
+        getData();
+        $('#search_period').click(function() {
+            getData();
+        });
+    });
+
+    function getData() {
+
         var distance = '@(Resources.CarConsumption.Distance)';
         var mileage = '@(Resources.CarConsumption.Mileage)';
+        var startDate = $('input[name=start]').val();
+        var endDate = $('input[name=end]').val();
+        //alert(startDate);
+        //alert(endDate);
 
         var carId = '@(ViewBag.Car.Id)';
 
-        jQuery.getJSON("CarConsumption/GetConsumptionStatistics", { "carId": carId }, function (items) {
+        jQuery.getJSON("CarConsumption/GetConsumptionFromPeriod", { "carId": carId, "startDate": startDate, "endDate": endDate }, function (items) {
 
-            $('#distance_period').text(items[0].AllDistance);
+            if (items.length === 0) {
+                $('#period_result').html(
+                    '<div class="col-lg-12">' +
+                    '<div class="alert alert-danger">' +
+                    '@Resources.CarConsumption.PeriodEmpty' +
+                    '</div>' +
+                    '</div>'
+                );
+            } else {
+                $('#period_result').html(
+                    '<p>' +
+                    '@Resources.CarConsumption.DroveFromPeriod: <span id="distance_period">' + items[0].AllDistance + '</span> @ViewBag.UnitDistance.' +
+                    '</p>'
+                );
+                //$('#distance_period').text(items[0].AllDistance);
 
-            $(function () {
-                var dataFuel = []; // Создается пустой массив
-                jQuery.each(items, function (itemNo, item) {
-                    var s = (item.Ticks - 621355968000000000) / 10000;
-                    dataFuel.push({ x: s, y: item.Distance });
-                });
+                $(function () {
+                    var dataFuel = []; // Создается пустой массив
+                    jQuery.each(items, function (itemNo, item) {
+                        var s = (item.Ticks - 621355968000000000) / 10000;
+                        dataFuel.push({ x: s, y: item.Distance });
+                    });
 
-                Highcharts.setOptions({
-                    lang: {
-                        months: ['@(Resources.Hicharts.January)', '@(Resources.Hicharts.February)', '@(Resources.Hicharts.March)', '@(Resources.Hicharts.April)', '@(Resources.Hicharts.May)', '@(Resources.Hicharts.June)', '@(Resources.Hicharts.July)', '@(Resources.Hicharts.August)', '@(Resources.Hicharts.September)', '@(Resources.Hicharts.October)', '@(Resources.Hicharts.November)', '@(Resources.Hicharts.December)'],
-                        shortMonths: ['@(Resources.Hicharts.ShortJanuary)', '@(Resources.Hicharts.ShortFebruary)', '@(Resources.Hicharts.ShortMarch)', '@(Resources.Hicharts.ShortApril)', '@(Resources.Hicharts.ShortMay)', '@(Resources.Hicharts.ShortJune)', '@(Resources.Hicharts.ShortJuly)', '@(Resources.Hicharts.ShortAugust)', '@(Resources.Hicharts.ShortSeptember)', '@(Resources.Hicharts.ShortOctober)', '@(Resources.Hicharts.ShortNovember)', '@(Resources.Hicharts.ShortDecember)'],
-                        weekdays: ['@(Resources.Hicharts.Sunday)', '@(Resources.Hicharts.Monday)', '@(Resources.Hicharts.Tuesday)', '@(Resources.Hicharts.Wednesday)', '@(Resources.Hicharts.Thursday)', '@(Resources.Hicharts.Friday)', '@(Resources.Hicharts.Saturday)'],
-                        rangeSelectorZoom: "@(Resources.Hicharts.ButtonTitle)"
-                    }
-                });
-
-                //['ShortMonthsJanuary', 'ShortMonthsFebruary', 'ShortMonthsMarch', 'ShortMonthsApril',
-                // 'ShortMonthsMay', 'ShortMonthsJune', 'ShortMonthsJuly', 'ShortMonthsAugust', 'ShortMonthsSeptember',
-                // 'ShortMonthsOctober', 'ShortMonthsNovember', 'ShortMonthsDecember']
-
-                //['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
-                // Create the chart
-                $('#distanceStatistics').highcharts('StockChart', {
-                    rangeSelector: {
-                        allButtonsEnabled: true,
-                        buttons: [
-                            {
-                                type: 'month',
-                                count: 3,
-                                text: '@(Resources.Hicharts.Day)',
-                                dataGrouping: {
-                                    forced: true,
-                                    units: [['day', [1]]]
-
-                                }
-                            }, {
-                                type: 'all',
-                                text: '@(Resources.Hicharts.Month)',
-                                dataGrouping: {
-                                    forced: true,
-                                    units: [['month', [1]]],
-                                    approximation: 'sum'    // Суммирует весь пробег за месяц
-                                }
-                            }, {
-                                type: 'all',
-                                count: 1,
-                                text: '@(Resources.Hicharts.Year)',
-                                dataGrouping: {
-                                    forced: true,
-                                    units: [['year', [1]]],
-                                    approximation: 'sum'    // Суммирует весь пробег за год
-                                }
-                            }
-                        ],
-                        buttonTheme: {
-                            width: 60
-                        },
-                        selected: 0,
-                        // Убрать поля для задания периода
-                        inputEnabled: false
-                    },
-
-                    xAxis: {
-                        type: 'datetime',
-                        dateTimeLabelFormats: {
-                            second: '%d-%m<br/>%Y',
-                            minute: '%d-%m<br/>%Y',
-                            hour: '%d-%m<br/>%Y',
-                            day: '%d-%m<br/>%Y',
-                            week: '%d-%m<br/>%Y',
-                            month: '%m-%Y',
-                            year: '%Y'
+                    Highcharts.setOptions({
+                        lang: {
+                            months: ['@(Resources.Hicharts.January)', '@(Resources.Hicharts.February)', '@(Resources.Hicharts.March)', '@(Resources.Hicharts.April)', '@(Resources.Hicharts.May)', '@(Resources.Hicharts.June)', '@(Resources.Hicharts.July)', '@(Resources.Hicharts.August)', '@(Resources.Hicharts.September)', '@(Resources.Hicharts.October)', '@(Resources.Hicharts.November)', '@(Resources.Hicharts.December)'],
+                            shortMonths: ['@(Resources.Hicharts.ShortJanuary)', '@(Resources.Hicharts.ShortFebruary)', '@(Resources.Hicharts.ShortMarch)', '@(Resources.Hicharts.ShortApril)', '@(Resources.Hicharts.ShortMay)', '@(Resources.Hicharts.ShortJune)', '@(Resources.Hicharts.ShortJuly)', '@(Resources.Hicharts.ShortAugust)', '@(Resources.Hicharts.ShortSeptember)', '@(Resources.Hicharts.ShortOctober)', '@(Resources.Hicharts.ShortNovember)', '@(Resources.Hicharts.ShortDecember)'],
+                            weekdays: ['@(Resources.Hicharts.Sunday)', '@(Resources.Hicharts.Monday)', '@(Resources.Hicharts.Tuesday)', '@(Resources.Hicharts.Wednesday)', '@(Resources.Hicharts.Thursday)', '@(Resources.Hicharts.Friday)', '@(Resources.Hicharts.Saturday)'],
+                            rangeSelectorZoom: "@(Resources.Hicharts.ButtonTitle)"
                         }
-                    },
+                    });
 
-                    yAxis: {
-                        //allowDecimals: false,
-                        showFirstLabel: true,
-                        showLastLabel: true,
-                        //labels: {
-                        //    y: 0,
-                        //    align: 'left'
-                        //},
-                        title: {
-                            text: distance + '(@(ViewBag.UnitDistance))'
-                        }
-                    },
+                    //['ShortMonthsJanuary', 'ShortMonthsFebruary', 'ShortMonthsMarch', 'ShortMonthsApril',
+                    // 'ShortMonthsMay', 'ShortMonthsJune', 'ShortMonthsJuly', 'ShortMonthsAugust', 'ShortMonthsSeptember',
+                    // 'ShortMonthsOctober', 'ShortMonthsNovember', 'ShortMonthsDecember']
 
-                    //rangeSelector: {
-                    //    selected: 5
-                    //},
+                    //['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-                    title: {
-                        text: '@(Resources.CarConsumption.Mileage)'
-                    },
+                    // Create the chart
+                    $('#distanceStatistics').highcharts('StockChart', {
+                        rangeSelector: {
+                            allButtonsEnabled: true,
+                            buttons: [
+                                {
+                                    type: 'month',
+                                    count: 3,
+                                    text: '@(Resources.Hicharts.Day)',
+                                    dataGrouping: {
+                                        forced: true,
+                                        units: [['day', [1]]]
 
-                    series: [
-                        {
-                            //name: 'AAPL Stock Price',
-                            data: dataFuel,
-                            marker: {
-                                enabled: true,
-                                radius: 3
+                                    }
+                                }, {
+                                    type: 'all',
+                                    text: '@(Resources.Hicharts.Month)',
+                                    dataGrouping: {
+                                        forced: true,
+                                        units: [['month', [1]]],
+                                        approximation: 'sum' // Суммирует весь пробег за месяц
+                                    }
+                                }, {
+                                    type: 'all',
+                                    count: 1,
+                                    text: '@(Resources.Hicharts.Year)',
+                                    dataGrouping: {
+                                        forced: true,
+                                        units: [['year', [1]]],
+                                        approximation: 'sum' // Суммирует весь пробег за год
+                                    }
+                                }
+                            ],
+                            buttonTheme: {
+                                width: 60
                             },
-                            shadow: true,
-                            tooltip: {
-                                //'<b>' + Highcharts.dateFormat('%A, %b %e, %Y', this.x) + '</b>';
-                                headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
-                                pointFormat:
-                                    '<tr><td style="color: {series.color}">@(Resources.CarConsumption.DistancesDrove): </td>' +
-                                        '<td style="text-align: right"><b>{point.y:.2f}(@(ViewBag.UnitDistance)).</b></td></tr>',
-                                valueDecimals: 2
+                            selected: 0,
+                            // Убрать поля для задания периода
+                            inputEnabled: false
+                        },
+
+                        xAxis: {
+                            type: 'datetime',
+                            dateTimeLabelFormats: {
+                                second: '%d-%m<br/>%Y',
+                                minute: '%d-%m<br/>%Y',
+                                hour: '%d-%m<br/>%Y',
+                                day: '%d-%m<br/>%Y',
+                                week: '%d-%m<br/>%Y',
+                                month: '%m-%Y',
+                                year: '%Y'
                             }
-                        }
-                    ]
+                        },
+
+                        yAxis: {
+                            //allowDecimals: false,
+                            showFirstLabel: true,
+                            showLastLabel: true,
+                            //labels: {
+                            //    y: 0,
+                            //    align: 'left'
+                            //},
+                            title: {
+                                text: distance + '(@(ViewBag.UnitDistance))'
+                            }
+                        },
+
+                        //rangeSelector: {
+                        //    selected: 5
+                        //},
+
+                        title: {
+                            text: '@(Resources.CarConsumption.Mileage)'
+                        },
+
+                        series: [
+                            {
+                                //name: 'AAPL Stock Price',
+                                data: dataFuel,
+                                marker: {
+                                    enabled: true,
+                                    radius: 3
+                                },
+                                shadow: true,
+                                tooltip: {
+                                    //'<b>' + Highcharts.dateFormat('%A, %b %e, %Y', this.x) + '</b>';
+                                    headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                                    pointFormat:
+                                        '<tr><td style="color: {series.color}">@(Resources.CarConsumption.DistancesDrove): </td>' +
+                                            '<td style="text-align: right"><b>{point.y:.2f}(@(ViewBag.UnitDistance)).</b></td></tr>',
+                                    valueDecimals: 2
+                                }
+                            }
+                        ]
+                    });
                 });
-            });
-
-
+            }
 
 
             //$(function () {
@@ -490,14 +531,30 @@
             //    });
             //});
         });
-    });
+    }
 </script>
 
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Получаем язык пользователя
+        var lang = '@ViewBag.LanguageName';
+        // Инициализация календаря
+        $('#datepicker_period').datepicker({
+            format: "dd.mm.yyyy",
+            weekStart: 1,
+            todayBtn: "linked",
+            clearBtn: true,
+            language: lang,
+            //autoclose: true,
+            todayHighlight: true
+        });
+    });
+</script>
 
 @section scripts {
 <script src="http://code.highcharts.com/stock/highstock.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Script/highcharts")
     @Scripts.Render("~/Scripts/rating")
+    @Scripts.Render("~/Script/bootstrap-datepicker")
 }

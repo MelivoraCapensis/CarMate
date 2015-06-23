@@ -37,8 +37,28 @@ namespace CarMate.Controllers
                 CurrentLang = Db.Languages.FirstOrDefault(p => p.Code == CurrentLangCode);
 
                 var ci = new CultureInfo(CurrentLangCode);
+                //{
+                //    NumberFormat = {NumberDecimalSeparator = ".", CurrencyDecimalSeparator = "."},
+                    
+                //};
+                //var ci = (CultureInfo) new CultureInfo(CurrentLangCode).Clone();
+                //ci.NumberFormat.NumberDecimalSeparator = ".";
+                //NumberFormatInfo nfi = (NumberFormatInfo) new CultureInfo(CurrentLangCode).Clone();
+                //NumberFormatInfo nfi = new CultureInfo(CurrentLangCode).NumberFormat;
+                //nfi.NumberDecimalSeparator = ".";
+                //nfi.CurrencyDecimalSeparator = ".";
+                //nfi.PercentDecimalSeparator = ".";
+                //nfi.CurrencyGroupSeparator = ".";
+                //nfi.NumberGroupSeparator = ".";
+                //nfi.PercentGroupSeparator = ".";
+                //ci.NumberFormat = nfi;
                 Thread.CurrentThread.CurrentUICulture = ci;
-                //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
+                //Thread.CurrentThread.CurrentCulture.NumberFormat = nfi;
+                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
+                //Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator = ".";
+                Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = "dd.MM.yyyy";
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat.DateSeparator = ".";
             }
             ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit), "Id", "NameUnit");
 

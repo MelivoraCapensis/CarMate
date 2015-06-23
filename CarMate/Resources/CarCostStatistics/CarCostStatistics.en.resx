@@ -138,6 +138,9 @@
   <data name="OtherEvents" xml:space="preserve">
     <value>Other events</value>
   </data>
+  <data name="PeriodEmpty" xml:space="preserve">
+    <value>For the selected period no data</value>
+  </data>
   <data name="PressColumn" xml:space="preserve">
     <value>Click column for more statistics</value>
   </data>

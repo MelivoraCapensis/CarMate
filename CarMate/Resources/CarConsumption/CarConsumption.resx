@@ -159,4 +159,7 @@
   <data name="Options" xml:space="preserve">
     <value>Опции</value>
   </data>
+  <data name="PeriodEmpty" xml:space="preserve">
+    <value>За выбранный период нет данных</value>
+  </data>
 </root>

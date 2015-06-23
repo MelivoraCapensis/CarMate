@@ -45,6 +45,7 @@ namespace CarMate.Controllers
             ViewBag.UnitVolume = user.UnitVolume.NameUnit;
 
             ViewBag.LanguageId = this.CurrentLang.Id;
+            ViewBag.LanguageName = this.CurrentLang.Code;
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
         }
 
@@ -159,6 +160,8 @@ namespace CarMate.Controllers
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }
+
+
             var carEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
 
             //Dictionary<string, double> costStatistics = new Dictionary<string, double>();
@@ -187,6 +190,102 @@ namespace CarMate.Controllers
                 {
                     //costStatistics[carEvent.EventTypes.Name] = carEvent.CostTotal;
                     t = new Test {Summ = carEvent.CostTotal, Name = carEvent.EventTypes.Name};
+                    allSumm += carEvent.CostTotal;
+                    t.Details.Add(new Details
+                    {
+                        DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture),
+                        Ticks = carEvent.DateEvent.ToLocalTime().Ticks,
+                        Cost = carEvent.CostTotal,
+                        Year = carEvent.DateEvent.Year,
+                        Month = carEvent.DateEvent.Month
+                    });
+                    tests.Add(t);
+                }
+            }
+            allSumm = Math.Round(allSumm, 2);
+
+            foreach (Test t in tests)
+            {
+                t.AllSumm = allSumm;
+            }
+
+            return Json(tests, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCostStatisticsFromPeriod(int carId, string startDate, string endDate)
+        {
+            var car = Db.Cars.Find(carId);
+            if (car == null)
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+
+            List<CarEvents> carEvents = new List<CarEvents>();
+
+
+            CultureInfo ci = new CultureInfo("ru");
+            DateTime start;
+            DateTime end;
+            // Если удалось преобразовать дату начала из строки в дату, то фильтруем по дате начала
+            if (DateTime.TryParseExact(startDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out start))
+            {
+                var carEventsTmp = Db.CarEvents
+                    .Where(x => x.CarId == carId && x.DateEvent >= start)
+                    .OrderBy(x => x.DateEvent);
+
+                DateTime endTmp;
+                // Если удалось преобразовать дату конца из строки в дату, то фильтруем по дате конца
+                if (DateTime.TryParseExact(endDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out endTmp))
+                {
+                    carEvents = carEventsTmp
+                        .Where(x => x.CarId == carId && x.DateEvent <= endTmp)
+                        .OrderBy(x => x.DateEvent)
+                        .ToList();
+                }
+            }
+            // Если не удалось преобразовать дату начала, но удалось преобразовать дату конца, то фильтруем по дате конца
+            else if (DateTime.TryParseExact(endDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out end))
+            {
+                carEvents = Db.CarEvents
+                    .Where(x => x.CarId == carId && x.DateEvent <= end)
+                    .OrderBy(x => x.DateEvent)
+                    .ToList();
+            }
+            else
+            {
+                carEvents = Db.CarEvents
+                    .Where(x => x.CarId == carId)
+                    .OrderBy(x => x.DateEvent)
+                    .ToList();
+            }
+            //var carEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+
+            //Dictionary<string, double> costStatistics = new Dictionary<string, double>();
+            List<Test> tests = new List<Test>();
+            double allSumm = 0;
+            foreach (var carEvent in carEvents)
+            {
+                //if (costStatistics.ContainsKey(carEvent.EventTypes.Name))
+                var t = tests.FirstOrDefault(x => x.Name.Equals(carEvent.EventTypes.Name));
+                if (t != null)
+                {
+                    //costStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
+
+                    t.Details.Add(new Details
+                    {
+                        DateCreate = carEvent.DateEvent.ToString(CultureInfo.CurrentCulture),
+                        Ticks = carEvent.DateEvent.ToLocalTime().Ticks,
+                        Cost = carEvent.CostTotal,
+                        Year = carEvent.DateEvent.Year,
+                        Month = carEvent.DateEvent.Month
+                    });
+                    t.Summ += carEvent.CostTotal;
+                    allSumm += carEvent.CostTotal;
+                }
+                else
+                {
+                    //costStatistics[carEvent.EventTypes.Name] = carEvent.CostTotal;
+                    t = new Test { Summ = carEvent.CostTotal, Name = carEvent.EventTypes.Name };
                     allSumm += carEvent.CostTotal;
                     t.Details.Add(new Details
                     {

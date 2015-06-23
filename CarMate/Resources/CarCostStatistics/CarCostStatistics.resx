@@ -138,6 +138,9 @@
   <data name="OtherEvents" xml:space="preserve">
     <value>Другие события</value>
   </data>
+  <data name="PeriodEmpty" xml:space="preserve">
+    <value>За выбранный период нет данных</value>
+  </data>
   <data name="PressColumn" xml:space="preserve">
     <value>Нажмите на колонку, для более подробной статистики</value>
   </data>

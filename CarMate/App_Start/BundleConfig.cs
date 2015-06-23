@@ -30,10 +30,6 @@ namespace CarMate
             bundles.Add(new ScriptBundle("~/Scripts/rating").Include
                ("~/Scripts/rating/jquery.rating-2.0.js"));
 
-            //bundles.Add(new ScriptBundle("~/Script/bootstrap-datepicker").Include(
-            //    "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js",
-            //    "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.ru.js"));
-
             bundles.Add(new ScriptBundle("~/Script/bootstrap-datepicker").Include(
                 "~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js",
                 "~/Scripts/bootstrap-datepicker/locales/bootstrap-datepicker.ru.js"
@@ -63,9 +59,6 @@ namespace CarMate
 
             bundles.Add(new StyleBundle("~/Content/rating").Include(
                 "~/Content/rating/jquery.rating.css"));
-
-            //bundles.Add(new StyleBundle("~/Content/bootstrap-datepicker").Include(
-            //    "~/Content/bootstrap-datepicker/datepicker.css"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap-datepicker").Include(
                 "~/Content/bootstrap-datepicker/bootstrap-datepicker3.css"));

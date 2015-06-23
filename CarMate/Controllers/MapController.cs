@@ -122,12 +122,12 @@ namespace CarMate.Controllers
             double radius;
             string r, l1, l2;
             List<int> fuelcategoryid=new List<int>();
-            r = poi.Radius.Replace('.', ',');
-            l1 = poi.Lat.Replace('.', ',');
-            l2 = poi.Long.Replace('.', ',');
-            //r = poi.Radius;
-            //l1 = poi.Lat;
-            //l2 = poi.Long;
+            //r = poi.Radius.Replace('.', ',');
+            //l1 = poi.Lat.Replace('.', ',');
+            //l2 = poi.Long.Replace('.', ',');
+            r = poi.Radius;
+            l1 = poi.Lat;
+            l2 = poi.Long;
             Double.TryParse(r, out radius);
             double latitude;
             Double.TryParse(l1, out latitude);
@@ -313,8 +313,8 @@ namespace CarMate.Controllers
             int categoryId;
             Int32.TryParse(item.Category, out categoryId);
             double radius;
-            r = item.Radius.Replace('.', ',');
-            //r = item.Radius;
+            //r = item.Radius.Replace('.', ',');
+            r = item.Radius;
             Double.TryParse(r, out radius);
             #endregion 
             List<Squirrel> markers = new List<Squirrel>();//список маркеров по путевым точкам
@@ -332,10 +332,10 @@ namespace CarMate.Controllers
                 foreach (var poisqurrel in incominglstSquirrel)
                 {
                     double latitude;
-                    l1 = poisqurrel.Lat.Replace('.', ',');
-                    l2 = poisqurrel.Long.Replace('.', ',');
-                    //l1 = poisqurrel.Lat;
-                    //l2 = poisqurrel.Long;
+                    //l1 = poisqurrel.Lat.Replace('.', ',');
+                    //l2 = poisqurrel.Long.Replace('.', ',');
+                    l1 = poisqurrel.Lat;
+                    l2 = poisqurrel.Long;
                     Double.TryParse(l1, out latitude);
                     double longitude;
                     Double.TryParse(l2, out longitude);
@@ -390,10 +390,10 @@ namespace CarMate.Controllers
                     foreach (var poisqurrel in incominglstSquirrel)
                     {
                         double latitude;
-                        l1 = poisqurrel.Lat.Replace('.', ',');
-                        l2 = poisqurrel.Long.Replace('.', ',');
-                        //l1 = poisqurrel.Lat;
-                        //l2 = poisqurrel.Long;
+                        //l1 = poisqurrel.Lat.Replace('.', ',');
+                        //l2 = poisqurrel.Long.Replace('.', ',');
+                        l1 = poisqurrel.Lat;
+                        l2 = poisqurrel.Long;
                         Double.TryParse(l1, out latitude);
                         double longitude;
                         Double.TryParse(l2, out longitude);
@@ -458,10 +458,10 @@ namespace CarMate.Controllers
                     foreach (var poisqurrel in incominglstSquirrel)
                     {
                         double latitude;
-                        l1 = poisqurrel.Lat.Replace('.', ',');
-                        l2 = poisqurrel.Long.Replace('.', ',');
-                        //l1 = poisqurrel.Lat;
-                        //l2 = poisqurrel.Long;
+                        //l1 = poisqurrel.Lat.Replace('.', ',');
+                        //l2 = poisqurrel.Long.Replace('.', ',');
+                        l1 = poisqurrel.Lat;
+                        l2 = poisqurrel.Long;
                         Double.TryParse(l1, out latitude);
                         double longitude;
                         Double.TryParse(l2, out longitude);

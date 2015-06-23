@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to За выбранный период нет данных.
+        /// </summary>
+        public static string CarEventsEmpty {
+            get {
+                return ResourceManager.GetString("CarEventsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Комментарий.
         /// </summary>
         public static string Comment {

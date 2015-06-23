@@ -79,6 +79,43 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="CarMateModel.Cars">
+        <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="ModificationId" ColumnName="ModificationId" />
+          <ScalarProperty Name="Odometer" ColumnName="Odometer" />
+          <ScalarProperty Name="Tank" ColumnName="Tank" />
+          <ScalarProperty Name="Consumption" ColumnName="Consumption" />
+          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+          <ScalarProperty Name="DateBuy" ColumnName="DateBuy" />
+          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="FuelCategoryId" ColumnName="FuelCategoryId" />
+          <ScalarProperty Name="CarTransmissionId" ColumnName="CarTransmissionId" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarTransmission">
+      <EntityTypeMapping TypeName="CarMateModel.CarTransmission">
+        <MappingFragment StoreEntitySet="CarTransmission">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarTransmissionLang">
+      <EntityTypeMapping TypeName="CarMateModel.CarTransmissionLang">
+        <MappingFragment StoreEntitySet="CarTransmissionLang">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CarTransmissionId" ColumnName="CarTransmissionId" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="NameTransmission" ColumnName="NameTransmission" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CarTypes">
       <EntityTypeMapping TypeName="CarMateModel.CarTypes">
         <MappingFragment StoreEntitySet="CarTypes">
@@ -115,6 +152,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="EventTypes">
+      <EntityTypeMapping TypeName="CarMateModel.EventTypes">
+        <MappingFragment StoreEntitySet="EventTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FuelCategories">
       <EntityTypeMapping TypeName="CarMateModel.FuelCategories">
         <MappingFragment StoreEntitySet="FuelCategories">
@@ -123,6 +169,15 @@
           <ScalarProperty Name="Category" ColumnName="Category" />
           <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
           <ScalarProperty Name="State" ColumnName="State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Languages">
+      <EntityTypeMapping TypeName="CarMateModel.Languages">
+        <MappingFragment StoreEntitySet="Languages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -169,14 +224,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Regions">
-      <EntityTypeMapping TypeName="CarMateModel.Regions">
-        <MappingFragment StoreEntitySet="Regions">
+    <EntitySetMapping Name="UnitDistance">
+      <EntityTypeMapping TypeName="CarMateModel.UnitDistance">
+        <MappingFragment StoreEntitySet="UnitDistance">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-          <ScalarProperty Name="Region" ColumnName="Region" />
-          <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
-          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Correction" ColumnName="Correction" />
+          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitDistanceLang">
+      <EntityTypeMapping TypeName="CarMateModel.UnitDistanceLang">
+        <MappingFragment StoreEntitySet="UnitDistanceLang">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UnitDistanceId" ColumnName="UnitDistanceId" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -202,7 +266,6 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="CarMateModel.Users">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="RegionId" ColumnName="RegionId" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -217,6 +280,7 @@
           <ScalarProperty Name="UnitDistanceId" ColumnName="UnitDistanceId" />
           <ScalarProperty Name="UnitVolumeId" ColumnName="UnitVolumeId" />
           <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -241,78 +305,40 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Cars">
-      <EntityTypeMapping TypeName="CarMateModel.Cars">
-        <MappingFragment StoreEntitySet="Cars">
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
-          <ScalarProperty Name="CarTransmissionId" ColumnName="CarTransmissionId" />
-          <ScalarProperty Name="FuelCategoryId" ColumnName="FuelCategoryId" />
+    <EntitySetMapping Name="Regions">
+      <EntityTypeMapping TypeName="CarMateModel.Regions">
+        <MappingFragment StoreEntitySet="Regions">
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
-          <ScalarProperty Name="DateBuy" ColumnName="DateBuy" />
-          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
-          <ScalarProperty Name="Consumption" ColumnName="Consumption" />
-          <ScalarProperty Name="Tank" ColumnName="Tank" />
-          <ScalarProperty Name="Odometer" ColumnName="Odometer" />
-          <ScalarProperty Name="ModificationId" ColumnName="ModificationId" />
-          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_Membership">
+      <EntityTypeMapping TypeName="CarMateModel.webpages_Membership">
+        <MappingFragment StoreEntitySet="webpages_Membership">
+          <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+          <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+          <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+          <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Languages">
-      <EntityTypeMapping TypeName="CarMateModel.Languages">
-        <MappingFragment StoreEntitySet="Languages">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EventTypes">
-      <EntityTypeMapping TypeName="CarMateModel.EventTypes">
-        <MappingFragment StoreEntitySet="EventTypes">
-          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CarTransmission">
-      <EntityTypeMapping TypeName="CarMateModel.CarTransmission">
-        <MappingFragment StoreEntitySet="CarTransmission">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CarTransmissionLang">
-      <EntityTypeMapping TypeName="CarMateModel.CarTransmissionLang">
-        <MappingFragment StoreEntitySet="CarTransmissionLang">
-          <ScalarProperty Name="NameTransmission" ColumnName="NameTransmission" />
-          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
-          <ScalarProperty Name="CarTransmissionId" ColumnName="CarTransmissionId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UnitDistance">
-      <EntityTypeMapping TypeName="CarMateModel.UnitDistance">
-        <MappingFragment StoreEntitySet="UnitDistance">
-          <ScalarProperty Name="UnitFuelConsumptionId" ColumnName="UnitFuelConsumptionId" />
-          <ScalarProperty Name="Correction" ColumnName="Correction" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UnitDistanceLang">
-      <EntityTypeMapping TypeName="CarMateModel.UnitDistanceLang">
-        <MappingFragment StoreEntitySet="UnitDistanceLang">
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="NameUnit" ColumnName="NameUnit" />
-          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
-          <ScalarProperty Name="UnitDistanceId" ColumnName="UnitDistanceId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
+    <EntitySetMapping Name="webpages_OAuthMembership">
+      <EntityTypeMapping TypeName="CarMateModel.webpages_OAuthMembership">
+        <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

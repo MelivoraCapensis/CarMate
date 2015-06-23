@@ -185,5 +185,14 @@ namespace Resources {
                 return ResourceManager.GetString("Options", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to За выбранный период нет данных.
+        /// </summary>
+        public static string PeriodEmpty {
+            get {
+                return ResourceManager.GetString("PeriodEmpty", resourceCulture);
+            }
+        }
     }
 }

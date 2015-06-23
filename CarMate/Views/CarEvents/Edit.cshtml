@@ -47,8 +47,8 @@
                                         //data_provide = "datepicker",
                                         //@Value = Model.DateEvent.ToString("dd/MM/yyyy"),
                                     })
-                                    <span class="input-group-addon" onclick=" OpenDatepicker() ">
-                                        <i class="glyphicon glyphicon-th" id="icon_datepicker"></i>
+                                    <span class="input-group-addon" id="icon_datepicker" onclick=" OpenDatepicker() ">
+                                        <i class="glyphicon glyphicon-th"></i>
                                     </span>
                                     @*@Html.ValidationMessageFor(model => model.DateEvent, "", new { @class = "text-danger" })*@
                                 </div>
@@ -138,12 +138,12 @@
 
         // При наведении на иконку календаря меняется курсор
         $('#icon_datepicker').mouseenter(function () {
-            $(this).css({ cursor: 'default' });
+            $(this).css({ cursor: 'pointer' });
         });
 
         // При наведении на поле ввода календаря меняется курсор
         $('#DateBuy').mouseenter(function () {
-            $(this).css({ cursor: 'default' });
+            $(this).css({ cursor: 'pointer' });
         });
     });
 </script>

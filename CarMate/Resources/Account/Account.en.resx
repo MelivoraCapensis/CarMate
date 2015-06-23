@@ -147,6 +147,9 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Email required field</value>
   </data>
+  <data name="EmailStringLength" xml:space="preserve">
+    <value>The value of {0} must be between {2} to {1} characters</value>
+  </data>
   <data name="EmailType" xml:space="preserve">
     <value>Invalid Email address</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="LoginRequired" xml:space="preserve">
     <value>Login required field</value>
+  </data>
+  <data name="LoginStringLength" xml:space="preserve">
+    <value>The value of {0} must be between {2} to {1} characters</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
@@ -193,7 +199,7 @@
     <value>Password required field</value>
   </data>
   <data name="PasswordStringLength" xml:space="preserve">
-    <value>The value \"{0}\" must contain not less than {2} characters</value>
+    <value>The value of {0} must be between {2} to {1} characters</value>
   </data>
   <data name="RegisteredExternalAccounts" xml:space="preserve">
     <value>Registered external accounts</value>

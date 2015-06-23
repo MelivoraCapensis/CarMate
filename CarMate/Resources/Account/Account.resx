@@ -147,6 +147,9 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Адрес электронной почты обязательное поле</value>
   </data>
+  <data name="EmailStringLength" xml:space="preserve">
+    <value>Значение {0} должно содержать от {2} до {1} символов</value>
+  </data>
   <data name="EmailType" xml:space="preserve">
     <value>Некорректный Адрес электронной почты</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="LoginRequired" xml:space="preserve">
     <value>Логин обязательное поле</value>
+  </data>
+  <data name="LoginStringLength" xml:space="preserve">
+    <value>Значение {0} должно содержать от {2} до {1} символов</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>Новый пароль</value>
@@ -193,7 +199,7 @@
     <value>Пароль обязательное поле</value>
   </data>
   <data name="PasswordStringLength" xml:space="preserve">
-    <value>Значение \"{0}\" должно содержать не менее {2} символов</value>
+    <value>Значение {0} должно содержать от {2} до {1} символов</value>
   </data>
   <data name="RegisteredExternalAccounts" xml:space="preserve">
     <value>Зарегистрированные внешние учетные записи</value>

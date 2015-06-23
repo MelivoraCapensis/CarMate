@@ -30,6 +30,7 @@ namespace CarMate.Models
     public class RegisterExternalLoginModel
     {
         [Required(ErrorMessageResourceName = "LoginRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [StringLength(20, ErrorMessageResourceName = "LoginStringLength", ErrorMessageResourceType = typeof(Resources.Account), MinimumLength = 1)]
         [Display(Name = "Login", ResourceType = typeof(Resources.Account))]
         public string UserName { get; set; }
 
@@ -82,6 +83,7 @@ namespace CarMate.Models
     public class RegisterModel
     {
         [Required(ErrorMessageResourceName = "LoginRequired", ErrorMessageResourceType = typeof(Resources.Account))]
+        [StringLength(20, ErrorMessageResourceName = "LoginStringLength", ErrorMessageResourceType = typeof(Resources.Account), MinimumLength = 1)]
         [Display(Name = "Login", ResourceType = typeof(Resources.Account))]
         public string UserName { get; set; }
 
@@ -94,7 +96,7 @@ namespace CarMate.Models
         [Required(ErrorMessageResourceName = "ConfirmPasswordRequired", ErrorMessageResourceType = typeof(Resources.Account))]
         [DataType(DataType.Password)]
         [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Account))]
-        [Compare("NewPassword", ErrorMessageResourceName = "ConfirmPasswordCompare", ErrorMessageResourceType = typeof(Resources.Account))]
+        [Compare("Password", ErrorMessageResourceName = "ConfirmPasswordCompare", ErrorMessageResourceType = typeof(Resources.Account))]
         public string ConfirmPassword { get; set; }
 
 
@@ -104,6 +106,7 @@ namespace CarMate.Models
 
         [Required(ErrorMessageResourceName = "EmailRequired", ErrorMessageResourceType = typeof(Resources.Account))]
         [Display(Name = "Email", ResourceType = typeof(Resources.Account))]
+        [StringLength(100, ErrorMessageResourceName = "EmailStringLength", ErrorMessageResourceType = typeof(Resources.Account), MinimumLength = 3)]
         //[DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessageResourceName = "EmailType", ErrorMessageResourceType = typeof(Resources.Account), ErrorMessage = null)]
         public string Email { get; set; }

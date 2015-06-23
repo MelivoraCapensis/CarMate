@@ -35,6 +35,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,6 +46,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <IncludeIisSettings>false</IncludeIisSettings>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook">
@@ -1443,14 +1448,11 @@
     <Content Include="PlaceMarkers\route.png" />
     <Content Include="PlaceMarkers\waypoint.png" />
     <Content Include="PlaceMarkers\waypoint2.png" />
-    <Content Include="Scripts\bootstrap-datepicker1\bootstrap-datepicker.js" />
-    <Content Include="Scripts\bootstrap-datepicker1\bootstrap-datepicker.ru.js" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-datepicker\locales\bootstrap-datepicker.ru.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\bootstrap-datepicker1\datepicker.css" />
     <Content Include="Scripts\highcharts\examples\3d-column-interactive\index.htm" />
     <Content Include="Scripts\highcharts\examples\3d-column-null-values\index.htm" />
     <Content Include="Scripts\highcharts\examples\3d-column-stacking-grouping\index.htm" />
@@ -1753,6 +1755,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Map.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\User\User.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

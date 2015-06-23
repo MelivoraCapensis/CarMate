@@ -46,9 +46,7 @@
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-@*<link href='../nprogress.css' rel='stylesheet' />*@
 <script src='../vendor/jquery-2.0.js'></script>
-@*<script src='../nprogress.js'></script>*@
 <script>if (location.hostname.match(/ricostacruz\.com$/)) { var _gaq = _gaq || []; _gaq.push(["_setAccount", "UA-20473929-1"]), _gaq.push(["_trackPageview"]), function () { var a = document.createElement("script"); a.type = "text/javascript", a.async = !0, a.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js"; var b = document.getElementsByTagName("script")[0]; b.parentNode.insertBefore(a, b) }() }</script>
 
 <style>
@@ -427,7 +425,8 @@
             var infowindow = new google.maps.InfoWindow({
                 map: map,
                 position: event.latLng,
-                content: 'Ваше местоположение'
+                //content: 'Ваше местоположение'
+                content: '@Resources.Map.YourLocation'
             });
             google.maps.event.addListener(marker, 'click', function () {
                 infowindow.open(map, marker);

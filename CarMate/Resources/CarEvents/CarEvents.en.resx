@@ -123,6 +123,9 @@
   <data name="AllEvents" xml:space="preserve">
     <value>All events</value>
   </data>
+  <data name="CarEventsEmpty" xml:space="preserve">
+    <value>For the selected period no data</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
   </data>

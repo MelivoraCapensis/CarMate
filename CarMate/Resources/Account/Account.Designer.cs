@@ -151,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Значение {0} должно содержать от {2} до {1} символов.
+        /// </summary>
+        public static string EmailStringLength {
+            get {
+                return ResourceManager.GetString("EmailStringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Некорректный Адрес электронной почты.
         /// </summary>
         public static string EmailType {
@@ -210,6 +219,15 @@ namespace Resources {
         public static string LoginRequired {
             get {
                 return ResourceManager.GetString("LoginRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение {0} должно содержать от {2} до {1} символов.
+        /// </summary>
+        public static string LoginStringLength {
+            get {
+                return ResourceManager.GetString("LoginStringLength", resourceCulture);
             }
         }
         
@@ -286,7 +304,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Значение \&quot;{0}\&quot; должно содержать не менее {2} символов.
+        ///   Looks up a localized string similar to Значение {0} должно содержать от {2} до {1} символов.
         /// </summary>
         public static string PasswordStringLength {
             get {

@@ -58,9 +58,12 @@
                     @Html.DropDownList("UnitFuelConsumptionId", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
-            
+
 
             <button id="btSave" onclick=" save() " class="btn btn-primary">@Resources.Global.Save</button>
+
+
+            <button id="btDeleteAccount" onclick="DeleteAccount()" class="btn btn-danger">Удалить аакаунт</button>
             @*<p>
                 <input type="submit" value="Сохранить" class="btn btn-primary"/>
                 @Html.ActionLink("Назад", "Details", "User", new { id = Model.UserId }, new { @class = "btn btn-primary" })
@@ -100,8 +103,32 @@
                 //alert(xhr.responseText);
             }
         });
+    }
 
-
+    function DeleteAccount() {
+        $.ajax({
+            url: '@Url.Action("DeleteAccount", "Account")',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            //url: '/api/1/user/buyer_profile/',
+            //url: '/api/1/user/buyer_profile/' + User.id() + '/',
+            //data: { "carEvents": {} },
+            //data: JSON.stringify({ unitDistanceId: unitDistanceId, unitVolumeId: unitVolumeId }),
+            async: true,
+            processData: false,
+            cache: false,
+            success:
+                function(data) {
+                    var url = '@Url.Action("Index", "Home")';
+                    window.location.href = url;
+                },
+            error: function(xhr, ajaxOptions, thrownError) {
+                //alert(xhr.status);
+                //alert(thrownError);
+                //alert(xhr.responseText);
+            }
+        });
     }
 </script>
 

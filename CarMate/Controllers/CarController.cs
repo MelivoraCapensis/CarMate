@@ -331,6 +331,12 @@ namespace CarMate.Controllers
                 return HttpNotFound();
             }
 
+            var carEvents = Db.CarEvents.Where(x => x.CarId == id);
+            foreach (var carEvent in carEvents)
+            {
+                Db.CarEvents.Remove(carEvent);
+            }
+
             Db.Cars.Remove(car);
             Db.SaveChanges();
             return RedirectToAction("Details", "User", new {id = car.UserId});
