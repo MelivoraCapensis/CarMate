@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
+using CarMate.Classes;
 
 namespace CarMate.Controllers
 {
@@ -16,37 +17,34 @@ namespace CarMate.Controllers
 
         public ActionResult Index()
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                this.UserId = Db.Users
-                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
+            //if (HttpContext.User.Identity.IsAuthenticated)
+            //{
+            //    this.UserId = Db.Users
+            //        .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+            //        .Select(x => x.Id)
+            //        .FirstOrDefault();
 
-                ViewBag.Owner = this.UserId;
-            }
-            else
-            {
-                this.UserId = 0;
-            }
+            //    ViewBag.Owner = this.UserId;
+            //}
+            //else
+            //{
+            //    this.UserId = 0;
+            //}
+            Owner(HttpContext);
 
-            return View(Db.Users.ToList());
-            //return View(new List<Users> { new Users(){
-            //    LastName = "qewr", 
-            //    FirstName = "fgdggf",
-            //    Nickname = "nick",
-            //    Id = 555, 
-            //    DateCreate = DateTime.Now,
-            //    DateRegister = DateTime.Now                
-            //}, 
-            //new Users(){
-            //    LastName = "qewr", 
-            //    FirstName = "fgdggf",
-            //    Nickname = "nick",
-            //    Id = 555, 
-            //    DateCreate = DateTime.Now,
-            //    DateRegister = DateTime.Now                
-            //}});
+            var users = RepProvider.Users.SelectAll().ToList();
+
+            //for(int i = 0; i < users.Count; i++)
+            ////foreach (Users user in users)
+            //{
+            //    //usersList[i].Cars = repProvider.Cars.Select(usersList[i].Id).ToList();
+            //    //var user1 = user;
+            //    users[i].Cars = RepProvider.Cars.Select(users[i].Id).ToList();
+            //        //Db.Cars.Where(x => x.UserId == user1.Id && x.State != Consts.StateDelete).ToList();
+            //}
+
+
+            return View(users);
         }
 
         //
@@ -54,24 +52,27 @@ namespace CarMate.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            var user = Db.Users.Find(id);
+            var user = RepProvider.Users.FindById(id);
+            //var user = Db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
-
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                this.UserId = Db.Users
-                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
-            }
-            else
-            {
-                this.UserId = 0;
-            }
-            ViewBag.IsOwner = UserId == user.Id;
+            Owner(HttpContext);
+            ViewBag.IsOwner = user.Id == this.UserId;
+            //if (HttpContext.User.Identity.IsAuthenticated)
+            //{
+            //    this.UserId = Db.Users
+            //        .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+            //        .Select(x => x.Id)
+            //        .FirstOrDefault();
+            //}
+            //else
+            //{
+            //    this.UserId = 0;
+            //}
+            //user.Cars = RepProvider.Cars.Select(user.Id).ToList();
+            
             return View(user);
 
             //return View(new Users()
@@ -101,7 +102,8 @@ namespace CarMate.Controllers
 
             if (ModelState.IsValid)
             {
-                Users userFromDb = Db.Users.Find(UserId);
+                var userFromDb = RepProvider.Users.FindById(UserId);
+                //Users userFromDb = Db.Users.Find(UserId);
                 userFromDb.UnitFuelConsumptionId = unitFuelConsumptionId;
                 var unitDistanceId = Db.UnitDistance.FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumptionId);
                 if (unitDistanceId != null)
@@ -116,7 +118,7 @@ namespace CarMate.Controllers
                 return Json("Ok");
             }
 
-            return Json("Error in controller2");
+            return Json("Error in controller");
         }
 
         public void Owner(HttpContextBase httpContext)
@@ -129,7 +131,7 @@ namespace CarMate.Controllers
                     .Select(x => x.Id)
                     .FirstOrDefault();
 
-                //ViewBag.Owner = this.UserId;
+                ViewBag.Owner = this.UserId;
             }
         }
 

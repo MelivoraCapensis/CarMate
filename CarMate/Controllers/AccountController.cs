@@ -42,12 +42,9 @@ namespace CarMate.Controllers
                 //return View(model);
                 //using (CarMateEntities db = new CarMateEntities())
                 //{
-                    var userId = Db.Users
-                    .Where(x => x.Nickname.Equals(model.UserName))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
+                var user = RepProvider.Users.FindByName(model.UserName);
 
-                    return RedirectToAction("Details", "User", new { id = userId });
+                return RedirectToAction("Details", "User", new { id = user.Id });
                 //}
                 
             }
@@ -107,58 +104,40 @@ namespace CarMate.Controllers
                     else
                         imgPath = "/Content/Images/anonim.jpg";
 
-                    Users user = null;
-                    //using (CarMateEntities db = new CarMateEntities())
-                    //{
-                        DateTime date = DateTime.Now;
-                        user = new Users
+                    Users user = RepProvider.Users.GetNewWithDefaultInitialization();
+                    DateTime date = DateTime.Now;
+                    user.Nickname = model.UserName;
+                    user.UserEmail = model.Email;
+                    user.DateRegister = date;
+                    user.DateCreate = date;
+
+                    var unitFuelConsumption = Db.UnitFuelConsumption.Find(model.UnitFuelConsumptionId);
+                    if (unitFuelConsumption != null)
+                    {
+                        user.UnitFuelConsumptionId = unitFuelConsumption.Id;
+
+                        var unitVolume = unitFuelConsumption.UnitVolume
+                            .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
+                        if (unitVolume != null)
                         {
-                            Nickname = model.UserName,
-                            UserEmail = model.Email,
-                            //FirstName = model.FirstName,
-                            //LastName = model.LastName,
-                            //dateBirth = model.Year,
-                            //country = model.Country,
-                            //region = model.Region,
-                            //city = model.City,
-                            DateRegister = date,
-                            //UnitDistanceId = 1,
-                            //UnitFuelConsumptionId = model.UnitFuelConsumptionId,
-                            //UserPassword = model.Password,
-
-                            DateCreate = date,
-                            State = 0
-                        };
-
-                        var unitFuelConsumption = Db.UnitFuelConsumption.Find(model.UnitFuelConsumptionId);
-                        if (unitFuelConsumption != null)
-                        {
-                            user.UnitFuelConsumptionId = unitFuelConsumption.Id;
-
-                            var unitVolume = unitFuelConsumption.UnitVolume
-                                .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
-                            if (unitVolume != null)
-                            {
-                                user.UnitVolumeId = unitVolume.Id;
-                            }
-
-                            var unitDistance = RepProvider.UnitDistance
-                                .Select(this.CurrentLang.Id)
-                                .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
-                            if (unitDistance != null)
-                            {
-                                user.UnitDistanceId = unitDistance.Id;
-                            }
+                            user.UnitVolumeId = unitVolume.Id;
                         }
 
-                        if (!String.IsNullOrEmpty(imgPath))
+                        var unitDistance = RepProvider.UnitDistance
+                            .Select(this.CurrentLang.Id)
+                            .FirstOrDefault(x => x.UnitFuelConsumptionId == unitFuelConsumption.Id);
+                        if (unitDistance != null)
                         {
-                            user.ImgPath = imgPath;
+                            user.UnitDistanceId = unitDistance.Id;
                         }
+                    }
 
-                        Db.Users.Add(user);
-                        Db.SaveChanges();
-                    //}
+                    if (!String.IsNullOrEmpty(imgPath))
+                    {
+                        user.ImgPath = imgPath;
+                    }
+
+                    RepProvider.Users.Add(user);
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Details", "User", new {id = user.Id});
                 }
@@ -250,7 +229,8 @@ namespace CarMate.Controllers
                         }
 
                         // Удаление пользователя
-                        var users = Db.Users.FirstOrDefault(x => x.Nickname.Equals(userName));
+                        var users = RepProvider.Users.FindByName(userName);
+                        //var users = Db.Users.FirstOrDefault(x => x.Nickname.Equals(userName));
                         if(users != null)
                         {
                             Db.Users.Remove(users);
@@ -568,15 +548,16 @@ namespace CarMate.Controllers
             {
                 if (HttpContext.User.Identity.IsAuthenticated)
                 {
-                    using (CarMateEntities db = new CarMateEntities())
-                    {
-                        var userId = db.Users
-                        .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                        .Select(x => x.Id)
-                        .FirstOrDefault();
+                    //using (CarMateEntities db = new CarMateEntities())
+                    //{
+                    //    var userId = db.Users
+                    //    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+                    //    .Select(x => x.Id)
+                    //    .FirstOrDefault();
+                    var user = RepProvider.Users.FindByName(HttpContext.User.Identity.Name);
 
-                        return RedirectToAction("Details", "User", new { id = userId });
-                    }
+                    return RedirectToAction("Details", "User", new {id = user.Id});
+                    //}
                 }
                 return RedirectToAction("Index", "Home");
             }

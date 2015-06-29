@@ -15,7 +15,8 @@ namespace CarMate.Controllers
 
         public ActionResult Index(int carId)
         {
-            Cars car = Db.Cars.Find(carId);
+            Cars car = RepProvider.Cars.FindById(carId);
+            //Cars car = Db.Cars.Find(carId);
             InitViewBag(car.Users);
             ConvertTankLoad(car);
             ConvertOdometrLoad(car);
@@ -23,7 +24,14 @@ namespace CarMate.Controllers
 
             CarAndUserInit(carId);
             ViewBag.EventTypes = Db.EventTypes.OrderBy(x => x.Name).Select(x => x.Name).ToList();
-            var carEevEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+            var carEevEvents = RepProvider.CarEvents
+                .Select(carId)
+                .OrderBy(x => x.DateEvent)
+                .ToList();
+            //var carEevEvents = Db.CarEvents
+            //    .Where(x => x.CarId == carId)
+            //    .OrderBy(x => x.DateEvent)
+            //    .ToList();
 
             Owner(HttpContext);
             
@@ -54,10 +62,15 @@ namespace CarMate.Controllers
             // Если пользователь авторизован
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                this.UserId = Db.Users
-                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
+                var user = RepProvider.Users.FindByName(HttpContext.User.Identity.Name);
+                if (user != null)
+                {
+                    this.UserId = user.Id;
+                }
+                //this.UserId = Db.Users
+                //    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+                //    .Select(x => x.Id)
+                //    .FirstOrDefault();
 
                 ViewBag.Owner = this.UserId;
             }
@@ -65,9 +78,11 @@ namespace CarMate.Controllers
 
         public void CarAndUserInit(int carId)
         {
-            var car = Db.Cars.Find(carId);
+            Cars car = RepProvider.Cars.FindById(carId);
+            //var car = Db.Cars.Find(carId);
             ViewBag.Car = car;
-            ViewBag.User = Db.Users.Find(car.UserId);
+            ViewBag.User = RepProvider.Users.FindById(car.UserId);
+            //ViewBag.User = Db.Users.Find(car.UserId);
 
             //var unitDistanceLang = Db.Users.Find(car.UserId).UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);
             //if (unitDistanceLang != null)
@@ -155,14 +170,22 @@ namespace CarMate.Controllers
 
         public JsonResult GetCostStatistics(int carId = 0)
         {
-            var car = Db.Cars.Find(carId);
+            Cars car = RepProvider.Cars.FindById(carId);
+            //var car = Db.Cars.Find(carId);
             if (car == null)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }
 
 
-            var carEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+            var carEvents = RepProvider.CarEvents
+                .Select(carId)
+                .OrderBy(x => x.DateEvent)
+                .ToList();
+            //var carEvents = Db.CarEvents
+            //    .Where(x => x.CarId == carId)
+            //    .OrderBy(x => x.DateEvent)
+            //    .ToList();
 
             //Dictionary<string, double> costStatistics = new Dictionary<string, double>();
             List<Test> tests = new List<Test>();
@@ -214,7 +237,8 @@ namespace CarMate.Controllers
 
         public JsonResult GetCostStatisticsFromPeriod(int carId, string startDate, string endDate)
         {
-            var car = Db.Cars.Find(carId);
+            Cars car = RepProvider.Cars.FindById(carId);
+            //var car = Db.Cars.Find(carId);
             if (car == null)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
@@ -229,9 +253,13 @@ namespace CarMate.Controllers
             // Если удалось преобразовать дату начала из строки в дату, то фильтруем по дате начала
             if (DateTime.TryParseExact(startDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out start))
             {
-                var carEventsTmp = Db.CarEvents
-                    .Where(x => x.CarId == carId && x.DateEvent >= start)
+                var carEventsTmp = RepProvider.CarEvents
+                    .Select(carId)
+                    .Where(x => x.DateEvent >= start)
                     .OrderBy(x => x.DateEvent);
+                //var carEventsTmp = Db.CarEvents
+                //    .Where(x => x.CarId == carId && x.DateEvent >= start)
+                //    .OrderBy(x => x.DateEvent);
 
                 DateTime endTmp;
                 // Если удалось преобразовать дату конца из строки в дату, то фильтруем по дате конца
@@ -241,22 +269,35 @@ namespace CarMate.Controllers
                         .Where(x => x.CarId == carId && x.DateEvent <= endTmp)
                         .OrderBy(x => x.DateEvent)
                         .ToList();
+                    //carEvents = carEventsTmp
+                    //    .Where(x => x.CarId == carId && x.DateEvent <= endTmp)
+                    //    .OrderBy(x => x.DateEvent)
+                    //    .ToList();
                 }
             }
             // Если не удалось преобразовать дату начала, но удалось преобразовать дату конца, то фильтруем по дате конца
             else if (DateTime.TryParseExact(endDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out end))
             {
-                carEvents = Db.CarEvents
-                    .Where(x => x.CarId == carId && x.DateEvent <= end)
+                carEvents = RepProvider.CarEvents
+                    .Select(carId)
+                    .Where(x => x.DateEvent <= end)
                     .OrderBy(x => x.DateEvent)
                     .ToList();
+                //carEvents = Db.CarEvents
+                //    .Where(x => x.CarId == carId && x.DateEvent <= end)
+                //    .OrderBy(x => x.DateEvent)
+                //    .ToList();
             }
             else
             {
-                carEvents = Db.CarEvents
-                    .Where(x => x.CarId == carId)
+                carEvents = RepProvider.CarEvents
+                    .Select(carId)
                     .OrderBy(x => x.DateEvent)
                     .ToList();
+                //carEvents = Db.CarEvents
+                //    .Where(x => x.CarId == carId)
+                //    .OrderBy(x => x.DateEvent)
+                //    .ToList();
             }
             //var carEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
 

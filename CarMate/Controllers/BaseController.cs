@@ -13,6 +13,7 @@ namespace CarMate.Controllers
     {
         //protected Entities Db;
         protected RepositoryProvider RepProvider;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         protected CarMateEntities Db = new CarMateEntities();
         protected int UserId;
@@ -63,6 +64,12 @@ namespace CarMate.Controllers
             ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit), "Id", "NameUnit");
 
             base.Initialize(requestContext);
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            logger.Error(filterContext.Exception.ToString() + "\r\n********************");
+            base.OnException(filterContext);
         }
 
 

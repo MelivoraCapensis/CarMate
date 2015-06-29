@@ -1,4 +1,5 @@
-﻿@model CarMate.Users
+﻿@using CarMate.Classes
+@model CarMate.Users
 
 @{
     ViewBag.Title = Resources.User.GarageUser + " " + Model.Nickname;
@@ -52,6 +53,10 @@
                 {
                     foreach (var car in @Model.Cars)
                     {
+                        if (car.State == Consts.StateDelete)
+                        {
+                            continue;
+                        }
                         <div class="col-xs-4">
                             <div class="container-fluid highlight">
 

@@ -44,6 +44,21 @@ namespace CarMate.DAL
             get { return GetRep<RepEventTypes>(); }
         }
 
+        public RepCars Cars
+        {
+            get { return GetRep<RepCars>(); }
+        }
+
+        public RepUsers Users
+        {
+            get { return GetRep<RepUsers>(); }
+        }
+
+        public RepCarEvents CarEvents
+        {
+            get { return GetRep<RepCarEvents>(); }
+        }
+
         public void SaveChanges()
         {
             _db.SaveChanges();

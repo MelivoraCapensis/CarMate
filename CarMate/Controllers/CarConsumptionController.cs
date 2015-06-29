@@ -16,7 +16,8 @@ namespace CarMate.Controllers
         {
             double minConsumption, avgConsumption, maxConsumption;
             var fullTankCharging = SelectFullTankCharging(carId, out minConsumption, out avgConsumption, out maxConsumption);
-            Cars car = Db.Cars.Find(carId);
+            //Cars car = Db.Cars.Find(carId);
+            Cars car = RepProvider.Cars.FindById(carId);
             
             InitViewBag(car.Users);
             ConvertTankLoad(car);
@@ -40,10 +41,15 @@ namespace CarMate.Controllers
             // Если пользователь авторизован
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                this.UserId = Db.Users
-                    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
+                var user = RepProvider.Users.FindByName(HttpContext.User.Identity.Name);
+                if (user != null)
+                {
+                    this.UserId = user.Id;
+                }
+                //this.UserId = Db.Users
+                //    .Where(x => x.Nickname.Equals(HttpContext.User.Identity.Name))
+                //    .Select(x => x.Id)
+                //    .FirstOrDefault();
 
                 ViewBag.Owner = this.UserId;
             }
@@ -56,13 +62,16 @@ namespace CarMate.Controllers
             maxConsumption = 0;
 
             // Получаем все события заправок из базы
-            var carEvents = Db.CarEvents
-                .Where(
-                    x =>
-                        x.CarId == carId &&
-                        x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
+            var carEvents = RepProvider.CarEvents
+                .Select(carId)
+                .Where(x => x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
                 .OrderBy(x => x.DateEvent)
                 .ToList();
+            //var carEvents = Db.CarEvents
+            //    .Where(x =>x.CarId == carId &&
+            //            x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
+            //    .OrderBy(x => x.DateEvent)
+            //    .ToList();
 
             // Ссылка на пердыдущее событие заправки
             CarEvents tmpCarEvent = null;
@@ -127,15 +136,22 @@ namespace CarMate.Controllers
         public List<double> SelectFullTankCharging(int carId, DateTime beginDate, DateTime endDate)
         {
             // Получаем все события заправок из базы
-            var carEvents = Db.CarEvents
-                .Where(
-                    x =>
-                        x.CarId == carId &&
-                        x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
-                        x.DateEvent >= beginDate &&
-                        x.DateEvent <= endDate)
+            var carEvents = RepProvider.CarEvents
+                .Select(carId)
+                .Where(x => x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
+                            x.DateEvent >= beginDate &&
+                            x.DateEvent <= endDate)
                 .OrderBy(x => x.DateCreate)
                 .ToList();
+            //var carEvents = Db.CarEvents
+            //    .Where(
+            //        x =>
+            //            x.CarId == carId &&
+            //            x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
+            //            x.DateEvent >= beginDate &&
+            //            x.DateEvent <= endDate)
+            //    .OrderBy(x => x.DateCreate)
+            //    .ToList();
 
             // Ссылка на пердыдущее событие заправки
             CarEvents tmpCarEvent = null;
@@ -186,9 +202,11 @@ namespace CarMate.Controllers
 
         public void CarAndUserInit(int carId)
         {
-            var car = Db.Cars.Find(carId);
+            Cars car = RepProvider.Cars.FindById(carId);
+            //var car = Db.Cars.Find(carId);
             ViewBag.Car = car;
-            ViewBag.User = Db.Users.Find(car.UserId);
+            ViewBag.User = RepProvider.Users.FindById(car.UserId);
+            //ViewBag.User = Db.Users.Find(car.UserId);
 
             //var unitDistanceLang = Db.Users.Find(car.UserId).UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);
             //if (unitDistanceLang != null)
@@ -295,11 +313,16 @@ namespace CarMate.Controllers
 
         public JsonResult GetConsumptionFromPeriod(int carId, string startDate, string endDate)
         {
-            var car = Db.Cars.Find(carId);
+            Cars car = RepProvider.Cars.FindById(carId);
+            //var car = Db.Cars.Find(carId);
             if (car == null)
             {
                 return Json("", JsonRequestBehavior.AllowGet);
             }
+
+            // Предществующее событие первому из списка событий, чтобы получить показания одометра события
+            CarEvents firstEvent = null;
+            // Список событий выбранного автомобиля за определенный период (если период задан)
             List<CarEvents> carEvents = new List<CarEvents>();
 
 
@@ -309,10 +332,24 @@ namespace CarMate.Controllers
             // Если удалось преобразовать дату начала из строки в дату, то фильтруем по дате начала
             if(DateTime.TryParseExact(startDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out start))
             {
-                var carEventsTmp = Db.CarEvents
-                    .Where(x => x.CarId == carId && x.DateEvent >= start)
+                var carEventsTmp = RepProvider.CarEvents
+                    .Select(carId)
+                    .Where(x => x.DateEvent >= start)
                     .OrderBy(x => x.DateEvent);
-                
+                //var carEventsTmp = Db.CarEvents
+                //    .Where(x => x.CarId == carId && x.DateEvent >= start)
+                //    .OrderBy(x => x.DateEvent);
+
+                // Получаем все события, которые произошли до событий, попавших в фильтр
+                var firstEvents = RepProvider.CarEvents
+                    .Select(carId)
+                    .Where(x => x.DateEvent <= start);
+                //var firstEvents = Db.CarEvents
+                //    .Where(x => x.CarId == carId && x.DateEvent <= start);
+
+                firstEvent = firstEvents
+                    .FirstOrDefault(x => x.DateEvent == firstEvents.Max(y => y.DateEvent));
+
                 DateTime endTmp;
                 // Если удалось преобразовать дату конца из строки в дату, то фильтруем по дате конца
                 if (DateTime.TryParseExact(endDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out endTmp))
@@ -326,37 +363,50 @@ namespace CarMate.Controllers
             // Если не удалось преобразовать дату начала, но удалось преобразовать дату конца, то фильтруем по дате конца
             else if (DateTime.TryParseExact(endDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out end))
             {
-                carEvents = Db.CarEvents
-                    .Where(x => x.CarId == carId && x.DateEvent <= end)
-                    .OrderBy(x => x.DateEvent).ToList();
+                carEvents = RepProvider.CarEvents
+                    .Select(carId)
+                    .Where(x => x.DateEvent <= end)
+                    .OrderBy(x => x.DateEvent)
+                    .ToList();
+                //carEvents = Db.CarEvents
+                //    .Where(x => x.CarId == carId && x.DateEvent <= end)
+                //    .OrderBy(x => x.DateEvent).ToList();
             }
             else
             {
-                carEvents = Db.CarEvents
-                    .Where(x => x.CarId == carId)
+                carEvents = RepProvider.CarEvents
+                    .Select(carId)
                     .OrderBy(x => x.DateEvent)
                     .ToList();
+                //carEvents = Db.CarEvents
+                //    .Where(x => x.CarId == carId)
+                //    .OrderBy(x => x.DateEvent)
+                //    .ToList();
             }
 
             
             InitViewBag(car.Users);
 
-            List<TestDistance> distance = new List<TestDistance>();
+            List<CarConsumptionDistance> distance = new List<CarConsumptionDistance>();
             // Проехано, за определенный период
-            //Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
             int allDistance = 0;
             int tmpOdometr = 0;
-            //string unitDistance = Db.Users.Find(car.UserId).UnitDistance.NameUnit;
-            //ViewBag.UnitDistance = Db.Users.Find(car.UserId).UnitDistance.NameUnit;
-
-
 
             for (int i = 0; i < carEvents.Count; i++)
             {
                 // Определяем общий пробег
                 if (i == 0)
                 {
-                    int beginDistance = carEvents[i].Odometer == null ? 0 : (int)carEvents[i].Odometer;
+                    int beginDistance = 0;
+                    if (firstEvent != null && firstEvent.Odometer != null)
+                    {
+                        beginDistance = carEvents[i].Odometer == null ? 0 : (int)(carEvents[i].Odometer - firstEvent.Odometer);
+                    }
+                    else
+                    {
+                        beginDistance = carEvents[i].Odometer == null ? 0 : (int)carEvents[i].Odometer;
+                    }
+                    //int beginDistance = carEvents[i].Odometer == null ? 0 : (int)carEvents[i].Odometer;
                     int endDistance = carEvents[carEvents.Count - 1].Odometer == null ? 0 : (int)carEvents[carEvents.Count - 1].Odometer;
                     allDistance = endDistance - beginDistance;
                     // Конвертируем всю пройденную дистанцию в выбранные единицы измерения.
@@ -380,7 +430,7 @@ namespace CarMate.Controllers
                 }
                 else
                 {
-                    TestDistance t = new TestDistance
+                    CarConsumptionDistance t = new CarConsumptionDistance
                     {
                         DateCreate = carEvents[i].DateEvent,
                         Ticks = carEvents[i].DateEvent.ToLocalTime().Ticks
@@ -401,7 +451,7 @@ namespace CarMate.Controllers
                 if (carEvents[i].Odometer != null)
                     tmpOdometr = (int)carEvents[i].Odometer;
             }
-            foreach (TestDistance d in distance)
+            foreach (CarConsumptionDistance d in distance)
             {
                 d.AllDistance = allDistance;
                 d.Distance = Math.Round(ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, ViewBag.UnitDistance, d.Distance), 2);
@@ -410,89 +460,89 @@ namespace CarMate.Controllers
             return Json(distance, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetConsumptionStatistics(int carId = 0)
-        {
-            var car = Db.Cars.Find(carId);
-            if (car == null)
-            {
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-            var carEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
-            InitViewBag(car.Users);
+        //public JsonResult GetConsumptionStatistics(int carId = 0)
+        //{
+        //    var car = Db.Cars.Find(carId);
+        //    if (car == null)
+        //    {
+        //        return Json("", JsonRequestBehavior.AllowGet);
+        //    }
+        //    var carEvents = Db.CarEvents.Where(x => x.CarId == carId).OrderBy(x => x.DateEvent).ToList();
+        //    InitViewBag(car.Users);
 
-            List<TestDistance> distance = new List<TestDistance>();
-            // Проехано, за определенный период
-            //Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
-            int allDistance = 0;
-            int tmpOdometr = 0;
-            //string unitDistance = Db.Users.Find(car.UserId).UnitDistance.NameUnit;
-            //ViewBag.UnitDistance = Db.Users.Find(car.UserId).UnitDistance.NameUnit;
+        //    List<TestDistance> distance = new List<TestDistance>();
+        //    // Проехано, за определенный период
+        //    //Dictionary<DateTime, double> distance = new Dictionary<DateTime, double>();
+        //    int allDistance = 0;
+        //    int tmpOdometr = 0;
+        //    //string unitDistance = Db.Users.Find(car.UserId).UnitDistance.NameUnit;
+        //    //ViewBag.UnitDistance = Db.Users.Find(car.UserId).UnitDistance.NameUnit;
             
             
 
-            for (int i = 0; i < carEvents.Count; i++)
-            {
-                // Определяем общий пробег
-                if (i == 0)
-                {
-                    int begin = carEvents[i].Odometer == null ? 0 : (int)carEvents[i].Odometer;
-                    int end = carEvents[carEvents.Count - 1].Odometer == null ? 0 : (int)carEvents[carEvents.Count - 1].Odometer;
-                    allDistance = end;
-                    // Конвертируем всю пройденную дистанцию в выбранные единицы измерения.
-                    allDistance = (int)Math.Round(ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, ViewBag.UnitDistance, allDistance));
-                    tmpOdometr = begin;
-                }
+        //    for (int i = 0; i < carEvents.Count; i++)
+        //    {
+        //        // Определяем общий пробег
+        //        if (i == 0)
+        //        {
+        //            int begin = carEvents[i].Odometer == null ? 0 : (int)carEvents[i].Odometer;
+        //            int end = carEvents[carEvents.Count - 1].Odometer == null ? 0 : (int)carEvents[carEvents.Count - 1].Odometer;
+        //            allDistance = end;
+        //            // Конвертируем всю пройденную дистанцию в выбранные единицы измерения.
+        //            allDistance = (int)Math.Round(ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, ViewBag.UnitDistance, allDistance));
+        //            tmpOdometr = begin;
+        //        }
 
-                var result = distance.FirstOrDefault(x => x.DateCreate == carEvents[i].DateEvent);
+        //        var result = distance.FirstOrDefault(x => x.DateCreate == carEvents[i].DateEvent);
 
-                if (result != null && result.DateCreate != DateTime.MinValue && carEvents[i].Odometer != null)
-                {
-                    result.Distance += (int)carEvents[i].Odometer - tmpOdometr;
-                    //result.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, result.Distance));
-                    //result.Ticks = new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1).ToLocalTime().Ticks;
-                    if (carEvents[i].FuelCount != null)
-                        result.SumLiters = (double)carEvents[i].FuelCount;
-                    else
-                        result.SumLiters = 0;
-                    result.SumMoney = carEvents[i].CostTotal;
-                    result.Name = carEvents[i].NameEvent;
-                }
-                else
-                {
-                    TestDistance t = new TestDistance
-                    {
-                        DateCreate = carEvents[i].DateEvent,
-                        Ticks = carEvents[i].DateEvent.ToLocalTime().Ticks
-                    };
-                    if (carEvents[i].Odometer != null)
-                    {
-                        t.Distance = (int) carEvents[i].Odometer - tmpOdometr;
-                    }
-                    //t.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, t.Distance));
-                    if (carEvents[i].FuelCount != null)
-                        t.SumLiters = (double)carEvents[i].FuelCount;
-                    else
-                        t.SumLiters = 0;
-                    t.SumMoney = carEvents[i].CostTotal;
-                    t.Name = carEvents[i].NameEvent;
-                    distance.Add(t);
-                }
-                if (carEvents[i].Odometer != null)
-                    tmpOdometr = (int)carEvents[i].Odometer;
-            }
-            foreach (TestDistance d in distance)
-            {
-                d.AllDistance = allDistance;
-                d.Distance = Math.Round(ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, ViewBag.UnitDistance, d.Distance), 2);
-            }
+        //        if (result != null && result.DateCreate != DateTime.MinValue && carEvents[i].Odometer != null)
+        //        {
+        //            result.Distance += (int)carEvents[i].Odometer - tmpOdometr;
+        //            //result.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, result.Distance));
+        //            //result.Ticks = new DateTime(carEvents[i].DateEvent.Year, carEvents[i].DateEvent.Month, 1).ToLocalTime().Ticks;
+        //            if (carEvents[i].FuelCount != null)
+        //                result.SumLiters = (double)carEvents[i].FuelCount;
+        //            else
+        //                result.SumLiters = 0;
+        //            result.SumMoney = carEvents[i].CostTotal;
+        //            result.Name = carEvents[i].NameEvent;
+        //        }
+        //        else
+        //        {
+        //            TestDistance t = new TestDistance
+        //            {
+        //                DateCreate = carEvents[i].DateEvent,
+        //                Ticks = carEvents[i].DateEvent.ToLocalTime().Ticks
+        //            };
+        //            if (carEvents[i].Odometer != null)
+        //            {
+        //                t.Distance = (int) carEvents[i].Odometer - tmpOdometr;
+        //            }
+        //            //t.Distance = (int)Math.Round(ConverterUnitDistance.ConvertDistanceFromKm(unitDistance, t.Distance));
+        //            if (carEvents[i].FuelCount != null)
+        //                t.SumLiters = (double)carEvents[i].FuelCount;
+        //            else
+        //                t.SumLiters = 0;
+        //            t.SumMoney = carEvents[i].CostTotal;
+        //            t.Name = carEvents[i].NameEvent;
+        //            distance.Add(t);
+        //        }
+        //        if (carEvents[i].Odometer != null)
+        //            tmpOdometr = (int)carEvents[i].Odometer;
+        //    }
+        //    foreach (TestDistance d in distance)
+        //    {
+        //        d.AllDistance = allDistance;
+        //        d.Distance = Math.Round(ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id, ViewBag.UnitDistance, d.Distance), 2);
+        //    }
 
             
 
-            return Json(distance, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(distance, JsonRequestBehavior.AllowGet);
+        //}
     }
 
-    public class TestDistance
+    public class CarConsumptionDistance
     {
         public DateTime DateCreate { set; get; }
         public double Ticks { set; get; }

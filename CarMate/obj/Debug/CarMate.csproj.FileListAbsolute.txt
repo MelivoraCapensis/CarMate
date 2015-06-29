@@ -1052,3 +1052,5 @@ D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Home.Home.en.resources
 D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Layout.Layout.en.resources
 D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Map.Map.resources
 D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Map.Map.en.resources
+D:\Git\CarMate\CarMate\bin\NLog.dll
+D:\Git\CarMate\CarMate\bin\NLog.xml

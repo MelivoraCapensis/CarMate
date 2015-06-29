@@ -50,7 +50,7 @@
     $(document).ready(function () {
         // При изменении в поле "Залито топлива"
         $('#FuelCount').keyup(function () {
-            // Получаем данные из поля FuelCount (Залито топлива)
+            // Получаем данные из поля FuelCount (количество залитого топлива)
             var fuelCount = $('#FuelCount').val();
             // Если FuelCount (Залито топлива) не число - выходим
             if (!$.isNumeric(fuelCount)) {
@@ -59,44 +59,108 @@
             // Получаем данные из поля PricePerLitr (цена за литр)
             var pricePerLitr = $('#PricePerLitr').val();
             // Если PricePerLitr (цена за литр) не число - выходим
-            if (!$.isNumeric(pricePerLitr)) {
+            //if (!$.isNumeric(pricePerLitr)) {
+            //    return;
+            //}
+
+            // Получаем данные из поля CostTotal (общая стоимость)
+            var costTotal = $('#CostTotal').val();
+            // Если PricePerLitr (цена за литр) и CostTotal (общая стоимость) не число - выходим
+            if (!$.isNumeric(pricePerLitr) && !$.isNumeric(costTotal)) {
                 return;
             }
-            // Считаем общую стоимость
-            var costTotal = fuelCount * pricePerLitr;
-            // Если CostTotal (общая стоимость) не число - выходим
-            if (!$.isNumeric(costTotal)) {
+            // Если PricePerLitr (цена за литр) и CostTotal (общая стоимость) ЧИСЛО - выходим
+            // Т.к. не знаем какое поле изменять
+            if ($.isNumeric(fuelCount) && $.isNumeric(pricePerLitr)) {
                 return;
             }
-            // Округляем до 2-х знаков, после запятой
-            costTotal = costTotal.toFixed(2);
-            // Результат вычисления помещаем в поле CostTotal (общая стоимость)
-            $('#CostTotal').val(costTotal);
+
+            if ($.isNumeric(costTotal)) {
+                // Считаем цену за литр
+                var pricePerLitrResult = costTotal / fuelCount;
+                // Если PricePerLitr (цена за литр) не число - выходим
+                if (!$.isNumeric(pricePerLitrResult)) {
+                    return;
+                }
+                // Округляем до 2-х знаков, после запятой
+                pricePerLitrResult = pricePerLitrResult.toFixed(2);
+                // Результат вычисления помещаем в поле PricePerLitr (цена за литр)
+                $('#PricePerLitr').val(pricePerLitrResult);
+            }
+
+            if ($.isNumeric(pricePerLitr)) {
+                // Считаем общую стоимость
+                var costTotalResult = fuelCount * pricePerLitr;
+                // Если CostTotal (общая стоимость) не число - выходим
+                if (!$.isNumeric(costTotalResult)) {
+                    return;
+                }
+                // Округляем до 2-х знаков, после запятой
+                costTotalResult = costTotalResult.toFixed(2);
+                // Результат вычисления помещаем в поле CostTotal (общая стоимость)
+                $('#CostTotal').val(costTotalResult);
+            }
+
+            
         });
 
         $('#PricePerLitr').keyup(function () {
-            // Получаем данные из поля FuelCount (Залито топлива)
-            var fuelCount = $('#FuelCount').val();
-            // Если FuelCount (Залито топлива) не число - выходим
-            if (!$.isNumeric(fuelCount)) {
-                return;
-            }
             // Получаем данные из поля PricePerLitr (цена за литр)
             var pricePerLitr = $('#PricePerLitr').val();
             // Если PricePerLitr (цена за литр) не число - выходим
             if (!$.isNumeric(pricePerLitr)) {
                 return;
             }
-            // Считаем общую стоимость
-            var costTotal = fuelCount * pricePerLitr;
-            // Если CostTotal (общая стоимость) не число - выходим
-            if (!$.isNumeric(costTotal)) {
+
+            // Получаем данные из поля FuelCount (количество залитого топлива)
+            var fuelCount = $('#FuelCount').val();
+            // Если FuelCount (количество залитого топлива) не число - выходим
+            //if (!$.isNumeric(fuelCount)) {
+            //    return;
+            //}
+            
+            // Получаем данные из поля CostTotal (общая стоимость)
+            var costTotal = $('#CostTotal').val();
+            // Если CostTotal (общая стоимость) и FuelCount (количество залитого топлива) не число - выходим
+            if (!$.isNumeric(fuelCount) && !$.isNumeric(costTotal)) {
                 return;
             }
-            // Округляем до 2-х знаков, после запятой
-            costTotal = costTotal.toFixed(2);
-            // Результат вычисления помещаем в поле CostTotal (общая стоимость)
-            $('#CostTotal').val(costTotal);
+
+            // Если FuelCount (количество залитого топлива) и CostTotal (общая стоимость) ЧИСЛО - выходим
+            // Т.к. не знаем какое поле изменять
+            if ($.isNumeric(fuelCount) && $.isNumeric(costTotal)) {
+                return;
+            }
+
+            if ($.isNumeric(fuelCount)) {
+                // Считаем общую стоимость
+                var costTotalResult = fuelCount * pricePerLitr;
+                // Если CostTotal (общая стоимость) не число - выходим
+                if (!$.isNumeric(costTotalResult)) {
+                    return;
+                }
+                // Округляем до 2-х знаков, после запятой
+                costTotalResult = costTotalResult.toFixed(2);
+                // Результат вычисления помещаем в поле CostTotal (общая стоимость)
+                $('#CostTotal').val(costTotalResult);
+            }
+
+            if ($.isNumeric(costTotal)) {
+                // Считаем количество залитого топлива
+                var fuelCountResult = costTotal / pricePerLitr;
+
+                // Если fuelCount (количество залитого топлива) не число - выходим
+                if (!$.isNumeric(fuelCountResult)) {
+                    return;
+                }
+                // Округляем до 2-х знаков, после запятой
+                fuelCountResult = fuelCountResult.toFixed(2);
+
+                // Результат вычисления помещаем в поле FuelCount (количество залитого топлива)
+                $('#FuelCount').val(fuelCountResult);
+            }
+
+            
         });
     });
 </script>
