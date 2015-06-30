@@ -1,0 +1,146 @@
+﻿<link type="text/css" href="~/Content/bootstrap.css" rel="stylesheet">
+
+<div class="container">
+    <!-- Static navbar -->
+    <div role="navigation" class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">(иконка) CarMate</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+
+                    <li><a href="@Url.Action("GetMap", "Map")">@Resources.Layout.Map</a></li>
+                    
+
+                    <li><a href="@Url.Action("Index", "User")">@Resources.Layout.Users</a></li>
+                    <li><a href="@Url.Action("Index", "Car")">@Resources.Layout.MeansTransport</a></li>
+
+                    @*<li><a href="#">Выбор языка</a></li>
+                    <li><a href="#">Обратная связь</a></li>*@
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Мой автомобиль<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Garage", "User")">@Resources.Global.MyGarage</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Перейти к автомобилю</a></li>
+                                <li><a href="#">Расход топлива</a></li>
+                                <li><a href="#">Статистика</a></li>
+                                <li><a href="#">События</a></li>
+                                <li><a href="#">График ТО (Напоминания) (Планы)</a></li>
+                                @*<li class="divider"></li>*@
+                                @*<li class="dropdown-header">Расход топлива</li>*@
+                                <li><a href="#">Сравнение автомобилей</a></li>
+                                <li><a href="#">Планирование маршрута (Мои маршруты)</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Профиль (поставить аватарку)<b class="caret"></b></a>
+                            @*<a data-toggle="dropdown" class="dropdown-toggle" href="#">@Resources.Global.SignedInAs @User.Identity.Name<b class="caret"></b></a>*@
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">@Resources.Global.SignedInAs @User.Identity.Name</li>
+                                <li><a href="#">Мои сообщения</a></li>
+                                <li class="divider"></li>
+                                <li><a href="@Url.Action("Manage", "Account")">@Resources.Global.Settings</a></li>
+                                <li>
+                                    <a href="#">
+                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="submit" value="@Resources.Global.SignOut" class="btn-link btn-sm"/>
+                                        }
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        @*<li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Профиль<b class="caret"></b></a>
+                            <ul class="dropdown-menu">*@
+                                <li>
+                                    <button id="registerButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#register">
+                                        @Resources.Global.SignUp
+                                    </button>
+                                </li>
+
+                                <li>
+                                    <button id="loginButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#login">
+                                        @Resources.Global.SignIn
+                                    </button>
+                                </li>
+                            @*</ul>
+                        </li>*@
+                    </ul>
+                }
+                <div>
+                    <!-- Модальное окно -->
+                    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button id="registerCloseButton" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title text-center" id="registerLabel">@Resources.Global.SignUp</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.Partial("_PartRegister", new CarMate.Models.RegisterModel())
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button id="loginCloseButton" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title text-center" id="loginLabel">@Resources.Global.SignIn</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.Partial("_PartLogin", new CarMate.Models.LoginModel())
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#registerInLogin').click(function() { // При нажатии на кнопку регистрации в окне входа
+            $('#loginCloseButton').trigger('click'); // Закрываем окно входа
+            $('#registerButton').trigger('click'); // Открываем окно регистрации
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#loginInRegister').click(function() { // При нажатии на кнопку входа в окне регистрации
+            $('#registerCloseButton').trigger('click'); // Закрываем окно регистрации
+            $('#loginButton').trigger('click'); // Открываем окно входа
+        });
+    });
+</script>

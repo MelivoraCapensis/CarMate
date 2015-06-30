@@ -1458,6 +1458,8 @@
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-datepicker\locales\bootstrap-datepicker.ru.js" />
+    <Content Include="Scripts\bootstrap-hover-dropdown\bootstrap-hover-dropdown.js" />
+    <Content Include="Scripts\bootstrap-hover-dropdown\bootstrap-hover-dropdown.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\highcharts\examples\3d-column-interactive\index.htm" />
@@ -1651,6 +1653,7 @@
     <Content Include="Views\FuelCategory\CheckFuelCategory.cshtml" />
     <Content Include="Views\Category\CategoryByCountry.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
+    <Content Include="Views\Shared\_PartMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -110,8 +110,9 @@ namespace CarMate.Controllers
             //    DateEvent = DateTime.Now,
             //    Odometer = car.Odometer
             //};
-           
-            ViewBag.EventTypeId = new SelectList(Db.EventTypes.Where(x=>x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name");
+
+            ViewBag.EventTypeId = new SelectList(RepProvider.EventTypes.Select(this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name");
+            //ViewBag.EventTypeId = new SelectList(Db.EventTypes.Where(x=>x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name");
 
             return View(carEvents);
         }
@@ -172,7 +173,8 @@ namespace CarMate.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.EventTypeId = new SelectList(Db.EventTypes.Where(x => x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name");
+            ViewBag.EventTypeId = new SelectList(RepProvider.EventTypes.Select(this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name");
+            //ViewBag.EventTypeId = new SelectList(Db.EventTypes.Where(x => x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name");
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carevents.CarId);
             return View(carEvents);
@@ -375,9 +377,11 @@ namespace CarMate.Controllers
             InitViewBagEmpty(user);
             //ConvertOdometrSave(carEvents);
             ViewBag.EventType = carEvents.EventTypes.Name;
-            ViewBag.EventTypeId =
-                new SelectList(Db.EventTypes.Where(x => x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id",
-                    "Name", carEvents.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(RepProvider.EventTypes
+                .Select(this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
+            //ViewBag.EventTypeId =
+            //    new SelectList(Db.EventTypes.Where(x => x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id",
+            //        "Name", carEvents.EventTypeId);
             //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories, "id", "category", carEvents.FuelCategoryId);
             //ViewBag.CarId = new SelectList(db.Cars, "id", "imgPath", carEvents.CarId);
             CarAndUserInit(carEvents.CarId);
@@ -462,7 +466,10 @@ namespace CarMate.Controllers
             var user = RepProvider.Users.FindById(carEvents.Cars.UserId);
 
             //ViewBag.EventTypeId = new SelectList(Db.EventTypes.OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
-            ViewBag.EventTypeId = new SelectList(Db.EventTypes.Where(x => x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
+
+            ViewBag.EventTypeId = new SelectList(RepProvider.EventTypes
+                .Select(this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
+            //ViewBag.EventTypeId = new SelectList(Db.EventTypes.Where(x => x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
             InitViewBagEmpty(user);
 
             //var unitDistanceLang = user.UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);

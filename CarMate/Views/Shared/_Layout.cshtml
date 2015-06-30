@@ -43,12 +43,14 @@
     @Styles.Render("~/Content/rating")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    
     @*@Scripts.Render("~/bundles/highcharts")*@
     @*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     @Scripts.Render("~/Scripts/rating")*@
     
 </head>
-<body style="border-top:none;">
+<body style="border-top: none;">
+    @Html.Partial("_PartMenu")
     <!-- Navigation -->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
@@ -61,23 +63,24 @@
             </li>
         </ul>
     </nav>
-    <!-- Header -->
-    @*<header id="top" class="header">
+
+<!-- Header -->
+@*<header id="top" class="header">
         <div class="text-vertical-center">
             <h1>CARMATE</h1>
             <br>
             <a href="#about" class="btn btn-dark btn-lg" style="color:white">Узнать больше</a>
         </div>
     </header>*@
-    <div id="body" style="background-color:white">
-        @RenderSection("featured", required: false)
-        <section class="main-content clear-fix" style="padding-left:0px;">
-            @Html.Partial("_DashboardPartial")
-            @RenderBody()
-        </section>
-    </div>
-    <!-- Call to Action -->
-    @* <div class="call-to-action bg-primary">
+<div id="body" style="background-color: white">
+    @RenderSection("featured", required: false)
+    <section class="main-content clear-fix" style="padding-left: 0px;">
+        @*@Html.Partial("_DashboardPartial")*@
+        @RenderBody()
+    </section>
+</div>
+<!-- Call to Action -->
+@* <div class="call-to-action bg-primary">
         <div class="container">
         <div class="row">
         <div class="col-lg-12 text-center">
@@ -88,74 +91,76 @@
         </div>
         </div>
         </div>*@
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4>
-                        <strong>@Resources.Layout.Startup</strong>
-                    </h4>
-                    <p>@Resources.Layout.StepAcademy<br>@Resources.Layout.ZaporozhyeUkraine</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-phone fa-fw"></i> (096) 812-0884</li>
-                        <li>
-                            <i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:name@example.com">carmate@google.com</a>
-                        </li>
-                    </ul>
-                    <br>
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
-                        </li>
-                    </ul>
-                    <hr class="small">
-                    <p class="text-muted">Copyright &copy; CarMate 2014</p>
-                </div>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 text-center">
+                <h4>
+                    <strong>@Resources.Layout.Startup</strong>
+                </h4>
+                <p>@Resources.Layout.StepAcademy<br>@Resources.Layout.ZaporozhyeUkraine</p>
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-phone fa-fw"></i> (096) 812-0884</li>
+                    <li>
+                        <i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:name@example.com">carmate@google.com</a>
+                    </li>
+                </ul>
+                <br>
+                <ul class="list-inline">
+                    <li>
+                        <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
+                    </li>
+                </ul>
+                <hr class="small">
+                <p class="text-muted">Copyright &copy; CarMate 2014</p>
             </div>
         </div>
-    </footer>
-    @Scripts.Render("~/bundles/jquery")
-    @*@Scripts.Render("~/Scripts/rating")*@
-    @RenderSection("scripts", required: false)
-    <!-- jQuery -->
-    @*<script src="js/jquery.js"></script>*@
-    <!-- Bootstrap Core JavaScript -->
-    @*<script src="js/bootstrap.min.js"></script>*@
-    <!-- Custom Theme JavaScript -->
-    <script type="text/javascript">
-        // Closes the sidebar menu
-        $("#menu-close").click(function (e) {
-            e.preventDefault();
-            $("#sidebar-wrapper").toggleClass("active");
-        });
-        // Opens the sidebar menu
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#sidebar-wrapper").toggleClass("active");
-        });
-        // Scrolls to the selected menu item on the page
-        $(function () {
-            $('a[href*=#]:not([href=#])').click(function () {
-                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-                    var target = $(this.hash);
-                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                    if (target.length) {
-                        $('html,body').animate({
-                            scrollTop: target.offset().top
-                        }, 1000);
-                        return false;
-                    }
+    </div>
+</footer>
+@Scripts.Render("~/bundles/jquery")
+@*Выпадающее меню при наведении*@
+@*@Scripts.Render("~/Scripts/bootstrap-hover-dropdown")*@
+@*@Scripts.Render("~/Scripts/rating")*@
+@RenderSection("scripts", required: false)
+<!-- jQuery -->
+@*<script src="js/jquery.js"></script>*@
+<!-- Bootstrap Core JavaScript -->
+@*<script src="js/bootstrap.min.js"></script>*@
+<!-- Custom Theme JavaScript -->
+<script type="text/javascript">
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
                 }
-                return false;
-            });
+            }
+            return false;
         });
-    </script>
+    });
+</script>
 </body>
 </html>

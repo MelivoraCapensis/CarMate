@@ -159,6 +159,9 @@
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
+  <data name="SignedInAs" xml:space="preserve">
+    <value>Вы вошли как</value>
+  </data>
   <data name="SignIn" xml:space="preserve">
     <value>Вход</value>
   </data>

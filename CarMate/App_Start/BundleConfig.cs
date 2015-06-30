@@ -27,6 +27,9 @@ namespace CarMate
             bundles.Add(new ScriptBundle("~/script/bootstrap").Include
                ("~/js/bootstrap.min.js"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/bootstrap-hover-dropdown").Include
+               ("~/Scripts/bootstrap-hover-dropdown.js"));
+
             bundles.Add(new ScriptBundle("~/Scripts/rating").Include
                ("~/Scripts/rating/jquery.rating-2.0.js"));
 

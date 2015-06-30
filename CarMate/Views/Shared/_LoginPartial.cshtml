@@ -1,46 +1,54 @@
-﻿@helper CurrentItem(string controller, string action)
+﻿@if (Request.IsAuthenticated)
 {
-    if (controller != ViewContext.RouteData.Values["controller"].ToString() || action != ViewContext.RouteData.Values["action"].ToString())
-    {
-        return;
-    }
-    @:class="active"
+    <li><a href="@Url.Action("Garage", "User")">Hello, @User.Identity.Name</a></li>
+    <li><a href="@Url.Action("Garage", "User")">@Resources.Global.MyGarage</a></li>
+    <li><a href="@Url.Action("Manage", "Account")">@Resources.Global.Settings</a></li>
+    <li>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="@Resources.Global.SignOut" class="btn btn-link btn-lg" />
+        }
+    </li>
+}
+else
+{
+    <li>
+        <button id="registerButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#register">
+            @Resources.Global.SignUp
+        </button>
+    </li>
+
+    <li>
+        <button id="loginButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#login">
+            @Resources.Global.SignIn
+        </button>
+    </li>
 }
 
-@if (Request.IsAuthenticated){
+@*@if (Request.IsAuthenticated){
     <text>
-        @*Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!*@
         <li>
             Hello, @User.Identity.Name
         </li>
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
             {
                 @Html.AntiForgeryToken()
-                @*<a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>*@
-                @*@Html.ActionLink("Dashboard", "Dashboard", "Map")*@
                 <li>
                     @Html.ActionLink(Resources.Global.MyGarage, "Garage", "User", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
                 </li>
                 <li>
                     @Html.ActionLink(Resources.Global.Settings, "Manage", "Account", routeValues: null, htmlAttributes: new {@class = "btn btn-light"})
                 </li>
-                @*<li>
-                    @Html.ActionLink("Карта", "GetMap", "Map", htmlAttributes: new { @class = "btn btn-light" })
-                </li>*@
                 <li>
                     <input type="submit" value="@Resources.Global.SignOut" class="btn" />
                 </li>
             }
     </text>
-     //@Html.Partial("_DashboardPartial")
 }
 else
 {
     <ul>
-        @*<li> @Html.ActionLink("Dashboard", "Dashboard","Map")</li>*@
-        @*<li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-light" })</li>*@
-        @*<li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-light" })</li>*@
-
         <li>
             <button id="registerButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#register">
                 @Resources.Global.SignUp
@@ -52,15 +60,10 @@ else
                 @Resources.Global.SignIn
             </button>
         </li>
-
-        @*@Html.Partial("_PartRegister", new CarMate.Models.RegisterModel())*@
-
-
-        @*@Html.Partial("_PartLogin", new CarMate.Models.LoginModel())*@
     </ul>
 
     <div>
-        <!-- Модальное окно -->
+         Модальное окно 
         <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -92,9 +95,9 @@ else
             </div>
         </div>
     </div>
-}
+}*@
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function() {
         $('#registerInLogin').click(function() { // При нажатии на кнопку регистрации в окне входа
             $('#loginCloseButton').trigger('click'); // Закрываем окно входа
@@ -110,4 +113,4 @@ else
             $('#loginButton').trigger('click');    // Открываем окно входа
         });
     });
-</script>
+</script>*@

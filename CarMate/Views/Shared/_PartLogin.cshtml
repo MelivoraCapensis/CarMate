@@ -41,14 +41,16 @@
 
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8">
-                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.CheckBoxFor(m => m.RememberMe, new {@class = "checkbox-inline"})
                                     @Html.LabelFor(m => m.RememberMe, Resources.Account.RememberMe)
                                     @*<button id="registerInLogin" type="button" class="btn btn-info btn-lg">
                                         Регистрация
                                     </button>*@
-                                    <a id="registerInLogin">@Resources.Global.SignUp</a>
+
                                 </div>
+
                             </div>
+                            <a id="registerInLogin">@Resources.Global.SignUp</a>
                         </div>
 
                         
