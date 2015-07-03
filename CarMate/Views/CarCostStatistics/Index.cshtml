@@ -132,7 +132,7 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
 
 
         Highcharts.setOptions({
@@ -145,18 +145,20 @@
         });
 
         getData();
-        $('#search_period').click(function () {
+        $('#search_period').click(function() {
             getData();
+            
         });
-
-
     });
+
+    
+
 
     function getData() {
         var startDate = $('input[name=start]').val();
         var endDate = $('input[name=end]').val();
         var carId = '@(ViewBag.Car.Id)';
-        jQuery.getJSON("CarCostStatistics/GetCostStatisticsFromPeriod", { "carId": carId, "startDate": startDate, "endDate": endDate }, function (items) {
+        jQuery.getJSON("CarCostStatistics/GetCostStatisticsFromPeriod", { "carId": carId, "startDate": startDate, "endDate": endDate }, function(items) {
             if (items.length === 0) {
                 $('#period_result').html(
                     '<div class="col-lg-12">' +
@@ -165,6 +167,10 @@
                     '</div>' +
                     '</div>'
                 );
+
+                $('#allCostStatistics').html('');
+                $('#fuelCostStatistics').html('');
+                $('#otherCostStatistics').html('');
             } else {
                 $('#period_result').html(
                     '<p>' +
@@ -175,9 +181,9 @@
                 //$('#summ_period').text(items[0].AllSumm);
 
                 // График статистика расходов
-                $(function () {
+                $(function() {
                     var dataAll = []; // Создается пустой массив
-                    jQuery.each(items, function (itemNo, item) {
+                    jQuery.each(items, function(itemNo, item) {
                         dataAll.push({ name: item.Name, y: item.Summ });
                     });
 
@@ -222,11 +228,11 @@
                 });
 
 
-                $(function () {
+                $(function() {
                     var dataFuel = []; // Создается пустой массив
-                    jQuery.each(items, function (itemNo, item) {
+                    jQuery.each(items, function(itemNo, item) {
                         //if (item.Name === "Заправка") {
-                        jQuery.each(item.Details, function (itemNoDetails, itemDetails) {
+                        jQuery.each(item.Details, function(itemNoDetails, itemDetails) {
                             var s = (itemDetails.Ticks - 621355968000000000) / 10000;
                             dataFuel.push({ x: s, y: itemDetails.Cost, color: 'green' });
                         });
@@ -347,12 +353,12 @@
                     });
                 });
 
-                $(function () {
+                $(function() {
 
                     var brandsData = [];
                     var drilldownSeries = [];
 
-                    jQuery.each(items, function (itemNo, item) {
+                    jQuery.each(items, function(itemNo, item) {
                         brandsData.push({
                             name: item.Name,
                             y: item.Summ,
@@ -360,7 +366,7 @@
                         });
 
                         var versions = {};
-                        $.each(item.Details, function (itemDetailsNo, itemDetails) {
+                        $.each(item.Details, function(itemDetailsNo, itemDetails) {
                             if (!versions[item.Name]) {
                                 versions[item.Name] = [];
                             }

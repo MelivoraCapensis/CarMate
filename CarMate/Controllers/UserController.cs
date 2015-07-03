@@ -50,7 +50,7 @@ namespace CarMate.Controllers
         //
         // GET: /User/Details/5
 
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(int id = 0, bool defaultCarError = false)
         {
             var user = RepProvider.Users.FindById(id);
             //var user = Db.Users.Find(id);
@@ -72,18 +72,12 @@ namespace CarMate.Controllers
             //    this.UserId = 0;
             //}
             //user.Cars = RepProvider.Cars.Select(user.Id).ToList();
-            
-            return View(user);
+            if (defaultCarError)
+            {
+                ViewBag.DefaultCarError = "Автомобиль по умолчанию не выбран!";
+            }
 
-            //return View(new Users()
-            //{
-            //    LastName = "qewr",
-            //    FirstName = "fgdggf",
-            //    Nickname = "nick",
-            //    Id = 555,
-            //    DateCreate = DateTime.Now,
-            //    DateRegister = DateTime.Now
-            //});
+            return View(user);
         }
 
         [HttpPost]
@@ -165,5 +159,139 @@ namespace CarMate.Controllers
         {
             
         }
+
+        public JsonResult ChangeDefaultCar(int userId, int carId)
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                // Ищем пользователя с заданным id
+                var user = RepProvider.Users.FindById(userId);
+                // Если такого пользователя не существует выходим
+                if(user == null)
+                    return null;
+                // Если ник авторизованого пользователя не совпадает с ником пользователя, которому хотят поменять 
+                // автомобиль по умолчанию выходим
+                if(!user.Nickname.Equals(HttpContext.User.Identity.Name, StringComparison.OrdinalIgnoreCase))
+                    return null;
+                // Ищем автомобиль с заданным id, у текущего пользователя
+                var car = RepProvider.Cars.Select(userId).FirstOrDefault(x => x.Id == carId);
+                // Если такой автомобиль существует
+                if (car != null)
+                {
+                    // Изменяем автомобиль по умолчанию
+                    user.DefaultCarId = carId;
+                    user.State = Consts.StateUpdate;
+                    user.DateCreate = DateTime.Now;
+                    Db.SaveChanges();
+                    return Json("Ok", JsonRequestBehavior.AllowGet);
+                }
+                return null;
+            }
+            return null;
+        }
+
+        public ActionResult DefaultCarEvents()
+        {
+            // Если пользователь авторизован
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                // Ищем пользователя по имени в БД
+                var user = RepProvider.Users.FindByName(HttpContext.User.Identity.Name);
+                // Если такой пользователь существует
+                if (user != null)
+                {
+                    // Если у него выбрана машина по умолчанию
+                    if (user.DefaultCarId != null)
+                    {
+                        // Ищем автомобиль у текущего пользовате в БД
+                        var car = RepProvider.Cars.FindById((int)user.DefaultCarId);
+                        // Если такой автомобиль существует
+                        if (car != null)
+                        {
+                            // Если у пользователя есть автомобиль по умолчанию отправляем на события
+                            return RedirectToAction("Index", "CarEvents", new { carId = car.Id });
+                        }
+                        // Если машина по умолчанию не выбрана отправляем пользователя в гараж
+                        return RedirectToAction("Details", new { id = user.Id, defaultCarError = true });
+                    }
+                    //// Если машина по умолчанию не выбрана отправляем пользователя в гараж
+                    return RedirectToAction("Details", new { id = user.Id, defaultCarError = true});
+                }
+                // Если пользователь в БД не найден отправляем на страницу ошибки
+                return HttpNotFound();
+            }
+            // Если пользователь не авторизован отправляем его на окно авторизации
+            return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult DefaultCarConsumprion()
+        {
+            // Если пользователь авторизован
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                // Ищем пользователя по имени в БД
+                var user = RepProvider.Users.FindByName(HttpContext.User.Identity.Name);
+                // Если такой пользователь существует
+                if (user != null)
+                {
+                    // Если у него выбрана машина по умолчанию
+                    if (user.DefaultCarId != null)
+                    {
+                        // Ищем автомобиль у текущего пользовате в БД
+                        var car = RepProvider.Cars.FindById((int)user.DefaultCarId);
+                        // Если такой автомобиль существует
+                        if (car != null)
+                        {
+                            // Если у пользователя есть автомобиль по умолчанию отправляем на расход топлива
+                            return RedirectToAction("Index", "CarConsumption", new { carId = car.Id });
+                        }
+                        // Если машина по умолчанию не выбрана отправляем пользователя в гараж
+                        return RedirectToAction("Details", new { id = user.Id, defaultCarError = true });
+                    }
+                    //// Если машина по умолчанию не выбрана отправляем пользователя в гараж
+                    return RedirectToAction("Details", new { id = user.Id, defaultCarError = true });
+                }
+                // Если пользователь в БД не найден отправляем на страницу ошибки
+                return HttpNotFound();
+            }
+            // Если пользователь не авторизован отправляем его на окно авторизации
+            return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult DefaultCarCostStatistics()
+        {
+            // Если пользователь авторизован
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                // Ищем пользователя по имени в БД
+                var user = RepProvider.Users.FindByName(HttpContext.User.Identity.Name);
+                // Если такой пользователь существует
+                if (user != null)
+                {
+                    // Если у него выбрана машина по умолчанию
+                    if (user.DefaultCarId != null)
+                    {
+                        // Ищем автомобиль у текущего пользовате в БД
+                        var car = RepProvider.Cars.FindById((int)user.DefaultCarId);
+                        // Если такой автомобиль существует
+                        if (car != null)
+                        {
+                            // Если у пользователя есть автомобиль по умолчанию отправляем на статистику
+                            return RedirectToAction("Index", "CarCostStatistics", new { carId = car.Id });
+                        }
+                        // Если машина по умолчанию не выбрана отправляем пользователя в гараж
+                        return RedirectToAction("Details", new { id = user.Id, defaultCarError = true });
+                    }
+                    //// Если машина по умолчанию не выбрана отправляем пользователя в гараж
+                    return RedirectToAction("Details", new { id = user.Id, defaultCarError = true });
+                }
+                // Если пользователь в БД не найден отправляем на страницу ошибки
+                return HttpNotFound();
+            }
+            // Если пользователь не авторизован отправляем его на окно авторизации
+            return RedirectToAction("Login", "Account");
+        }
+
+        
     }
 }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Avg" xml:space="preserve">
-    <value>Средний</value>
+    <value>Средний: </value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Дата</value>
@@ -133,7 +133,7 @@
     <value>Проехано, за выбранный период</value>
   </data>
   <data name="FillTwoTimes" xml:space="preserve">
-    <value>Пользователь еще не заправлял полный бак 2 раза подряд.</value>
+    <value>За выбранный период пользователь еще не заправлял полный бак 2 раза.</value>
   </data>
   <data name="FuelConsumption" xml:space="preserve">
     <value>Расход топлива</value>
@@ -142,13 +142,13 @@
     <value>К событию</value>
   </data>
   <data name="Max" xml:space="preserve">
-    <value>Максимальный</value>
+    <value>Максимальный: </value>
   </data>
   <data name="Mileage" xml:space="preserve">
     <value>Пробег</value>
   </data>
   <data name="Min" xml:space="preserve">
-    <value>Минимальный</value>
+    <value>Минимальный: </value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>

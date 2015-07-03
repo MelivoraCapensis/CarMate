@@ -37,9 +37,9 @@ namespace CarMate
         public System.DateTime DateCreate { get; set; }
         public int State { get; set; }
     
-        public virtual EventTypes EventTypes { get; set; }
         public virtual FuelCategories FuelCategories { get; set; }
         public virtual Cars Cars { get; set; }
         public virtual ICollection<LogBook> LogBook { get; set; }
+        public virtual EventTypes EventTypes { get; set; }
     }
 }

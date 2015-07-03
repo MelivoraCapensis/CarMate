@@ -1,9 +1,9 @@
 ﻿<link type="text/css" href="~/Content/bootstrap.css" rel="stylesheet">
 
-<div class="container">
+@*<div class="container">*@
     <!-- Static navbar -->
-    <div role="navigation" class="navbar navbar-default">
-        <div class="container-fluid">
+    <div role="navigation" class="navbar navbar-default navbar-static-top">
+        <div class="container">
             <div class="navbar-header">
                 <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
                     <span class="sr-only">Toggle navigation</span>
@@ -15,11 +15,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
-
                     <li><a href="@Url.Action("GetMap", "Map")">@Resources.Layout.Map</a></li>
-                    
-
                     <li><a href="@Url.Action("Index", "User")">@Resources.Layout.Users</a></li>
                     <li><a href="@Url.Action("Index", "Car")">@Resources.Layout.MeansTransport</a></li>
 
@@ -30,15 +26,15 @@
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">Мой автомобиль<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("Garage", "User")">@Resources.Global.MyGarage</a></li>
+                                <li><a href="@Url.Action("Garage", "User")">@Resources.Layout.MyGarage</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Перейти к автомобилю</a></li>
-                                <li><a href="#">Расход топлива</a></li>
-                                <li><a href="#">Статистика</a></li>
-                                <li><a href="#">События</a></li>
+                                <li>@*<a href="@Url.Action("DefaultCar", "User")">Перейти к автомобилю</a>*@</li>
+                                <li><a href="@Url.Action("DefaultCarEvents", "User")">События</a></li>
+                                <li><a href="@Url.Action("DefaultCarConsumprion", "User")">Расход топлива</a></li>
+                                <li><a href="@Url.Action("DefaultCarCostStatistics", "User")">Статистика</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">В разработке</li>
                                 <li><a href="#">График ТО (Напоминания) (Планы)</a></li>
-                                @*<li class="divider"></li>*@
-                                @*<li class="dropdown-header">Расход топлива</li>*@
                                 <li><a href="#">Сравнение автомобилей</a></li>
                                 <li><a href="#">Планирование маршрута (Мои маршруты)</a></li>
                             </ul>
@@ -57,13 +53,13 @@
                                 <li class="divider"></li>
                                 <li><a href="@Url.Action("Manage", "Account")">@Resources.Global.Settings</a></li>
                                 <li>
-                                    <a href="#">
-                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <input type="submit" value="@Resources.Global.SignOut" class="btn-link btn-sm"/>
-                                        }
-                                    </a>
+                                    <a href="@Url.Action("LogOff", "Account", new { id = "logoutForm" })">@Resources.Global.SignOut</a>
+                                    @*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="submit" value="@Resources.Global.SignOut (ссылка на всю строку)" class="btn-link btn-sm" />
+                                    }*@
+
                                 </li>
                             </ul>
                         </li>
@@ -73,20 +69,20 @@
                 {
                     <ul class="nav navbar-nav navbar-right">
                         @*<li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Профиль<b class="caret"></b></a>
-                            <ul class="dropdown-menu">*@
-                                <li>
-                                    <button id="registerButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#register">
-                                        @Resources.Global.SignUp
-                                    </button>
-                                </li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Профиль<b class="caret"></b></a>
+                        <ul class="dropdown-menu">*@
+                        <li>
+                            <button id="registerButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#register">
+                                @Resources.Global.SignUp
+                            </button>
+                        </li>
 
-                                <li>
-                                    <button id="loginButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#login">
-                                        @Resources.Global.SignIn
-                                    </button>
-                                </li>
-                            @*</ul>
+                        <li>
+                            <button id="loginButton" type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#login">
+                                @Resources.Global.SignIn
+                            </button>
+                        </li>
+                        @*</ul>
                         </li>*@
                     </ul>
                 }
@@ -125,7 +121,7 @@
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </div>
-</div>
+@*</div>*@
 
 <script type="text/javascript">
     $(document).ready(function() {

@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Средний.
+        ///   Looks up a localized string similar to Средний: .
         /// </summary>
         public static string Avg {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Пользователь еще не заправлял полный бак 2 раза подряд..
+        ///   Looks up a localized string similar to За выбранный период пользователь еще не заправлял полный бак 2 раза..
         /// </summary>
         public static string FillTwoTimes {
             get {
@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Максимальный.
+        ///   Looks up a localized string similar to Максимальный: .
         /// </summary>
         public static string Max {
             get {
@@ -151,7 +151,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Минимальный.
+        ///   Looks up a localized string similar to Минимальный: .
         /// </summary>
         public static string Min {
             get {

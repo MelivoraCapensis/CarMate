@@ -1,0 +1,26 @@
+﻿@model List<string>
+
+@{
+    ViewBag.Title = "GetErrorsInformationByDate";
+}
+
+
+
+<div class="container">
+    <p>
+        @Html.ActionLink("Главное меню", "Index", "Admin")
+    </p>
+
+    <p>
+        @Html.ActionLink("Назад", "Index", "AdminErrorLogs")
+    </p>
+
+    <h2>Логи за выбранный день</h2>
+
+    @foreach (string str in Model)
+    {
+        <p>
+            @Html.ActionLink(str, "OpenLog", "AdminErrorLogs", new {fileName = ViewBag.Directory + str}, null)
+        </p>
+    }
+</div>

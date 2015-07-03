@@ -18,7 +18,7 @@ namespace CarMate.Controllers
             var fullTankCharging = SelectFullTankCharging(carId, out minConsumption, out avgConsumption, out maxConsumption);
             //Cars car = Db.Cars.Find(carId);
             Cars car = RepProvider.Cars.FindById(carId);
-            
+            ViewBag.CarId = car.Id;
             InitViewBag(car.Users);
             ConvertTankLoad(car);
             ConvertOdometrLoad(car);
@@ -35,6 +35,208 @@ namespace CarMate.Controllers
 
             return View(fullTankCharging);
         }
+
+        public JsonResult GetFuelConsumption(int carId, string startDate, string endDate)
+        {
+            var car = RepProvider.Cars.FindById(carId);
+            InitViewBag(car.Users);
+
+            List<CarEvents> carEvents = new List<CarEvents>();
+            CultureInfo ci = new CultureInfo("ru");
+            DateTime start;
+            DateTime end;
+            // Если удалось преобразовать дату начала из строки в дату, то фильтруем по дате начала
+            if (DateTime.TryParseExact(startDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out start))
+            {
+                var carEventsTmp = RepProvider.CarEvents
+                    .Select(carId)
+                    .Where(x => x.DateEvent >= start)
+                    .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer);
+
+                DateTime endTmp;
+                // Если удалось преобразовать дату конца из строки в дату, то фильтруем по дате конца
+                if (DateTime.TryParseExact(endDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out endTmp))
+                {
+                    carEvents = carEventsTmp
+                        .Where(x => x.CarId == carId && x.DateEvent <= endTmp)
+                        .OrderBy(x => x.DateEvent)
+                        .ThenBy(x => x.Odometer)
+                        .ToList();
+                }
+            }
+            // Если не удалось преобразовать дату начала, но удалось преобразовать дату конца, то фильтруем по дате конца
+            else if (DateTime.TryParseExact(endDate, "dd.MM.yyyy", ci, DateTimeStyles.None, out end))
+            {
+                carEvents = RepProvider.CarEvents
+                    .Select(carId)
+                    .Where(x => x.DateEvent <= end)
+                    .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer)
+                    .ToList();
+            }
+            else
+            {
+                carEvents = RepProvider.CarEvents
+                    .Select(carId)
+                    .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer)
+                    .ToList();
+            }
+
+            double minConsumption = 0;
+            double avgConsumption = 0;
+            double maxConsumption = 0;
+            List<CarConsumptionJson> fullTankCharging = new List<CarConsumptionJson>();
+
+            //// Получаем все события автомобиля заправок из БД
+            //var carEvents = RepProvider.CarEvents
+            //    .Select(carId)
+            //    .Where(x => x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
+            //    .OrderBy(x => x.DateEvent)
+            //    .ThenBy(x => x.Odometer)
+            //    .ToList();
+
+            // Ссылка на первую заправку "Полный бак"
+            CarEvents firstCarEvent = null;
+            // Ссылка на вторую заправку "Полный бак"
+            CarEvents secondCarEvent = null;
+            // Сумма всех расходов топлива
+            double sumConsumption = 0;
+            int count = 0;
+            // Сумма залитого топлива между 2-мя заправками "Полный бак"
+            double sumFuel = 0;
+            foreach (var carEvent in carEvents)
+            {
+                // Если заправка "Полный бак"
+                if (carEvent.IsFullTank)
+                {
+                    // Если это первое событие "Полный бак"
+                    if (firstCarEvent == null)
+                    {
+                        // Сохраняем ссылку на первую заправку "Полный бак"
+                        firstCarEvent = carEvent;
+                        if (firstCarEvent.FuelCount != null)
+                        {
+                            sumFuel += (double)firstCarEvent.FuelCount;
+                        }
+                        continue;
+                    }
+                    // Сохраняем ссылку на вторую заправку "Полный бак"
+                    secondCarEvent = carEvent;
+                    if (secondCarEvent.FuelCount != null)
+                    {
+                        // Прибавляем кол. топлива, которое заправили на второй заправке "Полный бак"
+                        sumFuel += (double)secondCarEvent.FuelCount;
+                    }
+                    // Считаем пройденное расстояние, между 2-мя заправками "Полный бак"
+                    int distance = (int)(secondCarEvent.Odometer - firstCarEvent.Odometer);
+                    // Считаем расход топлива, между 2-мя заправками "Полный бак"
+                    double consumption = (sumFuel * 100) / distance;
+                    // Если это первый расчет расхода топлива или минимальный расход топлива больше, чем текущий расход топлива
+                    if (count == 0 || minConsumption > consumption)
+                    {
+                        // Запоминаем минимальный расход топлива
+                        minConsumption = consumption;
+                    }
+                    // Если это первый расчет расхода топлива или максимальный расход топлива меньше, чем текущий расход топлива
+                    if (count == 0 || maxConsumption > consumption)
+                    {
+                        // Запоминаем максимальный расход топлива
+                        maxConsumption = consumption;
+                    }
+                    // Суммируем расход топлива
+                    sumConsumption += consumption;
+                    // Запоминаем, сколько расчетов расхода топлива произвели
+                    count++;
+
+
+                    // Конвертируем расход топлива между событиями заправка "полный бак" в выбранные единицы измерения
+                    consumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                        consumption);
+                    // Округляем значение до 2-х знаков после запятой
+                    consumption = Math.Round(consumption, 2);
+
+                    // Конвертируем расстояние между событиями заправка "полный бак" в выбранные единицы измерения
+                    var distanceTmp = ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id,
+                        ViewBag.UnitDistance, distance);
+                    // Округляем значение
+                    distance = (int)Math.Round(distanceTmp);
+
+                    int firstCarEventOdometer = firstCarEvent.Odometer ?? 0;
+                    firstCarEventOdometer = (int)ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id,
+                        ViewBag.UnitDistance, firstCarEventOdometer);
+                    int secondCarEventOdometer = secondCarEvent.Odometer ?? 0;
+                    secondCarEventOdometer = (int)ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id,
+                        ViewBag.UnitDistance, secondCarEventOdometer);
+
+                    fullTankCharging.Add(new CarConsumptionJson(
+                        new EventJson
+                        {
+                            DateEvent = firstCarEvent.DateEvent.ToString("dd.MM.yyyy"),
+                            Odometer = firstCarEventOdometer,
+                            Id = firstCarEvent.Id
+                        },
+                        new EventJson
+                        {
+                            DateEvent = secondCarEvent.DateEvent.ToString("dd.MM.yyyy"),
+                            Odometer = secondCarEventOdometer,
+                            Id = secondCarEvent.Id
+                        }
+                        , consumption, distance));
+                    // Первым событием становится второе
+                    firstCarEvent = secondCarEvent;
+
+                    // Запоминаем, сколько потратили бензина на первом событии "Полный бак"
+                    // Если количество залитого топлива null (firstCarEvent.FuelCount == null), то заносим 0
+                    sumFuel = firstCarEvent.FuelCount ?? 0;
+                }
+                // Если это событие заправка и была заправка "Полный бак"
+                else if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs) && firstCarEvent != null)
+                {
+                    if (carEvent.FuelCount != null)
+                    {
+                        // Запоминаем, сколько всего потратили топлива между двумя заправками "Полный бак"
+                        sumFuel += (double)carEvent.FuelCount;
+                    }
+                }
+            }
+            // Считаем средний расход топлива
+            avgConsumption = Math.Round(sumConsumption / count, 2);
+
+            // Конвертируем средний расход топлива в выбранные единицы измерения
+            avgConsumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                avgConsumption);
+            // Округляем значение до 2-х знаков после запятой
+            avgConsumption = Math.Round(avgConsumption, 2);
+
+            // Конвертируем минимальный расход топлива в выбранные единицы измерения
+            minConsumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                minConsumption);
+            // Округляем значение до 2-х знаков после запятой
+            minConsumption = Math.Round(minConsumption, 2);
+
+            // Конвертируем максимальный расход топлива в выбранные единицы измерения
+            maxConsumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                maxConsumption);
+            // Округляем значение до 2-х знаков после запятой
+            maxConsumption = Math.Round(maxConsumption, 2);
+
+
+            foreach (var item in fullTankCharging)
+            {
+                item.MinConsumption = minConsumption;
+                item.AvgConsumption = avgConsumption;
+                item.MaxConsumption = maxConsumption;
+            }
+
+            // Конвертировать данные в выбранную систему измерения
+
+            fullTankCharging = fullTankCharging.OrderByDescending(x => x.NewCarEvent.DateEvent).ToList();
+
+            return Json(fullTankCharging, JsonRequestBehavior.AllowGet);
+        }
+
 
         public void Owner(HttpContextBase httpContext)
         {
@@ -55,150 +257,341 @@ namespace CarMate.Controllers
             }
         }
 
+        //public List<CarConsumptionViewModel> SelectFullTankCharging(int carId, out double minConsumption, out double avgConsumption, out double maxConsumption)
+        //{
+        //    minConsumption = 0;
+        //    avgConsumption = 0;
+        //    maxConsumption = 0;
+
+        //    // Получаем все события заправок из базы
+        //    var carEvents = RepProvider.CarEvents
+        //        .Select(carId)
+        //        .Where(x => x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
+        //        .OrderBy(x => x.DateEvent)
+        //        .ToList();
+
+        //    // Ссылка на пердыдущее событие заправки
+        //    CarEvents tmpCarEvent = null;
+        //    // Список событий заправок 
+        //    // (идут парами: 
+        //    // - если 2 заправки подряд с полный бак, то 1 пара
+        //    // - если 3 заправки подряд с полным баком, то 2 пары
+        //    List<CarConsumptionViewModel> fullTankCharging = new List<CarConsumptionViewModel>();
+
+        //    double summConsumption = 0;
+        //    foreach (var carEvent in carEvents)
+        //    {
+        //        // Если у текущей заправки заправили полный бак
+        //        if (carEvent.IsFullTank)
+        //        {
+        //            // Это первая заправка полынм баком
+        //            // - пропустил предыдущую заправку
+        //            // - до этого заправился не поным баком
+        //            if (tmpCarEvent == null || carEvent.IsMissedFilling)
+        //            {
+        //                tmpCarEvent = carEvent;
+        //            }
+        //            // Это НЕ первая заправка полынм баком
+        //            else
+        //            {
+        //                double consumption = 0;
+        //                int mileage = 0;
+        //                if (carEvent.Odometer != null && tmpCarEvent.Odometer != null)
+        //                {
+        //                    mileage = (int)(carEvent.Odometer - tmpCarEvent.Odometer);
+        //                }
+
+        //                if (carEvent.FuelCount != null && mileage != 0)
+        //                {
+        //                    consumption = Math.Round(((double)carEvent.FuelCount * 100 / mileage), 2);
+        //                    if (Math.Abs(minConsumption) <= 0|| minConsumption > consumption)
+        //                        minConsumption = consumption;
+
+        //                    if (Math.Abs(maxConsumption) <= 0 || maxConsumption < consumption)
+        //                        maxConsumption = consumption;
+
+        //                    summConsumption += consumption;
+        //                }
+
+        //                fullTankCharging.Add(new CarConsumptionViewModel(tmpCarEvent, carEvent, consumption, mileage));
+        //                tmpCarEvent = carEvent;
+        //            }
+        //        }
+        //        // Заправка не с полным баком
+        //        else
+        //        {
+        //            tmpCarEvent = null;
+        //        }
+        //    }
+        //    avgConsumption = Math.Round(summConsumption/carEvents.Count);
+
+            
+        //    return fullTankCharging.OrderByDescending(x=>x.NewCarEvent.DateEvent).ToList();
+        //}
+
         public List<CarConsumptionViewModel> SelectFullTankCharging(int carId, out double minConsumption, out double avgConsumption, out double maxConsumption)
         {
+            var car = RepProvider.Cars.FindById(carId);
+            InitViewBag(car.Users);
             minConsumption = 0;
             avgConsumption = 0;
             maxConsumption = 0;
+            List<CarConsumptionViewModel> fullTankCharging = new List<CarConsumptionViewModel>();
 
-            // Получаем все события заправок из базы
+            // Получаем все события автомобиля заправок из БД
             var carEvents = RepProvider.CarEvents
                 .Select(carId)
                 .Where(x => x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
                 .OrderBy(x => x.DateEvent)
+                .ThenBy(x => x.Odometer)
                 .ToList();
-            //var carEvents = Db.CarEvents
-            //    .Where(x =>x.CarId == carId &&
-            //            x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
-            //    .OrderBy(x => x.DateEvent)
-            //    .ToList();
 
-            // Ссылка на пердыдущее событие заправки
-            CarEvents tmpCarEvent = null;
-            // Список событий заправок 
-            // (идут парами: 
-            // - если 2 заправки подряд с полный бак, то 1 пара
-            // - если 3 заправки подряд с полным баком, то 2 пары
-            List<CarConsumptionViewModel> fullTankCharging = new List<CarConsumptionViewModel>();
-
-            double summConsumption = 0;
+            // Ссылка на первую заправку "Полный бак"
+            CarEvents firstCarEvent = null;
+            // Ссылка на вторую заправку "Полный бак"
+            CarEvents secondCarEvent = null;
+            // Сумма всех расходов топлива
+            double sumConsumption = 0;
+            int count = 0;
+            // Сумма залитого топлива между 2-мя заправками "Полный бак"
+            double sumFuel = 0;
             foreach (var carEvent in carEvents)
             {
-                // Если у текущей заправки заправили полный бак
+                // Если заправка "Полный бак"
                 if (carEvent.IsFullTank)
                 {
-                    // Это первая заправка полынм баком
-                    // - пропустил предыдущую заправку
-                    // - до этого заправился не поным баком
-                    if (tmpCarEvent == null || carEvent.IsMissedFilling)
+                    // Если это первое событие "Полный бак"
+                    if (firstCarEvent == null)
                     {
-                        tmpCarEvent = carEvent;
+                        // Сохраняем ссылку на первую заправку "Полный бак"
+                        firstCarEvent = carEvent;
+                        if (firstCarEvent.FuelCount != null)
+                        {
+                            sumFuel += (double) firstCarEvent.FuelCount;
+                        }
+                        continue;
                     }
-                    // Это НЕ первая заправка полынм баком
-                    else
+                    // Сохраняем ссылку на вторую заправку "Полный бак"
+                    secondCarEvent = carEvent;
+                    if (secondCarEvent.FuelCount != null)
                     {
-                        double consumption = 0;
-                        int mileage = 0;
-                        if (carEvent.Odometer != null && tmpCarEvent.Odometer != null)
-                        {
-                            mileage = (int)(carEvent.Odometer - tmpCarEvent.Odometer);
-                        }
-
-                        if (carEvent.FuelCount != null && mileage != 0)
-                        {
-                            consumption = Math.Round(((double)carEvent.FuelCount * 100 / mileage), 2);
-                            if (Math.Abs(minConsumption) <= 0|| minConsumption > consumption)
-                                minConsumption = consumption;
-
-                            if (Math.Abs(maxConsumption) <= 0 || maxConsumption < consumption)
-                                maxConsumption = consumption;
-
-                            summConsumption += consumption;
-                        }
-
-                        fullTankCharging.Add(new CarConsumptionViewModel(tmpCarEvent, carEvent, consumption, mileage));
-                        tmpCarEvent = carEvent;
+                        // Прибавляем кол. топлива, которое заправили на второй заправке "Полный бак"
+                        sumFuel += (double) secondCarEvent.FuelCount;
                     }
+                    // Считаем пройденное расстояние, между 2-мя заправками "Полный бак"
+                    int distance = (int) (secondCarEvent.Odometer - firstCarEvent.Odometer);
+                    // Считаем расход топлива, между 2-мя заправками "Полный бак"
+                    // Округляем до 2-х десятичных знаков
+                    double consumption = (sumFuel*100)/distance;
+                    // Если это первый расчет расхода топлива или минимальный расход топлива больше, чем текущий расход топлива
+                    if (count == 0 || minConsumption > consumption)
+                    {
+                        // Запоминаем минимальный расход топлива
+                        minConsumption = consumption;
+                    }
+                    // Если это первый расчет расхода топлива или максимальный расход топлива меньше, чем текущий расход топлива
+                    if (count == 0 || maxConsumption > consumption)
+                    {
+                        // Запоминаем максимальный расход топлива
+                        maxConsumption = consumption;
+                    }
+                    // Суммируем расход топлива
+                    sumConsumption += consumption;
+                    // Запоминаем, сколько расчетов расхода топлива произвели
+                    count++;
+
+                    // Конвертируем расход топлива между событиями заправка "полный бак" в выбранные единицы измерения
+                    consumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                        consumption);
+                    // Округляем значение до 2-х знаков после запятой
+                    consumption = Math.Round(consumption, 2);
+
+                    // Конвертируем расстояние между событиями заправка "полный бак" в выбранные единицы измерения
+                    var distanceTmp = ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id,
+                        ViewBag.UnitDistance, distance);
+                    // Округляем значение
+                    distance = (int)Math.Round(distanceTmp);
+
+                    firstCarEvent.Odometer = firstCarEvent.Odometer ?? 0;
+                    firstCarEvent.Odometer = (int)ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id,
+                        ViewBag.UnitDistance, (int)firstCarEvent.Odometer);
+                    secondCarEvent.Odometer = secondCarEvent.Odometer ?? 0;
+                    secondCarEvent.Odometer = (int)ConverterUnitDistance.ConverterDistanceLoad(RepProvider, CurrentLang.Id,
+                        ViewBag.UnitDistance, (int)secondCarEvent.Odometer);
+
+                    fullTankCharging.Add(new CarConsumptionViewModel(firstCarEvent, secondCarEvent, consumption, distance));
+                    // Первым событием становится второе
+                    firstCarEvent = secondCarEvent;
+
+                    // Запоминаем, сколько потратили бензина на первом событии "Полный бак"
+                    // Если количество залитого топлива null (firstCarEvent.FuelCount == null), то заносим 0
+                    sumFuel = firstCarEvent.FuelCount ?? 0;
                 }
-                // Заправка не с полным баком
-                else
+                // Если это событие заправка и была заправка "Полный бак"
+                else if (carEvent.EventTypes.Name.Equals(Consts.EventTypeNameAzs) && firstCarEvent != null)
                 {
-                    tmpCarEvent = null;
-                    //isPreviousChargingFullTank = false;
+                    if (carEvent.FuelCount != null)
+                    {
+                        // Запоминаем, сколько всего потратили топлива между двумя заправками "Полный бак"
+                        sumFuel += (double) carEvent.FuelCount;
+                    }
                 }
             }
-            avgConsumption = Math.Round(summConsumption/carEvents.Count);
+            // Считаем средний расход топлива
+            avgConsumption = sumConsumption/count;
 
-            
-            return fullTankCharging.OrderByDescending(x=>x.NewCarEvent.DateEvent).ToList();
+            // Конвертируем средний расход топлива в выбранные единицы измерения
+            avgConsumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                avgConsumption);
+            // Округляем значение до 2-х знаков после запятой
+            avgConsumption = Math.Round(avgConsumption, 2);
+
+            // Конвертируем минимальный расход топлива в выбранные единицы измерения
+            minConsumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                minConsumption);
+            // Округляем значение до 2-х знаков после запятой
+            minConsumption = Math.Round(minConsumption, 2);
+
+            // Конвертируем максимальный расход топлива в выбранные единицы измерения
+            maxConsumption = ConverterUnitFuelConsumption.ConverterFuelConsumptionLoad(ViewBag.UnitFuelConsumption,
+                maxConsumption);
+            // Округляем значение до 2-х знаков после запятой
+            maxConsumption = Math.Round(maxConsumption, 2);
+
+
+
+
+
+
+
+
+            //// Ссылка на пердыдущее событие заправки
+            //CarEvents tmpCarEvent = null;
+            //// Список событий заправок 
+            //// (идут парами: 
+            //// - если 2 заправки подряд с полный бак, то 1 пара
+            //// - если 3 заправки подряд с полным баком, то 2 пары
+            //List<CarConsumptionViewModel> fullTankCharging = new List<CarConsumptionViewModel>();
+
+            //double summConsumption = 0;
+            //foreach (var carEvent in carEvents)
+            //{
+            //    // Если у текущей заправки заправили полный бак
+            //    if (carEvent.IsFullTank)
+            //    {
+            //        // Это первая заправка полынм баком
+            //        // - пропустил предыдущую заправку
+            //        // - до этого заправился не поным баком
+            //        if (tmpCarEvent == null || carEvent.IsMissedFilling)
+            //        {
+            //            tmpCarEvent = carEvent;
+            //        }
+            //        // Это НЕ первая заправка полынм баком
+            //        else
+            //        {
+            //            double consumption = 0;
+            //            int mileage = 0;
+            //            if (carEvent.Odometer != null && tmpCarEvent.Odometer != null)
+            //            {
+            //                mileage = (int)(carEvent.Odometer - tmpCarEvent.Odometer);
+            //            }
+
+            //            if (carEvent.FuelCount != null && mileage != 0)
+            //            {
+            //                consumption = Math.Round(((double)carEvent.FuelCount * 100 / mileage), 2);
+            //                if (Math.Abs(minConsumption) <= 0 || minConsumption > consumption)
+            //                    minConsumption = consumption;
+
+            //                if (Math.Abs(maxConsumption) <= 0 || maxConsumption < consumption)
+            //                    maxConsumption = consumption;
+
+            //                summConsumption += consumption;
+            //            }
+
+            //            fullTankCharging.Add(new CarConsumptionViewModel(tmpCarEvent, carEvent, consumption, mileage));
+            //            tmpCarEvent = carEvent;
+            //        }
+            //    }
+            //    // Заправка не с полным баком
+            //    else
+            //    {
+            //        tmpCarEvent = null;
+            //    }
+            //}
+            //avgConsumption = Math.Round(summConsumption / carEvents.Count);
+
+
+            return fullTankCharging.OrderByDescending(x => x.NewCarEvent.DateEvent).ToList();
         }
 
-        public List<double> SelectFullTankCharging(int carId, DateTime beginDate, DateTime endDate)
-        {
-            // Получаем все события заправок из базы
-            var carEvents = RepProvider.CarEvents
-                .Select(carId)
-                .Where(x => x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
-                            x.DateEvent >= beginDate &&
-                            x.DateEvent <= endDate)
-                .OrderBy(x => x.DateCreate)
-                .ToList();
-            //var carEvents = Db.CarEvents
-            //    .Where(
-            //        x =>
-            //            x.CarId == carId &&
-            //            x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
-            //            x.DateEvent >= beginDate &&
-            //            x.DateEvent <= endDate)
-            //    .OrderBy(x => x.DateCreate)
-            //    .ToList();
 
-            // Ссылка на пердыдущее событие заправки
-            CarEvents tmpCarEvent = null;
-            // Список событий заправок 
-            // (идут парами: 
-            // - если 2 заправки подряд с полный бак, то 1 пара
-            // - если 3 заправки подряд с полным баком, то 2 пары
-            List<double> fullTankCharging = new List<double>();
+        //public List<double> SelectFullTankCharging(int carId, DateTime beginDate, DateTime endDate)
+        //{
+        //    // Получаем все события заправок из базы
+        //    var carEvents = RepProvider.CarEvents
+        //        .Select(carId)
+        //        .Where(x => x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
+        //                    x.DateEvent >= beginDate &&
+        //                    x.DateEvent <= endDate)
+        //        .OrderBy(x => x.DateCreate)
+        //        .ThenBy(x => x.Odometer)
+        //        .ToList();
+        //    //var carEvents = Db.CarEvents
+        //    //    .Where(
+        //    //        x =>
+        //    //            x.CarId == carId &&
+        //    //            x.EventTypes.Name.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase) &&
+        //    //            x.DateEvent >= beginDate &&
+        //    //            x.DateEvent <= endDate)
+        //    //    .OrderBy(x => x.DateCreate)
+        //    //    .ToList();
 
-            foreach (var carEvent in carEvents)
-            {
-                // Если у текущей заправки заправили полный бак
-                if (carEvent.IsFullTank)
-                {
-                    // Это первая заправка полынм баком
-                    // - пропустил предыдущую заправку
-                    // - до этого заправился не поным баком
-                    if (tmpCarEvent == null || carEvent.IsMissedFilling)
-                    {
-                        tmpCarEvent = carEvent;
-                    }
-                    // Это НЕ первая заправка полынм баком
-                    else
-                    {
-                        double consumption = 0;
-                        int mileage = 0;
-                        if (carEvent.Odometer != null && tmpCarEvent.Odometer != null)
-                        {
-                            mileage = (int)(carEvent.Odometer - tmpCarEvent.Odometer);
-                        }
-                        if (carEvent.FuelCount != null && mileage != 0)
-                        {
-                            consumption = Math.Round(((double)carEvent.FuelCount * 100 / mileage), 2);
-                        }
+        //    // Ссылка на пердыдущее событие заправки
+        //    CarEvents tmpCarEvent = null;
+        //    // Список событий заправок 
+        //    // (идут парами: 
+        //    // - если 2 заправки подряд с полный бак, то 1 пара
+        //    // - если 3 заправки подряд с полным баком, то 2 пары
+        //    List<double> fullTankCharging = new List<double>();
 
-                        fullTankCharging.Add(consumption);
-                        tmpCarEvent = carEvent;
-                    }
-                }
-                // Заправка не с полным баком
-                else
-                {
-                    tmpCarEvent = null;
-                }
-            }
-            return fullTankCharging;
-        }
+        //    foreach (var carEvent in carEvents)
+        //    {
+        //        // Если у текущей заправки заправили полный бак
+        //        if (carEvent.IsFullTank)
+        //        {
+        //            // Это первая заправка полынм баком
+        //            // - пропустил предыдущую заправку
+        //            // - до этого заправился не поным баком
+        //            if (tmpCarEvent == null || carEvent.IsMissedFilling)
+        //            {
+        //                tmpCarEvent = carEvent;
+        //            }
+        //            // Это НЕ первая заправка полынм баком
+        //            else
+        //            {
+        //                double consumption = 0;
+        //                int mileage = 0;
+        //                if (carEvent.Odometer != null && tmpCarEvent.Odometer != null)
+        //                {
+        //                    mileage = (int)(carEvent.Odometer - tmpCarEvent.Odometer);
+        //                }
+        //                if (carEvent.FuelCount != null && mileage != 0)
+        //                {
+        //                    consumption = Math.Round(((double)carEvent.FuelCount * 100 / mileage), 2);
+        //                }
+
+        //                fullTankCharging.Add(consumption);
+        //                tmpCarEvent = carEvent;
+        //            }
+        //        }
+        //        // Заправка не с полным баком
+        //        else
+        //        {
+        //            tmpCarEvent = null;
+        //        }
+        //    }
+        //    return fullTankCharging;
+        //}
 
         public void CarAndUserInit(int carId)
         {
@@ -335,7 +728,8 @@ namespace CarMate.Controllers
                 var carEventsTmp = RepProvider.CarEvents
                     .Select(carId)
                     .Where(x => x.DateEvent >= start)
-                    .OrderBy(x => x.DateEvent);
+                    .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer);
                 //var carEventsTmp = Db.CarEvents
                 //    .Where(x => x.CarId == carId && x.DateEvent >= start)
                 //    .OrderBy(x => x.DateEvent);
@@ -357,6 +751,7 @@ namespace CarMate.Controllers
                     carEvents = carEventsTmp
                         .Where(x => x.CarId == carId && x.DateEvent <= endTmp)
                         .OrderBy(x => x.DateEvent)
+                        .ThenBy(x => x.Odometer)
                         .ToList();
                 }
             }
@@ -367,6 +762,7 @@ namespace CarMate.Controllers
                     .Select(carId)
                     .Where(x => x.DateEvent <= end)
                     .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer)
                     .ToList();
                 //carEvents = Db.CarEvents
                 //    .Where(x => x.CarId == carId && x.DateEvent <= end)
@@ -377,6 +773,7 @@ namespace CarMate.Controllers
                 carEvents = RepProvider.CarEvents
                     .Select(carId)
                     .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer)
                     .ToList();
                 //carEvents = Db.CarEvents
                 //    .Where(x => x.CarId == carId)
@@ -553,5 +950,33 @@ namespace CarMate.Controllers
         public double SumLiters { set; get; }
         public double SumMoney { set; get; }
     }
-    
+
+    public class CarConsumptionJson
+    {
+        public EventJson NewCarEvent { set; get; }
+        public EventJson OldCarEvent { set; get; }
+        public double Consumption { set; get; }
+        // Пробег между первой и второй заправкой с полным баком
+        public int Mileage { set; get; }
+
+        public double MinConsumption { set; get; }
+        public double AvgConsumption { set; get; }
+        public double MaxConsumption { set; get; }
+
+        public CarConsumptionJson(EventJson oldCarEvent, EventJson newCarEvent, double consumption, int mileage)
+        {
+            OldCarEvent = oldCarEvent;
+            NewCarEvent = newCarEvent;
+            if (newCarEvent.Odometer != null && oldCarEvent.Odometer != null)
+                Mileage = (int)(newCarEvent.Odometer - oldCarEvent.Odometer);
+            Consumption = consumption;
+        }
+    }
+
+    public class EventJson
+    {
+        public int Id { set; get; }
+        public int? Odometer { set; get; }
+        public string DateEvent { set; get; }
+    }
 }

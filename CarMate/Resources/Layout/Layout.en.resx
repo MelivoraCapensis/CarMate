@@ -123,6 +123,9 @@
   <data name="MeansTransport" xml:space="preserve">
     <value>Means of transport</value>
   </data>
+  <data name="MyGarage" xml:space="preserve">
+    <value>My Garage</value>
+  </data>
   <data name="Startup" xml:space="preserve">
     <value>Startup</value>
   </data>

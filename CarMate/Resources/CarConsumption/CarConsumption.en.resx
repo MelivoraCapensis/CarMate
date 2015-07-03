@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Avg" xml:space="preserve">
-    <value>Average</value>
+    <value>Average: </value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
@@ -133,7 +133,7 @@
     <value>Drove for the selected period</value>
   </data>
   <data name="FillTwoTimes" xml:space="preserve">
-    <value>This user has not made a full tank of 2 times in a row.</value>
+    <value>For the selected period the user has not made a full tank of 2 times.</value>
   </data>
   <data name="FuelConsumption" xml:space="preserve">
     <value>Fuel consumption</value>
@@ -142,13 +142,13 @@
     <value>Go to event</value>
   </data>
   <data name="Max" xml:space="preserve">
-    <value>Maximum</value>
+    <value>Maximum: </value>
   </data>
   <data name="Mileage" xml:space="preserve">
     <value>Mileage</value>
   </data>
   <data name="Min" xml:space="preserve">
-    <value>Minimum</value>
+    <value>Minimum: </value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>

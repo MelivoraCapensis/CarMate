@@ -48,7 +48,23 @@
         </div>
     </div>
 
-     <div class="row"> <!-- cars wrapper row -->
+    @if (@ViewBag.DefaultCarError != null)
+    {
+        <div class="row">
+            @*<div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.DefaultCarError
+                </div>
+            </div>*@
+            <div class=" col-lg-offset-3 col-lg-6 text-center">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.DefaultCarError
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row"> <!-- cars wrapper row -->
                 @if (@Model.Cars.Any())
                 {
                     foreach (var car in @Model.Cars)
@@ -93,6 +109,22 @@
                                         @if (ViewBag.IsOwner != null && ViewBag.IsOwner == true)
                                         {
                                             <p>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        @if (Model.DefaultCarId != null && Model.DefaultCarId == car.Id)
+                                                        {
+                                                            <input type="radio" name="defaultCar" id="defaultCar + @car.Id" aria-label="..." checked="checked" onchange="changeDefaultCar(@Model.Id, @car.Id)">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" name="defaultCar" id="defaultCar + @car.Id" aria-label="..." onchange="changeDefaultCar(@Model.Id, @car.Id)">
+                                                        }
+                                                    </span>
+                                                    @*<input type="text" class="form-control" aria-label="...">*@
+                                                    <label class="form-control">Автомобиль по умолчанию</label>
+                                                </div><!-- /input-group -->
+                                            </p>
+                                            <p>
                                                 @Html.ActionLink(Resources.Global.Delete, "Delete", "Car", new {id = car.Id}, new {@class = "btn btn-primary"})
                                                 @Html.ActionLink(Resources.Global.Edit, "Edit", "Car", new { id = car.Id }, new { @class = "btn btn-primary" })
                                             </p>
@@ -117,3 +149,29 @@
     </div><!-- End cars row -->
 
 </div> <!-- End General Container -->
+
+<script type="text/javascript">
+    function changeDefaultCar(userId, carId) {
+        //alert("Автомобиль по умолчанию" + carId);
+        $.ajax({
+            url: '@Url.Action("ChangeDefaultCar", "User")',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            processData: false,
+            cache: false,
+            data: JSON.stringify({ userId: userId, carId: carId }),
+            success:
+                function(data) {
+                    alert("Автомобиль по умолчанию изменен на " + carId);
+                },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert("Ошибка. Не удалось изменить автомобиль по умолчанию на " + carId);
+                //alert(xhr.status);
+                //alert(thrownError);
+                //alert(xhr.responseText);
+            }
+        });
+    }
+</script>

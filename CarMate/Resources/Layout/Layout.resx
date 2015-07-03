@@ -123,6 +123,9 @@
   <data name="MeansTransport" xml:space="preserve">
     <value>Транспортные средства</value>
   </data>
+  <data name="MyGarage" xml:space="preserve">
+    <value>Мой гараж</value>
+  </data>
   <data name="Startup" xml:space="preserve">
     <value>Стартап</value>
   </data>

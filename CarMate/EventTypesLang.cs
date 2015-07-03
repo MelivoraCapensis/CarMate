@@ -12,17 +12,14 @@ namespace CarMate
     using System;
     using System.Collections.Generic;
     
-    public partial class EventTypes
+    public partial class EventTypesLang
     {
-        public EventTypes()
-        {
-            this.CarEvents = new HashSet<CarEvents>();
-            this.EventTypesLang = new HashSet<EventTypesLang>();
-        }
-    
         public int Id { get; set; }
+        public int EventTypesId { get; set; }
+        public int LanguageId { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<CarEvents> CarEvents { get; set; }
-        public virtual ICollection<EventTypesLang> EventTypesLang { get; set; }
+        public virtual EventTypes EventTypes { get; set; }
+        public virtual Languages Languages { get; set; }
     }
 }

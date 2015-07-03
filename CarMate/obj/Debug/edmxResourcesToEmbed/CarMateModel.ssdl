@@ -142,8 +142,15 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventTypesLang">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventTypesId" Type="int" Nullable="false" />
+    <Property Name="LanguageId" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="LanguageId" Type="int" />
   </EntityType>
   <EntityType Name="FuelCategories">
     <Key>
@@ -267,6 +274,7 @@
     <Property Name="UnitVolumeId" Type="int" Nullable="false" />
     <Property Name="UnitFuelConsumptionId" Type="int" Nullable="false" />
     <Property Name="LanguageId" Type="int" />
+    <Property Name="DefaultCarId" Type="int" />
   </EntityType>
   <EntityType Name="VendorAliases">
     <Key>
@@ -405,6 +413,30 @@
       </Principal>
       <Dependent Role="CarEvents">
         <PropertyRef Name="FuelCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventTypesLang_fk_EventTypes">
+    <End Role="EventTypes" Type="Self.EventTypes" Multiplicity="1" />
+    <End Role="EventTypesLang" Type="Self.EventTypesLang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTypesLang">
+        <PropertyRef Name="EventTypesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventTypesLang_fk_Language">
+    <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+    <End Role="EventTypesLang" Type="Self.EventTypesLang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTypesLang">
+        <PropertyRef Name="LanguageId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -808,6 +840,7 @@
     <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventTypes" EntityType="Self.EventTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventTypesLang" EntityType="Self.EventTypesLang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FuelCategories" EntityType="Self.FuelCategories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LogBook" EntityType="Self.LogBook" Schema="dbo" store:Type="Tables" />
@@ -854,6 +887,14 @@
     <AssociationSet Name="Events_fk_FuelCategory" Association="Self.Events_fk_FuelCategory">
       <End Role="FuelCategories" EntitySet="FuelCategories" />
       <End Role="CarEvents" EntitySet="CarEvents" />
+    </AssociationSet>
+    <AssociationSet Name="EventTypesLang_fk_EventTypes" Association="Self.EventTypesLang_fk_EventTypes">
+      <End Role="EventTypes" EntitySet="EventTypes" />
+      <End Role="EventTypesLang" EntitySet="EventTypesLang" />
+    </AssociationSet>
+    <AssociationSet Name="EventTypesLang_fk_Language" Association="Self.EventTypesLang_fk_Language">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="EventTypesLang" EntitySet="EventTypesLang" />
     </AssociationSet>
     <AssociationSet Name="fk_CarBrands_carTypeId" Association="Self.fk_CarBrands_carTypeId">
       <End Role="CarTypes" EntitySet="CarTypes" />

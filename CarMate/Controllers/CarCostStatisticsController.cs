@@ -18,15 +18,23 @@ namespace CarMate.Controllers
             Cars car = RepProvider.Cars.FindById(carId);
             //Cars car = Db.Cars.Find(carId);
             InitViewBag(car.Users);
+            
             ConvertTankLoad(car);
             ConvertOdometrLoad(car);
             ConvertConsumptionLoad(car);
 
             CarAndUserInit(carId);
-            ViewBag.EventTypes = Db.EventTypes.OrderBy(x => x.Name).Select(x => x.Name).ToList();
-            var carEevEvents = RepProvider.CarEvents
+            ViewBag.EventTypes = RepProvider.EventTypes
+                .Select(CurrentLang.Id)
+                .OrderBy(x => x.Name)
+                .Select(x => x.Name)
+                .ToList();
+            //ViewBag.EventTypes = Db.EventTypes.OrderBy(x => x.Name).Select(x => x.Name).ToList();
+
+            var carEvents = RepProvider.CarEvents
                 .Select(carId)
                 .OrderBy(x => x.DateEvent)
+                .ThenBy(x => x.Odometer)
                 .ToList();
             //var carEevEvents = Db.CarEvents
             //    .Where(x => x.CarId == carId)
@@ -37,8 +45,10 @@ namespace CarMate.Controllers
             
             ViewBag.IsOwner = this.UserId == car.UserId;
 
-            return View(carEevEvents);
+            return View(carEvents);
         }
+
+
 
         private void InitViewBag(Users user)
         {
@@ -181,6 +191,7 @@ namespace CarMate.Controllers
             var carEvents = RepProvider.CarEvents
                 .Select(carId)
                 .OrderBy(x => x.DateEvent)
+                .ThenBy(x => x.Odometer)
                 .ToList();
             //var carEvents = Db.CarEvents
             //    .Where(x => x.CarId == carId)
@@ -245,8 +256,6 @@ namespace CarMate.Controllers
             }
 
             List<CarEvents> carEvents = new List<CarEvents>();
-
-
             CultureInfo ci = new CultureInfo("ru");
             DateTime start;
             DateTime end;
@@ -256,7 +265,8 @@ namespace CarMate.Controllers
                 var carEventsTmp = RepProvider.CarEvents
                     .Select(carId)
                     .Where(x => x.DateEvent >= start)
-                    .OrderBy(x => x.DateEvent);
+                    .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer);
                 //var carEventsTmp = Db.CarEvents
                 //    .Where(x => x.CarId == carId && x.DateEvent >= start)
                 //    .OrderBy(x => x.DateEvent);
@@ -268,6 +278,7 @@ namespace CarMate.Controllers
                     carEvents = carEventsTmp
                         .Where(x => x.CarId == carId && x.DateEvent <= endTmp)
                         .OrderBy(x => x.DateEvent)
+                        .ThenBy(x => x.Odometer)
                         .ToList();
                     //carEvents = carEventsTmp
                     //    .Where(x => x.CarId == carId && x.DateEvent <= endTmp)
@@ -282,6 +293,7 @@ namespace CarMate.Controllers
                     .Select(carId)
                     .Where(x => x.DateEvent <= end)
                     .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer)
                     .ToList();
                 //carEvents = Db.CarEvents
                 //    .Where(x => x.CarId == carId && x.DateEvent <= end)
@@ -293,6 +305,7 @@ namespace CarMate.Controllers
                 carEvents = RepProvider.CarEvents
                     .Select(carId)
                     .OrderBy(x => x.DateEvent)
+                    .ThenBy(x => x.Odometer)
                     .ToList();
                 //carEvents = Db.CarEvents
                 //    .Where(x => x.CarId == carId)

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Log>
+
+@{
+    ViewBag.Title = "OpenLog";
+}
+
+<div class="container">
+    <p>
+        @Html.ActionLink("Главное меню", "Index", "Admin")
+    </p>
+    <p>
+        @Html.ActionLink("Назад", "LogsByDate", "AdminErrorLogs", new { directory = ViewBag.Directory }, null)
+    </p>
+    
+
+    <h2>OpenLog</h2>
+
+    @foreach (var log in Model)
+    {
+        <h3>@log.DateError</h3>
+
+        <p>@log.Message</p>
+
+    }
+</div>

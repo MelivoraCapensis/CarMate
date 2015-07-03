@@ -47,7 +47,7 @@ namespace CarMate.Controllers
             ConvertConsumptionLoad(car);
 
             CarAndUserInit(id);
-            car.CarEvents = RepProvider.CarEvents.Select(car.Id).ToList();
+            car.CarEvents = RepProvider.CarEvents.Select(car.Id).OrderByDescending(x => x.DateEvent).ThenByDescending(x => x.Odometer).ToList();
 
             // Этот пользователь владелец?
             ViewBag.IsOwner = this.UserId == car.UserId;

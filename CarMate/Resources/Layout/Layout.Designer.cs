@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Мой гараж.
+        /// </summary>
+        public static string MyGarage {
+            get {
+                return ResourceManager.GetString("MyGarage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Стартап.
         /// </summary>
         public static string Startup {

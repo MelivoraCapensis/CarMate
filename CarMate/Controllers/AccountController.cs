@@ -59,7 +59,7 @@ namespace CarMate.Controllers
         // POST: /Account/LogOff
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
@@ -261,11 +261,12 @@ namespace CarMate.Controllers
         public void InitViewBag()
         {
             // Заменить на DAL
-            using (CarMateEntities carMateDb = new CarMateEntities())
-            {
+            //using (CarMateEntities carMateDb = new CarMateEntities())
+            //{
                 if (HttpContext.User.Identity.IsAuthenticated)
                 {
-                    var user = carMateDb.Users.FirstOrDefault(x => x.Nickname.Equals(HttpContext.User.Identity.Name));
+                    var user = RepProvider.Users.FindByName(HttpContext.User.Identity.Name);
+                    //var user = carMateDb.Users.FirstOrDefault(x => x.Nickname.Equals(HttpContext.User.Identity.Name));
                     if (user != null)
                     {
                         //var unitDistanceLang =
@@ -274,9 +275,9 @@ namespace CarMate.Controllers
                             //carMateDb.UnitDistance.OrderBy(x => x.NameUnit).ToList(),
                             RepProvider.UnitDistance.Select(CurrentLang.Id).OrderBy(x => x.NameUnit).ToList(),
                             "Id", "NameUnit", user.UnitDistanceId);
-                        ViewBag.UnitVolumeId = new SelectList(carMateDb.UnitVolume.OrderBy(x => x.NameUnit).ToList(),
+                        ViewBag.UnitVolumeId = new SelectList(Db.UnitVolume.OrderBy(x => x.NameUnit).ToList(),
                             "Id", "NameUnit", user.UnitVolumeId);
-                        ViewBag.UnitFuelConsumptionId = new SelectList(carMateDb.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(),
+                        ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(),
                             "Id", "NameUnit", user.UnitFuelConsumptionId);
                     }
                     else
@@ -286,12 +287,14 @@ namespace CarMate.Controllers
                             RepProvider.UnitDistance.Select(CurrentLang.Id).OrderBy(x => x.NameUnit).ToList(),
                             "Id", "NameUnit");
                         ViewBag.UnitVolumeId = new SelectList(
-                            carMateDb.UnitVolume.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
+                            Db.UnitVolume.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
                         ViewBag.UnitFuelConsumptionId = new SelectList(
-                            carMateDb.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
+                            Db.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
                     }
+                    ViewBag.UnitFuelConsumption = new SelectList(
+                            Db.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
                 }
-            }
+            //}
         }
 
         //

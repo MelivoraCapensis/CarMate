@@ -1,0 +1,21 @@
+﻿@model List<string>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <p>
+        @Html.ActionLink("Главное меню", "Index", "Admin")
+    </p>
+
+    <h2>Логи ошибок</h2>
+
+    @*<p>@Model</p>*@
+    @foreach (string str in Model)
+    {
+        <p>
+            @Html.ActionLink(str, "LogsByDate", "AdminErrorLogs", new {directory = str}, null)
+        </p>
+    }
+</div>

@@ -19,9 +19,22 @@
             <div id="carContainer">
                 @*<h2>@ViewBag.Title</h2>*@
 
-                
+                <div class="row">
+                    <div class="col-lg-7 col-md-7">
+                        <div class="input-daterange input-group" id="datepicker_period">
+                            <span class="input-group-addon">За период: </span>
+                            <span class="input-group-addon">с</span>
+                            <input type="text" class="input form-control" name="start"/>
+                            <span class="input-group-addon">по</span>
+                            <input type="text" class="input form-control" name="end"/>
+                        </div>
+                        <button class="btn btn-success" id="search_period">Найти</button>
+                    </div>
+                </div>
 
-                @if (Model.Any())
+                <div id="period_result_fuelConsumption"></div>
+
+                @*@if (Model.Any())
                 {
                     <table class="table">
                         <tr>
@@ -71,53 +84,65 @@
                             </tr>
 
                             <tr>
-                                <td>
-                                    @*@Html.DisplayFor(x => carEvent.NewCarEvent.DateEvent)*@
-                                    @carEvent.NewCarEvent.DateEvent.ToString("dd/MM/yyyy")
+                                <td id="newCarEvent_DateEvent">
+                                    @carEvent.NewCarEvent.DateEvent.ToString("dd.MM.yyyy")
                                 </td>
 
                                 <td>
-                                    @*@carEvent.NewCarEvent.FuelCategories.category*@
-                                    @*Название заправки, тип топлива, перейти к событию, место где произошло событие*@
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(x => carEvent.Mileage)
+                                    <span id="carEvent_Mileage">
+                                        @Html.DisplayFor(x => carEvent.Mileage)
+                                    </span>
+                                     @ViewBag.UnitDistance
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(x => carEvent.Consumption)
+                                    <span id="carEvent_Consumption">
+                                        @Html.DisplayFor(x => carEvent.Consumption)
+                                    </span>
+                                     @ViewBag.UnitFuelConsumption
                                 </td>
 
-                                <td>
+                                <td id="btn_carEvent_NewCarEvent">
                                     @Html.ActionLink(Resources.CarConsumption.GoToEvent, "Details", "CarEvents", new { id = carEvent.NewCarEvent.Id }, new { @class = "btn btn-default" })
                                 </td>
                             </tr>
 
                             <tr>
-                                <td>
-                                    @*@Html.DisplayFor(x => carEvent.OldCarEvent.DateEvent)*@
-                                    @carEvent.OldCarEvent.DateEvent.ToString("dd/MM/yyyy")
+                                <td id="oldCarEvent_DateEvent">
+                                    @carEvent.OldCarEvent.DateEvent.ToString("dd.MM.yyyy")
                                 </td>
 
                                 <td>
-                                    @*Название заправки, тип топлива, перейти к событию, место где произошло событие*@
                                 </td>
 
                                 <td></td>
 
                                 <td></td>
 
-                                <td>
-                                    @Html.ActionLink(@Resources.CarConsumption.GoToEvent, "Details", "CarEvents", new {id = carEvent.OldCarEvent.Id}, new {@class = "btn btn-default"})
+                                <td id="btn_carEvent_OldCarEvent">
+                                    @Html.ActionLink(@Resources.CarConsumption.GoToEvent, "Details", "CarEvents", new { id = carEvent.OldCarEvent.Id }, new { @class = "btn btn-default" })
                                 </td>
                             </tr>
                         }
                     </table>
 
-                    @:@Resources.CarConsumption.Min: @ViewBag.MinConsumption;
-                    @:@Resources.CarConsumption.Avg: @ViewBag.AvgConsumption;
-                    @:@Resources.CarConsumption.Max: @ViewBag.MaxConsumption;
+                    <h4>Расход топлива</h4>
+                    <p>
+                        @Resources.CarConsumption.Min:
+                        <span id="minConsumption">@ViewBag.MinConsumption</span>
+                    </p>
+                    <p>
+                        @Resources.CarConsumption.Avg
+                        <span id="avgConsumption">@ViewBag.AvgConsumption</span>
+                    </p>
+                    <p>
+                        @Resources.CarConsumption.Max
+                        <span id="maxConsumption">@ViewBag.MaxConsumption</span>
+                    </p>
+                    
 
                     <div id="fuelConsamptionHighcharts" class="col-lg-12 col-md-12"></div>
                 }
@@ -128,32 +153,20 @@
                             @Resources.CarConsumption.FillTwoTimes
                         </div>
                     </div>
-                }
+                }*@
+                <div id="fuelConsamptionHighcharts" class="col-lg-12 col-md-12"></div>
 
                 <hr/>
 
-                <div class="row">
-                    <div class="col-lg-7 col-md-7">
-                        <div class="input-daterange input-group" id="datepicker_period">
-                            <span class="input-group-addon">За период: </span>
-                            <span class="input-group-addon">с</span>
-                            <input type="text" class="input form-control" name="start" />
-                            <span class="input-group-addon">по</span>
-                            <input type="text" class="input form-control" name="end" />
-                        </div>
-                        <button class="btn btn-success" id="search_period">Найти</button>
-                    </div>
-                </div>
-
-                    <div id="period_result"></div>
-                    @*<p>
+                <div id="period_result"></div>
+                @*<p>
                 @Resources.CarConsumption.DroveFromPeriod: <span id="distance_period"></span> @ViewBag.UnitDistance.
             </p>*@
 
-                    <div id="distanceStatistics" class="col-lg-12 col-md-12"></div>
+                <div id="distanceStatistics" class="col-lg-12 col-md-12"></div>
 
-                    <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
-                </div>
+                <div id="fuelCostStatistics" class="col-lg-12 col-md-12"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -166,9 +179,13 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        
+    $(document).ready(function() {
+        getFuelConsamptionHighcharts();
 
+
+    });
+
+    function getFuelConsamptionHighcharts() {
         var json = '@(comsumptionJson)';
         var dataConsumption = JSON.parse(json);
 
@@ -205,8 +222,8 @@
             },
             series: [
                 {
-                     name: 'Тип топлива',
-                     data: dataConsumption
+                    name: 'Тип топлива',
+                    data: dataConsumption
                 }
                 //, {
                 //    name: 'London',
@@ -214,17 +231,167 @@
                 //}
             ]
         });
-    });
+    }
 </script>
 
 
 <script type="text/javascript">
     $(document).ready(function() {
         getData();
+        getFuelConsumption();
         $('#search_period').click(function() {
             getData();
+            getFuelConsumption();
+            getFuelConsamptionHighcharts();
         });
     });
+
+    function getFuelConsumption() {
+        var carId = @(ViewBag.CarId);
+        var startDate = $('input[name=start]').val();
+        var endDate = $('input[name=end]').val();
+        $.ajax({
+            url: '@Url.Action("GetFuelConsumption", "CarConsumption")',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            //url: '/api/1/user/buyer_profile/',
+            //url: '/api/1/user/buyer_profile/' + User.id() + '/',
+            //data: { "carEvents": {} },
+            data: JSON.stringify({ "carId": carId, "startDate": startDate, "endDate": endDate }),
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success:
+                function(data) {
+                    if (data.length === 0) {
+                        $('#period_result_fuelConsumption').html(
+                            '<div class="col-lg-12">' +
+                            '<div class="alert alert-danger">' +
+                            '@Resources.CarConsumption.FillTwoTimes' +
+                            '</div>' +
+                            '</div>'
+                        );
+                        $('#fuelConsamptionHighcharts').html('');
+                        $('#distanceStatistics').html('');
+                    } else {
+
+                        var table = '<table class="table">' +
+                                        '<tr>' +
+                                            '<th>' +
+                                                '@Resources.CarConsumption.Date' +
+                                            '</th>' +
+                                            '<th>' +
+                                                '@Resources.CarConsumption.Name' +
+                                            '</th>' +
+                                            '<th>' +
+                                                '@Resources.CarConsumption.Odometer' +
+                                            '</th>' +
+                                            '<th>' +
+                                                '@Resources.CarConsumption.FuelConsumption' +
+                                            '</th>' +
+                                            '<th>' +
+                                                '@Resources.CarConsumption.Options' +
+                                            '</th>' +
+                                        '</tr>';
+
+
+                        jQuery.each(data, function(itemNo, item) {
+                            table += '<tr style="background: cornflowerblue">';
+                            table += ' <td></td>';
+                            table += ' <td></td>';
+                            table += ' <td></td>';
+                            table += ' <td></td>';
+                            table += ' <td></td>';
+                            table += ' </tr>';
+
+                            table += '<tr>';
+                            table += '<td id="newCarEvent_DateEvent">';
+                            table += item.NewCarEvent.DateEvent;
+                            table += '</td>';
+
+                            table += ' <td></td>';
+
+                            table += '<td>';
+                            table += '<span id="carEvent_Mileage">';
+                            table += item.Mileage;
+                            table += '</span>';
+                            table += '@ViewBag.UnitDistance';
+                            table += '</td>';
+
+                            table += '<td>';
+                            table += '<span id="carEvent_Consumption">';
+                            table += item.Consumption;
+                            table += '</span>';
+                            table += '@ViewBag.UnitFuelConsumption';
+                            table += '</td>';
+
+                            table += '<td id="btn_carEvent_NewCarEvent">';
+                            @*table += '<a class = "btn btn-default" href="@Url.Action("Details", "CarEvents", new {id = @<text>item.NewCarEvent.Id</text>})">@Resources.CarConsumption.GoToEvent</a>';*@
+                            @*table += '<a class = "btn btn-default" href="ru/Details/CarEvents/?id=';
+                            table += item.NewCarEvent.Id;
+                            table +='>@Resources.CarConsumption.GoToEvent</a>';*@
+                            table += '</td>';
+                            table += '</tr>';
+
+                            table += '<tr>';
+                            table += '<td id="oldCarEvent_DateEvent">';
+                            table += item.OldCarEvent.DateEvent;
+                            table += '</td>';
+
+                            table += ' <td></td>';
+
+                            table += ' <td></td>';
+
+                            table += ' <td></td>';
+
+                            table += '<td id="btn_carEvent_OldCarEvent">';
+                            @*table += '<a class = "btn btn-default" href="@Url.Action("Details", "CarEvents", new {id = "item.OldCarEvent.Id"})">@Resources.CarConsumption.GoToEvent</a>';*@
+                            table += '</td>';
+                            table += '</tr>';
+                        });
+                        table += '</table>';
+
+                        var consumption = '<p>';
+                        consumption += '@Resources.CarConsumption.Min: ';
+                        consumption += '<span id="minConsumption">@ViewBag.MinConsumption</span>';
+                        consumption += '</p>';
+
+                        consumption += '<p>';
+                        consumption += ' @Resources.CarConsumption.Avg: ';
+                        consumption += '<span id="avgConsumption">@ViewBag.AvgConsumption</span>';
+                        consumption += '</p>';
+
+                        consumption += '<p>';
+                        consumption += '@Resources.CarConsumption.Max: ';
+                        consumption += '<span id="maxConsumption">@ViewBag.MaxConsumption</span>';
+                        consumption += '</p>';
+
+                        var res = table + consumption;
+
+                        $('#period_result_fuelConsumption').html(res);
+
+
+                        @*'<p>' +
+                        '@Resources.CarCostStatistics.MoneySpentPeriod: <span id="summ_period">' + items[0].AllSumm + '</span> грн.' +
+                        '</p>'
+                        );
+                        var min = data[0].MinConsumption;
+                        alert(min);
+                        $('#minConsumption').val(@(ViewBag.MinConsumption));
+                        $('#avgConsumption').val(@(ViewBag.AvgConsumption));
+                        $('#maxConsumption').val(@(ViewBag.MaxConsumption));*@
+
+                    }
+                },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert("Ошибка загрузки данных");
+                //alert(xhr.status);
+                //alert(thrownError);
+                //alert(xhr.responseText);
+            }
+        });
+    }
 
     function getData() {
 
