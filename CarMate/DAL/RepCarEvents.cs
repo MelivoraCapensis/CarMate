@@ -86,6 +86,13 @@ namespace CarMate.DAL
                 DateEvent = DateTime.Now,
                 State = Consts.StateNew
             };
+
+            Cars car = Db.Cars.Find(carId);
+            if (car != null && car.State != Consts.StateDelete)
+            {
+                carEvents.Odometer = car.Odometer;
+            }
+
             return carEvents;
         }
     }

@@ -174,9 +174,9 @@
             }
             // Если PricePerLitr (цена за литр) и FuelCount (количество залитого топлива) ЧИСЛО - выходим
             // Т.к. не знаем какое поле изменять
-            if ($.isNumeric(fuelCount) && $.isNumeric(pricePerLitr)) {
-                return;
-            }
+            //if ($.isNumeric(fuelCount) && $.isNumeric(pricePerLitr)) {
+            //    return;
+            //}
 
             // Если PricePerLitr (цена за литр) это число, то считаем FuelCount (количество залитого топлива)
             if ($.isNumeric(pricePerLitr)) {
@@ -195,7 +195,7 @@
             }
 
             // Если FuelCount (количество залитого топлива) это число, то считаем PricePerLitr (цена за литр)
-            if ($.isNumeric(fuelCount)) {
+            else if ($.isNumeric(fuelCount)) {
                 // Считаем количество залитого бензина
                 var pricePerLitrResult = costTotal / fuelCount;
 

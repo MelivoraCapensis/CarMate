@@ -58,7 +58,7 @@ namespace CarMate.Controllers
         //
         // POST: /Account/LogOff
 
-        [HttpPost]
+        //[HttpPost]
         //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
@@ -279,6 +279,9 @@ namespace CarMate.Controllers
                             "Id", "NameUnit", user.UnitVolumeId);
                         ViewBag.UnitFuelConsumptionId = new SelectList(Db.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(),
                             "Id", "NameUnit", user.UnitFuelConsumptionId);
+                        ViewBag.UnitFuelConsumption = new SelectList(
+                            Db.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit",
+                            user.UnitFuelConsumptionId);
                     }
                     else
                     {
@@ -290,9 +293,10 @@ namespace CarMate.Controllers
                             Db.UnitVolume.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
                         ViewBag.UnitFuelConsumptionId = new SelectList(
                             Db.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
-                    }
-                    ViewBag.UnitFuelConsumption = new SelectList(
+                        ViewBag.UnitFuelConsumption = new SelectList(
                             Db.UnitFuelConsumption.OrderBy(x => x.NameUnit).ToList(), "Id", "NameUnit");
+                    }
+                    
                 }
             //}
         }

@@ -18,8 +18,8 @@ namespace CarMate
         {
             this.FuelCategories = new HashSet<FuelCategories>();
             this.Placemarks = new HashSet<Placemarks>();
-            this.Vendors = new HashSet<Vendors>();
             this.Regions = new HashSet<Regions>();
+            this.Vendors = new HashSet<Vendors>();
         }
     
         public int Id { get; set; }
@@ -29,7 +29,7 @@ namespace CarMate
     
         public virtual ICollection<FuelCategories> FuelCategories { get; set; }
         public virtual ICollection<Placemarks> Placemarks { get; set; }
-        public virtual ICollection<Vendors> Vendors { get; set; }
         public virtual ICollection<Regions> Regions { get; set; }
+        public virtual ICollection<Vendors> Vendors { get; set; }
     }
 }

@@ -353,18 +353,25 @@
                         table += '</table>';
 
                         var consumption = '<p>';
-                        consumption += '@Resources.CarConsumption.Min: ';
-                        consumption += '<span id="minConsumption">@ViewBag.MinConsumption</span>';
+                        consumption += '@Resources.CarConsumption.Min';
+                        consumption += '<span id="minConsumption">';
+                        consumption += data[0].MinConsumption;
+                        consumption += '</span>';
+                        @*consumption += '<span id="minConsumption">@ViewBag.MinConsumption</span>';*@
                         consumption += '</p>';
 
                         consumption += '<p>';
-                        consumption += ' @Resources.CarConsumption.Avg: ';
-                        consumption += '<span id="avgConsumption">@ViewBag.AvgConsumption</span>';
+                        consumption += ' @Resources.CarConsumption.Avg';
+                        consumption += '<span id="avgConsumption">';
+                        consumption += data[0].AvgConsumption;
+                        consumption += '</span>';
                         consumption += '</p>';
 
                         consumption += '<p>';
-                        consumption += '@Resources.CarConsumption.Max: ';
-                        consumption += '<span id="maxConsumption">@ViewBag.MaxConsumption</span>';
+                        consumption += '@Resources.CarConsumption.Max';
+                        consumption += '<span id="maxConsumption">';
+                        consumption += data[0].MaxConsumption;
+                        consumption += '</span>';
                         consumption += '</p>';
 
                         var res = table + consumption;

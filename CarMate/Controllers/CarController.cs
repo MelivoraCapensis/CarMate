@@ -301,10 +301,20 @@ namespace CarMate.Controllers
             ViewBag.User = user;
             //ViewBag.User = Db.Users.Find(this.UserId);
             if (car.CarModels != null)
-                ViewBag.BrandId = new SelectList(Db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand", car.CarModels.BrandId);
+                ViewBag.BrandId = new SelectList(
+                    Db.CarBrands
+                    //.Where(x=>x.CarTypeId==1)
+                        .Where(x => x.CarTypes.CarType.Equals(Consts.CarTypeCar, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(x => x.Brand)
+                        .ToList(),
+                    "Id", "Brand", car.CarModels.BrandId);
             else
             {
-                ViewBag.BrandId = new SelectList(Db.CarBrands.OrderBy(x => x.Brand), "Id", "Brand");
+                ViewBag.BrandId = new SelectList(Db.CarBrands
+                    .Where(x => x.CarTypes.CarType.Equals(Consts.CarTypeCar, StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(x => x.Brand)
+                    .ToList(),
+                    "Id", "Brand");
             }
             ViewBag.FuelCategoryId = new SelectList(Db.FuelCategories.OrderBy(x => x.Category), "Id", "Category", car.FuelCategoryId);
             ViewBag.CarTransmissionId = new SelectList(RepProvider.CarTransmission.Select(this.CurrentLang.Id).OrderBy(x => x.NameTransmission), "Id", "NameTransmission", car.CarTransmissionId);

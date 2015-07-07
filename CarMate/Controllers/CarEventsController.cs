@@ -600,8 +600,10 @@ namespace CarMate.Controllers
                 carEventsModel = JsonConvert.DeserializeObject<CarEvents>(carEventJson);
             }
 
-
-            if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
+            string nameAnaloue = name;
+            if (!String.IsNullOrEmpty(name))
+                nameAnaloue = RepProvider.EventTypes.SelectAnalogue(name);
+            if (nameAnaloue.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
             {
                 //for (int i = 0; i < HttpContext.Request.ServerVariables.Count; i++)
                 //{
@@ -613,6 +615,7 @@ namespace CarMate.Controllers
                 // Если путь заканчивается словом Create (View Create)
                 if (path.IndexOf("Create", 0, StringComparison.OrdinalIgnoreCase) != -1 && carEventsModel != null)
                 {
+                    // Тип бензина устанавливаем в предпочитаемый
                     ViewBag.FuelCategoryId = new SelectList(Db.FuelCategories.OrderBy(x => x.Category).Distinct(), "Id", "Category", Db.Cars.Find(carEventsModel.CarId).FuelCategoryId);
                 }
                 else
@@ -627,7 +630,7 @@ namespace CarMate.Controllers
                 }
                 return PartialView("_PartEventFilling", carEventsModel);
             }
-            if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
+            if (nameAnaloue.Equals(Consts.EventTypeNameRepair, StringComparison.OrdinalIgnoreCase))
             {
                 //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 return PartialView("_PartEventRepair", carEventsModel);
@@ -646,14 +649,17 @@ namespace CarMate.Controllers
                 carEventsModel.FuelCategories = Db.FuelCategories.Find(carEventsModel.FuelCategoryId);
             }
 
-            if (name.Equals("Заправка", StringComparison.OrdinalIgnoreCase))
+            string nameAnaloue = name;
+            if(!String.IsNullOrEmpty(name))
+                nameAnaloue = RepProvider.EventTypes.SelectAnalogue(name);
+            if (nameAnaloue.Equals(Consts.EventTypeNameAzs, StringComparison.OrdinalIgnoreCase))
             {
                 ViewBag.UnitVolume = RepProvider.Users.FindById(userId).UnitVolume.NameUnit;
                 ViewBag.FuelCategoryId = new SelectList(Db.FuelCategories.OrderBy(x => x.Category).Distinct(), "Id", "Category", 1);
                 //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 return PartialView("_PartEventFillingDetails", carEventsModel);
             }
-            if (name.Equals("Ремонт", StringComparison.OrdinalIgnoreCase))
+            if (nameAnaloue.Equals(Consts.EventTypeNameRepair, StringComparison.OrdinalIgnoreCase))
             {
                 //ViewBag.FuelCategoryId = new SelectList(db.FuelCategories.OrderBy(x => x.category).Distinct(), "Id", "Category", 1);
                 return PartialView("_PartEventRepairDetails", carEventsModel);

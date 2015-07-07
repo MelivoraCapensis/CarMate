@@ -31,6 +31,8 @@ namespace CarMate.Classes
         public const string UnitFuelConsumptionNameLitersOn100Km = "л/100км";
         public const string UnitFuelConsumptionNameMileOnGallon = "миль/галлон";
 
+        public const string CarTypeCar = "Легковые автомобили + автомобили-фургоны";
+
         public const int RussianLanguage = 1;
 
     }

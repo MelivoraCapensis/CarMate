@@ -17,9 +17,9 @@ namespace CarMate
         public Languages()
         {
             this.CarTransmissionLang = new HashSet<CarTransmissionLang>();
+            this.EventTypesLang = new HashSet<EventTypesLang>();
             this.UnitDistanceLang = new HashSet<UnitDistanceLang>();
             this.Users = new HashSet<Users>();
-            this.EventTypesLang = new HashSet<EventTypesLang>();
         }
     
         public int Id { get; set; }
@@ -27,8 +27,8 @@ namespace CarMate
         public string Name { get; set; }
     
         public virtual ICollection<CarTransmissionLang> CarTransmissionLang { get; set; }
+        public virtual ICollection<EventTypesLang> EventTypesLang { get; set; }
         public virtual ICollection<UnitDistanceLang> UnitDistanceLang { get; set; }
         public virtual ICollection<Users> Users { get; set; }
-        public virtual ICollection<EventTypesLang> EventTypesLang { get; set; }
     }
 }

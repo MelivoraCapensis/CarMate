@@ -78,20 +78,30 @@
 
                                 <div class="row">
                                     @*<div class="col-xs-12 ">*@
-                                    <div class="col-lg-12 col-md-12 thumbnail">
-                                        @Html.ActionLink(" ", "Details", "Car", new { id = car.Id })
-                                        <img src="@car.ImgPath" />
+                                    <div class="col-lg-12 col-md-12">
+                                        @*@Html.ActionLink(" ", "Details", "Car", new { id = car.Id })*@
+                                        <a href="@Url.Action("Index", "CarEvents", new { carId = car.Id })">
+                                            <img src="@car.ImgPath" style="min-height: 300px;max-height: 300px; max-width: 300px;" />
+                                        </a>
                                     </div><!-- End col-->
                                 </div><!-- End row-->
                                 <div class="row">
-                                    <div class="col-xs-12">
+                                    <div class="col-lg-12 col-md-12">
                                         @if (@car.ModificationId != null)
                                         {
-                                            <h3>@car.CarModels.CarBrands.Brand @(" - ") @car.CarModels.Model @(" - ") @car.CarModifications.Modification</h3>
+                                            string str = car.CarModels.CarBrands.Brand + " - " + car.CarModels.Model + " - " + car.CarModifications.Modification;
+                                            <h4>
+                                                @Html.ActionLink(str, "Index", "CarEvents", new { carId = car.Id }, null)
+                                            </h4>
+                                            @*<h3>@car.CarModels.CarBrands.Brand @(" - ") @car.CarModels.Model @(" - ") @car.CarModifications.Modification</h3>*@
                                         }
                                         else
                                         {
-                                            <h3>@car.CarModels.CarBrands.Brand @(" - ") @car.CarModels.Model</h3>
+                                            string str = car.CarModels.CarBrands.Brand + " - " + car.CarModels.Model;
+                                            <h4>
+                                                @Html.ActionLink(str, "Index", "CarEvents", new { carId = car.Id }, null)
+                                            </h4>
+                                            @*<h3>@car.CarModels.CarBrands.Brand @(" - ") @car.CarModels.Model</h3>*@
                                         }
 
                                         <p>@Resources.Car.Brand: @car.CarModels.CarBrands.Brand</p>
@@ -125,7 +135,7 @@
                                                 </div><!-- /input-group -->
                                             </p>
                                             <p>
-                                                @Html.ActionLink(Resources.Global.Delete, "Delete", "Car", new {id = car.Id}, new {@class = "btn btn-primary"})
+                                                @Html.ActionLink(Resources.Global.Delete, "Delete", "Car", new { id = car.Id }, new { @class = "btn btn-primary" })
                                                 @Html.ActionLink(Resources.Global.Edit, "Edit", "Car", new { id = car.Id }, new { @class = "btn btn-primary" })
                                             </p>
                                         }
@@ -164,10 +174,10 @@
             data: JSON.stringify({ userId: userId, carId: carId }),
             success:
                 function(data) {
-                    alert("Автомобиль по умолчанию изменен на " + carId);
+                    alert("Автомобиль по умолчанию изменен.");
                 },
             error: function(xhr, ajaxOptions, thrownError) {
-                alert("Ошибка. Не удалось изменить автомобиль по умолчанию на " + carId);
+                alert("Ошибка. Не удалось изменить автомобиль по умолчанию!");
                 //alert(xhr.status);
                 //alert(thrownError);
                 //alert(xhr.responseText);

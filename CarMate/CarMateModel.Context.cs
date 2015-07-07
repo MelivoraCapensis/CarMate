@@ -39,22 +39,22 @@ namespace CarMate
         public DbSet<Categories> Categories { get; set; }
         public DbSet<CategoryLog> CategoryLog { get; set; }
         public DbSet<Countries> Countries { get; set; }
+        public DbSet<EventTypes> EventTypes { get; set; }
+        public DbSet<EventTypesLang> EventTypesLang { get; set; }
         public DbSet<FuelCategories> FuelCategories { get; set; }
         public DbSet<Languages> Languages { get; set; }
         public DbSet<LogBook> LogBook { get; set; }
         public DbSet<Placemarks> Placemarks { get; set; }
         public DbSet<Prices> Prices { get; set; }
+        public DbSet<Regions> Regions { get; set; }
         public DbSet<UnitDistance> UnitDistance { get; set; }
         public DbSet<UnitDistanceLang> UnitDistanceLang { get; set; }
         public DbSet<UnitFuelConsumption> UnitFuelConsumption { get; set; }
         public DbSet<UnitVolume> UnitVolume { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<VendorAliases> VendorAliases { get; set; }
         public DbSet<Vendors> Vendors { get; set; }
-        public DbSet<Regions> Regions { get; set; }
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
-        public DbSet<Users> Users { get; set; }
-        public DbSet<EventTypes> EventTypes { get; set; }
-        public DbSet<EventTypesLang> EventTypesLang { get; set; }
     }
 }

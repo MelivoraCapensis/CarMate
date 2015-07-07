@@ -140,7 +140,7 @@ namespace CarMate.Controllers
                         minConsumption = consumption;
                     }
                     // Если это первый расчет расхода топлива или максимальный расход топлива меньше, чем текущий расход топлива
-                    if (count == 0 || maxConsumption > consumption)
+                    if (count == 0 || maxConsumption < consumption)
                     {
                         // Запоминаем максимальный расход топлива
                         maxConsumption = consumption;

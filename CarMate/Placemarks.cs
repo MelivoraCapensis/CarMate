@@ -33,7 +33,7 @@ namespace CarMate
         public virtual Categories Categories { get; set; }
         public virtual Countries Countries { get; set; }
         public virtual ICollection<Prices> Prices { get; set; }
-        public virtual Vendors Vendors { get; set; }
         public virtual Regions Regions { get; set; }
+        public virtual Vendors Vendors { get; set; }
     }
 }

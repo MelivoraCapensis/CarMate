@@ -109,10 +109,10 @@ namespace CarMate.Controllers
                 //userFromDb.UnitVolumeId = unitVolumeId;
 
                 Db.SaveChanges();
-                return Json("Ok");
+                return Json("Единицы измерения успешно изменены.");
             }
 
-            return Json("Error in controller");
+            return Json("Ошибка!");
         }
 
         public void Owner(HttpContextBase httpContext)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CarMate.Classes;
 
 namespace CarMate.DAL
 {
@@ -33,6 +34,15 @@ namespace CarMate.DAL
             }
 
             return eventTypesList.AsQueryable();
+        }
+
+        public string SelectAnalogue(string eventTypeName)
+        {
+            var eventTypesLang = Db.EventTypesLang.First(x => x.Name.Equals(eventTypeName));
+            int eventTypesId = eventTypesLang.EventTypesId;
+            var res = Db.EventTypesLang.First(x => x.EventTypesId == eventTypesId && x.Languages.Code.Equals("ru")).Name;
+
+            return res;
         }
     }
 }

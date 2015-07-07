@@ -2,33 +2,44 @@
 
 @if (Model.Count > 0)
 {
-    <h3>@Resources.Account.RegisteredExternalAccounts</h3>
-    <table>
-        <tbody>
-        @foreach (CarMate.Models.ExternalLogin externalLogin in Model)
-        {
-            <tr>
-                <td>@externalLogin.ProviderDisplayName</td>
-                <td>
-                    @if (ViewBag.ShowRemoveButton)
-                    {
-                        using (Html.BeginForm("Disassociate", "Account"))
-                        {
-                            @Html.AntiForgeryToken()
-                            <fieldset>
-                                @Html.Hidden("provider", externalLogin.Provider)
-                                @Html.Hidden("providerUserId", externalLogin.ProviderUserId)
-                                <input type="submit" value="@Resources.Global.Delete" />
-                            </fieldset>
-                        }
-                    }
-                    else
-                    {
-                        @: &nbsp;
-                    }
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-lg-10 col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">@Resources.Account.RegisteredExternalAccounts</div>
+                <div class="panel-body">
+                    @*<h3>@Resources.Account.RegisteredExternalAccounts</h3>*@
+                    <table>
+                        <tbody>
+                            @foreach (CarMate.Models.ExternalLogin externalLogin in Model)
+                            {
+                                <tr>
+                                    <td><b>@externalLogin.ProviderDisplayName &nbsp;</b></td>
+                                    <td>
+                                        @if (ViewBag.ShowRemoveButton)
+                                        {
+                                            using (Html.BeginForm("Disassociate", "Account"))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <fieldset>
+                                                    @Html.Hidden("provider", externalLogin.Provider)
+                                                    @Html.Hidden("providerUserId", externalLogin.ProviderUserId)
+                                                    <input type="submit" value="@Resources.Global.Delete" class="btn btn-danger"/>
+                                                </fieldset>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @: &nbsp;
+                                }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
 }
+
