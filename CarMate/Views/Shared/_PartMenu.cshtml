@@ -1,4 +1,5 @@
-﻿<link type="text/css" href="~/Content/bootstrap.css" rel="stylesheet">
+﻿@using CarMate.Helper
+<link type="text/css" href="~/Content/bootstrap.css" rel="stylesheet">
 
 @*<div class="container">*@
     <!-- Static navbar -->
@@ -86,6 +87,17 @@
                         </li>*@
                     </ul>
                 }
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Язык<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Url.LangSwitcher("English", ViewContext.RouteData, "en")</li>
+                            <li>@Url.LangSwitcher("Русский", ViewContext.RouteData, "ru")</li>
+                        </ul>
+                    </li>
+                </ul>
+
                 <div>
                     <!-- Модальное окно -->
                     <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">

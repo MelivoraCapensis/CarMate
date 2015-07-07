@@ -1,4 +1,5 @@
-﻿@helper CurrentItem(string controller, string action)
+﻿@using CarMate.Helper
+@helper CurrentItem(string controller, string action)
 {
     if (controller != ViewContext.RouteData.Values["controller"].ToString() || action != ViewContext.RouteData.Values["action"].ToString())
     {
@@ -96,6 +97,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1 text-center">
+                @Url.LangSwitcher("English", ViewContext.RouteData, "en")
+                @Url.LangSwitcher("Русский", ViewContext.RouteData, "ru")
                 <h4>
                     <strong>@Resources.Layout.Startup</strong>
                 </h4>
