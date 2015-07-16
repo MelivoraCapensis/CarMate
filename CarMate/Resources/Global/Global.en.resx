@@ -171,4 +171,16 @@
   <data name="SignUp" xml:space="preserve">
     <value>Sign up</value>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>by</value>
+  </data>
+  <data name="DuringPeriod" xml:space="preserve">
+    <value>During the period: </value>
+  </data>
+  <data name="Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>from</value>
+  </data>
 </root>

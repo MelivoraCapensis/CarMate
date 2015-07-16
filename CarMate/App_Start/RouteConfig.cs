@@ -27,12 +27,47 @@ namespace CarMate
             //);
 
             routes.MapRoute(
+                name: "Car",
+                url: "{lang}/Car/Create/{userId}",
+                defaults: new { controller = "Car", action = "Create", carId = UrlParameter.Optional },
+                constraints: new { lang = @"ru|en" },
+                namespaces: new[] { "CarMate.Controllers" }
+                );
+
+            routes.MapRoute(
+                name: "CarEvents",
+                url: "{lang}/CarEvents/Index/{carId}",
+                defaults: new { controller = "CarEvents", action = "Index", carId = UrlParameter.Optional },
+                constraints: new {lang = @"ru|en"},
+                namespaces: new[] {"CarMate.Controllers"}
+                );
+
+            routes.MapRoute(
+                name: "CarConsumption",
+                url: "{lang}/CarConsumption/Index/{carId}",
+                defaults: new { controller = "CarConsumption", action = "Index", carId = UrlParameter.Optional },
+                constraints: new { lang = @"ru|en" },
+                namespaces: new[] { "CarMate.Controllers" }
+                );
+
+            routes.MapRoute(
+                name: "CarCostStatistics",
+                url: "{lang}/CarCostStatistics/Index/{carId}",
+                defaults: new { controller = "CarCostStatistics", action = "Index", carId = UrlParameter.Optional },
+                constraints: new { lang = @"ru|en" },
+                namespaces: new[] { "CarMate.Controllers" }
+                );
+
+
+            routes.MapRoute(
                 name: "lang",
                 url: "{lang}/{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                defaults: new { controller = "User", action = "Details", id = UrlParameter.Optional },
                 constraints: new { lang = @"ru|en" },
                 namespaces: new[] { "CarMate.Controllers" }
             );
+
+
 
             routes.MapRoute(
                 name: "default",

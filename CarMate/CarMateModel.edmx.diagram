@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="CarMateModel.CarEvents" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CarModels" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CarModifications" Width="1.5" PointX="6" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarMateModel.CarNode" Width="1.5" PointX="11.25" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.Cars" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CarTransmission" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CarMateModel.CarTransmissionLang" Width="1.5" PointX="11.25" PointY="19.625" IsExpanded="true" />
@@ -40,7 +39,6 @@
         <AssociationConnector Association="CarMateModel.fk_CarBrands_carTypeId" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.fk_CarModels_brandId" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.CarDetails_fk_Car" ManuallyRouted="false" />
-        <AssociationConnector Association="CarMateModel.CarDetails_fk_CarNode" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.Events_fk_EventType" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.Events_fk_FuelCategory" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.fk_Charging_carId" ManuallyRouted="false" />
@@ -78,6 +76,11 @@
         <AssociationConnector Association="CarMateModel.Users_fk_UnitFuelConsumption" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.Users_fk_UnitVolume" ManuallyRouted="false" />
         <AssociationConnector Association="CarMateModel.VendorAliases_fk_Vendors" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CarMateModel.CarNodes" Width="1.5" PointX="11.25" PointY="9.75" />
+        <EntityTypeShape EntityType="CarMateModel.CarNodesLang" Width="1.5" PointX="8.25" PointY="28.875" />
+        <AssociationConnector Association="CarMateModel.CarDetails_fk_CarNode" />
+        <AssociationConnector Association="CarMateModel.CarNodeLang_fk_CarNode" />
+        <AssociationConnector Association="CarMateModel.CarNodeLang_fk_Language" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

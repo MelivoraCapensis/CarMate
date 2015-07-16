@@ -141,6 +141,21 @@
   <data name="ConfirmPasswordRequired" xml:space="preserve">
     <value>Confirm password required field</value>
   </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Deleting your account</value>
+  </data>
+  <data name="DeleteAccountHeader" xml:space="preserve">
+    <value>Delete account</value>
+  </data>
+  <data name="DeleteAccountInfo" xml:space="preserve">
+    <value>Attention! Once you delete your account, it will be impossible to recover!</value>
+  </data>
+  <data name="EditFuelConsumption" xml:space="preserve">
+    <value>Change the units of fuel consumption</value>
+  </data>
+  <data name="EditFuelConsumptionInfo" xml:space="preserve">
+    <value>Units for mileage and tank volume change automatically.</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -212,6 +227,9 @@
   </data>
   <data name="SetPassword" xml:space="preserve">
     <value>Set password</value>
+  </data>
+  <data name="SettingsAccount" xml:space="preserve">
+    <value>Settings account</value>
   </data>
   <data name="SignInWithAnotherService" xml:space="preserve">
     <value>Sign in with another service</value>

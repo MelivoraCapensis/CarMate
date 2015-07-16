@@ -8,7 +8,7 @@
         {
             @Html.ActionLink(Resources.Global.Edit, "Edit", "Car", new {id = Model.Id}, new {@class = "btn btn-primary"})
         }
-        @Html.ActionLink(Resources.Car.SeeAllPhotos, "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-default", disabled = true })
+        @*@Html.ActionLink(Resources.Car.SeeAllPhotos, "Photo", "Car", new { id = Model.Id }, new { @class = "btn btn-default", disabled = true })*@
     </div>
     <hr/>
     <p>@Resources.Car.Brand: @Model.CarModels.CarBrands.Brand</p>

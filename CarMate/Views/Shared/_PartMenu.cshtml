@@ -25,19 +25,19 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Мой автомобиль<b class="caret"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">@Resources.Layout.MyCar<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="@Url.Action("Garage", "User")">@Resources.Layout.MyGarage</a></li>
                                 <li class="divider"></li>
                                 <li>@*<a href="@Url.Action("DefaultCar", "User")">Перейти к автомобилю</a>*@</li>
-                                <li><a href="@Url.Action("DefaultCarEvents", "User")">События</a></li>
-                                <li><a href="@Url.Action("DefaultCarConsumprion", "User")">Расход топлива</a></li>
-                                <li><a href="@Url.Action("DefaultCarCostStatistics", "User")">Статистика</a></li>
-                                <li class="divider"></li>
+                                <li><a href="@Url.Action("DefaultCarEvents", "User")">@Resources.Layout.Events</a></li>
+                                <li><a href="@Url.Action("DefaultCarConsumprion", "User")">@Resources.Layout.FuelConsumption</a></li>
+                                <li><a href="@Url.Action("DefaultCarCostStatistics", "User")">@Resources.Layout.Statistics</a></li>
+                                @*<li class="divider"></li>
                                 <li class="dropdown-header">В разработке</li>
                                 <li><a href="#">График ТО (Напоминания) (Планы)</a></li>
                                 <li><a href="#">Сравнение автомобилей</a></li>
-                                <li><a href="#">Планирование маршрута (Мои маршруты)</a></li>
+                                <li><a href="#">Планирование маршрута (Мои маршруты)</a></li>*@
                             </ul>
                         </li>
                     }
@@ -46,11 +46,11 @@
                 {
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Профиль (поставить аватарку)<b class="caret"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">@Resources.Layout.Profile (поставить аватарку)<b class="caret"></b></a>
                             @*<a data-toggle="dropdown" class="dropdown-toggle" href="#">@Resources.Global.SignedInAs @User.Identity.Name<b class="caret"></b></a>*@
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">@Resources.Global.SignedInAs @User.Identity.Name</li>
-                                <li><a href="#">Мои сообщения</a></li>
+                                <li><a href="#">@Resources.Layout.MyMessages</a></li>
                                 <li class="divider"></li>
                                 <li><a href="@Url.Action("Manage", "Account")">@Resources.Global.Settings</a></li>
                                 <li>
@@ -90,7 +90,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Язык<b class="caret"></b></a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">@Resources.Layout.Language<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Url.LangSwitcher("English", ViewContext.RouteData, "en")</li>
                             <li>@Url.LangSwitcher("Русский", ViewContext.RouteData, "ru")</li>

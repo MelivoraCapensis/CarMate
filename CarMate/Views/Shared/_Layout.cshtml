@@ -57,11 +57,12 @@
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-            @*<li @CurrentItem("User", "Index")>@Html.ActionLink(Resources.Layout.Users, "Index", "User", null, null)</li>
-                <li @CurrentItem("Car", "Index")>@Html.ActionLink(Resources.Layout.MeansTransport, "Index", "Car", null, null)</li>
+        @*<li @CurrentItem("User", "Index")>@Html.ActionLink(Resources.Layout.Users, "Index", "User", null, null)</li>
+    <li @CurrentItem("Car", "Index")>@Html.ActionLink(Resources.Layout.MeansTransport, "Index", "Car", null, null)</li>
+        *@
                 <li id="menu_map">
-                    @Html.ActionLink(Resources.Layout.Map, "GetMap", "Map")
-                </li>*@
+                    @*@Html.ActionLink(Resources.Layout.Map, "GetMap", "Map")*@
+                </li>
         </ul>
     </nav>
 
@@ -97,8 +98,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1 text-center">
-                @Url.LangSwitcher("English", ViewContext.RouteData, "en")
-                @Url.LangSwitcher("Русский", ViewContext.RouteData, "ru")
+                @*@Url.LangSwitcher("English", ViewContext.RouteData, "en")
+                @Url.LangSwitcher("Русский", ViewContext.RouteData, "ru")*@
                 <h4>
                     <strong>@Resources.Layout.Startup</strong>
                 </h4>

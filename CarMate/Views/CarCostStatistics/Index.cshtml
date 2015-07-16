@@ -95,7 +95,7 @@
                     }
                 </div>*@
 
-                <div class="row">
+                @*<div class="row">
                     <div class="col-lg-7 col-md-7">
                         <div class="input-daterange input-group" id="datepicker_period">
                             <span class="input-group-addon">За период: </span>
@@ -106,7 +106,8 @@
                         </div>
                         <button class="btn btn-success" id="search_period">Найти</button>
                     </div>
-                </div>
+                </div>*@
+                @Html.Partial("_PartPeriod")
 
                     <div id="period_result"></div>
                     @*<p>
@@ -158,7 +159,317 @@
         var startDate = $('input[name=start]').val();
         var endDate = $('input[name=end]').val();
         var carId = '@(ViewBag.Car.Id)';
-        jQuery.getJSON("CarCostStatistics/GetCostStatisticsFromPeriod", { "carId": carId, "startDate": startDate, "endDate": endDate }, function(items) {
+
+
+        $.ajax({
+            url: '@Url.Action("GetCostStatisticsFromPeriod", "CarCostStatistics")',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            //url: '/api/1/user/buyer_profile/',
+            //url: '/api/1/user/buyer_profile/' + User.id() + '/',
+            //data: { "carEvents": {} },
+            data: JSON.stringify({ "carId": carId, "startDate": startDate, "endDate": endDate }),
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success:
+                function (items) {
+                    if (items.length === 0) {
+                        $('#period_result').html(
+                            '<div class="col-lg-12">' +
+                            '<div class="alert alert-danger">' +
+                            '@Resources.CarCostStatistics.PeriodEmpty' +
+                            '</div>' +
+                            '</div>'
+                        );
+
+                        $('#allCostStatistics').html('');
+                        $('#fuelCostStatistics').html('');
+                        $('#otherCostStatistics').html('');
+                    } else {
+                        //alert(items.length);
+                        $('#period_result').html(
+                            '<p>' +
+                            '@Resources.CarCostStatistics.MoneySpentPeriod: <span id="summ_period">' + items[0].AllSumm + '</span> грн.' +
+                            '</p>'
+                        );
+                        //alert(items[0].AllSumm);
+                        //$('#summ_period').text(items[0].AllSumm);
+
+                        // График статистика расходов
+                        $(function () {
+                            var dataAll = []; // Создается пустой массив
+                            jQuery.each(items, function (itemNo, item) {
+                                dataAll.push({ name: item.Name, y: item.Summ });
+                            });
+
+                            $('#allCostStatistics').highcharts({
+                                chart: {
+                                    plotBackgroundColor: null,
+                                    plotBorderWidth: null,
+                                    plotShadow: false
+                                },
+                                title: {
+                                    text: '@(Resources.CarCostStatistics.CostStatistics)'
+                                },
+                                subtitle: {
+                                    text: '@(Resources.Hicharts.Period): '
+                                },
+                                tooltip: {
+                                    headerFormat: '',
+                                    pointFormat: '<b>{point.name}: {point.percentage:.1f}%</b>'
+                                },
+                                plotOptions: {
+                                    pie: {
+                                        allowPointSelect: true,
+                                        cursor: 'pointer',
+                                        dataLabels: {
+                                            enabled: true,
+                                            //format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                            format: '<b>{point.name}</b>: {point.y:.2f}грн', // Формат отображаемой надписи, рядом с каждой частью графика
+                                            style: {
+                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                            }
+                                        }
+                                    }
+                                },
+                                series: [
+                                    {
+                                        type: 'pie',
+                                        name: '@(Resources.CarCostStatistics.MoneySpent)',
+                                        data: dataAll
+                                    }
+                                ]
+                            });
+                        });
+
+
+                        $(function () {
+                            var dataFuel = []; // Создается пустой массив
+                            jQuery.each(items, function (itemNo, item) {
+                                //if (item.Name === "Заправка") {
+                                jQuery.each(item.Details, function (itemNoDetails, itemDetails) {
+                                    var s = (itemDetails.Ticks - 621355968000000000) / 10000;
+                                    dataFuel.push({ x: s, y: itemDetails.Cost, color: 'green' });
+                                });
+                                //}
+                            });
+
+
+                            // Create the chart
+                            $('#fuelCostStatistics').highcharts('StockChart', {
+                                xAxis: {
+                                    type: 'datetime',
+                                    dateTimeLabelFormats: {
+                                        second: '%d-%m<br/>%Y',
+                                        minute: '%d-%m<br/>%Y',
+                                        hour: '%d-%m<br/>%Y',
+                                        day: '%d-%m<br/>%Y',
+                                        week: '%d-%m<br/>%Y',
+                                        month: '%m-%Y',
+                                        year: '%Y'
+                                    }
+                                },
+
+                                yAxis: {
+                                    //allowDecimals: false,
+                                    showFirstLabel: true,
+                                    showLastLabel: true,
+                                    //labels: {
+                                    //    y: 0,
+                                    //    align: 'left'
+                                    //},
+                                    title: {
+                                        text: '@(Resources.CarCostStatistics.Money) (грн)'
+                                    }
+                                },
+
+                                //colors: ['#434348'],
+
+                                //colors: ['#000000', '#434348', '#90ed7d', '#f7a35c', '#8085e9',
+                                //'#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
+
+                                rangeSelector: {
+                                    allButtonsEnabled: true,
+                                    buttons: [
+                                        {
+                                            type: 'month',
+                                            count: 3,
+                                            text: '@(Resources.Hicharts.Day)',
+                                            dataGrouping: {
+                                                forced: true,
+                                                units: [['day', [1]]]
+                                            }
+                                        }, {
+                                            type: 'all',
+                                            text: '@(Resources.Hicharts.Month)',
+                                            dataGrouping: {
+                                                forced: true,
+                                                units: [['month', [1]]],
+                                                // Суммирует все затраты на топливо за месяц
+                                                approximation: 'sum'
+                                            }
+                                        }, {
+                                            type: 'all',
+                                            count: 1,
+                                            text: '@(Resources.Hicharts.Year)',
+                                            dataGrouping: {
+                                                forced: true,
+                                                units: [['year', [1]]],
+                                                // Суммирует все затраты на топливо за год
+                                                approximation: 'sum'
+                                            }
+                                        }
+                                    ],
+                                    buttonTheme: {
+                                        width: 60
+                                    },
+                                    selected: 0,
+                                    // Убрать поля для задания периода
+                                    inputEnabled: false
+                                },
+
+                                title: {
+                                    text: '@(Resources.CarCostStatistics.TotalCosts)'
+                                },
+
+                                series: [
+                                    {
+                                        //name: 'AAPL Stock Price',
+                                        data: dataFuel,
+                                        //[
+                                        //    [1147651200000, 67.79],
+                                        //    [1147737600000, 64.98],
+                                        //    [1147824000000, 65.26],
+                                        //    [1147910400000, 63.18],
+                                        //    [1147996800000, 64.51],
+                                        //    [1148256000000, 63.38],
+                                        //    [1148342400000, 63.15],
+                                        //    [1148428800000, 63.34],
+                                        //    [1148515200000, 64.33],
+                                        //    [1148601600000, 63.55],
+                                        //    [1148947200000, 61.22],
+                                        //    [1149033600000, 59.77]
+                                        //],
+                                        marker: {
+                                            enabled: true,
+                                            radius: 3
+                                        },
+                                        shadow: true,
+                                        tooltip: {
+                                            //'<b>' + Highcharts.dateFormat('%A, %b %e, %Y', this.x) + '</b>';
+                                            headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                                            pointFormat:
+                                                '<tr><td style="color: {series.color}">@Resources.CarCostStatistics.MoneySpent: </td>' +
+                                                    '<td style="text-align: right"><b>{point.y}грн.</b></td></tr>',
+                                            valueDecimals: 2
+                                        }
+                                    }
+                                ]
+                            });
+                        });
+
+                        $(function () {
+
+                            var brandsData = [];
+                            var drilldownSeries = [];
+
+                            jQuery.each(items, function (itemNo, item) {
+                                brandsData.push({
+                                    name: item.Name,
+                                    y: item.Summ,
+                                    drilldown: item.Name
+                                });
+
+                                var versions = {};
+                                $.each(item.Details, function (itemDetailsNo, itemDetails) {
+                                    if (!versions[item.Name]) {
+                                        versions[item.Name] = [];
+                                    }
+                                    var str = "";
+                                    if (itemDetails.Month < 10) {
+                                        str = "0" + itemDetails.Month + "/" + itemDetails.Year;
+                                    } else {
+                                        str = itemDetails.Month + "/" + itemDetails.Year;
+                                    }
+
+                                    versions[item.Name].push([str, itemDetails.Cost]);
+                                });
+
+                                drilldownSeries.push({
+                                    name: item.Name,
+                                    id: item.Name,
+                                    data: versions[item.Name]
+                                });
+
+                            });
+
+                            Highcharts.setOptions({
+                                lang: {
+                                    drillUpText: '@Resources.CarCostStatistics.Back'
+                                }
+                            });
+
+                            $('#otherCostStatistics').highcharts({
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: '@Resources.CarCostStatistics.OtherEvents'
+                                },
+                                subtitle: {
+                                    text: '@Resources.CarCostStatistics.PressColumn'
+                                },
+                                xAxis: {
+                                    type: 'category'
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: '@Resources.CarCostStatistics.MoneySpent'
+                                    }
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                plotOptions: {
+                                    series: {
+                                        borderWidth: 0,
+                                        dataLabels: {
+                                            enabled: true,
+                                            format: '{point.y:.2f}'
+                                        }
+                                    }
+                                },
+
+                                tooltip: {
+                                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b>грн<br/>'
+                                },
+
+                                series: [
+                                    {
+                                        name: '@Resources.CarCostStatistics.Event',
+                                        colorByPoint: true,
+                                        data: brandsData
+                                    }
+                                ],
+                                drilldown: {
+                                    series: drilldownSeries
+                                }
+                            });
+                        });
+                    }
+                },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert("Ошибка загрузки данных");
+                //alert(xhr.status);
+                //alert(thrownError);
+                //alert(xhr.responseText);
+            }
+        });
+
+        @*jQuery.getJSON("CarCostStatistics/GetCostStatisticsFromPeriod", { "carId": carId, "startDate": startDate, "endDate": endDate }, function(items) {
             if (items.length === 0) {
                 $('#period_result').html(
                     '<div class="col-lg-12">' +
@@ -443,7 +754,7 @@
                     });
                 });
             }
-        });
+        });*@
     }
 </script>
 

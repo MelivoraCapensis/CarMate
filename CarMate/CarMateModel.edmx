@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CarMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CarMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Aliases">
           <Key>
             <PropertyRef Name="Id" />
@@ -69,11 +69,19 @@
           <Property Name="YearBegin" Type="nvarchar" MaxLength="30" />
           <Property Name="YearEnd" Type="nvarchar" MaxLength="30" />
         </EntityType>
-        <EntityType Name="CarNode">
+        <EntityType Name="CarNodes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarNodesLang">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarNodeId" Type="int" Nullable="false" />
+          <Property Name="LanguageId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Cars">
@@ -338,14 +346,38 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CarDetails_fk_CarNode">
-          <End Role="CarNode" Type="Self.CarNode" Multiplicity="1" />
+          <End Role="CarNodes" Type="Self.CarNodes" Multiplicity="1" />
           <End Role="CarDetails" Type="Self.CarDetails" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CarNode">
+            <Principal Role="CarNodes">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CarDetails">
               <PropertyRef Name="CarNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarNodeLang_fk_CarNode">
+          <End Role="CarNodes" Type="Self.CarNodes" Multiplicity="1" />
+          <End Role="CarNodesLang" Type="Self.CarNodesLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarNodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarNodesLang">
+              <PropertyRef Name="CarNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarNodeLang_fk_Language">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="CarNodesLang" Type="Self.CarNodesLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarNodesLang">
+              <PropertyRef Name="LanguageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -836,7 +868,8 @@
           <EntitySet Name="CarEvents" EntityType="Self.CarEvents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarModifications" EntityType="Self.CarModifications" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CarNode" EntityType="Self.CarNode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarNodes" EntityType="Self.CarNodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarNodesLang" EntityType="Self.CarNodesLang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarTransmission" EntityType="Self.CarTransmission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CarTransmissionLang" EntityType="Self.CarTransmissionLang" Schema="dbo" store:Type="Tables" />
@@ -866,8 +899,16 @@
             <End Role="CarDetails" EntitySet="CarDetails" />
           </AssociationSet>
           <AssociationSet Name="CarDetails_fk_CarNode" Association="Self.CarDetails_fk_CarNode">
-            <End Role="CarNode" EntitySet="CarNode" />
+            <End Role="CarNodes" EntitySet="CarNodes" />
             <End Role="CarDetails" EntitySet="CarDetails" />
+          </AssociationSet>
+          <AssociationSet Name="CarNodeLang_fk_CarNode" Association="Self.CarNodeLang_fk_CarNode">
+            <End Role="CarNodes" EntitySet="CarNodes" />
+            <End Role="CarNodesLang" EntitySet="CarNodesLang" />
+          </AssociationSet>
+          <AssociationSet Name="CarNodeLang_fk_Language" Association="Self.CarNodeLang_fk_Language">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="CarNodesLang" EntitySet="CarNodesLang" />
           </AssociationSet>
           <AssociationSet Name="Cars_fk_CarTransmission" Association="Self.Cars_fk_CarTransmission">
             <End Role="CarTransmission" EntitySet="CarTransmission" />
@@ -1030,8 +1071,7 @@
             <End Role="VendorAliases" EntitySet="VendorAliases" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CarMateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1061,7 +1101,7 @@
           <Property Name="CarId" Type="Int32" Nullable="false" />
           <Property Name="CarNodeId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cars" Relationship="Self.CarDetails_fk_Car" FromRole="CarDetails" ToRole="Cars" />
-          <NavigationProperty Name="CarNode" Relationship="Self.CarDetails_fk_CarNode" FromRole="CarDetails" ToRole="CarNode" />
+          <NavigationProperty Name="CarNodes" Relationship="CarMateModel.CarDetails_fk_CarNode" FromRole="CarDetails" ToRole="CarNodes" />
         </EntityType>
         <EntityType Name="CarEvents">
           <Key>
@@ -1112,14 +1152,6 @@
           <Property Name="YearEnd" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CarModels" Relationship="Self.fk_Modifications_modelId" FromRole="CarModifications" ToRole="CarModels" />
           <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_modificationId" FromRole="CarModifications" ToRole="Cars" />
-        </EntityType>
-        <EntityType Name="CarNode">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="CarDetails" Relationship="Self.CarDetails_fk_CarNode" FromRole="CarNode" ToRole="CarDetails" />
         </EntityType>
         <EntityType Name="Cars">
           <Key>
@@ -1250,6 +1282,7 @@
           <NavigationProperty Name="EventTypesLang" Relationship="Self.EventTypesLang_fk_Language" FromRole="Languages" ToRole="EventTypesLang" />
           <NavigationProperty Name="UnitDistanceLang" Relationship="Self.UnitDistanceLang_fk_Language" FromRole="Languages" ToRole="UnitDistanceLang" />
           <NavigationProperty Name="Users" Relationship="Self.Users_fk_Langusges" FromRole="Languages" ToRole="Users" />
+          <NavigationProperty Name="CarNodesLang" Relationship="CarMateModel.CarNodeLang_fk_Language" FromRole="Languages" ToRole="CarNodesLang" />
         </EntityType>
         <EntityType Name="LogBook">
           <Key>
@@ -1484,18 +1517,6 @@
             </Principal>
             <Dependent Role="CarDetails">
               <PropertyRef Name="CarId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CarDetails_fk_CarNode">
-          <End Role="CarNode" Type="Self.CarNode" Multiplicity="1" />
-          <End Role="CarDetails" Type="Self.CarDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CarNode">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CarDetails">
-              <PropertyRef Name="CarNodeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1950,7 +1971,6 @@
           <EntitySet Name="CarEvents" EntityType="Self.CarEvents" />
           <EntitySet Name="CarModels" EntityType="Self.CarModels" />
           <EntitySet Name="CarModifications" EntityType="Self.CarModifications" />
-          <EntitySet Name="CarNode" EntityType="Self.CarNode" />
           <EntitySet Name="Cars" EntityType="Self.Cars" />
           <EntitySet Name="CarTransmission" EntityType="Self.CarTransmission" />
           <EntitySet Name="CarTransmissionLang" EntityType="Self.CarTransmissionLang" />
@@ -1989,10 +2009,6 @@
           </AssociationSet>
           <AssociationSet Name="CarDetails_fk_Car" Association="Self.CarDetails_fk_Car">
             <End Role="Cars" EntitySet="Cars" />
-            <End Role="CarDetails" EntitySet="CarDetails" />
-          </AssociationSet>
-          <AssociationSet Name="CarDetails_fk_CarNode" Association="Self.CarDetails_fk_CarNode">
-            <End Role="CarNode" EntitySet="CarNode" />
             <End Role="CarDetails" EntitySet="CarDetails" />
           </AssociationSet>
           <AssociationSet Name="Events_fk_EventType" Association="Self.Events_fk_EventType">
@@ -2143,7 +2159,76 @@
             <End Role="Vendors" EntitySet="Vendors" />
             <End Role="VendorAliases" EntitySet="VendorAliases" />
           </AssociationSet>
+          <EntitySet Name="CarNodes" EntityType="CarMateModel.CarNodes" />
+          <EntitySet Name="CarNodesLang" EntityType="CarMateModel.CarNodesLang" />
+          <AssociationSet Name="CarDetails_fk_CarNode" Association="CarMateModel.CarDetails_fk_CarNode">
+            <End Role="CarNodes" EntitySet="CarNodes" />
+            <End Role="CarDetails" EntitySet="CarDetails" />
+          </AssociationSet>
+          <AssociationSet Name="CarNodeLang_fk_CarNode" Association="CarMateModel.CarNodeLang_fk_CarNode">
+            <End Role="CarNodes" EntitySet="CarNodes" />
+            <End Role="CarNodesLang" EntitySet="CarNodesLang" />
+          </AssociationSet>
+          <AssociationSet Name="CarNodeLang_fk_Language" Association="CarMateModel.CarNodeLang_fk_Language">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="CarNodesLang" EntitySet="CarNodesLang" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="CarNodes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="CarDetails" Relationship="CarMateModel.CarDetails_fk_CarNode" FromRole="CarNodes" ToRole="CarDetails" />
+          <NavigationProperty Name="CarNodesLang" Relationship="CarMateModel.CarNodeLang_fk_CarNode" FromRole="CarNodes" ToRole="CarNodesLang" />
+        </EntityType>
+        <EntityType Name="CarNodesLang">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarNodeId" Type="Int32" Nullable="false" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CarNodes" Relationship="CarMateModel.CarNodeLang_fk_CarNode" FromRole="CarNodesLang" ToRole="CarNodes" />
+          <NavigationProperty Name="Languages" Relationship="CarMateModel.CarNodeLang_fk_Language" FromRole="CarNodesLang" ToRole="Languages" />
+        </EntityType>
+        <Association Name="CarDetails_fk_CarNode">
+          <End Type="CarMateModel.CarNodes" Role="CarNodes" Multiplicity="1" />
+          <End Type="CarMateModel.CarDetails" Role="CarDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarNodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarDetails">
+              <PropertyRef Name="CarNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarNodeLang_fk_CarNode">
+          <End Type="CarMateModel.CarNodes" Role="CarNodes" Multiplicity="1" />
+          <End Type="CarMateModel.CarNodesLang" Role="CarNodesLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarNodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarNodesLang">
+              <PropertyRef Name="CarNodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarNodeLang_fk_Language">
+          <End Type="CarMateModel.Languages" Role="Languages" Multiplicity="1" />
+          <End Type="CarMateModel.CarNodesLang" Role="CarNodesLang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarNodesLang">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2217,14 +2302,6 @@
                 <ScalarProperty Name="HorsePower" ColumnName="HorsePower" />
                 <ScalarProperty Name="YearBegin" ColumnName="YearBegin" />
                 <ScalarProperty Name="YearEnd" ColumnName="YearEnd" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CarNode">
-            <EntityTypeMapping TypeName="CarMateModel.CarNode">
-              <MappingFragment StoreEntitySet="CarNode">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2497,6 +2574,23 @@
                 <ScalarProperty Name="Provider" ColumnName="Provider" />
                 <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarNodes">
+            <EntityTypeMapping TypeName="CarMateModel.CarNodes">
+              <MappingFragment StoreEntitySet="CarNodes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarNodesLang">
+            <EntityTypeMapping TypeName="CarMateModel.CarNodesLang">
+              <MappingFragment StoreEntitySet="CarNodesLang">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="CarNodeId" ColumnName="CarNodeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

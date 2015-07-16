@@ -19,8 +19,14 @@ namespace CarMate.Controllers
         //
         // GET: /CarEvents/
 
-        public ActionResult Index(int carId)
+        public ActionResult Index(int carId=0)
         {
+            Cars car = RepProvider.Cars.FindById(carId);
+            if (car == null)
+            {
+                return HttpNotFound();
+            }
+
             // Загрузка всех событий выбраной машины
             var carEvents = RepProvider.CarEvents
                 .Select(carId)
@@ -34,7 +40,7 @@ namespace CarMate.Controllers
             //    .ToList();
 
             Owner(HttpContext);
-            Cars car = RepProvider.Cars.FindById(carId);
+            
             //var car = Db.Cars.Find(carId);
             ViewBag.IsOwner = this.UserId == car.UserId;
             InitViewBagEmpty(car.Users);
@@ -470,6 +476,9 @@ namespace CarMate.Controllers
             ViewBag.EventTypeId = new SelectList(RepProvider.EventTypes
                 .Select(this.CurrentLang.Id).OrderBy(x => x.Name).ToList(), "Id", "Name", carEvents.EventTypeId);
             //ViewBag.EventTypeId = new SelectList(Db.EventTypes.Where(x => x.LanguageId == this.CurrentLang.Id).OrderBy(x => x.Name), "Id", "Name", carEvents.EventTypeId);
+
+            
+
             InitViewBagEmpty(user);
 
             //var unitDistanceLang = user.UnitDistance.UnitDistanceLang.FirstOrDefault(x => x.LanguageId == CurrentLang.Id);

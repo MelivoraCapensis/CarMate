@@ -25,6 +25,7 @@ namespace CarMate.Controllers
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
+            //UserId = 0;
             RepProvider = new RepositoryProvider(Db);
 
             //if (requestContext.HttpContext.Request.Url != null)

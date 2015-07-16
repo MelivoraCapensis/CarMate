@@ -171,4 +171,16 @@
   <data name="SignUp" xml:space="preserve">
     <value>Регистрация</value>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>по</value>
+  </data>
+  <data name="DuringPeriod" xml:space="preserve">
+    <value>За период: </value>
+  </data>
+  <data name="Find" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>с</value>
+  </data>
 </root>

@@ -133,6 +133,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Удалить аакаунт.
+        /// </summary>
+        public static string DeleteAccount {
+            get {
+                return ResourceManager.GetString("DeleteAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Удаление аккаунта.
+        /// </summary>
+        public static string DeleteAccountHeader {
+            get {
+                return ResourceManager.GetString("DeleteAccountHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Внимание! Как только вы удалите свой аккаунт, восстановить его будет невозможно!.
+        /// </summary>
+        public static string DeleteAccountInfo {
+            get {
+                return ResourceManager.GetString("DeleteAccountInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Изменение единиц расхода топлива.
+        /// </summary>
+        public static string EditFuelConsumption {
+            get {
+                return ResourceManager.GetString("EditFuelConsumption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Единицы измерения для одометра и объема бака изменятся автоматически..
+        /// </summary>
+        public static string EditFuelConsumptionInfo {
+            get {
+                return ResourceManager.GetString("EditFuelConsumptionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Адрес электронной почты.
         /// </summary>
         public static string Email {
@@ -345,6 +390,15 @@ namespace Resources {
         public static string SetPassword {
             get {
                 return ResourceManager.GetString("SetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Настройки аккаунта.
+        /// </summary>
+        public static string SettingsAccount {
+            get {
+                return ResourceManager.GetString("SettingsAccount", resourceCulture);
             }
         }
         

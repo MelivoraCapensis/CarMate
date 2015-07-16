@@ -141,6 +141,21 @@
   <data name="ConfirmPasswordRequired" xml:space="preserve">
     <value>Подтверждение пароля обязательное поле</value>
   </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Удалить аакаунт</value>
+  </data>
+  <data name="DeleteAccountHeader" xml:space="preserve">
+    <value>Удаление аккаунта</value>
+  </data>
+  <data name="DeleteAccountInfo" xml:space="preserve">
+    <value>Внимание! Как только вы удалите свой аккаунт, восстановить его будет невозможно!</value>
+  </data>
+  <data name="EditFuelConsumption" xml:space="preserve">
+    <value>Изменение единиц расхода топлива</value>
+  </data>
+  <data name="EditFuelConsumptionInfo" xml:space="preserve">
+    <value>Единицы измерения для одометра и объема бака изменятся автоматически.</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Адрес электронной почты</value>
   </data>
@@ -212,6 +227,9 @@
   </data>
   <data name="SetPassword" xml:space="preserve">
     <value>Задать пароль</value>
+  </data>
+  <data name="SettingsAccount" xml:space="preserve">
+    <value>Настройки аккаунта</value>
   </data>
   <data name="SignInWithAnotherService" xml:space="preserve">
     <value>Вход через другую службу</value>

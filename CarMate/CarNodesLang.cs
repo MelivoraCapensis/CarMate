@@ -12,16 +12,14 @@ namespace CarMate
     using System;
     using System.Collections.Generic;
     
-    public partial class CarNode
+    public partial class CarNodesLang
     {
-        public CarNode()
-        {
-            this.CarDetails = new HashSet<CarDetails>();
-        }
-    
         public int Id { get; set; }
+        public int CarNodeId { get; set; }
+        public int LanguageId { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<CarDetails> CarDetails { get; set; }
+        public virtual CarNodes CarNodes { get; set; }
+        public virtual Languages Languages { get; set; }
     }
 }

@@ -71,14 +71,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CarNode">
-      <EntityTypeMapping TypeName="CarMateModel.CarNode">
-        <MappingFragment StoreEntitySet="CarNode">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Cars">
       <EntityTypeMapping TypeName="CarMateModel.Cars">
         <MappingFragment StoreEntitySet="Cars">
@@ -348,6 +340,23 @@
           <ScalarProperty Name="Provider" ColumnName="Provider" />
           <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarNodes">
+      <EntityTypeMapping TypeName="CarMateModel.CarNodes">
+        <MappingFragment StoreEntitySet="CarNodes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarNodesLang">
+      <EntityTypeMapping TypeName="CarMateModel.CarNodesLang">
+        <MappingFragment StoreEntitySet="CarNodesLang">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="CarNodeId" ColumnName="CarNodeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -128,7 +128,8 @@ namespace CarMate.Controllers
                         RepProvider.Cars.Add(car);
                         //Db.Cars.Add(car);
                         //Db.SaveChanges();
-                        return RedirectToAction("Details", "Car", new {id = car.Id});
+                        //return RedirectToAction("Details", "Car", new {id = car.Id});
+                        return RedirectToAction("Index", "CarEvents", new { carId = car.Id });
                     }
                     catch (Exception exc)
                     {

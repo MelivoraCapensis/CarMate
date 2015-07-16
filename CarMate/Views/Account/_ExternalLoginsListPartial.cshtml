@@ -9,13 +9,13 @@
 }
 else
 {
-    <div class="row">
+    @*<div class="row">
         <div class="col-lg-10 col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading">@Resources.Account.AddNewAccount</div>
-                <div class="panel-body">
+                <div class="panel-body">*@
                     @*<h3>@Resources.Account.AddNewAccount</h3>*@
-                    @using (Html.BeginForm("ExternalLogin", "Account", new {ReturnUrl = ViewBag.ReturnUrl}))
+                    using (Html.BeginForm("ExternalLogin", "Account", new {ReturnUrl = ViewBag.ReturnUrl}))
                     {
                         @Html.AntiForgeryToken()
                         @*<h4>@Resources.Account.SignInWithAnotherService</h4>*@
@@ -26,10 +26,10 @@ else
                             }
                         </div>
                     }
-                </div>
+                @*</div>
             </div>
         </div>
-    </div>
+    </div>*@
 }
 
 

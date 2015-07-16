@@ -215,7 +215,10 @@
     <Compile Include="CarModifications.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CarNode.cs">
+    <Compile Include="CarNodes.cs">
+      <DependentUpon>CarMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarNodesLang.cs">
       <DependentUpon>CarMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Cars.cs">
@@ -271,10 +274,12 @@
     <Compile Include="DAL\ICountriesRepository.cs" />
     <Compile Include="DAL\IPlacemarksRepository.cs" />
     <Compile Include="DAL\IRegionRepository.cs" />
+    <Compile Include="DAL\PartCarNodes.cs" />
     <Compile Include="DAL\PartCarTransmission.cs" />
     <Compile Include="DAL\PlacemarksRepository.cs" />
     <Compile Include="DAL\RegionRepository.cs" />
     <Compile Include="DAL\RepCarEvents.cs" />
+    <Compile Include="DAL\RepCarNodes.cs" />
     <Compile Include="DAL\RepCars.cs" />
     <Compile Include="DAL\RepCarTransmission.cs" />
     <Compile Include="DAL\RepEventTypes.cs" />
@@ -1666,6 +1671,7 @@
     <Content Include="Views\AdminErrorLogs\Index.cshtml" />
     <Content Include="Views\AdminErrorLogs\LogsByDate.cshtml" />
     <Content Include="Views\AdminErrorLogs\OpenLog.cshtml" />
+    <Content Include="Views\Shared\_PartPeriod.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

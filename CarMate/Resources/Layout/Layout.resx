@@ -117,17 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Events" xml:space="preserve">
+    <value>События</value>
+  </data>
+  <data name="FuelConsumption" xml:space="preserve">
+    <value>Расход топлива</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
   <data name="Map" xml:space="preserve">
     <value>Карта</value>
   </data>
   <data name="MeansTransport" xml:space="preserve">
     <value>Транспортные средства</value>
   </data>
+  <data name="MyCar" xml:space="preserve">
+    <value>Мой автомобиль</value>
+  </data>
   <data name="MyGarage" xml:space="preserve">
     <value>Мой гараж</value>
   </data>
+  <data name="MyMessages" xml:space="preserve">
+    <value>Мои сообщения</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
   <data name="Startup" xml:space="preserve">
     <value>Стартап</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Статистика</value>
   </data>
   <data name="StepAcademy" xml:space="preserve">
     <value>Академия ШАГ</value>

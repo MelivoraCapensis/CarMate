@@ -64,11 +64,19 @@
     <Property Name="YearBegin" Type="nvarchar" MaxLength="30" />
     <Property Name="YearEnd" Type="nvarchar" MaxLength="30" />
   </EntityType>
-  <EntityType Name="CarNode">
+  <EntityType Name="CarNodes">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarNodesLang">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarNodeId" Type="int" Nullable="false" />
+    <Property Name="LanguageId" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Cars">
@@ -333,14 +341,38 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="CarDetails_fk_CarNode">
-    <End Role="CarNode" Type="Self.CarNode" Multiplicity="1" />
+    <End Role="CarNodes" Type="Self.CarNodes" Multiplicity="1" />
     <End Role="CarDetails" Type="Self.CarDetails" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="CarNode">
+      <Principal Role="CarNodes">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="CarDetails">
         <PropertyRef Name="CarNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarNodeLang_fk_CarNode">
+    <End Role="CarNodes" Type="Self.CarNodes" Multiplicity="1" />
+    <End Role="CarNodesLang" Type="Self.CarNodesLang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarNodes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CarNodesLang">
+        <PropertyRef Name="CarNodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarNodeLang_fk_Language">
+    <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+    <End Role="CarNodesLang" Type="Self.CarNodesLang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Languages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CarNodesLang">
+        <PropertyRef Name="LanguageId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -831,7 +863,8 @@
     <EntitySet Name="CarEvents" EntityType="Self.CarEvents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CarModifications" EntityType="Self.CarModifications" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CarNode" EntityType="Self.CarNode" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CarNodes" EntityType="Self.CarNodes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CarNodesLang" EntityType="Self.CarNodesLang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CarTransmission" EntityType="Self.CarTransmission" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CarTransmissionLang" EntityType="Self.CarTransmissionLang" Schema="dbo" store:Type="Tables" />
@@ -861,8 +894,16 @@
       <End Role="CarDetails" EntitySet="CarDetails" />
     </AssociationSet>
     <AssociationSet Name="CarDetails_fk_CarNode" Association="Self.CarDetails_fk_CarNode">
-      <End Role="CarNode" EntitySet="CarNode" />
+      <End Role="CarNodes" EntitySet="CarNodes" />
       <End Role="CarDetails" EntitySet="CarDetails" />
+    </AssociationSet>
+    <AssociationSet Name="CarNodeLang_fk_CarNode" Association="Self.CarNodeLang_fk_CarNode">
+      <End Role="CarNodes" EntitySet="CarNodes" />
+      <End Role="CarNodesLang" EntitySet="CarNodesLang" />
+    </AssociationSet>
+    <AssociationSet Name="CarNodeLang_fk_Language" Association="Self.CarNodeLang_fk_Language">
+      <End Role="Languages" EntitySet="Languages" />
+      <End Role="CarNodesLang" EntitySet="CarNodesLang" />
     </AssociationSet>
     <AssociationSet Name="Cars_fk_CarTransmission" Association="Self.Cars_fk_CarTransmission">
       <End Role="CarTransmission" EntitySet="CarTransmission" />

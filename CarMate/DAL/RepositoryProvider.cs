@@ -59,6 +59,11 @@ namespace CarMate.DAL
             get { return GetRep<RepCarEvents>(); }
         }
 
+        public RepCarNodes CarNodes
+        {
+            get { return GetRep<RepCarNodes>(); }
+        }
+
         public void SaveChanges()
         {
             _db.SaveChanges();

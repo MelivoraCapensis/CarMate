@@ -44,5 +44,14 @@ namespace CarMate.DAL
 
             return res;
         }
+
+        public string SelectAnalogueFromLanguage(string eventTypeName, string language)
+        {
+            var eventTypesLang = Db.EventTypesLang.First(x => x.Name.Equals(eventTypeName));
+            int eventTypesId = eventTypesLang.EventTypesId;
+            var res = Db.EventTypesLang.First(x => x.EventTypesId == eventTypesId && x.Languages.Code.Equals(language)).Name;
+
+            return res;
+        }
     }
 }

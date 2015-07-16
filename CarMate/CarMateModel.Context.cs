@@ -31,7 +31,6 @@ namespace CarMate
         public DbSet<CarEvents> CarEvents { get; set; }
         public DbSet<CarModels> CarModels { get; set; }
         public DbSet<CarModifications> CarModifications { get; set; }
-        public DbSet<CarNode> CarNode { get; set; }
         public DbSet<Cars> Cars { get; set; }
         public DbSet<CarTransmission> CarTransmission { get; set; }
         public DbSet<CarTransmissionLang> CarTransmissionLang { get; set; }
@@ -56,5 +55,7 @@ namespace CarMate
         public DbSet<Vendors> Vendors { get; set; }
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
+        public DbSet<CarNodes> CarNodes { get; set; }
+        public DbSet<CarNodesLang> CarNodesLang { get; set; }
     }
 }

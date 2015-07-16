@@ -320,7 +320,7 @@ namespace CarMate.Controllers
             foreach (var carEvent in carEvents)
             {
                 //if (costStatistics.ContainsKey(carEvent.EventTypes.Name))
-                var t = tests.FirstOrDefault(x => x.Name.Equals(carEvent.EventTypes.Name));
+                var t = tests.FirstOrDefault(x => x.Name.Equals(RepProvider.EventTypes.SelectAnalogueFromLanguage(carEvent.EventTypes.Name, this.CurrentLangCode)));
                 if (t != null)
                 {
                     //costStatistics[carEvent.EventTypes.Name] += carEvent.CostTotal;
@@ -339,7 +339,8 @@ namespace CarMate.Controllers
                 else
                 {
                     //costStatistics[carEvent.EventTypes.Name] = carEvent.CostTotal;
-                    t = new Test { Summ = carEvent.CostTotal, Name = carEvent.EventTypes.Name };
+                    t = new Test { Summ = carEvent.CostTotal, Name = RepProvider.EventTypes.SelectAnalogueFromLanguage(carEvent.EventTypes.Name, this.CurrentLangCode) };
+                    //RepProvider.EventTypes.SelectAnalogueFromLanguage(carEvent.EventTypes.Name, this.CurrentLangCode)
                     allSumm += carEvent.CostTotal;
                     t.Details.Add(new Details
                     {

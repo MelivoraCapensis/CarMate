@@ -17,13 +17,13 @@ namespace CarMate.DAL
         public IQueryable<CarTransmission> Select(int languageId)
         {
             List<CarTransmission> carTransmissionList = new List<CarTransmission>();
-            var res = Db.CarTransmissionLang.Where(x => x.LanguageId == languageId).ToList();
-            for (int i = 0; i < res.Count(); i++)
+            var carTransmissionLang = Db.CarTransmissionLang.Where(x => x.LanguageId == languageId).ToList();
+            for (int i = 0; i < carTransmissionLang.Count(); i++)
             {
                 carTransmissionList.Add(new CarTransmission()
                 {
-                    NameTransmission = res[i].NameTransmission,
-                    Id = res[i].CarTransmissionId
+                    NameTransmission = carTransmissionLang[i].NameTransmission,
+                    Id = carTransmissionLang[i].CarTransmissionId
                 });
             }
 
