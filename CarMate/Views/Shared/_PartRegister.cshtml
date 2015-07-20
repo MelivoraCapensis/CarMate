@@ -82,8 +82,11 @@
                         </div>
                     }
 
-                    @*<h2>Use another service to log in.</h2>*@
-                    @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
+@*<h2>Use another service to log in.</h2>*@
+<div class="col-lg-offset-3 col-md-offset-3">
+    @Html.Action("ExternalLoginsList", "Account", new {ReturnUrl = ViewBag.ReturnUrl})
+</div>
+      @*              @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })*@
 
                 @*</div>
             </div>

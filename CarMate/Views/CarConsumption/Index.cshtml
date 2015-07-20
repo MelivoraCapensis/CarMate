@@ -35,7 +35,7 @@
 
                 <div id="period_result_fuelConsumption"></div>
 
-                @*@if (Model.Any())
+                        @*@if (Model.Any())
                 {
                     <table class="table">
                         <tr>
@@ -202,15 +202,15 @@
             title: {
                 text: 'Расход топлива'
             },
-            subtitle: {
-                text: 'Период: '
-            },
+            //subtitle: {
+            //    text: 'Период: '
+            //},
             xAxis: {
                 categories: arr
             },
             yAxis: {
                 title: {
-                    text: 'Бензин/Газ (л./100км.)'
+                    text: 'Расход топлива (@ViewBag.UnitFuelConsumption)'
                 }
             },
             plotOptions: {
@@ -282,9 +282,9 @@
                                             '<th>' +
                                                 '@Resources.CarConsumption.Date' +
                                             '</th>' +
-                                            '<th>' +
+                                            @*'<th>' +
                                                 '@Resources.CarConsumption.Name' +
-                                            '</th>' +
+                                            '</th>' +*@
                                             '<th>' +
                                                 '@Resources.CarConsumption.Odometer' +
                                             '</th>' +
@@ -298,9 +298,10 @@
 
 
                         jQuery.each(data, function(itemNo, item) {
-                            table += '<tr style="background: cornflowerblue">';
+                            //table += '<tr style="background: cornflowerblue">';
+                            table += '<tr>';
                             table += ' <td></td>';
-                            table += ' <td></td>';
+                            //table += ' <td></td>';
                             table += ' <td></td>';
                             table += ' <td></td>';
                             table += ' <td></td>';
@@ -311,20 +312,20 @@
                             table += item.NewCarEvent.DateEvent;
                             table += '</td>';
 
-                            table += ' <td></td>';
+                            //table += ' <td></td>';
 
                             table += '<td>';
                             table += '<span id="carEvent_Mileage">';
                             table += item.Mileage;
                             table += '</span>';
-                            table += '@ViewBag.UnitDistance';
+                            table += ' @ViewBag.UnitDistance';
                             table += '</td>';
 
                             table += '<td>';
                             table += '<span id="carEvent_Consumption">';
                             table += item.Consumption;
                             table += '</span>';
-                            table += '@ViewBag.UnitFuelConsumption';
+                            table += ' @ViewBag.UnitFuelConsumption';
                             table += '</td>';
 
                             table += '<td id="btn_carEvent_NewCarEvent">';
@@ -340,7 +341,7 @@
                             table += item.OldCarEvent.DateEvent;
                             table += '</td>';
 
-                            table += ' <td></td>';
+                            //table += ' <td></td>';
 
                             table += ' <td></td>';
 
@@ -357,6 +358,7 @@
                         consumption += '@Resources.CarConsumption.Min';
                         consumption += '<span id="minConsumption">';
                         consumption += data[0].MinConsumption;
+                        consumption += ' @ViewBag.UnitFuelConsumption';
                         consumption += '</span>';
                         @*consumption += '<span id="minConsumption">@ViewBag.MinConsumption</span>';*@
                         consumption += '</p>';
@@ -365,6 +367,7 @@
                         consumption += ' @Resources.CarConsumption.Avg';
                         consumption += '<span id="avgConsumption">';
                         consumption += data[0].AvgConsumption;
+                        consumption += ' @ViewBag.UnitFuelConsumption';
                         consumption += '</span>';
                         consumption += '</p>';
 
@@ -372,6 +375,7 @@
                         consumption += '@Resources.CarConsumption.Max';
                         consumption += '<span id="maxConsumption">';
                         consumption += data[0].MaxConsumption;
+                        consumption += ' @ViewBag.UnitFuelConsumption';
                         consumption += '</span>';
                         consumption += '</p>';
 
@@ -553,7 +557,7 @@
                                             headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
                                             pointFormat:
                                                 '<tr><td style="color: {series.color}">@(Resources.CarConsumption.DistancesDrove): </td>' +
-                                                    '<td style="text-align: right"><b>{point.y:.2f}(@(ViewBag.UnitDistance)).</b></td></tr>',
+                                                    '<td style="text-align: right"><b>{point.y:.0f}(@(ViewBag.UnitDistance))</b></td></tr>',
                                             valueDecimals: 2
                                         }
                                     }

@@ -1054,3 +1054,17 @@ D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Map.Map.resources
 D:\Git\CarMate\CarMate\obj\Debug\CarMate.Resources.Map.Map.en.resources
 D:\Git\CarMate\CarMate\bin\NLog.dll
 D:\Git\CarMate\CarMate\bin\NLog.xml
+D:\Git\CarMate\CarMate\bin\Hangfire.Core.dll
+D:\Git\CarMate\CarMate\bin\Hangfire.SqlServer.dll
+D:\Git\CarMate\CarMate\bin\HtmlAgilityPack.dll
+D:\Git\CarMate\CarMate\bin\Microsoft.Owin.dll
+D:\Git\CarMate\CarMate\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Git\CarMate\CarMate\bin\Owin.dll
+D:\Git\CarMate\CarMate\bin\Hangfire.Core.xml
+D:\Git\CarMate\CarMate\bin\Hangfire.SqlServer.xml
+D:\Git\CarMate\CarMate\bin\HtmlAgilityPack.pdb
+D:\Git\CarMate\CarMate\bin\HtmlAgilityPack.xml
+D:\Git\CarMate\CarMate\bin\Microsoft.Owin.xml
+D:\Git\CarMate\CarMate\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Git\CarMate\CarMate\bin\Hangfire.Dashboard.Authorization.dll
+D:\Git\CarMate\CarMate\bin\Hangfire.Dashboard.Authorization.xml

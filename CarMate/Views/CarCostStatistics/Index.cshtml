@@ -213,9 +213,9 @@
                                 title: {
                                     text: '@(Resources.CarCostStatistics.CostStatistics)'
                                 },
-                                subtitle: {
+                                @*subtitle: {
                                     text: '@(Resources.Hicharts.Period): '
-                                },
+                                },*@
                                 tooltip: {
                                     headerFormat: '',
                                     pointFormat: '<b>{point.name}: {point.percentage:.1f}%</b>'
@@ -250,13 +250,32 @@
                             jQuery.each(items, function (itemNo, item) {
                                 //if (item.Name === "Заправка") {
                                 jQuery.each(item.Details, function (itemNoDetails, itemDetails) {
+                                    //var s = (item.Ticks - 621355968000000000) / 10000;
+                                    //dataFuel.push({ x: s, y: item.Distance });
                                     var s = (itemDetails.Ticks - 621355968000000000) / 10000;
-                                    dataFuel.push({ x: s, y: itemDetails.Cost, color: 'green' });
+                                    dataFuel.push({ x: s, y: itemDetails.Cost });
                                 });
                                 //}
                             });
 
 
+                            //function sortDataFuel() {
+                            //    return function (a, b) {
+                            //        if (a.x < b.x) {
+                            //            return b;
+                            //        }
+                            //        //if (a.x > b.x) {
+                            //            return a;
+                            //        //} else {
+                                        
+                            //        //}
+                                    
+                            //    }
+                            //}
+
+                            //var newDataFuel = dataFuel.sort(sortDataFuel());
+
+                            
                             // Create the chart
                             $('#fuelCostStatistics').highcharts('StockChart', {
                                 xAxis: {
@@ -271,6 +290,7 @@
                                         year: '%Y'
                                     }
                                 },
+                               
 
                                 yAxis: {
                                     //allowDecimals: false,

@@ -40,17 +40,16 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8">
+                                <div class="col-lg-offset-2 col-md-offset-2 col-lg-6 col-md-6">
                                     @Html.CheckBoxFor(m => m.RememberMe, new {@class = "checkbox-inline"})
                                     @Html.LabelFor(m => m.RememberMe, Resources.Account.RememberMe)
                                     @*<button id="registerInLogin" type="button" class="btn btn-info btn-lg">
                                         Регистрация
                                     </button>*@
-
                                 </div>
-
+                                <a id="registerInLogin">@Resources.Global.SignUp</a>
                             </div>
-                            <a id="registerInLogin">@Resources.Global.SignUp</a>
+                            
                         </div>
 
                         
@@ -77,8 +76,11 @@
                         </div>*@
 
                     }
-    @*<h2>Use another service to log in.</h2>*@
-    @Html.Action("ExternalLoginsList", "Account", new {ReturnUrl = ViewBag.ReturnUrl})
+@*<h2>Use another service to log in.</h2>*@
+<div class="col-lg-offset-3 col-md-offset-3">
+    @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
+</div>
+    @*@Html.Action("ExternalLoginsList", "Account", new {ReturnUrl = ViewBag.ReturnUrl})*@
 
                 @*</div>
             </div>

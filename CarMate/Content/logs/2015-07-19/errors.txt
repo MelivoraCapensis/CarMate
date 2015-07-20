@@ -1,0 +1,1 @@
+2015-07-19 17:58:36.8130|WARN|Hangfire.Server.SchedulePoller|Error occurred during execution of 'Schedule Poller' component. Execution will be retried (attempt 3 of 2147483647) in 00:00:04 seconds.

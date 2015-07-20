@@ -136,7 +136,7 @@
     <value>Money spent for the period</value>
   </data>
   <data name="OtherEvents" xml:space="preserve">
-    <value>Other events</value>
+    <value>Costs events</value>
   </data>
   <data name="PeriodEmpty" xml:space="preserve">
     <value>For the selected period no data</value>

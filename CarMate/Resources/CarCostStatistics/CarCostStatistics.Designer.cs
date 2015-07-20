@@ -115,7 +115,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Другие события.
+        ///   Looks up a localized string similar to Затраты по событиям.
         /// </summary>
         public static string OtherEvents {
             get {

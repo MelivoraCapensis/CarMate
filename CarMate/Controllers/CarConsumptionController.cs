@@ -232,7 +232,10 @@ namespace CarMate.Controllers
 
             // Конвертировать данные в выбранную систему измерения
 
-            fullTankCharging = fullTankCharging.OrderByDescending(x => x.NewCarEvent.DateEvent).ToList();
+            //fullTankCharging = fullTankCharging
+            //    .OrderBy(x => x.OldCarEvent.DateEvent)
+            //    .ThenBy(x=>x.NewCarEvent.DateEvent)
+            //    .ToList();
 
             return Json(fullTankCharging, JsonRequestBehavior.AllowGet);
         }

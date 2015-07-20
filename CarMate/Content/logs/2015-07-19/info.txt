@@ -1,0 +1,60 @@
+2015-07-19 16:51:15.4450|INFO|Hangfire.SqlServer.SqlServerStorage|Start installing Hangfire SQL objects...
+2015-07-19 16:51:17.4010|INFO|Hangfire.SqlServer.SqlServerStorage|Hangfire SQL objects installed.
+2015-07-19 16:51:19.0720|INFO|Hangfire.BackgroundJobServer|Starting Hangfire Server
+2015-07-19 16:51:19.0720|INFO|Hangfire.BackgroundJobServer|Using job storage: 'SQL Server: mssql3.1gb.ua@1gb_carmatealex07'.
+2015-07-19 16:51:19.0840|INFO|Hangfire.BackgroundJobServer|Using the following options for SQL Server job storage:
+2015-07-19 16:51:19.0840|INFO|Hangfire.BackgroundJobServer|    Queue poll interval: 00:00:15.
+2015-07-19 16:51:19.0840|INFO|Hangfire.BackgroundJobServer|    Invisibility timeout: 00:30:00.
+2015-07-19 16:51:19.0960|INFO|Hangfire.BackgroundJobServer|Using the following options for Hangfire Server:
+2015-07-19 16:51:19.0960|INFO|Hangfire.BackgroundJobServer|    Worker count: 10.
+2015-07-19 16:51:19.0960|INFO|Hangfire.BackgroundJobServer|    Listening queues: 'default'.
+2015-07-19 16:51:19.0960|INFO|Hangfire.BackgroundJobServer|    Shutdown timeout: 00:00:15.
+2015-07-19 16:51:19.0960|INFO|Hangfire.BackgroundJobServer|    Schedule polling interval: 00:00:15.
+2015-07-19 16:51:21.7130|INFO|Hangfire.Server.ServerBootstrapper|Starting server components
+2015-07-19 16:52:38.7810|INFO|Hangfire.Server.ServerBootstrapper|Stopping server components
+2015-07-19 16:52:38.9610|INFO|Hangfire.BackgroundJobServer|Hangfire Server stopped.
+2015-07-19 16:52:53.6460|INFO|Hangfire.SqlServer.SqlServerStorage|Start installing Hangfire SQL objects...
+2015-07-19 16:52:53.8320|INFO|Hangfire.SqlServer.SqlServerStorage|Hangfire SQL objects installed.
+2015-07-19 16:52:54.1600|INFO|Hangfire.BackgroundJobServer|Starting Hangfire Server
+2015-07-19 16:52:54.1680|INFO|Hangfire.BackgroundJobServer|Using job storage: 'SQL Server: mssql3.1gb.ua@1gb_carmatealex07'.
+2015-07-19 16:52:54.1680|INFO|Hangfire.BackgroundJobServer|Using the following options for SQL Server job storage:
+2015-07-19 16:52:54.1680|INFO|Hangfire.BackgroundJobServer|    Queue poll interval: 00:00:15.
+2015-07-19 16:52:54.1680|INFO|Hangfire.BackgroundJobServer|    Invisibility timeout: 00:30:00.
+2015-07-19 16:52:54.1680|INFO|Hangfire.BackgroundJobServer|Using the following options for Hangfire Server:
+2015-07-19 16:52:54.1680|INFO|Hangfire.BackgroundJobServer|    Worker count: 10.
+2015-07-19 16:52:54.1680|INFO|Hangfire.BackgroundJobServer|    Listening queues: 'default'.
+2015-07-19 16:52:54.1770|INFO|Hangfire.BackgroundJobServer|    Shutdown timeout: 00:00:15.
+2015-07-19 16:52:54.1770|INFO|Hangfire.BackgroundJobServer|    Schedule polling interval: 00:00:15.
+2015-07-19 16:52:55.2540|INFO|Hangfire.Server.ServerBootstrapper|Starting server components
+2015-07-19 17:04:37.7760|INFO|Hangfire.Server.ServerBootstrapper|Stopping server components
+2015-07-19 17:04:38.0070|INFO|Hangfire.BackgroundJobServer|Hangfire Server stopped.
+2015-07-19 17:04:42.2900|INFO|Hangfire.SqlServer.SqlServerStorage|Start installing Hangfire SQL objects...
+2015-07-19 17:04:42.5260|INFO|Hangfire.SqlServer.SqlServerStorage|Hangfire SQL objects installed.
+2015-07-19 17:04:47.7150|INFO|Hangfire.BackgroundJobServer|Starting Hangfire Server
+2015-07-19 17:04:47.7150|INFO|Hangfire.BackgroundJobServer|Using job storage: 'SQL Server: mssql3.1gb.ua@1gb_carmatealex07'.
+2015-07-19 17:04:47.7150|INFO|Hangfire.BackgroundJobServer|Using the following options for SQL Server job storage:
+2015-07-19 17:04:47.7150|INFO|Hangfire.BackgroundJobServer|    Queue poll interval: 00:00:15.
+2015-07-19 17:04:47.7150|INFO|Hangfire.BackgroundJobServer|    Invisibility timeout: 00:30:00.
+2015-07-19 17:04:47.7270|INFO|Hangfire.BackgroundJobServer|Using the following options for Hangfire Server:
+2015-07-19 17:04:47.7270|INFO|Hangfire.BackgroundJobServer|    Worker count: 10.
+2015-07-19 17:04:47.7270|INFO|Hangfire.BackgroundJobServer|    Listening queues: 'default'.
+2015-07-19 17:04:47.7270|INFO|Hangfire.BackgroundJobServer|    Shutdown timeout: 00:00:15.
+2015-07-19 17:04:47.7270|INFO|Hangfire.BackgroundJobServer|    Schedule polling interval: 00:00:15.
+2015-07-19 17:04:49.1500|INFO|Hangfire.Server.ServerBootstrapper|Starting server components
+2015-07-19 17:08:44.8230|INFO|Hangfire.Server.ServerBootstrapper|Stopping server components
+2015-07-19 17:08:45.0390|INFO|Hangfire.BackgroundJobServer|Hangfire Server stopped.
+2015-07-19 17:09:14.2970|INFO|Hangfire.SqlServer.SqlServerStorage|Start installing Hangfire SQL objects...
+2015-07-19 17:09:14.8740|INFO|Hangfire.SqlServer.SqlServerStorage|Hangfire SQL objects installed.
+2015-07-19 17:09:15.6780|INFO|Hangfire.BackgroundJobServer|Starting Hangfire Server
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|Using job storage: 'SQL Server: mssql3.1gb.ua@1gb_carmatealex07'.
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|Using the following options for SQL Server job storage:
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|    Queue poll interval: 00:00:15.
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|    Invisibility timeout: 00:30:00.
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|Using the following options for Hangfire Server:
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|    Worker count: 10.
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|    Listening queues: 'default'.
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|    Shutdown timeout: 00:00:15.
+2015-07-19 17:09:15.6950|INFO|Hangfire.BackgroundJobServer|    Schedule polling interval: 00:00:15.
+2015-07-19 17:09:17.0770|INFO|Hangfire.Server.ServerBootstrapper|Starting server components
+2015-07-19 17:58:35.6660|INFO|Hangfire.Server.SchedulePoller|Error occurred during execution of 'Schedule Poller' component. Execution will be retried (attempt 2 of 2147483647) in 00:00:01 seconds.
+2015-07-19 17:58:35.6690|INFO|Hangfire.Server.ServerHeartbeat|Error occurred during execution of 'Server Heartbeat' component. Execution will be retried (attempt 2 of 2147483647) in 00:00:04 seconds.

@@ -33,6 +33,8 @@ namespace CarMate.Classes
 
         public const string CarTypeCar = "Легковые автомобили + автомобили-фургоны";
 
+        public const string Ukraine = "Украина";
+
         public const int RussianLanguage = 1;
 
     }

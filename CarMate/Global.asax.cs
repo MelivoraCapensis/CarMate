@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Hangfire;
 
 namespace CarMate
 {
@@ -22,12 +23,14 @@ namespace CarMate
         {
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            WebApiConfig.Register(System.Web.Http.GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             //RouteConfig.RegisterRoutes(RouteTable.Routes);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            Hangfire.GlobalConfiguration.Configuration.UseSqlServerStorage("DefaultConnection");
         }
 
         //protected void Application_AcquireRequestState(object sender, EventArgs e)

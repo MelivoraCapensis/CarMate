@@ -136,7 +136,7 @@
     <value>Денег потрачено за период</value>
   </data>
   <data name="OtherEvents" xml:space="preserve">
-    <value>Другие события</value>
+    <value>Затраты по событиям</value>
   </data>
   <data name="PeriodEmpty" xml:space="preserve">
     <value>За выбранный период нет данных</value>
