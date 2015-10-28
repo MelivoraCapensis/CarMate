@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:local="clr-namespace:MapXamarinForm;assembly=MapXamarinForm"
+             x:Class="MapXamarinForm.Views.CurrentEventPage" Padding="20, 20">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+
+      <local:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="20" />
+            <Setter Property="Source" Value="{local:ImageResource MapXamarinForm.Images.error.png}" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="20" />
+            <Setter Property="Source" Value="{local:ImageResource MapXamarinForm.Images.success.png}" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+      </local:BooleanToObjectConverter>
+
+      <Style x:Key="baseStyle"
+             TargetType="Label">
+        <Setter Property="XAlign" Value="Start" />
+        <Setter Property="YAlign" Value="Center" />
+        <Setter Property="FontSize" Value="Micro" />
+        <Setter Property="FontAttributes" Value="Italic" />
+      </Style>
+      <local:BooleanToObjectConverter x:Key="boolToStyleEmail"
+                                           x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter a valid email" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="Your email looks good" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+
+      </local:BooleanToObjectConverter>
+      <local:BooleanToObjectConverter x:Key="boolToStyleEventCost"
+                                           x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter a valid event cost" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="Event cost looks good" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+
+      </local:BooleanToObjectConverter>
+      <local:BooleanToObjectConverter x:Key="boolToStyleEventAmount"
+                                           x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter a valid event amount" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="Event amount looks good" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+
+      </local:BooleanToObjectConverter>      
+       <local:BooleanToObjectConverter x:Key="boolToStylePricePerLitr"
+                                           x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter a valid price per litr" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="price per litr looks good" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+
+      </local:BooleanToObjectConverter>   
+      <local:BooleanToObjectConverter x:Key="boolToStyleEventOdometr"
+                                           x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter a valid odometr" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="odometr looks good" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+
+      </local:BooleanToObjectConverter>   
+
+      <local:BooleanToObjectConverter x:Key="boolToStyleAge"
+                                             x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter numeric values" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="You are very young!" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+
+      </local:BooleanToObjectConverter>
+
+      <local:GenderConverter x:Key="genderConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ScrollView>
+  <StackLayout>
+    <StackLayout HeightRequest="200">
+      <maps:Map x:Name="currentmap" HeightRequest="100" IsShowingUser = "true" ></maps:Map>
+    </StackLayout>
+
+    <Picker x:Name="category_picker" Title ="Category Event"></Picker>
+    <Grid x:Name="section_gas_event" IsVisible="False">
+
+      <Grid.RowDefinitions>
+        <RowDefinition  />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="40" />
+      </Grid.ColumnDefinitions>
+
+    
+        <Picker x:Name="checked_fuel_category" Title ="Fuel Category" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"></Picker>
+        <!--section validate entry priceLitr-->
+        <Entry x:Name="priceLitr" Grid.Row="1" Grid.Column="1"
+               Placeholder="Price per litr" >
+          <Entry.Behaviors>
+            <local:AmountValidatorBehavior x:Name="priceLitrValidator"/>
+          </Entry.Behaviors>
+        </Entry>
+        <Image  x:Name="priceLitrSuccessErrorImage" Grid.Row="1" Grid.Column="2"
+                    Style="{Binding Source={x:Reference priceLitrValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleImage}}"/>
+        <Label x:Name="priceLitrSuccessErrorLabel" Style="{Binding Source={x:Reference priceLitrValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStylePricePerLitr}}"  Grid.Row="2" Grid.Column="1"/>
+        <!--section validate entry lastEventOdometer-->
+
+      
+      <!--section validate entry eventAmount-->
+      <Entry x:Name="eventAmount" Grid.Row="3" Grid.Column="1"
+             Placeholder="Amount litr" >
+        <Entry.Behaviors>
+          <local:AmountValidatorBehavior x:Name="amountValidator"/>
+        </Entry.Behaviors>
+      </Entry>
+      <Image  x:Name="amountSuccessErrorImage" Grid.Row="3" Grid.Column="2"
+                  Style="{Binding Source={x:Reference amountValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleImage}}"/>
+      <Label x:Name="amountSuccessErrorLabel" Style="{Binding Source={x:Reference amountValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleEventAmount}}" Grid.Row="4" Grid.Column="1" />
+      <!--section validate entry eventCost-->
+      <Entry x:Name="eventCost" Grid.Row="5" Grid.Column="1"
+             Placeholder="Event Cost" >
+        <Entry.Behaviors>
+          <local:AmountValidatorBehavior x:Name="costValidator"/>
+        </Entry.Behaviors>
+      </Entry>
+      <Image  x:Name="costSuccessErrorImage" Grid.Row="5" Grid.Column="2"
+                  Style="{Binding Source={x:Reference costValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleImage}}"/>
+      <Label x:Name="costSuccessErrorLabel" Style="{Binding Source={x:Reference costValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleEventCost}}" Grid.Row="6" Grid.Column="1"/>
+    </Grid>
+    <Grid>
+
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="40" />
+      </Grid.ColumnDefinitions>
+      <Entry x:Name="lastEventOdometer"  Grid.Row="0" Grid.Column="1"
+              Placeholder="Odometr" >
+        <Entry.Behaviors>
+          <local:OdometrValidatorBehavior x:Name="eventOdometrValidator"/>
+        </Entry.Behaviors>
+      </Entry>
+      <Image  x:Name="eventOdometrSuccessErrorImage" Grid.Row="0" Grid.Column="2"
+                  Style="{Binding Source={x:Reference eventOdometrValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleImage}}"/>
+      <Label x:Name="eventOdometrSuccessErrorLabel" Style="{Binding Source={x:Reference eventOdometrValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleEventOdometr}}"  Grid.Row="1" Grid.Column="1"/>
+
+      <Entry x:Name="commentEvent" Grid.Row="2" Grid.Column="1"
+             Placeholder="Comment" ></Entry>
+    </Grid>
+    <Button x:Name="button_ok" Text="Save" />
+
+  </StackLayout>
+  </ScrollView>
+</ContentPage>

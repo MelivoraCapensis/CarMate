@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0f5a1ce67e9b487e869f636a3555f8e9" Name="Diagram1">
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Aliases" Width="1.5" PointX="3" PointY="34.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarBrands" Width="1.5" PointX="3.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarDetails" Width="1.5" PointX="13.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarEvents" Width="1.5" PointX="5.25" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarModels" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarModifications" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarNode" Width="1.5" PointX="11.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Cars" Width="1.5" PointX="8.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarTransmission" Width="3.125" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CarTypes" Width="1.5" PointX="1.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Categories" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.CategoryLog" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Countries" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.EventTypes" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.FuelCategories" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.LogBook" Width="1.5" PointX="10.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Placemarks" Width="1.5" PointX="5.25" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Prices" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Regions" Width="1.5" PointX="3" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.UnitDistance" Width="2.75" PointX="6" PointY="31" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.UnitFuelConsumption" Width="1.875" PointX="3.75" PointY="31" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.UnitVolume" Width="2.875" PointX="6" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.UserProfile" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Users" Width="2.875" PointX="8.25" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.VendorAliases" Width="1.5" PointX="5.25" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gb_carmate30052015Model.Vendors" Width="1.5" PointX="3" PointY="24.625" IsExpanded="true" />
+        <AssociationConnector Association="gb_carmate30052015Model.VendorAliases_fk_Alias" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_CarBrands_carTypeId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_CarModels_brandId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.CarDetails_fk_Car" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.CarDetails_fk_CarNode" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Events_fk_EventType" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Events_fk_FuelCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Charging_carId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Charging_chargingid" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Cars_modelId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Modifications_modelId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Cars_modificationId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Cars_fk_CarTransmission" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Cars_fk_FuelCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Cars_userId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_LogBook_carId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Placemarks_categoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_CategoryLog_categoryid" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_FuelCategories_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Placemarks_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Regions_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Vendors_countryId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Prices_fuelId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Placemarks_placemarkid" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Placemarks_regionId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Placemarks_vendorId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Prices_vendorId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.fk_Regions_regionId" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Users_fk_Region" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.UnitDistance_fk_UnitFuelConsumtion" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Users_fk_UnitDistance" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.UnitVolume_fk_UnitFuelConsumption" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Users_fk_UnitFuelConsumption" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.Users_fk_UnitVolume" ManuallyRouted="false" />
+        <AssociationConnector Association="gb_carmate30052015Model.VendorAliases_fk_Vendors" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

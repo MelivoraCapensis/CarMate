@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MapXamarinForm;assembly=MapXamarinForm"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="MapXamarinForm.Views.ManegerGaragePage" Padding="20, 20">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+
+      <local:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="20" />
+            <Setter Property="Source" Value="{local:ImageResource MapXamarinForm.Images.error.png}" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="20" />
+            <Setter Property="Source" Value="{local:ImageResource MapXamarinForm.Images.success.png}" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+      </local:BooleanToObjectConverter>
+
+      <Style x:Key="baseStyle"
+             TargetType="Label">
+        <Setter Property="XAlign" Value="Start" />
+        <Setter Property="YAlign" Value="Center" />
+        <Setter Property="FontSize" Value="Micro" />
+        <Setter Property="FontAttributes" Value="Italic" />
+      </Style>
+
+      <local:BooleanToObjectConverter x:Key="boolToStyleCarOdometr"
+                                          x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter a valid odometr" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="odometr looks good" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+        
+      </local:BooleanToObjectConverter>
+
+      <local:BooleanToObjectConverter x:Key="boolToStyleCarTank"
+                                          x:TypeArguments="Style">
+        <local:BooleanToObjectConverter.FalseObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#F44336" />
+            <Setter Property="Text" Value="Enter a valid tank" />
+          </Style>
+        </local:BooleanToObjectConverter.FalseObject>
+
+        <local:BooleanToObjectConverter.TrueObject>
+          <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="TextColor" Value="#4CAF50" />
+            <Setter Property="Text" Value="tank looks good" />
+          </Style>
+        </local:BooleanToObjectConverter.TrueObject>
+
+      </local:BooleanToObjectConverter>
+      
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ScrollView>
+    <StackLayout>
+       <Label Text="Chois car type" FontSize="30" ></Label>
+      <Picker x:Name="car_type_picker" Title ="Chois  brand"></Picker>
+      <Label Text="Chois car brand" FontSize="30" ></Label>
+      <Picker x:Name="car_brand_picker" Title ="Chois  brand"></Picker>
+      <Label Text="Chois brand model" FontSize="30"></Label>
+      <Picker x:Name="car_model_picker" Title ="Chois  model" IsEnabled="false"></Picker>
+      <Label Text="Chois model modification" FontSize="30" ></Label>
+      <Picker x:Name="car_modification_picker" Title ="Chois  modification" IsEnabled="false"></Picker>
+    <Grid x:Name="section_gas_event">
+
+      <Grid.RowDefinitions>
+        <RowDefinition  />
+        <RowDefinition />
+        <RowDefinition />      
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="40" />
+      </Grid.ColumnDefinitions>
+     
+     
+      <!--section validate entry odometr-->
+      <Entry x:Name="car_odometr" Grid.Row="0" Grid.Column="1"
+             Placeholder="Odometr" >
+        <Entry.Behaviors>
+          <local:AmountValidatorBehavior x:Name="amountValidator"/>
+        </Entry.Behaviors>
+      </Entry>
+      <Image  x:Name="car_odometrSuccessErrorImage" Grid.Row="0" Grid.Column="2"
+                  Style="{Binding Source={x:Reference amountValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleImage}}"/>
+      <Label x:Name="car_odometrSuccessErrorLabel" Style="{Binding Source={x:Reference amountValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleCarOdometr}}"  Grid.Row="1" Grid.Column="1"/>
+      <!--section validate entry odometr-->
+      <Entry x:Name="car_tank" Grid.Row="2" Grid.Column="1"
+             Placeholder="Tank" >
+        <Entry.Behaviors>
+          <local:AmountValidatorBehavior x:Name="tankamountValidator"/>
+        </Entry.Behaviors>
+      </Entry>
+      <Image  x:Name="priceLitrSuccessErrorImage" Grid.Row="2" Grid.Column="2"
+                  Style="{Binding Source={x:Reference tankamountValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleImage}}"/>
+      <Label x:Name="priceLitrSuccessErrorLabel" Style="{Binding Source={x:Reference tankamountValidator}, 
+                                Path=IsValid, 
+                                Converter={StaticResource boolToStyleCarTank}}"  Grid.Row="3" Grid.Column="1"/>
+    </Grid>
+       <Label Text="Chois fuel category" FontSize="30" ></Label>
+       <Picker x:Name="car_fuelcategory_picker" Title ="Chois  fuelcategory"></Picker>
+      <DatePicker x:Name="datebuy_picker" Format="D" VerticalOptions="FillAndExpand" >
+       
+      </DatePicker>
+      <Button x:Name="button_add" Text="Save" />
+    </StackLayout>
+  </ScrollView>
+</ContentPage>
